@@ -1,0 +1,9 @@
+{
+  "apps": [{
+    "autorestart": true,
+    "instances": 1,
+    "name": "rbp-app-dev",
+    "script": "npm",
+    "args": "start"
+    }]
+  }
