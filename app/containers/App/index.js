@@ -26,6 +26,9 @@ function App(props) {
   return (
     <AppWrapper>
       <Helmet
+        link={[
+        { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' },
+        ]}
         titleTemplate="%s - React.js Boilerplate"
         defaultTitle="React.js Boilerplate"
         meta={[

@@ -20,6 +20,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
         <BackgroundImg src={motowoman} alt="landing page background image" />
       Landing page here
       <Button> Get a free quote </Button>
+      <button className="btn btn-primary"> Test </button>
       </div>
     );
   }
