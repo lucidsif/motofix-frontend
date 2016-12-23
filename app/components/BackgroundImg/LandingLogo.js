@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import NormalImg from 'components/Img';
 
 const LandingLogo = styled(NormalImg)`
-width: 30%;
-margin: 0 auto;
-display: block;
+width: 35%;
+position: absolute;
+top: 20%;
+left: 35%;
+z-index: 1;
 `;
 
 export default LandingLogo;

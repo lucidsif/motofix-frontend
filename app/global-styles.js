@@ -12,6 +12,11 @@ injectGlobal`
     color: #fafafa;
   }
 
+  .background-img-div {
+    width:100%;
+    height:100%;
+  }
+
   body {
     height: 100%;
     width: 100%;
