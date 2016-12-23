@@ -47,6 +47,14 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     }, {
+      path: '/landing',
+      name: 'landing',
+      getComponent(location, cb) {
+        System.import('containers/Landing')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
