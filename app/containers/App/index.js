@@ -29,10 +29,10 @@ function App(props) {
         link={[
         { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' },
         ]}
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
+        titleTemplate="%s - motofix"
+        defaultTitle="motofix"
         meta={[
-          { name: 'description', content: 'A React.js Boilerplate application' },
+          { name: 'description', content: 'motofix' },
         ]}
       />
       <Header />
