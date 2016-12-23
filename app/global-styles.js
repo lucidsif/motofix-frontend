@@ -3,6 +3,15 @@ import { injectGlobal } from 'styled-components';
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html,
+
+  .nav-link{
+    color: #fafafa;
+  }
+
+  .navbar-brand{
+    color: #fafafa;
+  }
+
   body {
     height: 100%;
     width: 100%;
