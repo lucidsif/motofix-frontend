@@ -3,7 +3,6 @@
  * Landing
  *
  */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import LandingLogo from 'components/BackgroundImg/LandingLogo';
@@ -12,6 +11,7 @@ import image from './motowoman.png';
 import BgImg from 'containers/Landing/BgImg';
 import Button from 'components/Button';
 
+import BgImgDiv from 'components/BackgroundImg/BgImgDiv';
 
 export class Landing extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
