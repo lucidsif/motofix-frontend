@@ -4,17 +4,20 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
   html,
 
+  .background-img{
+    background: url(http://res.cloudinary.com/motocloud/image/upload/v1482555076/motowoman_uuhdtx.png) no-repeat center center fixed;
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+  }
+
   .nav-link{
     color: #fafafa;
   }
 
   .navbar-brand{
     color: #fafafa;
-  }
-
-  .background-img-div {
-    width:100%;
-    height:100%;
   }
 
   body {
@@ -29,6 +32,7 @@ injectGlobal`
   body.fontLoaded {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
+
 
   #app {
     background-color: #fafafa;
