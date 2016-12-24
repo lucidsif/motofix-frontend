@@ -7,6 +7,7 @@ injectGlobal`
     margin:0;
     height:100%;
     overflow:hidden;
+    padding-top: 30px;
   }
 
   .quote{

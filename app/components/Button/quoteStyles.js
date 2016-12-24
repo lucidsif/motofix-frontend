@@ -15,9 +15,6 @@ const buttonStyles = css`
   font-size: 16px;
   background-color: #38BEA0;
   color: #fff;
-  position: absolute;
-  top: 19em;
-  right: 34em;
 
   &:active {
     background: #41addd;
