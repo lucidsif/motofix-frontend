@@ -9,9 +9,7 @@ import LandingLogo from 'components/BackgroundImg/LandingLogo';
 import logo from 'components/BackgroundImg/logo@2x.png';
 import image from './motowoman.png';
 import BgImg from 'containers/Landing/BgImg';
-import Button from 'components/Button';
-
-import BgImgDiv from 'components/BackgroundImg/BgImgDiv';
+import QuoteStyledButton from 'components/Button/QuoteStyledButton';
 
 export class Landing extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -20,8 +18,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
         <BgImg src={image} />
         <LandingLogo src={logo} alt="landing page logo" />
         Landing page here
-        <button className="btn btn-primary"> Get a free quote </button>
-        <Button> balls </Button>
+        <QuoteStyledButton className="quote"> Get a quote </QuoteStyledButton>
       </div>
     );
   }

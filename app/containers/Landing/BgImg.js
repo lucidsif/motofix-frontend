@@ -11,6 +11,7 @@ const BgImg = styled(Img)`
   top: -100%; bottom: -100%;
   left: -100%; right: -100%;
   margin: auto;
+  z-index: 0;
 `;
 
 export default BgImg;

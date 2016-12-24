@@ -9,6 +9,11 @@ injectGlobal`
     overflow:hidden;
   }
 
+  .quote{
+    margin: auto;
+
+  }
+
   .nav-link {
     color: #fafafa;
   }
