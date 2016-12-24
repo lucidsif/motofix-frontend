@@ -15,7 +15,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
   render() {
     return (
       <div className="img-wrapper">
-        <img className="img-responsive" alt="bg-img" src={image} />
+        <img className="img-responsive bg" alt="bg-img" src={image} />
         <div className="img-overlay">
           <button className="btn btn-md btn-success">Button</button>
         </div>
