@@ -14,12 +14,11 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
 
   render() {
     return (
-      <div className="container">
-      <div className="row">
-        <div className="col-md-4 col-sm-4 col-xs-12 ">
-          <button className="btn btn-primary"> Get a quote </button>
+      <div className="img-wrapper">
+        <img className="img-responsive" alt="bg-img" src={image} />
+        <div className="img-overlay">
+          <button className="btn btn-md btn-success">Button</button>
         </div>
-      </div>
       </div>
     );
   }
