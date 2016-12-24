@@ -2,19 +2,18 @@ import { injectGlobal } from 'styled-components';
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
-  html,
+  html, body {
+    margin:0;
+    height:100%;
+    overflow:hidden;
+  }
 
-  .nav-link{
+  .nav-link {
     color: #fafafa;
   }
 
-  .navbar-brand{
+  .navbar-brand {
     color: #fafafa;
-  }
-
-  body {
-    height: 100%;
-    width: 100%;
   }
 
   body {
