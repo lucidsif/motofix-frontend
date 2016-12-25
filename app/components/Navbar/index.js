@@ -6,7 +6,6 @@
 
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import { push } from 'react-router-redux';
 import { Menu } from 'semantic-ui-react';
 
 class AppNavbar extends Component {
@@ -15,9 +14,8 @@ class AppNavbar extends Component {
     this.state = { activeItem: 'home' };
 
     this.handleItemClick = (e, { name }) => {
-      // browserHistory.push(name);
+      browserHistory.push(name);
       this.setState({ activeItem: name });
-      this.props.dispatch(push(name));
     };
   }
 
