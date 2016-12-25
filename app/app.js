@@ -33,7 +33,6 @@ import 'sanitize.css/sanitize.css';
 import 'styles/global-styles';
 import '!!style-loader!css-loader!./styles/local-styles.css';
 
-
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});

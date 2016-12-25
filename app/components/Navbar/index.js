@@ -5,9 +5,9 @@
 */
 
 import React, { Component } from 'react';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import { push } from 'react-router-redux';
-import { Input, Menu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 
 class AppNavbar extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class AppNavbar extends Component {
     this.state = { activeItem: 'home' };
 
     this.handleItemClick = (e, { name }) => {
-      browserHistory.push(name);
+      // browserHistory.push(name);
       this.setState({ activeItem: name });
       this.props.dispatch(push(name));
     };
