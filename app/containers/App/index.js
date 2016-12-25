@@ -30,6 +30,9 @@ function App(props) {
         link={[
         { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' },
         ]}
+        link={[
+        { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css' },
+        ]}
         titleTemplate="%s - motofix"
         defaultTitle="motofix"
         meta={[

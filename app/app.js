@@ -32,6 +32,7 @@ import LanguageProvider from 'containers/LanguageProvider';
 import 'sanitize.css/sanitize.css';
 import 'styles/global-styles';
 import '!!style-loader!css-loader!./styles/local-styles.css';
+//import '!!style-loader!css-loader!../node_modules/semantic-ui-react/
 
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in

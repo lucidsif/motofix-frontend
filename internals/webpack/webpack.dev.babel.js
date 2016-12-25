@@ -10,7 +10,6 @@ const logger = require('../../server/logger');
 const cheerio = require('cheerio');
 const pkg = require(path.resolve(process.cwd(), 'package.json'));
 const dllPlugin = pkg.dllPlugin;
-const ip = require('ip');
 
 
 const plugins = [

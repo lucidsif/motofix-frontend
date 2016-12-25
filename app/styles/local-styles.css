@@ -41,3 +41,13 @@
 .navbar-brand {
   color: #fafafa;
 }
+
+.img-responsive{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.img{
+  vertical-align: middle;
+}
