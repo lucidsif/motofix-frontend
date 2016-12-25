@@ -4,7 +4,6 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
 html, body {
   height:100%;
-  padding-top: 30px;
 }
 
   body {
