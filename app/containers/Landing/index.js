@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import logo from 'components/BackgroundImg/logo@2x.png';
 import image from './motowoman.png';
 import QuoteStyledButton from 'components/Button/QuoteStyledButton';
-import { Button } from 'semantic-ui-react';
 
 export class Landing extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
@@ -18,9 +17,6 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
         <img className="img-responsive bg" alt="bg-img" src={image} />
         <div className="img-overlay">
           <img src={logo} alt="logo" />
-        </div>
-        <div className="img-overlay">
-          <Button primary>Primary</Button>
         </div>
         <div className="img-overlay">
           <QuoteStyledButton> Get a quote </QuoteStyledButton>
