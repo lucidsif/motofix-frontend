@@ -5,7 +5,6 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import LandingLogo from 'components/BackgroundImg/LandingLogo';
 import logo from 'components/BackgroundImg/logo@2x.png';
 import image from './motowoman.png';
 import QuoteStyledButton from 'components/Button/QuoteStyledButton';
