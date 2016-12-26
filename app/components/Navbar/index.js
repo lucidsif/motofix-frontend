@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import { Menu } from 'semantic-ui-react';
+import { Dropdown, Menu } from 'semantic-ui-react';
 
 class AppNavbar extends Component {
   constructor(props) {
@@ -29,6 +29,17 @@ class AppNavbar extends Component {
         <Menu.Menu position="right">
           <Menu.Item name="logout" active={activeItem === 'logout'} onClick={this.handleItemClick} />
         </Menu.Menu>
+        <Dropdown text="Shopping" pointing className="link item">
+          <Dropdown.Menu>
+            <Dropdown.Header>Categories</Dropdown.Header>
+            <Dropdown.Item>Home Goods</Dropdown.Item>
+            <Dropdown.Item>Bedroom</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Header>Order</Dropdown.Header>
+            <Dropdown.Item>Status</Dropdown.Item>
+            <Dropdown.Item>Cancellations</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </Menu>
     );
   }
