@@ -18,12 +18,18 @@ import 'file?name=[name].[ext]!./.htaccess';
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import FontFaceObserver from 'fontfaceobserver';
 import { useScroll } from 'react-router-scroll';
 import configureStore from './store';
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
+
+// create apollo client
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cix5sxtuw04yi0111y6hkzbxp' }),
+});
 
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
@@ -72,7 +78,7 @@ const rootRoute = {
 
 const render = (messages) => {
   ReactDOM.render(
-    <Provider store={store}>
+    <ApolloProvider store={store} client={client}>
       <LanguageProvider messages={messages}>
         <Router
           history={history}
@@ -84,7 +90,7 @@ const render = (messages) => {
           }
         />
       </LanguageProvider>
-    </Provider>,
+    </ApolloProvider>,
     document.getElementById('app')
   );
 };
