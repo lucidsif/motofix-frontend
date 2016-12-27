@@ -23,13 +23,9 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import FontFaceObserver from 'fontfaceobserver';
 import { useScroll } from 'react-router-scroll';
 import configureStore from './store';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import { ApolloProvider } from 'react-apollo';
 
-// create apollo client
-const client = new ApolloClient({
-  networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cix5sxtuw04yi0111y6hkzbxp' }),
-});
+import { ApolloProvider } from 'react-apollo';
+import apolloClient from './graphql';
 
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
@@ -58,7 +54,7 @@ import { translationMessages } from './i18n';
 // Optionally, this could be changed to leverage a created history
 // e.g. `const browserHistory = useRouterHistory(createBrowserHistory)();`
 const initialState = {};
-const store = configureStore(initialState, browserHistory);
+const store = configureStore(initialState, apolloClient, browserHistory);
 
 // Sync history and store, as the react-router-redux reducer
 // is under the non-default key ("routing"), selectLocationState
@@ -78,7 +74,7 @@ const rootRoute = {
 
 const render = (messages) => {
   ReactDOM.render(
-    <ApolloProvider store={store} client={client}>
+    <ApolloProvider store={store} client={apolloClient}>
       <LanguageProvider messages={messages}>
         <Router
           history={history}

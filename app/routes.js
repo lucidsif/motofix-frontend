@@ -47,6 +47,14 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     }, {
+      path: '/apollo',
+      name: 'apolloTest',
+      getComponent(location, cb) {
+        System.import('containers/ApolloTest')
+        .then(loadModule(cb))
+        .catch(errorLoading);
+      },
+    }, {
       path: '/landing',
       name: 'landing',
       getComponent(location, cb) {
