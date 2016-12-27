@@ -30,12 +30,12 @@ import apolloClient from './graphql';
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
 
-// Import CSS reset and Global Styles
+// Import CSS reset and Styles
 import 'sanitize.css/sanitize.css';
 import 'styles/global-styles';
 import '!!style-loader!css-loader!./styles/local-styles.css';
 
-//  Observe loading of Open Sans (to remove open sans, remove the <link> tag in
+// Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
 
@@ -74,7 +74,7 @@ const rootRoute = {
 
 const render = (messages) => {
   ReactDOM.render(
-    <ApolloProvider store={store} client={apolloClient}>
+    <ApolloProvider immutable store={store} client={apolloClient}>
       <LanguageProvider messages={messages}>
         <Router
           history={history}

@@ -11,11 +11,11 @@ export class ApolloTest extends React.Component { // eslint-disable-line react/p
 
   render() {
     if (this.props.loading) {
-      return <span style={{ fontSize: '3rem' }}>Loading...</span>;
+      return <span style={{ fontSize: '1rem' }}>Loading...</span>;
     }
 
     const posts = this.props.posts.map(
-      (post) => <div style={{ fontSize: '3rem' }}>{post.name} - {post.description}</div>
+      (post) => <div style={{ fontSize: '1rem' }}>{post.name} - {post.description}</div>
     );
 
     return <div>{posts}</div>;
