@@ -80,6 +80,27 @@ export default function createRoutes(store) {
 
         importModules.catch(errorLoading);
       },
+      childRoutes: [
+        {
+          path: '/quote/vehicle',
+          name: 'quoteAddVehicle',
+          getComponent(nextState, cb) {
+            const importModules = Promise.all([
+              System.import('containers/QuoteAddVehicle/reducer'),
+              System.import('containers/QuoteAddVehicle'),
+            ]);
+
+            const renderRoute = loadModule(cb);
+
+            importModules.then(([reducer, component]) => {
+              injectReducer('quoteAddVehicle', reducer.default);
+              renderRoute(component);
+            });
+
+            importModules.catch(errorLoading);
+          },
+        },
+      ],
     }, {
       path: '*',
       name: 'notfound',
