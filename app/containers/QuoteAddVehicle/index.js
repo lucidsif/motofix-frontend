@@ -39,11 +39,11 @@ let QuoteAddVehicle = (props) => {
 
 // Decorate with redux-form
 QuoteAddVehicle = reduxForm({
-  form: 'selectingFormValues',  // a unique identifier for this form
+  form: 'selectVehicleForm',  // a unique identifier for this form
 })(QuoteAddVehicle);
 
 // Decorate with connect to read form values
-const selector = formValueSelector('selectingFormValues'); // <-- same as form name
+const selector = formValueSelector('selectVehicleForm'); // <-- same as form name
 QuoteAddVehicle = connect(
   (state) => {
     // can select values individually
