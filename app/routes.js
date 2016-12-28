@@ -63,6 +63,14 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     }, {
+      path: '/login',
+      name: 'loginPage',
+      getComponent(location, cb) {
+        System.import('containers/LoginPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '/quote',
       name: 'quoteContainer',
       getComponent(nextState, cb) {

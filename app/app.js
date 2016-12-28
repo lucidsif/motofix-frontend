@@ -32,6 +32,7 @@ import LanguageProvider from 'containers/LanguageProvider';
 
 // Import CSS reset and Styles
 import 'sanitize.css/sanitize.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import 'styles/global-styles';
 import '!!style-loader!css-loader!./styles/local-styles.css';
 
