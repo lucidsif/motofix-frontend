@@ -3,38 +3,32 @@ import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable';
 
 let QuoteAddVehicle = (props) => {
-  const { favoriteColorValue, fullName, handleSubmit, hasEmailValue, pristine, reset, submitting } = props;
+  const { yearValue, handleSubmit, pristine, reset, submitting } = props;
   return (
     <form className="ui form" onSubmit={handleSubmit}>
         <div className="field">
           <label>Select Year</label>
-          <Field name="favoriteColor" component="select" className="ui fluid dropdown" placeholder="2017">
-            <option value="#ff0000">Red</option>
-            <option value="#00ff00">Green</option>
-            <option value="#0000ff">Blue</option>
+          <Field name="year" component="select" className="ui fluid dropdown" placeholder="2017">
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
           </Field>
         </div>
         <div className="field">
           <label>Select Make</label>
           <Field name="make" component="select" className="ui fluid dropdown" placeholder="BMW">
             <option></option>
-            <option value="#ff0000">Red</option>
-            <option value="#00ff00">Green</option>
-            <option value="#0000ff">Blue</option>
           </Field>
           </div>
           <div className="field">
           <label>Select Model</label>
           <Field name="model" component="select" className="ui fluid dropdown" placeholder="HP4">
             <option></option>
-            <option value="#ff0000">Red</option>
-            <option value="#00ff00">Green</option>
-            <option value="#0000ff">Blue</option>
           </Field>
           </div>
       <div>
-        <button className="ui primary button" type="submit" disabled={pristine || submitting}>Submit {fullName}</button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values
+        <button className="ui primary right floated button" type="submit" disabled={pristine || submitting}>Submit</button>
+        <button className="right floated button" type="button" disabled={pristine || submitting} onClick={reset}>Clear Values
         </button>
       </div>
     </form>
@@ -53,10 +47,11 @@ const selector = formValueSelector('selectingFormValues'); // <-- same as form n
 QuoteAddVehicle = connect(
   (state) => {
     // can select values individually
-
-    const favoriteColorValue = selector(state, 'favoriteColor');
+    const { yearValue, makeValue, modelValue } = selector(state, 'year', 'make', 'model');
     return {
-      favoriteColorValue,
+      yearValue,
+      makeValue,
+      modelValue,
     };
   }
 )(QuoteAddVehicle);
