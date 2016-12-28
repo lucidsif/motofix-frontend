@@ -1,62 +1,48 @@
-/*
- *
- * QuoteAddVehicle
- *
- */
+import React from 'react'
+// Notice that we need redux-form/immutable for the boilerplate
+// http://redux-form.com/6.2.0/examples/immutable/
+import { Field, reduxForm } from 'redux-form/immutable';
 
-import React from 'react';
-import { connect } from 'react-redux';
-import selectQuoteAddVehicle from './selectors';
-import { Button, Form, Message } from 'semantic-ui-react';
+const renderField = ({ input, type, meta: { touched, error } }) => (
+    <div>
+      <input {...input} className="form-control" type={type}/>
+      {touched && error && <span>{error}</span>}
+    </div>
+)
 
-const years = [
-  { text: 2017, value: 2017 },
-  { text: 2016, value: 2016 },
-  { text: 2015, value: 2015 },
-];
+const renderGroup = (field) => (
+  <div className="form-group">
+    <label>{label}</label>
+    <Field name={field} type={field} component={renderField} />
+  </div>
+)
 
-export class QuoteAddVehicle extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props) {
-    super(props);
+const LoginForm = (props) => {
+  const { error, handleSubmit, submitting } = props
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label>Email</label>
+        <Field name="email" type="email" component={renderField} />
+      </div>
 
-    this.state = { formData: {} };
-  }
+      <div className="form-group">
+        <label>Password</label>
+        <Field name="password" type="password" component={renderField} label="Password"/>
+      </div>
 
-  handleChange = (e, { value }) => this.setState({ value })
+      {/* Render error if any. */}
+      {error && <strong>{error}</strong>}
 
-  handleSubmit = (e, { formData }) => {
-    e.preventDefault();
-    this.setState({ formData });
-  }
-  render() {
-    const { formData } = this.state;
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <h3>Add your motorcycle</h3>
-        <Form.Group widths="equal">
-          <Form.Select label="Year" name="year" options={years} placeholder="2017" onChange={this.handleChange} />
-        </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Select label="Make" name="make" options={years} placeholder="Honda" />
-        </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Select label="Model" name="model" options={years} placeholder="CBR 600" />
-        </Form.Group>
-        <Button primary type="submit">Submit</Button>
-        <Message>
-          <pre>formData: {JSON.stringify(formData, null, 2)}</pre>
-        </Message>
-      </Form>
-    );
-  }
+      <div>
+        <button type="submit" className="btn btn-primary" disabled={submitting}>Submit</button>
+      </div>
+    </form>
+  )
 }
 
-const mapStateToProps = selectQuoteAddVehicle();
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuoteAddVehicle);
+export default reduxForm({
+  // Per Step# 2: http://redux-form.com/6.2.0/docs/GettingStarted.md/
+  // A unique identifier for this form
+  form: 'loginForm'
+})(LoginForm)
