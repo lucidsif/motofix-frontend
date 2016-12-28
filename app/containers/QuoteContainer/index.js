@@ -16,7 +16,6 @@ export class QuoteContainer extends React.Component { // eslint-disable-line rea
       <div>
         <QuoteProgressBar />
         <Segment attached padded="very"> Very padded content.
-          {this.props.children}
         </Segment>
       </div>
     );
