@@ -1,48 +1,64 @@
 import React from 'react';
-// Notice that we need redux-form/immutable for the boilerplate
-// http://redux-form.com/6.2.0/examples/immutable/
-import { Field, reduxForm } from 'redux-form/immutable';
+import { connect } from 'react-redux';
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable';
 
-const renderField = ({ input, type, meta: { touched, error } }) => (
-  <div>
-    <input {...input} className="form-control" type={type} />
-    {touched && error && <span>{error}</span>}
-  </div>
-);
-
-const renderGroup = (field) => (
-  <div className="form-group">
-    <label>{label}</label>
-    <Field name={field} type={field} component={renderField} />
-  </div>
-);
-
-const LoginForm = (props) => {
-  const { error, handleSubmit, submitting } = props
+let QuoteAddVehicle = (props) => {
+  const { favoriteColorValue, fullName, handleSubmit, hasEmailValue, pristine, reset, submitting } = props;
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>Email</label>
-        <Field name="email" type="email" component={renderField} />
-      </div>
-
-      <div className="form-group">
-        <label>Password</label>
-        <Field name="password" type="password" component={renderField} label="Password"/>
-      </div>
-
-      {/* Render error if any. */}
-      {error && <strong>{error}</strong>}
-
+    <form className="ui form" onSubmit={handleSubmit}>
+        <div className="field">
+          <label>Select Year</label>
+          <Field name="favoriteColor" component="select" className="ui fluid dropdown" placeholder="2017">
+            <option value="#ff0000">Red</option>
+            <option value="#00ff00">Green</option>
+            <option value="#0000ff">Blue</option>
+          </Field>
+        </div>
+        <div className="field">
+          <label>Select Make</label>
+          <Field name="make" component="select" className="ui fluid dropdown" placeholder="BMW">
+            <option></option>
+            <option value="#ff0000">Red</option>
+            <option value="#00ff00">Green</option>
+            <option value="#0000ff">Blue</option>
+          </Field>
+          </div>
+          <div className="field">
+          <label>Select Model</label>
+          <Field name="model" component="select" className="ui fluid dropdown" placeholder="HP4">
+            <option></option>
+            <option value="#ff0000">Red</option>
+            <option value="#00ff00">Green</option>
+            <option value="#0000ff">Blue</option>
+          </Field>
+          </div>
       <div>
-        <button type="submit" className="btn btn-primary" disabled={submitting}>Submit</button>
+        <button className="ui primary button" type="submit" disabled={pristine || submitting}>Submit {fullName}</button>
+        <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values
+        </button>
       </div>
     </form>
   );
 };
 
-export default reduxForm({
-  // Per Step# 2: http://redux-form.com/6.2.0/docs/GettingStarted.md/
-  // A unique identifier for this form
-  form: 'loginForm',
-})(LoginForm);
+// The order of the decoration does not matter.
+
+// Decorate with redux-form
+QuoteAddVehicle = reduxForm({
+  form: 'selectingFormValues',  // a unique identifier for this form
+})(QuoteAddVehicle);
+
+// Decorate with connect to read form values
+const selector = formValueSelector('selectingFormValues'); // <-- same as form name
+QuoteAddVehicle = connect(
+  (state) => {
+    // can select values individually
+
+    const favoriteColorValue = selector(state, 'favoriteColor');
+    return {
+      favoriteColorValue,
+    };
+  }
+)(QuoteAddVehicle);
+
+export default QuoteAddVehicle;
