@@ -5,6 +5,7 @@ const client = new ApolloClient({
     uri: 'http://localhost:5000/graphql',
     opts: {
       credentials: 'same-origin',
+      shouldBatch: false,
     },
   }),
   reduxRootSelector: (state) => state.get('apollo'),

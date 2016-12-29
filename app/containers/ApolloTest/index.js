@@ -5,41 +5,35 @@ import gql from 'graphql-tag';
 
 export class ApolloTest extends React.Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
-    // loading: PropTypes.bool,
+    loading: PropTypes.bool,
     motorcycles: PropTypes.array,
   };
 
   render() {
-    /*
-    if (!this.props.loading) {
+    console.log(bikes);
+
+    if (this.props.loading) {
       return <span style={{ fontSize: '1rem' }}>Loading...</span>;
     }
-    */
-    if (!this.props.motorcycles) {
-      return <div>Loading</div>;
-    }
-    const posts = this.props.motorcycles.map(
-      (motorcycle) => <div style={{ fontSize: '1rem' }}>{motorcycle.model}</div>
-    );
-
-    return <div>{posts}</div>;
+    const bikes = this.props.motorcycles.map(
+      (bike) => <div key={bike.id} className="segment">{bike.model}</div>);
+    return <div className="container">{bikes}</div>;
   }
 }
 
 const TEST_QUERY = gql`
-  query allMotorcycles($filterByMake: String!, $filterByYear: Int){
+{
+  allMotorcycles(filterByYear: 2009, filterByMake: "honda"){
+    id
+    make
     model
   }
+}
 `;
 
 const withData = graphql(TEST_QUERY, {
-  options: {
-    variables: {
-      filterByMake: 'bmw',
-      filterByYear: 2009,
-    },
-  },
-  props: ({ data: { allMotorcycles } }) => ({
+  props: ({ data: { loading, allMotorcycles } }) => ({
+    loading,
     motorcycles: allMotorcycles,
   }),
 });
