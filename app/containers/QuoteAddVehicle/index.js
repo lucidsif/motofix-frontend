@@ -10,7 +10,6 @@ let QuoteAddVehicle = (props) => {
   const { yearValue, makeValue, modelValue, handleSubmit, pristine, reset, submitting, motorcycles } = props;
   console.log(motorcycles);
   console.log(yearValue, makeValue, modelValue);
-
   const yearsOptions = yearsData.map(
       (year) => <option key={year} value={year}>{year}</option>);
   return (
@@ -49,8 +48,8 @@ QuoteAddVehicle.propTypes = {
 };
 
 const YEAR_QUERY = gql`
-{
-  allMotorcycles(filterByYear: $yearValue){
+query allMotorcycles($filterByYear: Int){
+  allMotorcycles(filterByYear: $filterByYear){
     id
     make
   }
@@ -58,22 +57,6 @@ const YEAR_QUERY = gql`
 `;
 
 // The order of the decoration does not matter.
-
-// Decorate with redux-form
-QuoteAddVehicle = reduxForm({
-  form: 'selectVehicleForm',  // a unique identifier for this form
-})(QuoteAddVehicle);
-
-// Decorate with react-apollo
-const withData = graphql(YEAR_QUERY, {
-  options: ({ yearValue }) => ({ variables: { yearValue } }),
-  props: ({ data: { loading, allMotorcycles } }) => ({
-    loading,
-    motorcycles: allMotorcycles,
-  }),
-});
-
-QuoteAddVehicle = withData(QuoteAddVehicle);
 
 // Decorate with connect to read form values
 const selector = formValueSelector('selectVehicleForm');
@@ -90,5 +73,21 @@ QuoteAddVehicle = connect(
     };
   }
 )(QuoteAddVehicle);
+
+// Decorate with redux-form
+QuoteAddVehicle = reduxForm({
+  form: 'selectVehicleForm',  // a unique identifier for this form
+})(QuoteAddVehicle);
+
+// Decorate with react-apollo
+const withData = graphql(YEAR_QUERY, {
+  options: ({ yearValue }) => ({ variables: { filterByYear: yearValue } }),
+  props: ({ data: { loading, allMotorcycles } }) => ({
+    loading,
+    motorcycles: allMotorcycles,
+  }),
+});
+
+QuoteAddVehicle = withData(QuoteAddVehicle);
 
 export default QuoteAddVehicle;
