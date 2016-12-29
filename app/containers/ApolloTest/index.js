@@ -10,8 +10,6 @@ export class ApolloTest extends React.Component { // eslint-disable-line react/p
   };
 
   render() {
-    console.log(bikes);
-
     if (this.props.loading) {
       return <span style={{ fontSize: '1rem' }}>Loading...</span>;
     }
