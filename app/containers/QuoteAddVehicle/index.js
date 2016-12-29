@@ -1,5 +1,5 @@
 import React from 'react';
-import apolloClient from 'apollo-client';
+import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -20,18 +20,19 @@ let QuoteAddVehicle = (props) => {
         }),
       };
 
-  const yearFilterQuery = () => {
+  const yearFilterQuery = (e) => {
     client.query({
       query: gql`
-      query allMotorcycles($filterByYear: Int){
+      query allMotorcycles($filterByYear: String){
         allMotorcycles(filterByYear: $filterByYear){
           id
           make
         }
       }
       `,
-      variables: { ...withData },
+      variables: { filterByYear: yearValue },
     });
+    console.log(motorcycles);
   };
 
   if(loading){
@@ -42,7 +43,7 @@ let QuoteAddVehicle = (props) => {
     <h4>{yearValue}</h4>
       <div className="field">
           <label>Select Year</label>
-        <Field name="year" component="select" className="ui fluid dropdown" placeholder="2017">
+        <Field name="year" component="select" onClick={yearFilterQuery} className="ui fluid dropdown" placeholder="2017">
           {yearsOptions}
         </Field>
       </div>
@@ -71,9 +72,11 @@ let QuoteAddVehicle = (props) => {
 
 QuoteAddVehicle.propTypes = {
   ...propTypes,
+  client: React.PropTypes.instanceOf(ApolloClient).isRequired,
 };
 
 // The order of the decoration does not matter.
+QuoteAddVehicle = withApollo(QuoteAddVehicle);
 
 // Decorate with connect to read form values
 const selector = formValueSelector('selectVehicleForm');
