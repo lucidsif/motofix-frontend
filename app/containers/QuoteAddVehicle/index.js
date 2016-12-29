@@ -75,9 +75,6 @@ QuoteAddVehicle.propTypes = {
   client: React.PropTypes.instanceOf(ApolloClient).isRequired,
 };
 
-// The order of the decoration does not matter.
-QuoteAddVehicle = withApollo(QuoteAddVehicle);
-
 // Decorate with connect to read form values
 const selector = formValueSelector('selectVehicleForm');
 QuoteAddVehicle = connect(
@@ -98,5 +95,7 @@ QuoteAddVehicle = connect(
 QuoteAddVehicle = reduxForm({
   form: 'selectVehicleForm',  // a unique identifier for this form
 })(QuoteAddVehicle);
+
+QuoteAddVehicle = withApollo(QuoteAddVehicle);
 
 export default QuoteAddVehicle;
