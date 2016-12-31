@@ -8,6 +8,8 @@ import yearsData from './years';
 
 let makesData = [];
 let makesFactory = [];
+let modelsData = [];
+let modelsFactory = [];
 
 class QuoteAddVehicle extends React.Component {
 
@@ -16,6 +18,7 @@ class QuoteAddVehicle extends React.Component {
     this.state = { yearValue: 1990, makeValue: '', modelValue: '' };
   }
   updateYearValue(newValue) {
+    this.setState({ yearValue: newValue });
     this.props.client.query({
       query: gql`
       query allMotorcycles($filterByYear: String){
@@ -31,12 +34,33 @@ class QuoteAddVehicle extends React.Component {
       makesFactory = makesData.map((bike) => {
         return { value: bike.make, label: bike.make };
       });
+        console.dir(`yearsdata: ${makesData}, makesfactory: ${makesFactory}`);
     });
-    this.setState({ yearValue: newValue });
   }
-
+  //// make
   updateMakeValue(newValue) {
     this.setState({ makeValue: newValue });
+    this.props.client.query({
+      query: gql`
+      query allMotorcycles($filterByYear: String, $filterByMake: String){
+        allMotorcycles(filterByYear: $filterByYear, filterByMake: $filterByMake){
+          id
+          model
+        }
+      }
+      `,
+      variables: { filterByYear: this.state.yearValue, filterByMake: newValue },
+    }).then((result) => {
+      modelsData = result.data.allMotorcycles;
+      modelsFactory = modelsData.map((bike) => {
+        return { value: bike.model, label: bike.model };
+      });
+      console.dir(`modelsdata: ${modelsData}, modelsfactory: ${modelsFactory}`);
+    });
+  }
+//// model
+  updateModelValue(newValue) {
+    this.setState({ modelValue: newValue });
   }
   render() {
     return (
@@ -64,11 +88,26 @@ class QuoteAddVehicle extends React.Component {
             options={makesFactory}
             simpleValue
             clearable
-            name="selected-year"
+            name="selected-make"
             value={this.state.makeValue}
             onChange={this.updateMakeValue.bind(this)}
             searchable={this.state.searchable}
-            placeholder="Select a year"
+            placeholder="Select a make"
+          />
+        </div>
+        <div>
+          <h3>Select a model {modelsData.length}, {modelsFactory.length} </h3>
+          <Select
+            ref="stateSelect"
+            autofocus
+            options={modelsFactory}
+            simpleValue
+            clearable
+            name="selected-model"
+            value={this.state.modelValue}
+            onChange={this.updateModelValue.bind(this)}
+            searchable={this.state.searchable}
+            placeholder="Select a model"
           />
         </div>
       </div>
