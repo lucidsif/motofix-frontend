@@ -11,15 +11,17 @@ let makesFactory = [];
 let modelsData = [];
 let modelsFactory = [];
 
+// TODO: refactor to use official api when available or write in more declarative way
 class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { yearValue: 2016, makeValue: '', modelValue: '', makeOptions: [{value: 'bmw', label: 'bmw'}, {value: 'honda', label: 'honda'}] };
+    this.state = { yearValue: 2016, makeValue: '', modelValue: '', makeOptions: '', modelOptions: '' };
   }
-  updateYearValue(newValue) {
+  updateYearValueAndGetMakes(newValue) {
     this.setState({ yearValue: newValue });
-    //query for makes
+    this.setState({ makeValue: '' });
+    this.setState({ modelValue: '' });
     this.props.client.query({
       query: gql`
       query allMotorcycles($filterByYear: String){
@@ -32,15 +34,15 @@ class QuoteAddVehicle extends React.Component {
       variables: { filterByYear: newValue },
     }).then((result) => {
       makesData = result.data.allMotorcycles;
-      makesFactory= makesData.map((bike) => {
+      makesFactory = makesData.map((bike) => {
         return { value: bike.make, label: bike.make };
       });
-      this.setState({makeOptions: makesFactory})
+      this.setState({ makeOptions: makesFactory })
     });
   }
-  updateMakeValue(newValue) {
+  updateMakeValueAndGetModels(newValue) {
     this.setState({ makeValue: newValue });
-    // query for makes
+    this.setState({ modelValue: '' });
     this.props.client.query({
       query: gql`
       query allMotorcycles($filterByYear: String, $filterByMake: String){
@@ -56,7 +58,7 @@ class QuoteAddVehicle extends React.Component {
       modelsFactory = modelsData.map((bike) => {
         return { value: bike.model, label: bike.model };
       });
-      this.setState({ modelOptions: modelsFactory })
+      this.setState({ modelOptions: modelsFactory });
     });
   }
 // model
@@ -76,7 +78,7 @@ class QuoteAddVehicle extends React.Component {
             clearable
             name="selected-year"
             value={this.state.yearValue}
-            onChange={this.updateYearValue.bind(this)}
+            onChange={this.updateYearValueAndGetMakes.bind(this)}
             searchable={this.state.searchable}
             placeholder="2017"
           />
@@ -91,7 +93,7 @@ class QuoteAddVehicle extends React.Component {
             clearable
             name="selected-make"
             value={this.state.makeValue}
-            onChange={this.updateMakeValue.bind(this)}
+            onChange={this.updateMakeValueAndGetModels.bind(this)}
             searchable={this.state.searchable}
             placeholder="Select a make"
           />
