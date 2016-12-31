@@ -19,6 +19,7 @@ class QuoteAddVehicle extends React.Component {
   }
   updateYearValue(newValue) {
     this.setState({ yearValue: newValue });
+    //query for makes
     this.props.client.query({
       query: gql`
       query allMotorcycles($filterByYear: String){
@@ -35,13 +36,11 @@ class QuoteAddVehicle extends React.Component {
         return { value: bike.make, label: bike.make };
       });
       this.setState({makeOptions: makesFactory})
-        console.dir(`yearsdata: ${makesData}, makesfactory: ${makesFactory}`);
     });
   }
-  //// make
   updateMakeValue(newValue) {
     this.setState({ makeValue: newValue });
-    /*
+    // query for makes
     this.props.client.query({
       query: gql`
       query allMotorcycles($filterByYear: String, $filterByMake: String){
@@ -57,9 +56,8 @@ class QuoteAddVehicle extends React.Component {
       modelsFactory = modelsData.map((bike) => {
         return { value: bike.model, label: bike.model };
       });
-      console.dir(`modelsdata: ${modelsData}, modelsfactory: ${modelsFactory}`);
+      this.setState({ modelOptions: modelsFactory })
     });
-    */
   }
 // model
   updateModelValue(newValue) {
@@ -103,7 +101,7 @@ class QuoteAddVehicle extends React.Component {
           <Select
             ref="stateSelect"
             autofocus
-            options={modelsFactory}
+            options={this.state.modelOptions}
             simpleValue
             clearable
             name="selected-model"
