@@ -12,6 +12,12 @@ let QuoteAddVehicle = (props) => {
   const { yearValue, makeValue, modelValue, handleSubmit, pristine, reset, submitting, motorcycles, loading, client } = props;
   const yearsOptions = yearsData.map(
       (year) => <option key={year} value={year}>{year}</option>);
+  const makes = motorcycles || ['bmw', 'honda'];
+  const makesOptions = makes.map(
+      (year) => <option key={year} value={year}>{year}</option>);
+
+
+/*
   const withData = {
          options: ({ yearValue }) => ({ variables: { filterByYear: yearValue } }),
         props: ({ data: { loading, allMotorcycles } }) => ({
@@ -19,6 +25,7 @@ let QuoteAddVehicle = (props) => {
           motorcycles: allMotorcycles,
         }),
       };
+      */
 
   const yearFilterQuery = (e) => {
     client.query({
@@ -50,8 +57,7 @@ let QuoteAddVehicle = (props) => {
       <div className="field">
         <label>Select Make</label>
         <Field name="make" component="select" className="ui fluid dropdown" placeholder="BMW">
-          <option></option>
-          <option>BMW</option>
+          {makesOptions}
         </Field>
       </div>
       <div className="field">
