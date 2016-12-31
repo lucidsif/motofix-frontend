@@ -1,7 +1,8 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import ApolloClient from 'apollo-client';
+import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { connect } from 'react-redux';
+
 import Select from 'react-select';
 import yearsData from './years';
 
@@ -16,9 +17,20 @@ class QuoteAddVehicle extends React.Component {
         this.state = { yearValue: 1990, makeValue: '', modelValue: '' };
     }
     updateYearValue(newValue) {
-      console.log(newValue);
+      this.props.client.query({
+      query: gql`
+      query allMotorcycles($filterByYear: String){
+        allMotorcycles(filterByYear: $filterByYear){
+          id
+          make
+        }
+      }
+      `,
+      variables: { filterByYear: newValue },
+    });
         this.setState({ yearValue: newValue });
       }
+
     updateMakeValue(newValue) {
       console.log(newValue);
         this.setState({ makeValue: newValue });
@@ -70,25 +82,8 @@ QuoteAddVehicle.propTypes = {
 };
 */
 
-const YEAR_QUERY = gql`
-query allMotorcycles($filterByYear: String){
-  allMotorcycles(filterByYear: $filterByYear){
-    id
-    make
-  }
-}
-`;
-
 // Decorate with react-apollo
-/*
-const withData = graphql(YEAR_QUERY, {
-  options: ({ yearValue }) => ({ variables: { filterByYear: yearValue } }),
-  props: ({ data: { loading, allMotorcycles } }) => ({
-    loading,
-    motorcycles: allMotorcycles,
-  }),
-});
 
-QuoteAddVehicle = withData(QuoteAddVehicle);
-*/
+QuoteAddVehicle = withApollo(QuoteAddVehicle);
+
 export default QuoteAddVehicle;
