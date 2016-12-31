@@ -6,12 +6,14 @@ import gql from 'graphql-tag';
 import Select from 'react-select';
 import yearsData from './years';
 
-var yearOptions = [
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' }
-];
+let makesData = [];
+let makesFactory = []
+
+
+
 
 class QuoteAddVehicle extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = { yearValue: 1990, makeValue: '', modelValue: '' };
@@ -27,7 +29,12 @@ class QuoteAddVehicle extends React.Component {
       }
       `,
       variables: { filterByYear: newValue },
+  }).then((result) => {
+    makesData = result.data.allMotorcycles;
+    makesFactory = makesData.map((bike) => {
+      return { value: bike.make, label: bike.make };
     });
+  });
         this.setState({ yearValue: newValue });
       }
 
@@ -55,11 +62,11 @@ class QuoteAddVehicle extends React.Component {
         />
         </div>
         <div>
-        <h3>Select a make </h3>
+        <h3>Select a make {makesData.length}, {makesFactory.length} </h3>
         <Select
           ref="stateSelect"
           autofocus
-          options={yearsData}
+          options={makesFactory}
           simpleValue
           clearable
           name="selected-year"
