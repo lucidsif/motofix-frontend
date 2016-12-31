@@ -32,9 +32,9 @@ import LanguageProvider from 'containers/LanguageProvider';
 
 // Import CSS reset and Styles
 import 'sanitize.css/sanitize.css';
-import 'bootstrap/dist/css/bootstrap.css';
 import 'styles/global-styles';
 import '!!style-loader!css-loader!./styles/local-styles.css';
+import 'react-select/dist/react-select.css';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
