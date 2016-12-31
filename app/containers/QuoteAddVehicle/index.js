@@ -11,18 +11,22 @@ var yearOptions = [
 ];
 
 class QuoteAddVehicle extends React.Component {
-    displayName: 'CitiesField'
     constructor(props) {
         super(props);
-        this.state = { value: '' };
+        this.state = { yearValue: 1990, makeValue: '', modelValue: '' };
     }
-    updateValue(newValue) {
+    updateYearValue(newValue) {
       console.log(newValue);
-        this.setState({ value: newValue });
+        this.setState({ yearValue: newValue });
+      }
+    updateMakeValue(newValue) {
+      console.log(newValue);
+        this.setState({ makeValue: newValue });
       }
 
     render() {
       return (
+      <div>
         <div>
         <h3>Select a year </h3>
         <Select
@@ -32,12 +36,28 @@ class QuoteAddVehicle extends React.Component {
           simpleValue
           clearable
           name="selected-year"
-          value={this.state.value}
-          onChange={this.updateValue.bind(this)}
+          value={this.state.yearValue}
+          onChange={this.updateYearValue.bind(this)}
           searchable={this.state.searchable}
-          placeholder="1990"
+          placeholder="2017"
         />
         </div>
+        <div>
+        <h3>Select a make </h3>
+        <Select
+          ref="stateSelect"
+          autofocus
+          options={yearsData}
+          simpleValue
+          clearable
+          name="selected-year"
+          value={this.state.makeValue}
+          onChange={this.updateMakeValue.bind(this)}
+          searchable={this.state.searchable}
+          placeholder="2017"
+        />
+        </div>
+      </div>
       )
     }
 }
