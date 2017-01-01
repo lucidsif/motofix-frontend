@@ -2,7 +2,7 @@ import React from 'react';
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 
 import Select from 'react-select';
 import yearsData from './years';
@@ -13,6 +13,7 @@ let modelsData = [];
 let modelsFactory = [];
 
 // TODO: refactor to use official api when available or write in more declarative way
+// TODO: add validation to required fields
 class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
@@ -62,13 +63,24 @@ class QuoteAddVehicle extends React.Component {
       this.setState({ modelOptions: modelsFactory });
     });
   }
-// model
   updateModelValue(newValue) {
     this.setState({ modelValue: newValue });
   }
+  handleSubmit(formProps){
+    console.log({ year: this.state.yearValue,
+                  make: this.state.makeValue,
+                  model: this.state.modelValue
+                });
+    const { year, make, model } = this.state;
+    if(year || make || model === '') {
+      console.log('please enter the required fields');
+      
+    }
+    formProps.preventDefault();
+  }
   render() {
     return (
-      <div>
+      <form onSubmit={this.handleSubmit.bind(this)}>
         <h3 className="section-heading">Add your motorcycle</h3>
         <div>
           <label>Select a year </label>
@@ -116,7 +128,7 @@ class QuoteAddVehicle extends React.Component {
           />
         </div>
         <Button color="teal" floated="right">Next</Button>
-      </div>
+      </form>
     );
   }
 }
