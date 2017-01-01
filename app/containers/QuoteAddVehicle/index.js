@@ -2,6 +2,7 @@ import React from 'react';
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Button } from 'semantic-ui-react';
 
 import Select from 'react-select';
 import yearsData from './years';
@@ -68,8 +69,9 @@ class QuoteAddVehicle extends React.Component {
   render() {
     return (
       <div>
+        <h3 className="section-heading">Add your motorcycle</h3>
         <div>
-          <h3>Select a year </h3>
+          <label>Select a year </label>
           <Select
             ref="stateSelect"
             autofocus
@@ -84,9 +86,9 @@ class QuoteAddVehicle extends React.Component {
           />
         </div>
         <div>
-          <h3>Select a make {makesData.length}, {makesFactory.length} </h3>
+          <label>Select a make {makesData.length}, {makesFactory.length} </label>
           <Select
-            ref="stateSelect"
+            ref="makeSelect"
             autofocus
             options={this.state.makeOptions}
             simpleValue
@@ -99,7 +101,7 @@ class QuoteAddVehicle extends React.Component {
           />
         </div>
         <div>
-          <h3>Select a model {modelsData.length}, {modelsFactory.length} </h3>
+          <label>Select a model {modelsData.length}, {modelsFactory.length} </label>
           <Select
             ref="stateSelect"
             autofocus
@@ -113,6 +115,7 @@ class QuoteAddVehicle extends React.Component {
             placeholder="Select a model"
           />
         </div>
+        <Button color="teal" floated="right">Next</Button>
       </div>
     );
   }
