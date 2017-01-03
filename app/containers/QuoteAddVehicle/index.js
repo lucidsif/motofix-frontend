@@ -18,6 +18,7 @@ let year;
 let make;
 let model;
 
+// TODO: fix bug/edge case where clearing the fields does not reset the state
 // TODO: refactor to use official api when available or write in more declarative way
 // TODO: add validation to required fields
 // TODO: add server handling and rerouting for successful onsubmit
@@ -52,6 +53,7 @@ class QuoteAddVehicle extends React.Component {
   updateMakeValueAndGetModels(newValue) {
     this.setState({ makeValue: newValue });
     this.setState({ modelValue: '' });
+    model = '';
     this.props.client.query({
       query: gql`
       query allMotorcycles($filterByYear: String, $filterByMake: String){
@@ -77,8 +79,7 @@ class QuoteAddVehicle extends React.Component {
     model = newValue;
   }
   handleSubmit(formProps) {
-    formProps.preventDefault();
-    const { yearValue, makeValue, modelValue } = this.state;
+
     if(yearValue && makeValue && modelValue) {
       console.log('all fields entered');
       browserHistory.push('/quote/services');
@@ -153,11 +154,16 @@ QuoteAddVehicle.propTypes = {
 export function mapDispatchToProps(dispatch){
   return {
     onSubmitForm: (evt) => {
-      console.log(evt.target.value);
       const vehicle = { year, make, model };
       evt.preventDefault();
-      console.log(`normal submit prevented and vehicle is: ${vehicle}`);
-      dispatch(addVehicle(vehicle));
+      if (year && make && model){
+        console.log('all fields submitted');
+        dispatch(addVehicle(vehicle));
+        browserHistory.push('/quote/services');
+      } else {
+        console.log('please fill out all fields');
+        browserHistory.push('/quote/vehicle');
+      }
     },
   };
 }
