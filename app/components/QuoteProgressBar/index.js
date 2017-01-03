@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import { Progress, Header } from 'semantic-ui-react';
+import { Progress, Segment } from 'semantic-ui-react';
 
 
 class QuoteProgressBar extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -16,7 +16,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
 // TODO: Make sure progress bar is fully responsive and visible on mobile devices
   render() {
     return (
-      <Header className="quote" attached="top">
+      <Segment className="quote" attached="top">
       <svg>
             <g>
               <line x1="20%" y1="10%" x2="90%" y2="10%"></line>
@@ -36,7 +36,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
               <text className="stage" x="10%" y="30%">Vehicle Information</text>
             </g>
             </svg>
-      </Header>
+      </Segment>
     );
   }
 }

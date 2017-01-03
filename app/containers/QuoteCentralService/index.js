@@ -14,7 +14,7 @@ export class QuoteCentralService extends React.Component { // eslint-disable-lin
     return (
       <div>
     <Grid.Row stretched>
-    <Segment padded="very" attached="top">
+    <Segment padded="very">
       <p>Live cart</p>
       </Segment>
     </Grid.Row>
@@ -29,7 +29,7 @@ export class QuoteCentralService extends React.Component { // eslint-disable-lin
       </Segment>
     </Grid.Row>
     <Grid.Row>
-    2 buttons
+    <p>2 buttons</p>
     </Grid.Row>
     </div>
     );

@@ -26,8 +26,9 @@ html, body {
     line-height: 1.5em;
   }
 
-  .ui.top.attached.header.quote{
+  .ui.top.attached.segment.quote{
     max-height: 70px;
+      margin-top: 2em;
   }
 
 svg {
@@ -72,10 +73,6 @@ svg g text.stage {
   fill: gray;
   text-anchor: middle;
   dominant-baseline: central;
-}
-.ui.top.attached.header {
-    min-width: 100%;
-    margin-top: 2em;
 }
 `
 ;
