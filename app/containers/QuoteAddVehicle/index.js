@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Form } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
@@ -18,10 +18,9 @@ let year;
 let make;
 let model;
 
-// TODO: fix bug/edge case where clearing the fields does not reset the state
-// TODO: refactor to use official api when available or write in more declarative way
+// TODO: refactor to use official api for select menus when available or write in more declarative way
 // TODO: add validation to required fields
-// TODO: add server handling and rerouting for successful onsubmit
+// TODO: Find a way to query and dispatch actions without the use of global variables
 class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
@@ -78,17 +77,6 @@ class QuoteAddVehicle extends React.Component {
     make = this.state.makeValue;
     model = newValue;
   }
-  handleSubmit(formProps) {
-
-    if(yearValue && makeValue && modelValue) {
-      console.log('all fields entered');
-      browserHistory.push('/quote/services');
-    }
-    else {
-      console.log('please enter the required fields');
-      browserHistory.push('/quote/vehicle');
-    }
-  }
   render() {
     return (
       <form onSubmit={this.props.onSubmitForm}>
@@ -96,7 +84,6 @@ class QuoteAddVehicle extends React.Component {
         <div>
           <label>Select a year </label>
           <Select
-            ref="stateSelect"
             autofocus
             options={yearsData}
             simpleValue
@@ -111,7 +98,6 @@ class QuoteAddVehicle extends React.Component {
         <div>
           <label>Select a make {makesData.length}, {makesFactory.length} </label>
           <Select
-            ref="makeSelect"
             autofocus
             options={this.state.makeOptions}
             simpleValue
@@ -126,7 +112,6 @@ class QuoteAddVehicle extends React.Component {
         <div>
           <label>Select a model {modelsData.length}, {modelsFactory.length} </label>
           <Select
-            ref="stateSelect"
             autofocus
             options={this.state.modelOptions}
             simpleValue
