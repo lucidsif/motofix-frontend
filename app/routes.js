@@ -108,6 +108,25 @@ export default function createRoutes(store) {
             importModules.catch(errorLoading);
           },
         },
+        {
+          path: '/quote/service',
+          name: 'QuoteCentralService',
+          getComponent(nextState, cb) {
+            const importModules = Promise.all([
+              System.import('containers/QuoteCentralService/reducer'),
+              System.import('containers/QuoteCentralService'),
+            ]);
+
+            const renderRoute = loadModule(cb);
+
+            importModules.then(([reducer, component]) => {
+              injectReducer('quoteCentralService', reducer.default);
+              renderRoute(component);
+            });
+
+            importModules.catch(errorLoading);
+          },
+        },
       ],
     }, {
       path: '*',
