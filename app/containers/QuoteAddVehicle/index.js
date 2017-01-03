@@ -18,9 +18,10 @@ let year;
 let make;
 let model;
 
+// TODO: bind the methods in the constructor rather than in a JSX prop
 // TODO: refactor to use official api for select menus when available or write in more declarative way
 // TODO: add validation to required fields
-// TODO: Find a way to query and dispatch actions without the use of global variables
+// TODO: Find a way to query and dispatch actions without the use of file scoped variables
 class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
