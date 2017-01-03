@@ -2,9 +2,11 @@ import React from 'react';
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Form } from 'semantic-ui-react';
 
+import { Button, Form } from 'semantic-ui-react';
+import { browserHistory } from 'react-router';
 import Select from 'react-select';
+
 import yearsData from './years';
 
 let makesData = [];
@@ -14,6 +16,7 @@ let modelsFactory = [];
 
 // TODO: refactor to use official api when available or write in more declarative way
 // TODO: add validation to required fields
+// TODO: add server handling and rerouting for successful onsubmit
 class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
@@ -67,16 +70,16 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ modelValue: newValue });
   }
   handleSubmit(formProps){
-    console.log({ year: this.state.yearValue,
-                  make: this.state.makeValue,
-                  model: this.state.modelValue
-                });
-    const { year, make, model } = this.state;
-    if(year || make || model === '') {
-      console.log('please enter the required fields');
-      
-    }
     formProps.preventDefault();
+    const { yearValue, makeValue, modelValue } = this.state;
+    if(yearValue && makeValue && modelValue) {
+      console.log('all fields entered');
+      browserHistory.push('/quote/services');
+    }
+    else {
+      console.log('please enter the required fields');
+      browserHistory.push('/quote/vehicle');
+    }
   }
   render() {
     return (
