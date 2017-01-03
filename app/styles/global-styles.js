@@ -63,6 +63,12 @@ svg g circle,
 svg g text {
   cursor: pointer;
 }
+
+svg g text.stage {
+  fill: gray;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
 .ui.top.attached.header {
     min-width: 100%;
     margin-top: 2em;
