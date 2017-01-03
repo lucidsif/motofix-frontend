@@ -43,7 +43,7 @@ li::before{
   content: '';
   position: absolute;
   top: .9em;
-  left: -4em;
+  left: 10em;
   width: 4em;
   height: .2em;
   background: dodgerblue;
@@ -65,6 +65,10 @@ li:first-child::before {
 
 .active ~ li::before {
   background: lightblue;
+}
+.ui.top.attached.header {
+    min-width: 100%;
+    margin-top: 2em;
 }
 `
 ;
