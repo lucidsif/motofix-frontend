@@ -13,7 +13,7 @@ export class QuoteCentralService extends React.Component { // eslint-disable-lin
   render() {
     return (
       <div>
-          bullshit
+          bullshit o
       </div>
     );
   }
