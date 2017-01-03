@@ -18,11 +18,22 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
   render() {
     return (
       <Header as="h5" attached="top">
-      <ul>
-<li className="active">1</li>
-<li>2</li>
-<li>3</li>
-</ul>
+      <svg>
+            <g>
+              <line x1="20%" y1="50%" x2="95%" y2="50%"></line>
+              <circle cx="95%" cy="50%" r="1.25em"></circle>
+              <text x="95%" y="50%">3</text>
+            </g>
+            <g className>
+              <line x1="5%" y1="50%" x2="20%" y2="50%"></line>
+              <circle cx="50%" cy="50%" r="1.25em"></circle>
+              <text x="50%" y="50%">2</text>
+            </g>
+            <g className="active">
+              <circle cx="5%" cy="50%" r="1.25em"></circle>
+              <text x="5%" y="50%">1</text>
+            </g>
+            </svg>
       </Header>
     );
   }

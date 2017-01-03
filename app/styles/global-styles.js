@@ -26,45 +26,42 @@ html, body {
     line-height: 1.5em;
   }
 
-li {
-  width: 2em;
-  height: 2em;
-  text-align: center;
-  line-height: 2em;
-  border-radius: 1em;
-  background: dodgerblue;
-  margin: 0 5vw 0 5vw;
-  display: inline-block;
-  color: white;
-  position: relative;
+svg {
+  width: 100%;
+  /*This goes here because SVG uses em as units*/
+  font: normal 9pt sans-serif;
 }
-
-li::before{
-  content: '';
-  position: absolute;
-  top: .9em;
-  left: -11vw;
-  width: 11vw;
-  height: .2em;
-  background: dodgerblue;
-  z-index: -1;
+svg g line {
+  stroke: #ecf0f1;
+  stroke-width: 2px;
 }
-
-
-li:first-child::before {
-  display: none;
+svg g.active line,
+svg g.active ~ g line {
+  stroke: orange;
 }
-
-.active {
-  background: orange;
+svg g circle {
+  fill: #95a5a6;
 }
-
-.active ~ li {
-  background: lightblue;
+svg g.active circle,
+svg g.active ~ g circle {
+  fill: orange;
 }
+svg g text {
+  fill: white;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+svg g.active text,
+svg g.active ~ g text {
+  fill: #FFF;
+}
+/* Make the active group bigger*/
 
-.active ~ li::before {
-  background: lightblue;
+/* Use 'pointer' cursor*/
+
+svg g circle,
+svg g text {
+  cursor: pointer;
 }
 .ui.top.attached.header {
     min-width: 100%;
