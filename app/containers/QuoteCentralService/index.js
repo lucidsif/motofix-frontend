@@ -13,8 +13,19 @@ export class QuoteCentralService extends React.Component { // eslint-disable-lin
   render() {
     return (
       <div>
-          bullshit o
-      </div>
+    <Grid.Row>
+      Live cart
+    </Grid.Row>
+    <Grid.Row>
+      Services
+    </Grid.Row>
+    <Grid.Row>
+      Input search box
+    </Grid.Row>
+    <Grid.Row>
+    2 buttons
+    </Grid.Row>
+    </div>
     );
   }
 }
