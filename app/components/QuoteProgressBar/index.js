@@ -18,8 +18,11 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
   render() {
     return (
       <Header as="h5" attached="top">
-        <text> Vehicle Information----------------------------------------------Services & Estimate----------------------------------------------Schedule </text>
-        <Progress percent={this.state.percent} indicating />
+      <ul>
+<li className="active">1</li>
+<li>2</li>
+<li>3</li>
+</ul>
       </Header>
     );
   }

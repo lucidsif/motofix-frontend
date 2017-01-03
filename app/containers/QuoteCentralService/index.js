@@ -7,20 +7,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import selectQuoteCentralService from './selectors';
-import { Grid, Image } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 
 export class QuoteCentralService extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
-    <Grid.Row>
-      Live cart
+    <Grid.Row stretched>
+    <Segment padded="very" attached="top">
+      <p>Live cart</p>
+      </Segment>
     </Grid.Row>
     <Grid.Row>
+    <Segment padded="very">
       Services
+      </Segment>
     </Grid.Row>
     <Grid.Row>
+    <Segment padded="very" attached="bottom">
       Input search box
+      </Segment>
     </Grid.Row>
     <Grid.Row>
     2 buttons

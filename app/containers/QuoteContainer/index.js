@@ -13,9 +13,9 @@ import QuoteProgressBar from 'components/QuoteProgressBar';
 export class QuoteContainer extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <Grid centered divided="vertically">
+      <Grid centered>
         <Grid.Row> <QuoteProgressBar /> </Grid.Row>
-                {this.props.children} 
+                {this.props.children}
       </Grid>
     );
   }
