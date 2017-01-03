@@ -33,7 +33,7 @@ li {
   line-height: 2em;
   border-radius: 1em;
   background: dodgerblue;
-  margin: 0 1em;
+  margin: 0 5vw 0 5vw;
   display: inline-block;
   color: white;
   position: relative;
@@ -43,8 +43,8 @@ li::before{
   content: '';
   position: absolute;
   top: .9em;
-  left: 10em;
-  width: 4em;
+  left: -11vw;
+  width: 11vw;
   height: .2em;
   background: dodgerblue;
   z-index: -1;
@@ -56,7 +56,7 @@ li:first-child::before {
 }
 
 .active {
-  background: dodgerblue;
+  background: orange;
 }
 
 .active ~ li {
