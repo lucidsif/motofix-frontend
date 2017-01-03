@@ -26,6 +26,10 @@ html, body {
     line-height: 1.5em;
   }
 
+  .ui.top.attached.header.quote{
+    max-height: 70px;
+  }
+
 svg {
   width: 100%;
   /*This goes here because SVG uses em as units*/
