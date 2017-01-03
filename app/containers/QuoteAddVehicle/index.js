@@ -1,10 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-
 import { Button, Form } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
+import { addVehicle } from './actions';
 import Select from 'react-select';
 
 import yearsData from './years';
@@ -13,6 +14,9 @@ let makesData = [];
 let makesFactory = [];
 let modelsData = [];
 let modelsFactory = [];
+let year;
+let make;
+let model;
 
 // TODO: refactor to use official api when available or write in more declarative way
 // TODO: add validation to required fields
@@ -68,8 +72,11 @@ class QuoteAddVehicle extends React.Component {
   }
   updateModelValue(newValue) {
     this.setState({ modelValue: newValue });
+    year = this.state.yearValue;
+    make = this.state.makeValue;
+    model = newValue;
   }
-  handleSubmit(formProps){
+  handleSubmit(formProps) {
     formProps.preventDefault();
     const { yearValue, makeValue, modelValue } = this.state;
     if(yearValue && makeValue && modelValue) {
@@ -83,7 +90,7 @@ class QuoteAddVehicle extends React.Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
+      <form onSubmit={this.props.onSubmitForm}>
         <h3 className="section-heading">Add your motorcycle</h3>
         <div>
           <label>Select a year </label>
@@ -143,8 +150,21 @@ QuoteAddVehicle.propTypes = {
 };
 */
 
-// Decorate with react-apollo
+export function mapDispatchToProps(dispatch){
+  return {
+    onSubmitForm: (evt) => {
+      console.log(evt.target.value);
+      const vehicle = { year, make, model };
+      evt.preventDefault();
+      console.log(`normal submit prevented and vehicle is: ${vehicle}`);
+      dispatch(addVehicle(vehicle));
+    },
+  };
+}
+
 
 QuoteAddVehicle = withApollo(QuoteAddVehicle);
+
+QuoteAddVehicle = connect(null, mapDispatchToProps)(QuoteAddVehicle);
 
 export default QuoteAddVehicle;

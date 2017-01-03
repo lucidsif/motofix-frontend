@@ -4,4 +4,4 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/QuoteAddVehicle/DEFAULT_ACTION';
+export const ADD_VEHICLE = 'app/QuoteAddVehicle/ADD_VEHICLE';

@@ -5,11 +5,12 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  ADD_VEHICLE,
 } from './constants';
 
-export function defaultAction() {
+export function addVehicle(vehicle) {
   return {
-    type: DEFAULT_ACTION,
+    type: ADD_VEHICLE,
+    vehicle,
   };
 }

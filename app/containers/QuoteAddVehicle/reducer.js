@@ -6,15 +6,19 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  ADD_VEHICLE,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  year: '',
+  make: '',
+  model: '',
+});
 
 function quoteAddVehicleReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case ADD_VEHICLE:
+      return state.merge(action.vehicle);
     default:
       return state;
   }
