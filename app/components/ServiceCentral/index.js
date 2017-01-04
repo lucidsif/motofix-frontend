@@ -5,7 +5,9 @@
 */
 
 import React from 'react';
-import { Grid, Segment, Input, Icon } from 'semantic-ui-react';
+import { Grid, Segment, Input, Icon, Image } from 'semantic-ui-react';
+import toolIcon from './toolIcon.png';
+import diagnoseIcon from './diagnoseIcon.png';
 
 
 function ServiceCentral() {
@@ -18,10 +20,16 @@ function ServiceCentral() {
 
         <Grid.Row columns={2}>
           <Grid.Column>
-            Repairs & Maintenance
+            <Segment textAlign="center">
+              <Image centered src={toolIcon} />
+              <p className="iconText"> Repairs & Maintenance</p>
+            </Segment>
           </Grid.Column>
           <Grid.Column>
-            Diagnostics & Inspections
+          <Segment textAlign="center">
+            <Image centered src={diagnoseIcon} />
+            <p className="iconText">Diagnostics & Inspections</p>
+          </Segment>
           </Grid.Column>
         </Grid.Row>
 
@@ -33,19 +41,19 @@ function ServiceCentral() {
         <Grid.Row>
           <Segment attached="top" textAlign="left">
             <p>Oil Change
-              <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
-              <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
+              <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
+              <Icon name="trash outline" size="large" className="serviceIcon redIcon" link />
             </p>
           </Segment>
           <Segment attached textAlign="left">
             Replace brake pads
-            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
-            <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
+            <Icon name="trash outline" size="large" className="serviceIcon redIcon"link />
           </Segment>
           <Segment attached="bottom" textAlign="left">
             Oil Change
-            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
-            <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
+            <Icon name="trash outline" size="large" className="serviceIcon redIcon" link />
           </Segment>
         </Grid.Row>
 

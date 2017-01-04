@@ -86,5 +86,11 @@ svg g text.stage {
 .redIcon{
   color: red;
 }
+
+.iconText{
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: #34495e;
+}
 `
 ;

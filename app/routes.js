@@ -109,7 +109,7 @@ export default function createRoutes(store) {
           },
         },
         {
-          path: '/quote/service',
+          path: '/quote/services',
           name: 'QuoteCentralService',
           getComponent(nextState, cb) {
             const importModules = Promise.all([
