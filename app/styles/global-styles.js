@@ -94,7 +94,7 @@ svg g text.stage {
 }
 
 .serviceSearchWidth{
-  width: 280px;
+  width: 300px;
 }
 `
 ;

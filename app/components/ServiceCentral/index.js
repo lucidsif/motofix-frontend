@@ -22,13 +22,13 @@ function ServiceCentral() {
         <Grid.Row columns={2}>
           <Grid.Column>
             <Segment textAlign="center">
-              <Image fluid centered size="mini" src={toolIcon} />
+              <Image as="a" centered size="mini" src={toolIcon} href="#" />
               <p className="iconText"> Repairs & Maintenance</p>
             </Segment>
           </Grid.Column>
           <Grid.Column>
             <Segment textAlign="center">
-              <Image fluid centered size="mini" src={diagnoseIcon} />
+              <Image as="a" centered size="mini" src={diagnoseIcon} href="#" />
               <p className="iconText">Diagnostics & Inspections</p>
             </Segment>
           </Grid.Column>
@@ -37,7 +37,6 @@ function ServiceCentral() {
         <Grid.Row>
           Common Services
         </Grid.Row>
-
 
         <Grid.Row>
           <Segment attached="top" textAlign="left">
