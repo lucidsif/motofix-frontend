@@ -24,7 +24,7 @@ const serviceSegments = () => {
 };
 
 // TODO: 3/10 make search input full width of the screen and responsive
-// TODO: 4/10 make sides of segments show
+
 function ServiceCentral() {
   return (
     <Segment padded="very">
@@ -55,6 +55,7 @@ function ServiceCentral() {
 
         <div className="pusher">
           <div className="ui main text container verticalScroll">
+          <Segment.Group>
           <Segment attached="top" textAlign="left">
             <p>Oil Change
               <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
@@ -72,6 +73,7 @@ function ServiceCentral() {
             <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
             <Icon name="trash outline" size="large" className="serviceIcon redIcon" link />
           </Segment>
+          </Segment.Group>
           </div>
         </div>
 
