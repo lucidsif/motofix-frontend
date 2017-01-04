@@ -9,7 +9,7 @@ import { Grid, Segment, Input, Icon, Image } from 'semantic-ui-react';
 import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
 
-const services = ['Oil Change', 'NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Smoke or steam is coming out of motorcycle'];
+const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Smoke or steam is coming out of motorcycle'];
 
 const serviceSegments = () => {
   return services.map((service) => {
@@ -64,7 +64,7 @@ function ServiceCentral() {
             <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
             <Icon name="trash outline" size="large" className="serviceIcon redIcon"link />
           </Segment>
-          {serviceSegments}
+          {serviceSegments()}
           <Segment attached="bottom" textAlign="left">
             Oil Change
             <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
