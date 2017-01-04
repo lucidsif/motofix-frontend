@@ -14,10 +14,10 @@ export class QuoteContainer extends React.Component { // eslint-disable-line rea
   render() {
     return (
       <Grid centered>
-       <QuoteProgressBar />
-      <Segment attached='bottom'>
-                {this.props.children}
-      </Segment>
+        <QuoteProgressBar />
+        <Segment attached="bottom">
+          {this.props.children}
+        </Segment>
       </Grid>
     );
   }
