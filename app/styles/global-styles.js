@@ -101,5 +101,10 @@ svg g text.stage {
   height: 300px;
   overflow-y: scroll;
 }
+
+.totalPriceNum {
+  color: green;
+
+}
 `
 ;
