@@ -5,11 +5,12 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  ADD_TO_CART,
 } from './constants';
 
-export function defaultAction() {
+export function addToCart(serviceName) {
   return {
-    type: DEFAULT_ACTION,
+    type: ADD_TO_CART,
+    serviceName,
   };
 }

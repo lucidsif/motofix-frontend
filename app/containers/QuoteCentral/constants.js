@@ -4,4 +4,4 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/QuoteCentralService/DEFAULT_ACTION';
+export const ADD_TO_CART = 'app/QuoteCentral/ADD_TO_CART';

@@ -11,13 +11,16 @@ import { Grid, Button } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 
+import { addToCart } from './actions';
+
 // TODO: 8/10 Create the price breakdown component
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  // console.log(this.props.onCartClick);
   render() {
     return (
       <div>
         <QuoteCart />
-        <AddServices />
+        <AddServices onCartClick={this.props.onCartClick} />
         <Grid.Row>
           <Button floated="right" color="teal">Next</Button>
           <Button floated="right">Back</Button>
@@ -31,7 +34,10 @@ const mapStateToProps = selectQuoteCentral();
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onCartClick: (evt) => {
+      console.log(`cart clicked, value is ${evt}`);
+      dispatch(addToCart(evt));
+    },
   };
 }
 
