@@ -23,6 +23,7 @@ const ServiceSegments = () => {
   });
 };
 
+// TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 
 function ServiceCentral() {

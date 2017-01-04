@@ -103,8 +103,7 @@ svg g text.stage {
 }
 
 .totalPriceNum {
-  color: green;
-
+  padding-bottom: 1em
 }
 `
 ;
