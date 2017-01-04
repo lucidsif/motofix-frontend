@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the quoteCentralService state domain
  */
-const selectQuoteCentralServiceDomain = () => (state) => state.get('quoteCentralService');
+const selectQuoteCentralDomain = () => (state) => state.get('quoteCentralService');
 
 /**
  * Other specific selectors
@@ -14,12 +14,12 @@ const selectQuoteCentralServiceDomain = () => (state) => state.get('quoteCentral
  * Default selector used by QuoteCentralService
  */
 
-const selectQuoteCentralService = () => createSelector(
-  selectQuoteCentralServiceDomain(),
+const selectQuoteCentral = () => createSelector(
+  selectQuoteCentralDomain(),
   (substate) => substate.toJS()
 );
 
-export default selectQuoteCentralService;
+export default selectQuoteCentral;
 export {
-  selectQuoteCentralServiceDomain,
+  selectQuoteCentralDomain,
 };

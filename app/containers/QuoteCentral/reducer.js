@@ -6,18 +6,21 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  ADD_TO_CART,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  services: [],
+});
 
-function quoteCentralServiceReducer(state = initialState, action) {
+function quoteCentralReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case ADD_TO_CART:
+    // push in to list
+      return state.push(action.serviceName);
     default:
       return state;
   }
 }
 
-export default quoteCentralServiceReducer;
+export default quoteCentralReducer;

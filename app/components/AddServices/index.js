@@ -26,7 +26,9 @@ const ServiceSegments = () => {
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 
-function AddServices() {
+function AddServices(props) {
+  const { onCartClick } = props;
+  console.log(onCartClick);
   return (
     <Segment padded="very">
       <Grid centered>
@@ -60,7 +62,7 @@ function AddServices() {
             <Segment.Group>
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={onCartClick} link />
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" link />
                 </p>
               </Segment>
