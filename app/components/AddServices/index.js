@@ -28,7 +28,6 @@ const ServiceSegments = () => {
 
 function AddServices(props) {
   const { onCartClick } = props;
-  console.log(onCartClick);
   return (
     <Segment padded="very">
       <Grid centered>

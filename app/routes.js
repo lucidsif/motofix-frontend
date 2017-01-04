@@ -110,7 +110,7 @@ export default function createRoutes(store) {
         },
         {
           path: '/quote/services',
-          name: 'QuoteCentralService',
+          name: 'QuoteCentral',
           getComponent(nextState, cb) {
             const importModules = Promise.all([
               System.import('containers/QuoteCentral/reducer'),
