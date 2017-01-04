@@ -79,22 +79,27 @@ svg g text.stage {
   float: right;
 }
 
-.blueIcon{
+.blueIcon {
   color: #1abc9c;
 }
 
-.redIcon{
+.redIcon {
   color: red;
 }
 
-.iconText{
+.iconText {
   margin-top: 1em;
   margin-bottom: 1em;
   color: #34495e;
 }
 
-.serviceSearchWidth{
+.serviceSearchWidth {
   width: 300px;
+}
+
+.verticalScroll {
+  height: 300px;
+  overflow-y: scroll;
 }
 `
 ;

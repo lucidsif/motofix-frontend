@@ -9,7 +9,7 @@ import { Grid, Segment, Input, Icon, Image } from 'semantic-ui-react';
 import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
 
-const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Smoke or steam is coming out of motorcycle'];
+const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Spongy braking'];
 
 const serviceSegments = () => {
   return services.map((service) => {
@@ -23,7 +23,8 @@ const serviceSegments = () => {
   });
 };
 
-// TODO: make search input full width of the screen and responsive
+// TODO: 3/10 make search input full width of the screen and responsive
+// TODO: 4/10 make sides of segments show
 function ServiceCentral() {
   return (
     <Segment padded="very">
@@ -52,7 +53,8 @@ function ServiceCentral() {
           Common Services
         </Grid.Row>
 
-        <Grid.Row>
+        <div className="pusher">
+          <div className="ui main text container verticalScroll">
           <Segment attached="top" textAlign="left">
             <p>Oil Change
               <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
@@ -64,13 +66,14 @@ function ServiceCentral() {
             <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
             <Icon name="trash outline" size="large" className="serviceIcon redIcon"link />
           </Segment>
-          {serviceSegments()}
+            {serviceSegments()}
           <Segment attached="bottom" textAlign="left">
-            Oil Change
+            Smoke or steam is coming out of motorcycle
             <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
             <Icon name="trash outline" size="large" className="serviceIcon redIcon" link />
           </Segment>
-        </Grid.Row>
+          </div>
+        </div>
 
 
       </Grid>
