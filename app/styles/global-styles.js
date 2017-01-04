@@ -92,5 +92,9 @@ svg g text.stage {
   margin-bottom: 1em;
   color: #34495e;
 }
+
+.serviceSearchWidth{
+  width: 280px;
+}
 `
 ;

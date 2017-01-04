@@ -9,27 +9,28 @@ import { Grid, Segment, Input, Icon, Image } from 'semantic-ui-react';
 import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
 
-
+// TODO: make search input full width of the screen and responsive
 function ServiceCentral() {
   return (
     <Segment padded="very">
       <Grid centered>
+        <h4> Add Services </h4>
         <Grid.Row>
-          <Input icon="search" placeholder="Search services" />
+          <Input className="serviceSearchWidth" icon="search" placeholder="Search services" />
         </Grid.Row>
 
         <Grid.Row columns={2}>
           <Grid.Column>
             <Segment textAlign="center">
-              <Image centered src={toolIcon} />
+              <Image fluid centered size="mini" src={toolIcon} />
               <p className="iconText"> Repairs & Maintenance</p>
             </Segment>
           </Grid.Column>
           <Grid.Column>
-          <Segment textAlign="center">
-            <Image centered src={diagnoseIcon} />
-            <p className="iconText">Diagnostics & Inspections</p>
-          </Segment>
+            <Segment textAlign="center">
+              <Image fluid centered size="mini" src={diagnoseIcon} />
+              <p className="iconText">Diagnostics & Inspections</p>
+            </Segment>
           </Grid.Column>
         </Grid.Row>
 
