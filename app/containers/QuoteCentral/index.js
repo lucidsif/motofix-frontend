@@ -1,23 +1,23 @@
 /*
  *
- * QuoteCentralService
+ * QuoteCentral
  *
  */
 
 import React from 'react';
 import { connect } from 'react-redux';
-import selectQuoteCentralService from './selectors';
+import selectQuoteCentral from './selectors';
 import { Grid, Button } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
-import ServiceCentral from 'components/ServiceCentral';
+import AddServices from 'components/AddServices';
 
 // TODO: 8/10 Create the price breakdown component
-export class QuoteCentralService extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
         <QuoteCart />
-        <ServiceCentral />
+        <AddServices />
         <Grid.Row>
           <Button floated="right" color="teal">Next</Button>
           <Button floated="right">Back</Button>
@@ -27,7 +27,7 @@ export class QuoteCentralService extends React.Component { // eslint-disable-lin
   }
 }
 
-const mapStateToProps = selectQuoteCentralService();
+const mapStateToProps = selectQuoteCentral();
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -35,4 +35,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuoteCentralService);
+export default connect(mapStateToProps, mapDispatchToProps)(QuoteCentral);

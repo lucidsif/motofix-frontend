@@ -113,8 +113,8 @@ export default function createRoutes(store) {
           name: 'QuoteCentralService',
           getComponent(nextState, cb) {
             const importModules = Promise.all([
-              System.import('containers/QuoteCentralService/reducer'),
-              System.import('containers/QuoteCentralService'),
+              System.import('containers/QuoteCentral/reducer'),
+              System.import('containers/QuoteCentral'),
             ]);
 
             const renderRoute = loadModule(cb);
