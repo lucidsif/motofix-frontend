@@ -7,7 +7,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import selectQuoteCentralService from './selectors';
-import { Grid, Segment } from 'semantic-ui-react';
+import { Grid, Segment, Accordion, Icon, Button } from 'semantic-ui-react';
+import ServiceCentral from 'components/ServiceCentral';
 
 export class QuoteCentralService extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -30,24 +31,27 @@ export class QuoteCentralService extends React.Component { // eslint-disable-lin
                 </Grid.Column>
               </Grid.Row>
 
+              <Accordion>
+                <Accordion.Title>
+                  <Icon name="dropdown" />
+                    See cost breakdown
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>
+                    Price breakdown component goes here
+                  </p>
+                </Accordion.Content>
+              </Accordion>
+
             </Grid>
           </Segment>
         </Grid.Row>
 
-        <Grid.Row>
-          <Segment padded="very">
-            Services
-          </Segment>
-        </Grid.Row>
+        < ServiceCentral />
 
         <Grid.Row>
-          <Segment padded="very" attached="bottom">
-          Input search box
-          </Segment>
-        </Grid.Row>
-
-        <Grid.Row>
-          <p>2 buttons</p>
+          <Button floated="right" color="teal">Next</Button>
+          <Button floated="right">Back</Button>
         </Grid.Row>
 
       </div>
