@@ -74,5 +74,17 @@ svg g text.stage {
   text-anchor: middle;
   dominant-baseline: central;
 }
+
+.serviceIcon{
+  float: right;
+}
+
+.blueIcon{
+  color: #1abc9c;
+}
+
+.redIcon{
+  color: red;
+}
 `
 ;

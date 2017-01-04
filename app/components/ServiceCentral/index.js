@@ -33,14 +33,19 @@ function ServiceCentral() {
         <Grid.Row>
           <Segment attached="top" textAlign="left">
             <p>Oil Change
-              <Icon name="add to cart" size="large" />
+              <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
+              <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
             </p>
           </Segment>
           <Segment attached textAlign="left">
             Replace brake pads
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
+            <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
           </Segment>
           <Segment attached="bottom" textAlign="left">
             Oil Change
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
+            <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
           </Segment>
         </Grid.Row>
 
