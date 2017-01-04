@@ -120,7 +120,7 @@ export default function createRoutes(store) {
             const renderRoute = loadModule(cb);
 
             importModules.then(([reducer, component]) => {
-              injectReducer('quoteCentralService', reducer.default);
+              injectReducer('quoteCentral', reducer.default);
               renderRoute(component);
             });
 

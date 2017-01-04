@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the quoteCentralService state domain
  */
-const selectQuoteCentralDomain = () => (state) => state.get('quoteCentralService');
+const selectQuoteCentralDomain = () => (state) => state.get('quoteCentral');
 
 /**
  * Other specific selectors
