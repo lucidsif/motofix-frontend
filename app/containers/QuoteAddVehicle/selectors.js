@@ -5,6 +5,8 @@ import { createSelector } from 'reselect';
  */
 const selectVehicle = () => (state) => state.get('quoteAddVehicle');
 
+
+// the fact that the selector is getting empty string values is probably causing the warning
 /**
  * Other specific selectors
  */

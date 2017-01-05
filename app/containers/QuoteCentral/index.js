@@ -14,7 +14,7 @@ import AddServices from 'components/AddServices';
 import { addToCart, removeFromCart } from './actions';
 
 import { createStructuredSelector } from 'reselect';
-import { selectVehicleDomain, selectYear, selectMake, selectModel } from 'containers/QuoteAddVehicle/selectors';
+import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 // TODO: 8/10 Create the price breakdown component
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -35,9 +35,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
 
 const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
-  year: selectYear(),
-  make: selectMake(),
-  model: selectModel(),
 });
 
 function mapDispatchToProps(dispatch) {

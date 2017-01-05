@@ -18,10 +18,11 @@ let year;
 let make;
 let model;
 
-// TODO: bind the methods in the constructor rather than in a JSX prop
-// TODO: refactor to use official api for select menus when available or write in more declarative way
-// TODO: add validation to required fields
-// TODO: Find a way to query and dispatch actions without the use of file scoped variables
+// TODO: 7.5/10 fix 'failed prop type invalid prop options of type string supplie to select. go to /quote/services and open console'
+// TODO: 7/10 bind the methods in the constructor rather than in a JSX prop
+// TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
+// TODO: 6/10 add validation to required fields
+// TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
 class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
