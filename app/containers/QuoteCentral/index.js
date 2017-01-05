@@ -34,9 +34,9 @@ const mapStateToProps = selectQuoteCentral();
 
 function mapDispatchToProps(dispatch) {
   return {
-    onCartClick: (evt) => {
-      console.log(`cart clicked, value is ${evt.target.value}`);
-      dispatch(addToCart(evt));
+    onCartClick: (service) => {
+      console.log(service);
+      dispatch(addToCart(service));
     },
   };
 }

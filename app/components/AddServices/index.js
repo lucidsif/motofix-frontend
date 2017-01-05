@@ -11,23 +11,24 @@ import diagnoseIcon from './diagnoseIcon.png';
 
 const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Spongy braking'];
 
-const ServiceSegments = () => {
-  return services.map((service) => {
-    return (
-      <Segment attached textAlign="left" key={service}>
-        {service}
-        <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
-        <Icon name="trash outline" size="large" className="serviceIcon redIcon"link />
-      </Segment>
-    );
-  });
-};
-
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 
 function AddServices(props) {
   const { onCartClick } = props;
+
+  const ServiceSegments = () => {
+    return services.map((service) => {
+      return (
+        <Segment attached textAlign="left" key={service}>
+          {service}
+          <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick(service)} link />
+          <Icon name="trash outline" size="large" className="serviceIcon redIcon"link />
+        </Segment>
+      );
+    });
+  };
+
   return (
     <Segment padded="very">
       <Grid centered>
@@ -61,7 +62,7 @@ function AddServices(props) {
             <Segment.Group>
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={onCartClick} link />
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick("add to bart")} link />
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" link />
                 </p>
               </Segment>
