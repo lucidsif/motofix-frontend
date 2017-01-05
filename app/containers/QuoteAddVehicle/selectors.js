@@ -27,15 +27,15 @@ const selectModel = () => createSelector(
  * Default selector used by QuoteAddVehicle
  */
 
-/*
-const selectQuoteAddVehicle = () => createSelector(
+
+const selectVehicleDomain = () => createSelector(
   selectVehicle(),
   (substate) => substate.toJS()
 );
-*/
-// export default selectQuoteAddVehicle;
+
+export default selectVehicleDomain;
 export {
-  selectVehicle,
+  selectVehicleDomain,
   selectYear,
   selectMake,
   selectModel,

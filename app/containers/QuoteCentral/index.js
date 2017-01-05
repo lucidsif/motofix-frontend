@@ -14,12 +14,12 @@ import AddServices from 'components/AddServices';
 import { addToCart, removeFromCart } from './actions';
 
 import { createStructuredSelector } from 'reselect';
-import { selectYear, selectMake, selectModel } from 'containers/QuoteAddVehicle/selectors';
+import { selectVehicleDomain, selectYear, selectMake, selectModel } from 'containers/QuoteAddVehicle/selectors';
 
 // TODO: 8/10 Create the price breakdown component
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  // console.log(this.props.onCartClick);
   render() {
+    console.log(this.props.vehicle);
     return (
       <div>
         <QuoteCart />
@@ -34,6 +34,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
 }
 
 const mapStateToProps = createStructuredSelector({
+  vehicle: selectVehicleDomain(),
   year: selectYear(),
   make: selectMake(),
   model: selectModel(),
