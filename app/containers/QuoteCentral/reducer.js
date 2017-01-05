@@ -20,9 +20,9 @@ const initialState = fromJS({ cart });
 function quoteCentralReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_CART:
-      return state.setIn(['cart', JSON.stringify(action.serviceName)], true);
+      return state.setIn(['cart', action.serviceName], true);
     case REMOVE_FROM_CART:
-      return state.setIn(['cart', JSON.stringify(action.serviceName)], false);
+      return state.setIn(['cart', action.serviceName], false);
     default:
       return state;
   }

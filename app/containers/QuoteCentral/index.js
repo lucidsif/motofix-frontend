@@ -24,10 +24,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     console.log(this.props.cart);
     return (
       <div>
-      {this.props.cart.Winterization ? (
-        <p>Winterization is in cart</p>
-      ) : (<p>Winterization is not in cart </p>
-      )}
         <QuoteCart />
         <AddServices cart={this.props.cart} onCartClick={this.props.onCartClick} onTrashClick={this.props.onTrashClick} />
         <Grid.Row>
