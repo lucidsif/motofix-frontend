@@ -15,15 +15,19 @@ const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection
 // TODO: 3/10 make search input full width of the screen and responsive
 
 function AddServices(props) {
-  const { onCartClick, onTrashClick } = props;
+  const { onCartClick, onTrashClick, cart } = props;
 
   const ServiceSegments = () => {
+    if(cart){ console.log('cart prop is passed to AddService') };
     return services.map((service) => {
       return (
         <Segment attached textAlign="left" key={service}>
           {service}
-          <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick(service)} link />
-          <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick(service)} link />
+          {!cart[service] ? (
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick(service)} link />
+          ) : (
+            <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick(service)} link />
+          )}
         </Segment>
       );
     });

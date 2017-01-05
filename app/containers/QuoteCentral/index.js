@@ -24,8 +24,12 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     console.log(this.props.cart);
     return (
       <div>
+      {this.props.cart.Winterization ? (
+        <p>Winterization is in cart</p>
+      ) : (<p>Winterization is not in cart </p>
+      )}
         <QuoteCart />
-        <AddServices onCartClick={this.props.onCartClick} onTrashClick={this.props.onTrashClick} />
+        <AddServices cart={this.props.cart} onCartClick={this.props.onCartClick} onTrashClick={this.props.onTrashClick} />
         <Grid.Row>
           <Button floated="right" color="teal">Next</Button>
           <Button floated="right">Back</Button>
