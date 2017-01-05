@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-
+// TODO: reverse domain and non domain names of selectors
 /**
  * Direct selector to the quoteAddVehicle state domain
  */
@@ -29,7 +29,7 @@ const selectModel = () => createSelector(
 
 const selectVehicleDomain = () => createSelector(
   selectVehicle(),
-  (substate) => substate.toJS()
+  (vehicle) => vehicle.toJS()
 );
 
 export default selectVehicleDomain;
