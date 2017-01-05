@@ -23,7 +23,7 @@ function AddServices(props) {
         <Segment attached textAlign="left" key={service}>
           {service}
           <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick(service)} link />
-          <Icon name="trash outline" size="large" className="serviceIcon redIcon"link />
+          <Icon name="trash outline" size="large" className="serviceIcon redIcon" disabled />
         </Segment>
       );
     });
@@ -63,14 +63,14 @@ function AddServices(props) {
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
                   <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick("add to bart")} link />
-                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" link />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" disabled />
                 </p>
               </Segment>
               {ServiceSegments()}
               <Segment attached textAlign="left">
                 Replace brake pads
                 <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
-                <Icon name="trash outline" size="large" className="serviceIcon redIcon"link />
+                <Icon name="trash outline" size="large" className="serviceIcon redIcon" disabled />
               </Segment>
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
