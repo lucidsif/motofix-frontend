@@ -10,7 +10,7 @@ const selectQuoteCentralDomain = () => (state) => state.get('quoteCentral');
  */
 const selectQuoteCentral = () => createSelector(
    selectQuoteCentralDomain(),
-   (substate) => substate.toJS()
+   (quoteCentralState) => quoteCentralState.toJS()
 );
 
 /**
@@ -18,7 +18,7 @@ const selectQuoteCentral = () => createSelector(
  */
 const selectCart = () => createSelector(
      selectQuoteCentralDomain(),
-     (substate) => substate.get('cart').toJS()
+     (quoteCentralState) => quoteCentralState.get('cart').toJS()
  );
 
 export default selectQuoteCentral;
