@@ -35,7 +35,7 @@ const mapStateToProps = selectQuoteCentral();
 function mapDispatchToProps(dispatch) {
   return {
     onCartClick: (service) => {
-      console.log(service);
+      console.log(service + typeof service);
       dispatch(addToCart(service));
     },
   };
