@@ -15,7 +15,7 @@ const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection
 // TODO: 3/10 make search input full width of the screen and responsive
 
 function AddServices(props) {
-  const { onCartClick } = props;
+  const { onCartClick, onTrashClick } = props;
 
   const ServiceSegments = () => {
     return services.map((service) => {
@@ -23,7 +23,7 @@ function AddServices(props) {
         <Segment attached textAlign="left" key={service}>
           {service}
           <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick(service)} link />
-          <Icon name="trash outline" size="large" className="serviceIcon redIcon" disabled />
+          <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick(service)} link />
         </Segment>
       );
     });
@@ -62,20 +62,15 @@ function AddServices(props) {
             <Segment.Group>
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick("add to bart")} link />
-                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" disabled />
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Oil Change')} link />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick('Oil Change')} link />
                 </p>
               </Segment>
               {ServiceSegments()}
-              <Segment attached textAlign="left">
-                Replace brake pads
-                <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
-                <Icon name="trash outline" size="large" className="serviceIcon redIcon" disabled />
-              </Segment>
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
-                <Icon name="add to cart" size="large" className="serviceIcon blueIcon" link />
-                <Icon name="trash outline" size="large" className="serviceIcon redIcon" link />
+                <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Smoke or steam is coming out of motorcycle')} link />
+                <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick('Smoke or steam is coming out of motorcycle')} link />
               </Segment>
             </Segment.Group>
           </div>
