@@ -10,9 +10,9 @@ import {
 } from './constants';
 
 const initialState = fromJS({
-  year: '',
-  make: '',
-  model: '',
+  year: null,
+  make: null,
+  model: null,
 });
 
 function quoteAddVehicleReducer(state = initialState, action) {

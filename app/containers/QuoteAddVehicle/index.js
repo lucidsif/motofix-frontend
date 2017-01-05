@@ -18,8 +18,7 @@ let year;
 let make;
 let model;
 
-// TODO: 7.5/10 fix 'failed prop type invalid prop options of type string supplie to select. go to /quote/services and open console'
-// TODO: 7/10 bind the methods in the constructor rather than in a JSX prop
+// TODO: 7/10 measure performance then bind the methods in the constructor rather than in a JSX prop
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 add validation to required fields
 // TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
@@ -27,12 +26,12 @@ class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { yearValue: 2016, makeValue: '', modelValue: '', makeOptions: '', modelOptions: '' };
+    this.state = { yearValue: 2016, makeValue: null, modelValue: null, makeOptions: null, modelOptions: null };
   }
   updateYearValueAndGetMakes(newValue) {
     this.setState({ yearValue: newValue });
-    this.setState({ makeValue: '' });
-    this.setState({ modelValue: '' });
+    this.setState({ makeValue: null });
+    this.setState({ modelValue: null });
     this.props.client.query({
       query: gql`
       query allMotorcycles($filterByYear: String){
@@ -53,7 +52,7 @@ class QuoteAddVehicle extends React.Component {
   }
   updateMakeValueAndGetModels(newValue) {
     this.setState({ makeValue: newValue });
-    this.setState({ modelValue: '' });
+    this.setState({ modelValue: null });
     model = '';
     this.props.client.query({
       query: gql`
@@ -104,6 +103,7 @@ class QuoteAddVehicle extends React.Component {
             options={this.state.makeOptions}
             simpleValue
             clearable
+
             name="selected-make"
             value={this.state.makeValue}
             onChange={this.updateMakeValueAndGetModels.bind(this)}
