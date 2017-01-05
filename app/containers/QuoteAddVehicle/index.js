@@ -18,7 +18,7 @@ let year;
 let make;
 let model;
 
-// TODO: 7/10 measure performance then bind the methods in the constructor rather than in a JSX prop
+// TODO: Make it impossible to set make without selecting year first
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 add validation to required fields
 // TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
@@ -27,6 +27,10 @@ class QuoteAddVehicle extends React.Component {
   constructor(props) {
     super(props);
     this.state = { yearValue: 2016, makeValue: null, modelValue: null, makeOptions: null, modelOptions: null };
+
+    this.updateYearValueAndGetMakes = this.updateYearValueAndGetMakes.bind(this);
+    this.updateMakeValueAndGetModels = this.updateMakeValueAndGetModels.bind(this);
+    this.updateModelValue = this.updateModelValue.bind(this);
   }
   updateYearValueAndGetMakes(newValue) {
     this.setState({ yearValue: newValue });
@@ -47,7 +51,7 @@ class QuoteAddVehicle extends React.Component {
       makesFactory = makesData.map((bike) => {
         return { value: bike.make, label: bike.make };
       });
-      this.setState({ makeOptions: makesFactory })
+      this.setState({ makeOptions: makesFactory });
     });
   }
   updateMakeValueAndGetModels(newValue) {
@@ -91,7 +95,7 @@ class QuoteAddVehicle extends React.Component {
             clearable
             name="selected-year"
             value={this.state.yearValue}
-            onChange={this.updateYearValueAndGetMakes.bind(this)}
+            onChange={this.updateYearValueAndGetMakes}
             searchable={this.state.searchable}
             placeholder="2017"
           />
@@ -106,7 +110,7 @@ class QuoteAddVehicle extends React.Component {
 
             name="selected-make"
             value={this.state.makeValue}
-            onChange={this.updateMakeValueAndGetModels.bind(this)}
+            onChange={this.updateMakeValueAndGetModels}
             searchable={this.state.searchable}
             placeholder="Select a make"
           />
@@ -120,7 +124,7 @@ class QuoteAddVehicle extends React.Component {
             clearable
             name="selected-model"
             value={this.state.modelValue}
-            onChange={this.updateModelValue.bind(this)}
+            onChange={this.updateModelValue}
             searchable={this.state.searchable}
             placeholder="Select a model"
           />
