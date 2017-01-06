@@ -9,7 +9,6 @@ import { Grid, Segment, Accordion, Icon, Label } from 'semantic-ui-react';
 
 function QuoteCart({ estimate }) {
   if (estimate){console.log('estimate prop was passed to cart')};
-  if (estimate){console.log(estimate.total)};
   return (
     <Grid.Row>
       <Segment padded="very">
