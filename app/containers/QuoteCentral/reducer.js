@@ -15,6 +15,7 @@ const cart = services.reduce((acc, cur, i) => {
   acc[cur] = { selected: false, found: null, laborTime: null, laborPrice: null };
   return acc;
 }, {});
+
 const estimate = { serviceTotal: 0, partsTotal: 0, total: 0, dealer: 0, priceSavings: 0, percentSavings: 0 };
 const initialState = fromJS({ cart, estimate });
 

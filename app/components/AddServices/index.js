@@ -18,7 +18,7 @@ function AddServices(props) {
   const { onCartClick, onTrashClick, cart } = props;
 
   const ServiceSegments = () => {
-    if(cart){ console.log('cart prop is passed to AddService') };
+    if (cart){ console.log('cart prop is passed to AddService') };
     return services.map((service) => {
       return (
         <Segment attached textAlign="left" key={service}>

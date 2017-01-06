@@ -14,19 +14,21 @@ import AddServices from 'components/AddServices';
 import { addToCart, removeFromCart } from './actions';
 
 import { createStructuredSelector } from 'reselect';
-import { selectCart } from './selectors';
+import { selectCart, selectEstimate } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 // TODO: 8/10 Create the price breakdown component
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
-// TODO: 6/10 make sure the onclick handler isn't being recreated on every rerender
+// TODO: 6/10 make sure the onclick handler for the back button isn't being recreated on every rerender
+// TODO: 5.5/10 route back buttom backwards instead of to a specific point
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     console.log(this.props.vehicle);
     console.log(this.props.cart);
+    console.log(this.props.estimate);
     return (
       <div>
-        <QuoteCart />
+        <QuoteCart estimate={this.props.estimate} />
         <AddServices cart={this.props.cart} onCartClick={this.props.onCartClick} onTrashClick={this.props.onTrashClick} />
         <Grid.Row>
           <Button floated="right" color="teal">Next</Button>
@@ -40,6 +42,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
 const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
   cart: selectCart(),
+  estimate: selectEstimate(),
 });
 
 function mapDispatchToProps(dispatch) {
