@@ -23,7 +23,7 @@ function AddServices(props) {
       return (
         <Segment attached textAlign="left" key={service}>
           {service}
-          {!cart[service] ? (
+          {!cart[service].selected ? (
             <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick(service)} link />
           ) : (
             <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick(service)} link />
@@ -57,7 +57,7 @@ function AddServices(props) {
         </Grid.Row>
 
         <Grid.Row>
-          Common Services
+          <b>Common Services</b>
         </Grid.Row>
 
         <div className="pusher">
@@ -66,15 +66,21 @@ function AddServices(props) {
             <Segment.Group>
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Oil Change')} link />
+                  {!cart['Oil Change'].selected ? (
+                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Oil Change')} link />
+                ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick('Oil Change')} link />
+                )}
                 </p>
               </Segment>
               {ServiceSegments()}
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
-                <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Smoke or steam is coming out of motorcycle')} link />
-                <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick('Smoke or steam is coming out of motorcycle')} link />
+                {!cart['Smoke or steam is coming out of motorcycle'].selected ? (
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Smoke or steam is coming out of motorcycle')} link />
+                ) : (
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick('Smoke or steam is coming out of motorcycle')} link />
+                )}
               </Segment>
             </Segment.Group>
           </div>
