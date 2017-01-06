@@ -19,6 +19,7 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 // TODO: 8/10 Create the price breakdown component
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
+// TODO: 6/10 make sure the onclick handler isn't being recreated on every rerender
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     console.log(this.props.vehicle);
