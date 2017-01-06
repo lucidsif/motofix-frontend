@@ -8,6 +8,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Grid, Button } from 'semantic-ui-react';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 
@@ -39,6 +41,21 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
   }
 }
 
+const OIL_CHANGE_QUERY = gql`
+{
+  laborEstimates(service: "Oil Change"){
+    response
+  }
+}
+`;
+
+const withData = graphql(OIL_CHANGE_QUERY, {
+  props: ({ ownProps, data: { loading, laborEstimates } }) => ({
+    loading,
+    laborEstimates,
+  }),
+});
+
 const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
   cart: selectCart(),
@@ -58,4 +75,5 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+QuoteCentral = withData(QuoteCentral);
 export default connect(mapStateToProps, mapDispatchToProps)(QuoteCentral);
