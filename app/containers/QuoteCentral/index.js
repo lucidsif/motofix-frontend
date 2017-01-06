@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { Grid, Button } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
@@ -28,7 +29,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         <AddServices cart={this.props.cart} onCartClick={this.props.onCartClick} onTrashClick={this.props.onTrashClick} />
         <Grid.Row>
           <Button floated="right" color="teal">Next</Button>
-          <Button floated="right">Back</Button>
+          <Button onClick={() => browserHistory.push('/quote/vehicle')} floated="right">Back</Button>
         </Grid.Row>
       </div>
     );
