@@ -67,17 +67,16 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
-  // ? merge the object?
   return {
     onCartClick: (service, oilData) => {
       const responseObj = JSON.parse(oilData.response)
       const laborTime = responseObj.time
-      const serviceObj = {serviceName: service, laborTime };
+      const serviceObj = {[service]: {selected: true, laborTime, laborPrice: null } };
       console.log(serviceObj);
       dispatch(addToCart(serviceObj));
     },
     onTrashClick: (service) => {
-      const serviceObj = {serviceName: service};
+      const serviceObj = {[service]: {selected: false, laborPrice: null } };
       console.log(serviceObj);
       dispatch(removeFromCart(serviceObj));
     },

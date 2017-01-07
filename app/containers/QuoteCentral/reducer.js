@@ -12,7 +12,7 @@ import {
 
 const services = ['Oil Change', 'Smoke or steam is coming out of motorcycle', 'NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Spongy braking'];
 const cart = services.reduce((acc, cur, i) => {
-  acc[cur] = { selected: false, found: null, laborTime: null, laborPrice: null };
+  acc[cur] = { selected: false, laborTime: null, laborPrice: null };
   return acc;
 }, {});
 
@@ -22,9 +22,9 @@ const initialState = fromJS({ cart, estimate });
 function quoteCentralReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_CART:
-      return state.setIn(['cart', action.payload.serviceName, 'selected'], true);
+      return state.mergeIn(['cart'], action.payload);
     case REMOVE_FROM_CART:
-      return state.setIn(['cart', action.payload.serviceName, 'selected'], false);
+      return state.mergeIn(['cart'], action.payload);
     default:
       return state;
   }
