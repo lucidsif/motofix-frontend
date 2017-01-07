@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Grid, Button } from 'semantic-ui-react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
@@ -25,10 +25,11 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 // TODO: 5.5/10 route back buttom backwards instead of to a specific point
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    console.log(this.props.vehicle);
-    console.log(this.props.cart);
-    console.log(this.props.estimate);
+    //console.log(this.props.vehicle);
+    //console.log(this.props.cart);
+    //console.log(this.props.estimate);
     console.log(this.props.oilChange);
+    console.log(this.props.winterization);
     return (
       <div>
         <QuoteCart estimate={this.props.estimate} />
@@ -50,12 +51,13 @@ const OIL_CHANGE_QUERY = gql`
 }
 `;
 
-const withData = graphql(OIL_CHANGE_QUERY, {
-  props: ({ ownProps, data: { loading, laborEstimates } }) => ({
-    loading,
-    oilChange: laborEstimates.response,
-  }),
-});
+const WINTERIZATION_QUERY = gql`
+{
+  laborEstimates(service: "Winterization"){
+    response
+  }
+}
+`;
 
 const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
@@ -76,5 +78,25 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-QuoteCentral = withData(QuoteCentral);
-export default connect(mapStateToProps, mapDispatchToProps)(QuoteCentral);
+const withOilChangeData = graphql(OIL_CHANGE_QUERY, {
+  props: ({ ownProps, data: { loading, laborEstimates } }) => ({
+    loading,
+    oilChange: laborEstimates,
+  }),
+});
+
+const withWinterizationData = graphql(WINTERIZATION_QUERY, {
+  props: ({ ownProps, data: { loading, laborEstimates } }) => ({
+    loading,
+    winterization: laborEstimates,
+  }),
+});
+
+export default compose(
+  withOilChangeData,
+  withWinterizationData,
+  connect(mapStateToProps, mapDispatchToProps)
+)(QuoteCentral);
+
+//QuoteCentral = withData(QuoteCentral);
+//export default connect(mapStateToProps, mapDispatchToProps)(QuoteCentral);
