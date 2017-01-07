@@ -18,12 +18,15 @@ import { addToCart, removeFromCart } from './actions';
 import { createStructuredSelector } from 'reselect';
 import { selectCart, selectEstimate } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
-// TODO: 9/10 determine how to write queries and pass their query results in a scalable, maintainable way
+
+import { withOilChangeData, withWinterizationData } from './queries';
+
 // TODO: 8.1/10 Modulate the queries/withDatas by moving them to a separate file and importing them
 // TODO: 8/10 Create the price breakdown component
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
 // TODO: 6/10 make sure the onclick handler for the back button isn't being recreated on every rerender
 // TODO: 5.5/10 route back buttom backwards instead of to a specific point
+
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     // console.log(this.props.vehicle);
@@ -43,22 +46,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     );
   }
 }
-
-const OIL_CHANGE_QUERY = gql`
-{
-  laborEstimates(service: "Oil Change"){
-    response
-  }
-}
-`;
-
-const WINTERIZATION_QUERY = gql`
-{
-  laborEstimates(service: "Winterization"){
-    response
-  }
-}
-`;
 
 const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
@@ -85,20 +72,6 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
-
-const withOilChangeData = graphql(OIL_CHANGE_QUERY, {
-  props: ({ ownProps, data: { loading, laborEstimates } }) => ({
-    loading,
-    oilChange: laborEstimates,
-  }),
-});
-
-const withWinterizationData = graphql(WINTERIZATION_QUERY, {
-  props: ({ ownProps, data: { loading, laborEstimates } }) => ({
-    loading,
-    winterization: laborEstimates,
-  }),
-});
 
 export default compose(
   withOilChangeData,
