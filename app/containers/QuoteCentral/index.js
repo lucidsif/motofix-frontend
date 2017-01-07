@@ -30,7 +30,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     // console.log(this.props.cart);
     // console.log(this.props.estimate);
     // console.log(this.props.oilChange);
-    // console.log(this.props.winterization);
+    // console.log(this.props.winterization)
     return (
       <div>
         <QuoteCart estimate={this.props.estimate} oilChange={this.props.oilChange} winterization={this.props.winterization} />
@@ -69,17 +69,17 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   // ? merge the object?
   return {
-    onCartClick: (service) => {
-      console.log(service);
-      //const appendedObj = obj[service];
-      //console.log(appendedObj);
-      dispatch(addToCart(service));
+    onCartClick: (service, oilData) => {
+      const responseObj = JSON.parse(oilData.response)
+      const laborTime = responseObj.time
+      const serviceObj = {serviceName: service, laborTime };
+      console.log(serviceObj);
+      dispatch(addToCart(serviceObj));
     },
     onTrashClick: (service) => {
-      console.log(service);
-      //const appendedObj = obj[service];
-      //console.log(appendedObj);
-      dispatch(removeFromCart(service));
+      const serviceObj = {serviceName: service};
+      console.log(serviceObj);
+      dispatch(removeFromCart(serviceObj));
     },
   };
 }

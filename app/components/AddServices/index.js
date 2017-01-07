@@ -66,7 +66,7 @@ function AddServices(props) {
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
                   {!cart['Oil Change'].selected ? (
-                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Oil Change')} link />
+                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Oil Change', oilChange)} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick('Oil Change')} link />
                 )}

@@ -9,16 +9,16 @@ import {
   REMOVE_FROM_CART,
 } from './constants';
 
-export function addToCart(serviceName) {
+export function addToCart(payload) {
   return {
     type: ADD_TO_CART,
-    serviceName,
+    payload,
   };
 }
 // Find out what the merged object looks like. Preserve the servicename if possibe
-export function removeFromCart(serviceName) {
+export function removeFromCart(payload) {
   return {
     type: REMOVE_FROM_CART,
-    serviceName,
+    payload,
   };
 }
