@@ -11,7 +11,7 @@ import diagnoseIcon from './diagnoseIcon.png';
 
 const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Spongy braking'];
 
-// TODO: 8/10 make oil change just like in service arr and add winterization
+// TODO: 8/10 add all services
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 

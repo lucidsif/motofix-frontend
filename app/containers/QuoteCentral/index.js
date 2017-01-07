@@ -8,8 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Grid, Button } from 'semantic-ui-react';
-import { graphql, compose } from 'react-apollo';
-import gql from 'graphql-tag';
+import { compose } from 'react-apollo';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 
@@ -21,11 +20,12 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 import { withOilChangeData, withWinterizationData } from './queries';
 
-// TODO: 8.1/10 Modulate the queries/withDatas by moving them to a separate file and importing them
-// TODO: 8/10 Create the price breakdown component
+// TODO: 8/10 restructure service arr (in reducers and props so non-spaced keys are used instead'
+// TODO: 7.5/10 Create the price breakdown component
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
 // TODO: 6/10 make sure the onclick handler for the back button isn't being recreated on every rerender
 // TODO: 5.5/10 route back buttom backwards instead of to a specific point
+// TODO: 5/10 modularize queries completely with single import
 
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -55,7 +55,6 @@ const mapStateToProps = createStructuredSelector({
 
 // Why is it replacing labortime?
 // what happens if there is no queryResult.response?
-// how to calculate service cost in to cart?<<< work on this first
 function mapDispatchToProps(dispatch) {
   return {
     onCartClick: (service, queryResult) => {
