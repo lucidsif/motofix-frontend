@@ -15,7 +15,7 @@ export function addToCart(serviceName) {
     serviceName,
   };
 }
-
+// Find out what the merged object looks like. Preserve the servicename if possibe
 export function removeFromCart(serviceName) {
   return {
     type: REMOVE_FROM_CART,

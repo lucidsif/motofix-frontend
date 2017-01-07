@@ -7,8 +7,8 @@
 import React from 'react';
 import { Grid, Segment, Accordion, Icon, Label } from 'semantic-ui-react';
 
-function QuoteCart({ estimate }) {
-  if (estimate){ console.log('estimate prop was passed to cart'); }
+function QuoteCart({ estimate, oilChange, winterization }) {
+  //if (estimate){ console.log('estimate prop was passed to cart'); }
   return (
     <Grid.Row>
       <Segment padded="very">
