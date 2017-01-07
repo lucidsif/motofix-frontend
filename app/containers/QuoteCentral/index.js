@@ -18,7 +18,7 @@ import { addToCart, removeFromCart } from './actions';
 import { createStructuredSelector } from 'reselect';
 import { selectCart, selectEstimate } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
-
+// TODO: 9/10 determine how to write queries and pass their query results in a scalable, maintainable way
 // TODO: 8.1/10 Modulate the queries/withDatas by moving them to a separate file and importing them
 // TODO: 8/10 Create the price breakdown component
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
@@ -33,8 +33,8 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     // console.log(this.props.winterization)
     return (
       <div>
-        <QuoteCart cart={this.props.cart} estimate={this.props.estimate} oilChange={this.props.oilChange} winterization={this.props.winterization} />
-        <AddServices cart={this.props.cart} oilChange={this.props.oilChange} winterization={this.props.winterization} onCartClick={this.props.onCartClick} onTrashClick={this.props.onTrashClick} />
+        <QuoteCart props={this.props} />
+        <AddServices props={this.props} />
         <Grid.Row>
           <Button floated="right" color="teal">Next</Button>
           <Button onClick={() => browserHistory.push('/quote/vehicle')} floated="right">Back</Button>
@@ -105,3 +105,6 @@ export default compose(
   withWinterizationData,
   connect(mapStateToProps, mapDispatchToProps)
 )(QuoteCentral);
+
+// ESLint
+//
