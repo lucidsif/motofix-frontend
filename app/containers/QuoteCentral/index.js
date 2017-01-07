@@ -33,7 +33,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     // console.log(this.props.winterization)
     return (
       <div>
-        <QuoteCart estimate={this.props.estimate} oilChange={this.props.oilChange} winterization={this.props.winterization} />
+        <QuoteCart cart={this.props.cart} estimate={this.props.estimate} oilChange={this.props.oilChange} winterization={this.props.winterization} />
         <AddServices cart={this.props.cart} oilChange={this.props.oilChange} winterization={this.props.winterization} onCartClick={this.props.onCartClick} onTrashClick={this.props.onTrashClick} />
         <Grid.Row>
           <Button floated="right" color="teal">Next</Button>
