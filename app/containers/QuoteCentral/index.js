@@ -66,10 +66,13 @@ const mapStateToProps = createStructuredSelector({
   estimate: selectEstimate(),
 });
 
+// Why is it replacing labortime?
+// what happens if there is no queryResult.response?
+// how to calculate service cost in to cart?<<< work on this first
 function mapDispatchToProps(dispatch) {
   return {
-    onCartClick: (service, oilData) => {
-      const responseObj = JSON.parse(oilData.response)
+    onCartClick: (service, queryResult) => {
+      const responseObj = JSON.parse(queryResult.response)
       const laborTime = responseObj.time
       const serviceObj = {[service]: {selected: true, laborTime, laborPrice: null } };
       console.log(serviceObj);
