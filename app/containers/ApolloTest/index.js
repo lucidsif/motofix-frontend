@@ -37,3 +37,23 @@ const withData = graphql(TEST_QUERY, {
 });
 
 export default withData(ApolloTest);
+
+/*
+
+const WINTERIZATION_QUERY = gql`
+{
+  laborEstimates(service: "Winterization"){
+    response
+  }
+}
+`;
+
+const withWinterizationData = graphql(WINTERIZATION_QUERY, {
+  props: ({ ownProps, data: { loading, laborEstimates } }) => ({
+    loading,
+    winterization: laborEstimates.response,
+  }),
+});
+
+//QuoteCentral = withWinterizationData(QuoteCentral);
+*/

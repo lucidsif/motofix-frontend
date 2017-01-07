@@ -28,6 +28,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     console.log(this.props.vehicle);
     console.log(this.props.cart);
     console.log(this.props.estimate);
+    console.log(this.props.oilChange);
     return (
       <div>
         <QuoteCart estimate={this.props.estimate} />
@@ -52,7 +53,7 @@ const OIL_CHANGE_QUERY = gql`
 const withData = graphql(OIL_CHANGE_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    laborEstimates,
+    oilChange: laborEstimates.response,
   }),
 });
 
