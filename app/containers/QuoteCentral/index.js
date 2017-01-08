@@ -52,13 +52,13 @@ const mapStateToProps = createStructuredSelector({
   cart: selectCart(),
   estimate: selectEstimate(),
 });
-
-// Why is it replacing labortime?
-// what happens if there is no queryResult.response?
+// what happens if there is no queryResult.response or it fails?
 function mapDispatchToProps(dispatch) {
   return {
     onCartClick: (service, queryResult) => {
       console.log(service, queryResult);
+      // should the business logic be moved to redux saga? Yes. It is middleware that can do business logic.
+      // Move this logic to redux saga.
       const responseObj = JSON.parse(queryResult.response)
       const laborTime = responseObj.time
       const serviceObj = {[service]: {selected: true, laborTime, laborPrice: null } };

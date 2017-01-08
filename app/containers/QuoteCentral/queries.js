@@ -3,6 +3,7 @@
  */
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+// TODO: 6/10 Use fragments instead of queries?
 
 const ACCESSORY_INSTALLATION_QUERY = gql`
 {
