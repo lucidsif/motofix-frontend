@@ -4,7 +4,14 @@
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
-const OIL_CHANGE_QUERY = gql`
+const ACCESSORY_INSTALLATION_QUERY = gql`
+{
+  laborEstimates(service: "Accessory Installation"){
+    response
+  }
+}
+
+`;const OIL_CHANGE_QUERY = gql`
 {
   laborEstimates(service: "Oil Change"){
     response

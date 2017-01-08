@@ -23,12 +23,12 @@ function AddServices(props) {
   const ServiceSegments = () => {
     return services.map((service) => {
       // in case despacing all the services  is required, this is the function needed
-      const propifiedService = service.replace(/\s/g,'').replace(/['"]+/g, '');
+      const propifiedService = service.replace(/\s/g, "")
       return (
         <Segment attached textAlign="left" key={service}>
           {service}
           {!props.props.cart[service].selected ? (
-            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick(service, props.props[service])} link />
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick(service, props.props[propifiedService])} link />
           ) : (
             <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(service)} link />
           )}
