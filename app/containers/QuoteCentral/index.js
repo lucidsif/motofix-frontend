@@ -76,6 +76,7 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   queries.AccessoryInstallationData,
   queries.AirFilterReplacementData,
+  queries.BrakePadReplacementData,
   queries.OilChangeData,
   queries.WinterizationData,
   connect(mapStateToProps, mapDispatchToProps)

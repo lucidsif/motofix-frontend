@@ -9,7 +9,7 @@ import { Grid, Segment, Input, Icon, Image, Label } from 'semantic-ui-react';
 import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
 
-const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain & Sprocket Replacement', 'Check Engine/FI Light Is On', 'Clean & Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting (Inspection)', 'Motorcycle Is Overheating', 'NY State Inspection', 'Pre-purchase Inspection', 'Spongy braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization','Smoke Or Steam Is Coming Out Of Motorcycle'];
+const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine/FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting (Inspection)', 'Motorcycle Is Overheating', 'NY State Inspection', 'Pre-purchase Inspection', 'Spongy braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization','Smoke Or Steam Is Coming Out Of Motorcycle'];
 
 // Pre-req to adding passing dynamic props to service segments is writing out all the queries
 // TODO: 8/10 add all services
@@ -49,13 +49,13 @@ function AddServices(props) {
           <Grid.Column>
             <Segment textAlign="center">
               <Image as="a" centered size="mini" src={toolIcon} href="#" />
-              <p className="iconText"> Repairs & Maintenance</p>
+              <p className="iconText"> Repairs And Maintenance</p>
             </Segment>
           </Grid.Column>
           <Grid.Column>
             <Segment textAlign="center">
               <Image as="a" centered size="mini" src={diagnoseIcon} href="#" />
-              <p className="iconText">Diagnostics & Inspections</p>
+              <p className="iconText">Diagnostics And Inspections</p>
             </Segment>
           </Grid.Column>
         </Grid.Row>

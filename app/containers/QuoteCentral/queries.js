@@ -162,19 +162,19 @@ export const AirFilterReplacementData = graphql(AIR_FILTER_REPLACEMENT_QUERY, {
 export const BrakePadReplacementData = graphql(BRAKE_PAD_REPLACEMENT_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    BrakePadReplacement: laborEstimates,
   }),
 });
 export const BrakesSqueakingData = graphql(BRAKES_ARE_SQUEAKING_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    BrakesAreSqueaking: laborEstimates,
   }),
 });
 export const ChainSprocketReplacementData = graphql(CHAIN_AND_SPROCKET_REPLACEMENT_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    Replacement: laborEstimates,
   }),
 });
 export const CheckEngineFiData = graphql(CHECK_ENGINE_AND_FI_LIGHT_IS_ON_QUERY, {
