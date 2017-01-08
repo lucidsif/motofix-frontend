@@ -57,8 +57,8 @@ function mapDispatchToProps(dispatch) {
   return {
     onCartClick: (service, queryResult) => {
       console.log(service, queryResult);
-      // should the business logic be moved to redux saga? Yes. It is middleware that can do business logic.
-      // Move this logic to redux saga.
+      // side effect - eventhandler carries both the service and queryResult. redux-saga should handle th
+      // queryResult by dispatching an action that changes the service labortime in cart state
       const responseObj = JSON.parse(queryResult.response)
       const laborTime = responseObj.time
       const serviceObj = {[service]: {selected: true, laborTime, laborPrice: null } };
