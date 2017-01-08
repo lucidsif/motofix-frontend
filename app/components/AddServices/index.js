@@ -9,7 +9,7 @@ import { Grid, Segment, Input, Icon, Image, Label } from 'semantic-ui-react';
 import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
 
-const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine/FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting (Inspection)', 'Motorcycle Is Overheating', 'NY State Inspection', 'Pre-purchase Inspection', 'Spongy braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization','Smoke Or Steam Is Coming Out Of Motorcycle'];
+const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization'];
 
 // Pre-req to adding passing dynamic props to service segments is writing out all the queries
 // TODO: 8/10 add all services
@@ -81,7 +81,7 @@ function AddServices(props) {
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
                 {!props.props.cart['Smoke Or Steam Is Coming Out Of Motorcycle'].selected ? (
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Smoke Or Steam Is Coming Out Of Motorcycle')} link />
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Smoke Or Steam Is Coming Out Of Motorcycle', props.props.SmokeOrSteamIsComingOutOfMotorcycle)} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Smoke Or Steam Is Coming Out Of Motorcycle')} link />
                 )}

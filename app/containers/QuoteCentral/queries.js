@@ -174,43 +174,44 @@ export const BrakesSqueakingData = graphql(BRAKES_ARE_SQUEAKING_QUERY, {
 export const ChainSprocketReplacementData = graphql(CHAIN_AND_SPROCKET_REPLACEMENT_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    Replacement: laborEstimates,
+    ChainAndSprocketReplacement: laborEstimates,
   }),
 });
-export const CheckEngineFiData = graphql(CHECK_ENGINE_AND_FI_LIGHT_IS_ON_QUERY, {
+// broken
+export const CheckEngineFIData = graphql(CHECK_ENGINE_AND_FI_LIGHT_IS_ON_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    CheckEngineOrFILightIsOn: laborEstimates,
   }),
 });
 export const CleanLubeChainData = graphql(CLEAN_AND_LUBE_CHAIN_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    CleanAndLubeChain: laborEstimates,
   }),
 });
 export const FluidsLeakingData = graphql(FLUIDS_ARE_LEAKING_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    FluidsAreLeaking: laborEstimates,
   }),
 });
 export const MotorcycleNotStartingData = graphql(MOTORCYCLE_IS_NOT_STARTING_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    MotorcycleIsNotStarting: laborEstimates,
   }),
 });
 export const MotorcycleOverheatingData = graphql(MOTORCYCLE_IS_OVERHEATING_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    MotorcycleIsOverheating: laborEstimates,
   }),
 });
 export const NyStateInspectionData = graphql(NY_STATE_INSPECTION_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    NYStateInspection: laborEstimates,
   }),
 });
 export const OilChangeData = graphql(OIL_CHANGE_QUERY, {
@@ -219,46 +220,46 @@ export const OilChangeData = graphql(OIL_CHANGE_QUERY, {
     OilChange: laborEstimates,
   }),
 });
-export const PrePurchaseInspectionData = graphql(PRE_PURCHASE_INSPECTION_QUERY, {
+export const PrepurchaseInspectionData = graphql(PRE_PURCHASE_INSPECTION_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    PrepurchaseInspection: laborEstimates,
   }),
 });
 export const SmokeOrSteamData = graphql(SMOKE_OR_STEAM_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    SmokeOrSteamIsComingOutOfMotorcycle: laborEstimates,
   }),
 });
 export const SpongyBrakingData = graphql(SPONGY_BRAKING_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    SpongyBraking: laborEstimates,
   }),
 });
 export const SuspensionTuningData = graphql(SUSPENSION_TUNING_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    SuspensionTuning: laborEstimates,
   }),
 });
 export const TireReplacementData = graphql(TIRE_REPLACEMENT_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    TireReplacement: laborEstimates,
   }),
 });
 export const ValveAdjustmentData = graphql(VALVE_ADJUSTMENT_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    ValveAdjustment: laborEstimates,
   }),
 });
 export const WarningLightData = graphql(WARNING_LIGHT_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    AirFilterReplacement: laborEstimates,
+    WarningLightIsOn: laborEstimates,
   }),
 });
 export const WinterizationData = graphql(WINTERIZATION_QUERY, {
