@@ -9,7 +9,7 @@ import { Grid, Segment, Input, Icon, Image, Label } from 'semantic-ui-react';
 import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
 
-const services = ['Smoke Or Steam Is Coming Out Of Motorcycle', 'NY State Inspection', 'Motorcycle Is Not Starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check Engine/FI Light Is On', 'Warning Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Overheating', 'Brakes Are Squeaking', 'Spongy braking'];
+const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain & Sprocket Replacement', 'Check Engine/FI Light Is On', 'Clean & Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting (Inspection)', 'Motorcycle Is Overheating', 'NY State Inspection', 'Pre-purchase Inspection', 'Spongy braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization','Smoke Or Steam Is Coming Out Of Motorcycle'];
 
 // Pre-req to adding passing dynamic props to service segments is writing out all the queries
 // TODO: 8/10 add all services
