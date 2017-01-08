@@ -58,6 +58,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onCartClick: (service, queryResult) => {
+      console.log(service, queryResult);
       const responseObj = JSON.parse(queryResult.response)
       const laborTime = responseObj.time
       const serviceObj = {[service]: {selected: true, laborTime, laborPrice: null } };

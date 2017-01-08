@@ -23,14 +23,14 @@ const WINTERIZATION_QUERY = gql`
 export const withOilChangeData = graphql(OIL_CHANGE_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    oilChange: laborEstimates,
+    OilChange: laborEstimates,
   }),
 });
 
 export const withWinterizationData = graphql(WINTERIZATION_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    winterization: laborEstimates,
+    Winterization: laborEstimates,
   }),
 });
 

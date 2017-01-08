@@ -11,22 +11,25 @@ import diagnoseIcon from './diagnoseIcon.png';
 
 const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Spongy braking'];
 
+// Pre-req to adding passing dynamic props to service segments is writing out all the queries
 // TODO: 8/10 add all services
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 
 function AddServices(props) {
-  const { props: { onCartClick, onTrashClick, cart, oilChange, winterization }} = props;
+  // const { props: { props.onCartClick, props.onTrashClick, cart, OilChange, Winterization }} = props;
 
+  // .replace(/\s/g,'')
   const ServiceSegments = () => {
     return services.map((service) => {
+      const propifiedService = service.replace(/\s/g,'').replace(/['"]+/g, '');
       return (
         <Segment attached textAlign="left" key={service}>
           {service}
-          {!cart[service].selected ? (
-            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick(service)} link />
+          {!props.props.cart[service].selected ? (
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick(service, props.props[service])} link />
           ) : (
-            <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick(service)} link />
+            <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(service)} link />
           )}
         </Segment>
       );
@@ -66,20 +69,20 @@ function AddServices(props) {
             <Segment.Group>
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
-                  {!cart['Oil Change'].selected ? (
-                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Oil Change', oilChange)} link />
+                  {!props.props.cart['Oil Change'].selected ? (
+                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Oil Change', props.props.OilChange)} link />
                 ) : (
-                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick('Oil Change')} link />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Oil Change')} link />
                 )}
                 </p>
               </Segment>
               {ServiceSegments()}
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
-                {!cart['Smoke or steam is coming out of motorcycle'].selected ? (
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => onCartClick('Smoke or steam is coming out of motorcycle')} link />
+                {!props.props.cart['Smoke or steam is coming out of motorcycle'].selected ? (
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Smoke or steam is coming out of motorcycle')} link />
                 ) : (
-                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => onTrashClick('Smoke or steam is coming out of motorcycle')} link />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Smoke or steam is coming out of motorcycle')} link />
                 )}
               </Segment>
             </Segment.Group>
