@@ -10,7 +10,7 @@ import {
   REMOVE_FROM_CART,
 } from './constants';
 
-const services = ['Oil Change', 'Smoke or steam is coming out of motorcycle', 'NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Spongy braking'];
+const services = ['Oil Change', 'Smoke Or Steam Is Coming Out Of Motorcycle', 'NY State Inspection', 'Motorcycle Is Not Starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check Engine/FI Light Is On', 'Warning Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Overheating', 'Brakes Are Squeaking', 'Spongy braking'];
 const cart = services.reduce((acc, cur, i) => {
   acc[cur] = { selected: false, laborTime: null };
   return acc;

@@ -9,7 +9,7 @@ import { Grid, Segment, Input, Icon, Image, Label } from 'semantic-ui-react';
 import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
 
-const services = ['NY State Inspection', 'Motorcycle is not starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check engine/FI light in on', 'Warning light is on', 'Fluids are leaking', 'Motorcycle is overheating', 'Brakes are squeaking', 'Spongy braking'];
+const services = ['Smoke Or Steam Is Coming Out Of Motorcycle', 'NY State Inspection', 'Motorcycle Is Not Starting (Inspection)', 'Pre-purchase Inspection', 'Winterization', 'Air Filter Replacement', 'Chain & Sprocket Replacement', 'Clean & Lube Chain', 'Valve Adjustment', 'Accessory Installation', 'Suspension Tuning', 'Tire Replacement', 'Brake Pad Replacement', 'Check Engine/FI Light Is On', 'Warning Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Overheating', 'Brakes Are Squeaking', 'Spongy braking'];
 
 // Pre-req to adding passing dynamic props to service segments is writing out all the queries
 // TODO: 8/10 add all services
@@ -22,6 +22,7 @@ function AddServices(props) {
   // .replace(/\s/g,'')
   const ServiceSegments = () => {
     return services.map((service) => {
+      // in case despacing all the services  is required, this is the function needed
       const propifiedService = service.replace(/\s/g,'').replace(/['"]+/g, '');
       return (
         <Segment attached textAlign="left" key={service}>
@@ -79,10 +80,10 @@ function AddServices(props) {
               {ServiceSegments()}
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
-                {!props.props.cart['Smoke or steam is coming out of motorcycle'].selected ? (
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Smoke or steam is coming out of motorcycle')} link />
+                {!props.props.cart['Smoke Or Steam Is Coming Out Of Motorcycle'].selected ? (
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Smoke Or Steam Is Coming Out Of Motorcycle')} link />
                 ) : (
-                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Smoke or steam is coming out of motorcycle')} link />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Smoke Or Steam Is Coming Out Of Motorcycle')} link />
                 )}
               </Segment>
             </Segment.Group>
