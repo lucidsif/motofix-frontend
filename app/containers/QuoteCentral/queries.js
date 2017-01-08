@@ -147,25 +147,25 @@ const WINTERIZATION_QUERY = gql`
 `;
 //////// graphql containers
 // POST QUERY PROP VARIABLES ARE VERY IMPORTANT SINCE THEY ARE DYNAMICALLY ACCESSED BY QUOTECART
-export const withAccessoryInstallationData = graphql(ACCESSORY_INSTALLATION_QUERY, {
+export const AccessoryInstallationData = graphql(ACCESSORY_INSTALLATION_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     AccessoryInstallation: laborEstimates,
   }),
 });
-export const withAirFilterReplacementData = graphql(AIR_FILTER_REPLACEMENT_QUERY, {
+export const AirFilterReplacementData = graphql(AIR_FILTER_REPLACEMENT_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     AirFilterReplacement: laborEstimates,
   }),
 });
-export const withOilChangeData = graphql(OIL_CHANGE_QUERY, {
+export const OilChangeData = graphql(OIL_CHANGE_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     OilChange: laborEstimates,
   }),
 });
-export const withWinterizationData = graphql(WINTERIZATION_QUERY, {
+export const WinterizationData = graphql(WINTERIZATION_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     Winterization: laborEstimates,

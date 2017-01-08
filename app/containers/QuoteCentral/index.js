@@ -74,10 +74,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  queries.withAccessoryInstallationData,
-  queries.withAirFilterReplacementData,
-  queries.withOilChangeData,
-  queries.withWinterizationData,
+  queries.AccessoryInstallationData,
+  queries.AirFilterReplacementData,
+  queries.OilChangeData,
+  queries.WinterizationData,
   connect(mapStateToProps, mapDispatchToProps)
 )(QuoteCentral);
 
