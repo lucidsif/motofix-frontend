@@ -18,7 +18,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCart, selectEstimate } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
-import { withOilChangeData, withWinterizationData } from './queries';
+import * as queries from './queries';
 
 // TODO: 8/10 restructure service arr (in reducers and props so non-spaced keys are used instead'
 // TODO: 7.5/10 Create the price breakdown component
@@ -74,8 +74,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  withOilChangeData,
-  withWinterizationData,
+  queries.withOilChangeData,
+  queries.withWinterizationData,
   connect(mapStateToProps, mapDispatchToProps)
 )(QuoteCentral);
 
