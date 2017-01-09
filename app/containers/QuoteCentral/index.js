@@ -59,6 +59,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onCartClick: (service) => {
+      console.log(service);
       // side effect - eventhandler carries both the service and serviceQuery. redux-saga should handle th
       // serviceQuery by dispatching an action that changes the service labortime in cart state
       //const responseObj = JSON.parse(serviceQuery.response)

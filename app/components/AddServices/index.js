@@ -70,20 +70,20 @@ function AddServices(props) {
             <Segment.Group>
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
-                  {!props.props.cart['Oil Change'] ? (
-                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Oil Change')} link />
+                  {!props.props.cart.OilChange ? (
+                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('OilChange')} link />
                 ) : (
-                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Oil Change')} link />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('OilChange')} link />
                 )}
                 </p>
               </Segment>
               {ServiceSegments()}
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
-                {!props.props.cart['Smoke Or Steam Is Coming Out Of Motorcycle'] ? (
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Smoke Or Steam Is Coming Out Of Motorcycle', props.props.SmokeOrSteamIsComingOutOfMotorcycle)} link />
+                {!props.props.cart.SmokeOrSteamIsComingOutOfMotorcycle ? (
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('SmokeOrSteamIsComingOutOfMotorcycle')} link />
                 ) : (
-                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Smoke Or Steam Is Coming Out Of Motorcycle')} link />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('SmokeOrSteamIsComingOutOfMotorcycle')} link />
                 )}
               </Segment>
             </Segment.Group>

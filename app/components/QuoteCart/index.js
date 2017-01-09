@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Grid, Segment, Accordion, Icon, Label } from 'semantic-ui-react';
-const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization'];
+const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Smoke Or Steam Is Coming Out Of Motorcycle', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization','Oil Change'];
 
 
 // TODO: 7/10 make navbar fixed at the top and put props.props.cart price in there
@@ -20,36 +20,21 @@ function QuoteCart(props) {
       return regexedService;
     })
       .reduce((acc, curr) => {
-      console.log(curr);
       let objService = props.props[curr];
       if(objService && props.props.cart[curr]){
-        console.log(objService);
         let parsedResponse = JSON.parse(objService.response);
         return acc + parsedResponse.time;
       }
       else {
-        console.log('service not found or not selected');
         return acc + 0;
       }
     }, 0);
     return sum * 67;
     }
-  /*
-  // try to calculate laborTime from the apolloprop
-  // once you can do that, the cart price should be calculated from these props instead
-  // decouple labortime from eventhandler
-  const testApolloPropRender = () => {
-
-  }
-*/
-  // console.log(props.props.OilChange);
   return (
     <Grid.Row>
       <Segment padded="very">
         <Grid.Row>
-          {props.props.OilChange.laborEstimates &&
-            props.props.OilChange.laborEstimates.response
-          }
           <p className="totalPriceNum">Your Total Estimate: </p>
         </Grid.Row>
         <Grid centered divided="vertically">
