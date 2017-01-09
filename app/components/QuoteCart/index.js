@@ -6,6 +6,8 @@
 
 import React from 'react';
 import { Grid, Segment, Accordion, Icon, Label } from 'semantic-ui-react';
+const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization'];
+
 
 // TODO: 7/10 make navbar fixed at the top and put props.props.cart price in there
 // TODO: 6.5/10 Find a more functional/cleaner approach to calculate estimate, if possible
@@ -13,24 +15,25 @@ import { Grid, Segment, Accordion, Icon, Label } from 'semantic-ui-react';
 function QuoteCart(props) {
 
   const totalServicePrice = () => {
-    let sum = 0;
-    for (const key in props.props.cart) {
-      // skip loop if the property is from prototype
-
-      if (!props.props.cart.hasOwnProperty(key)) continue;
-      const obj = props.props.cart[key];
-      for (const prop in obj) {
-        // skip loop if the property is from prototype
-        if (!obj.hasOwnProperty(prop)) continue;
-
-        // your code
-        if (typeof obj[prop] === 'number') {
-          sum += obj[prop];
-        }
+    let apolloObjects = services.map((service) => {
+      let regexedService = service.replace(/\s/g, "");
+      let objService = props.props[regexedService];
+      return objService;
+    })
+    console.log(apolloObjects);
+    let sum = apolloObjects.reduce((acc, curr) => {
+      if(curr && curr.selected){
+        let parsedResponse = JSON.parse(curr.response);
+        return acc + parsedResponse.time;
       }
-    }
+      else {
+        console.log('service not found or not selected');
+        return acc + 0;
+      }
+    }, 0);
+    console.log(sum);
     return sum * 67;
-  };
+    }
   /*
   // try to calculate laborTime from the apolloprop
   // once you can do that, the cart price should be calculated from these props instead
@@ -39,7 +42,7 @@ function QuoteCart(props) {
 
   }
 */
-  console.log(props.props.OilChange);
+  // console.log(props.props.OilChange);
   return (
     <Grid.Row>
       <Segment padded="very">

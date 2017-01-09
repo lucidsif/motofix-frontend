@@ -152,7 +152,7 @@ query laborEstimates($vehicle: String, $service: String) {
 //////// graphql containers
 // POST QUERY PROP VARIABLES ARE VERY IMPORTANT SINCE THEY ARE DYNAMICALLY ACCESSED BY QUOTECART
 export const AccessoryInstallationData = graphql(ACCESSORY_INSTALLATION_QUERY, {
-  options: ( ownProps ) => ({ variables: { vehicle: ownProps.vehicle.appended, service: 'Accessory Installation' } }),
+  options: ( ownProps ) => ({ variables: { vehicle: ownProps.vehicle.appended, service: 'Oil Change' } }),
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     AccessoryInstallation: laborEstimates,
