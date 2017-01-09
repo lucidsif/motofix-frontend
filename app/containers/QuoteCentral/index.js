@@ -20,9 +20,6 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 import * as queries from './queries';
 
-// calc price from apolloprops
-// refactor to one off queries
-// refactor to decouple eventhandler and labortime state
 // TODO: 7.5/10 Create the price breakdown component
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
 // TODO: 6/10 make sure the onclick handler for the back button isn't being recreated on every rerender
