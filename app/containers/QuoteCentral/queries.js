@@ -222,7 +222,7 @@ export const OilChangeData = graphql(OIL_CHANGE_QUERY, {
   options: ( ownProps ) => ({ variables: { vehicle: ownProps.vehicle.appended, service: 'Oil Change' } }),
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
-    OilChange: laborEstimates,
+    OilChange: { laborEstimates, selected: 'false' },
   }),
 });
 export const PrepurchaseInspectionData = graphql(PRE_PURCHASE_INSPECTION_QUERY, {

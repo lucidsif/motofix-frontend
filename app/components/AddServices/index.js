@@ -36,7 +36,7 @@ function AddServices(props) {
       );
     });
   };
-
+  // checking for props.data.refetch()
   return (
     <Segment padded="very">
       <Grid centered>

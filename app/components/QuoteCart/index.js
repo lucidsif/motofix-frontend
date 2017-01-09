@@ -39,13 +39,13 @@ function QuoteCart(props) {
 
   }
 */
-  //console.log(props.props.cart);
+  console.log(props.props.OilChange);
   return (
     <Grid.Row>
       <Segment padded="very">
         <Grid.Row>
-          {props.props.OilChange &&
-            props.props.OilChange.response
+          {props.props.OilChange.laborEstimates &&
+            props.props.OilChange.laborEstimates.response
           }
           <p className="totalPriceNum">Your Total Estimate: </p>
         </Grid.Row>
