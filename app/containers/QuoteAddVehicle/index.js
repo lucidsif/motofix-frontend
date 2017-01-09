@@ -17,6 +17,7 @@ let modelsFactory = [];
 let year;
 let make;
 let model;
+let appended;
 
 // TODO: Make it impossible to set make without selecting year first
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
@@ -81,6 +82,7 @@ class QuoteAddVehicle extends React.Component {
     year = this.state.yearValue;
     make = this.state.makeValue;
     model = newValue;
+    appended = `${year} ${make} ${model}`;
   }
   render() {
     return (
@@ -145,7 +147,7 @@ QuoteAddVehicle.propTypes = {
 export function mapDispatchToProps(dispatch){
   return {
     onSubmitForm: (evt) => {
-      const vehicle = { year, make, model };
+      const vehicle = { appended, year, make, model };
       evt.preventDefault();
       if (year && make && model){
         console.log('all fields submitted');

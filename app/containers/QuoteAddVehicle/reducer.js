@@ -11,6 +11,7 @@ import {
 } from './constants';
 
 const initialState = fromJS({
+  appended: null,
   year: null,
   make: null,
   model: null,
