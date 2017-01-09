@@ -13,14 +13,11 @@ import services from './reducerServices';
 
 
 const cart = services.reduce((acc, cur, i) => {
-  acc[cur] = { selected: false, laborTime: null };
+  acc[cur] = { name: cur, selected: false, laborTime: null };
   return acc;
 }, {});
 // start with a single part and later evolve to multiple parts
-const part = services.reduce((acc, cur, i) => {
-  acc[cur] = { partName: null, imageUrl: null, price: null };
-  return acc;
-}, {});
+const part = cart;
 
 const estimate = { serviceTotal: 0, partsTotal: 0, total: 0, dealer: 0, priceSavings: 0, percentSavings: 0 };
 const initialState = fromJS({ cart, estimate, part });

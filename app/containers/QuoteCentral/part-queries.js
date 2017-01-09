@@ -6,8 +6,8 @@ import { graphql } from 'react-apollo';
 // TODO: 6/10 Use fragments instead of queries?
 
 const ACCESSORY_INSTALLATION_QUERY = gql`
-query laborEstimates($service: String){
-  laborEstimates(service: $service){
+{
+  laborEstimates(service: "Oil Change"){
     response
   }
 }
@@ -146,11 +146,9 @@ const WINTERIZATION_QUERY = gql`
   }
 }
 `;
-
 //////// graphql containers
 // POST QUERY PROP VARIABLES ARE VERY IMPORTANT SINCE THEY ARE DYNAMICALLY ACCESSED BY QUOTECART
 export const AccessoryInstallationData = graphql(ACCESSORY_INSTALLATION_QUERY, {
-  options: ( ownProps ) => ({ variables: { service: ownProps.vehicle.make } }),
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     AccessoryInstallation: laborEstimates,
@@ -180,6 +178,7 @@ export const ChainSprocketReplacementData = graphql(CHAIN_AND_SPROCKET_REPLACEME
     ChainAndSprocketReplacement: laborEstimates,
   }),
 });
+// broken
 export const CheckEngineFIData = graphql(CHECK_ENGINE_AND_FI_LIGHT_IS_ON_QUERY, {
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
@@ -270,3 +269,4 @@ export const WinterizationData = graphql(WINTERIZATION_QUERY, {
     Winterization: laborEstimates,
   }),
 });
+

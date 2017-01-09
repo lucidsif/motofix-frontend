@@ -55,14 +55,12 @@ const mapStateToProps = createStructuredSelector({
 // what happens if there is no serviceQuery.response or it fails?
 function mapDispatchToProps(dispatch) {
   return {
-    onCartClick: (service, serviceQuery) => {
-      console.log(service, serviceQuery);
+    onCartClick: (service, serviceQuery, vehicle) => {
       // side effect - eventhandler carries both the service and serviceQuery. redux-saga should handle th
       // serviceQuery by dispatching an action that changes the service labortime in cart state
       const responseObj = JSON.parse(serviceQuery.response)
       const laborTime = responseObj.time
       const serviceObj = {[service]: {selected: true, laborTime, laborPrice: null } };
-      console.log(serviceObj);
       dispatch(addToCart(serviceObj));
     },
     onTrashClick: (service) => {
@@ -73,7 +71,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+// order matters, connect must come first for the graphql containers to be able to access the props
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   queries.AccessoryInstallationData,
   queries.AirFilterReplacementData,
   queries.BrakePadReplacementData,
@@ -94,7 +94,6 @@ export default compose(
   queries.ValveAdjustmentData,
   queries.WarningLightData,
   queries.WinterizationData,
-  connect(mapStateToProps, mapDispatchToProps)
 )(QuoteCentral);
 
 // ESLint
