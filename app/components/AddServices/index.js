@@ -23,14 +23,14 @@ function AddServices(props) {
   const ServiceSegments = () => {
     return services.map((service) => {
       // in case despacing all the services  is required, this is the function needed
-      const propifiedService = service.replace(/\s/g, "")
+      let propifiedService = service.replace(/\s/g, "")
       return (
         <Segment attached textAlign="left" key={service}>
           {service}
-          {!props.props.cart[service].selected ? (
-            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick(service, props.props[propifiedService])} link />
+          {!props.props.cart[propifiedService] ? (
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick(propifiedService)} link />
           ) : (
-            <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(service)} link />
+            <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(propifiedService)} link />
           )}
         </Segment>
       );
@@ -70,8 +70,8 @@ function AddServices(props) {
             <Segment.Group>
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
-                  {!props.props.cart['Oil Change'].selected ? (
-                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Oil Change', props.props.OilChange)} link />
+                  {!props.props.cart['Oil Change'] ? (
+                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Oil Change')} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Oil Change')} link />
                 )}
@@ -80,7 +80,7 @@ function AddServices(props) {
               {ServiceSegments()}
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
-                {!props.props.cart['Smoke Or Steam Is Coming Out Of Motorcycle'].selected ? (
+                {!props.props.cart['Smoke Or Steam Is Coming Out Of Motorcycle'] ? (
                   <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('Smoke Or Steam Is Coming Out Of Motorcycle', props.props.SmokeOrSteamIsComingOutOfMotorcycle)} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('Smoke Or Steam Is Coming Out Of Motorcycle')} link />

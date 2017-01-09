@@ -15,15 +15,16 @@ const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad
 function QuoteCart(props) {
 
   const totalServicePrice = () => {
-    let apolloObjects = services.map((service) => {
+    let sum = services.map((service) => {
       let regexedService = service.replace(/\s/g, "");
-      let objService = props.props[regexedService];
-      return objService;
+      return regexedService;
     })
-    console.log(apolloObjects);
-    let sum = apolloObjects.reduce((acc, curr) => {
-      if(curr && curr.selected){
-        let parsedResponse = JSON.parse(curr.response);
+      .reduce((acc, curr) => {
+      console.log(curr);
+      let objService = props.props[curr];
+      if(objService && props.props.cart[curr]){
+        console.log(objService);
+        let parsedResponse = JSON.parse(objService.response);
         return acc + parsedResponse.time;
       }
       else {
@@ -31,7 +32,6 @@ function QuoteCart(props) {
         return acc + 0;
       }
     }, 0);
-    console.log(sum);
     return sum * 67;
     }
   /*
