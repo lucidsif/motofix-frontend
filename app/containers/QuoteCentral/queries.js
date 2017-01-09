@@ -8,8 +8,8 @@ import { graphql } from 'react-apollo';
 // TODO: 6/10 Use fragments instead of queries?
 
 const ACCESSORY_INSTALLATION_QUERY = gql`
-query laborEstimates($service: String){
-  laborEstimates(service: $service){
+query laborEstimates($vehicle: String, $service: String) {
+  laborEstimates(vehicle: $vehicle, service: $service) {
     response
   }
 }
@@ -86,8 +86,8 @@ const NY_STATE_INSPECTION_QUERY = gql`
 }
 `;
 const OIL_CHANGE_QUERY = gql`
-{
-  laborEstimates(service: "Oil Change"){
+query laborEstimates($vehicle: String, $service: String) {
+  laborEstimates(vehicle: $vehicle, service: $service) {
     response
   }
 }
@@ -152,7 +152,7 @@ const WINTERIZATION_QUERY = gql`
 //////// graphql containers
 // POST QUERY PROP VARIABLES ARE VERY IMPORTANT SINCE THEY ARE DYNAMICALLY ACCESSED BY QUOTECART
 export const AccessoryInstallationData = graphql(ACCESSORY_INSTALLATION_QUERY, {
-  options: ( ownProps ) => ({ variables: { service: ownProps.vehicle.appended } }),
+  options: ( ownProps ) => ({ variables: { vehicle: ownProps.vehicle.appended, service: 'Accessory Installation' } }),
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     AccessoryInstallation: laborEstimates,
@@ -219,6 +219,7 @@ export const NyStateInspectionData = graphql(NY_STATE_INSPECTION_QUERY, {
   }),
 });
 export const OilChangeData = graphql(OIL_CHANGE_QUERY, {
+  options: ( ownProps ) => ({ variables: { vehicle: ownProps.vehicle.appended, service: 'Oil Change' } }),
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     OilChange: laborEstimates,
