@@ -52,14 +52,14 @@ const mapStateToProps = createStructuredSelector({
   cart: selectCart(),
   estimate: selectEstimate(),
 });
-// what happens if there is no queryResult.response or it fails?
+// what happens if there is no serviceQuery.response or it fails?
 function mapDispatchToProps(dispatch) {
   return {
-    onCartClick: (service, queryResult) => {
-      console.log(service, queryResult);
-      // side effect - eventhandler carries both the service and queryResult. redux-saga should handle th
-      // queryResult by dispatching an action that changes the service labortime in cart state
-      const responseObj = JSON.parse(queryResult.response)
+    onCartClick: (service, serviceQuery) => {
+      console.log(service, serviceQuery);
+      // side effect - eventhandler carries both the service and serviceQuery. redux-saga should handle th
+      // serviceQuery by dispatching an action that changes the service labortime in cart state
+      const responseObj = JSON.parse(serviceQuery.response)
       const laborTime = responseObj.time
       const serviceObj = {[service]: {selected: true, laborTime, laborPrice: null } };
       console.log(serviceObj);
