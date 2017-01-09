@@ -3,6 +3,8 @@
  */
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+
+//TODO: have laborEstimates be able to accept a vehicle parameter on the apollo server
 // TODO: 6/10 Use fragments instead of queries?
 
 const ACCESSORY_INSTALLATION_QUERY = gql`
@@ -150,7 +152,7 @@ const WINTERIZATION_QUERY = gql`
 //////// graphql containers
 // POST QUERY PROP VARIABLES ARE VERY IMPORTANT SINCE THEY ARE DYNAMICALLY ACCESSED BY QUOTECART
 export const AccessoryInstallationData = graphql(ACCESSORY_INSTALLATION_QUERY, {
-  options: ( ownProps ) => ({ variables: { service: ownProps.vehicle.make } }),
+  options: ( ownProps ) => ({ variables: { service: ownProps.vehicle.appended } }),
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     AccessoryInstallation: laborEstimates,
