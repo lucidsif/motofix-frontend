@@ -4,7 +4,7 @@
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
-//TODO: have laborEstimates be able to accept a vehicle parameter on the apollo server
+//TODO: 7.5/10 See if you can add a reducer to winterization so it changes the state of cart[Winterization]laborTime
 // TODO: 6/10 Use fragments instead of queries?
 
 const ACCESSORY_INSTALLATION_QUERY = gql`
@@ -142,8 +142,8 @@ const WARNING_LIGHT_QUERY = gql`
 }
 `;
 const WINTERIZATION_QUERY = gql`
-{
-  laborEstimates(service: "Winterization"){
+query laborEstimates($vehicle: String, $service: String) {
+  laborEstimates(vehicle: $vehicle, service: $service) {
     response
   }
 }
@@ -268,6 +268,7 @@ export const WarningLightData = graphql(WARNING_LIGHT_QUERY, {
   }),
 });
 export const WinterizationData = graphql(WINTERIZATION_QUERY, {
+  options: ( ownProps ) => ({ variables: { vehicle: ownProps.vehicle.appended, service: 'Winterization' } }),
   props: ({ ownProps, data: { loading, laborEstimates } }) => ({
     loading,
     Winterization: laborEstimates,
