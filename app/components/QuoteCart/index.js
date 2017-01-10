@@ -10,19 +10,16 @@ const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad
 
 // TODO: 7/10 make navbar fixed at the top and put props.props.cart price in there
 // TODO: 6.5/10 Find a more functional/cleaner approach to calculate estimate, if possible
-// service total will be the sum of every service in props.props.cart prop that is selected true
+
 function QuoteCart(props) {
 
   // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
   const totalServicePrice = () => {
-    let sum = 5;
-
-    const regexedServices = services.map((service) => {
+    const sumOfLaborTimes = services.map((service) => {
       let regexedService = service.replace(/\s/g, "");
       return regexedService;
-    });
-
-    const sumOfLaborTimes = regexedServices.reduce((acc, curr) => {
+    })
+      .reduce((acc, curr) => {
       if(props.props.cart[curr].selected && typeof props.props.cart[curr].laborTime ==="number" ){
         const laborTime = props.props.cart[curr].laborTime;
         console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
@@ -32,9 +29,6 @@ function QuoteCart(props) {
         return acc + 0;
       }
     }, 0);
-    console.log(sumOfLaborTimes);
-
-
     return sumOfLaborTimes * 67;
     }
   return (
