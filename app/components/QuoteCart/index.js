@@ -23,10 +23,9 @@ function QuoteCart(props) {
     });
 
     const sumOfLaborTimes = regexedServices.reduce((acc, curr) => {
-      if(props.props.cart[curr].selected){
-        console.log(`${curr} is selected`);
+      if(props.props.cart[curr].selected && typeof props.props.cart[curr].laborTime ==="number" ){
         const laborTime = props.props.cart[curr].laborTime;
-        console.log(laborTime);
+        console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
         return acc + laborTime;
       }
       else {

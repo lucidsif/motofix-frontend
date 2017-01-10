@@ -12,16 +12,14 @@ import gql from 'graphql-tag';
 
 const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization'];
 
-// Pre-req to adding passing dynamic props to service segments is writing out all the queries
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 
 // dispatch response to a reducer that updates the cart state laborTime with the payload
 function AddServices(props) {
-  // const { props: { props.onCartClick, props.onTrashClick, cart, OilChange, Winterization }} = props;
 
   function runServiceQuery(service) {
-    console.log(`${service} is being queried`);
+    console.log(`to be queried: ${service}`);
     props.props.client.query({
       query: gql`
           query laborEstimates($vehicle: String, $service: String) {
@@ -36,7 +34,7 @@ function AddServices(props) {
       // run onCartClick to dispatch addToCart action creator
     props.props.onCartClick(service);
   }
-  // .replace(/\s/g,'')
+
   const ServiceSegments = () => {
     return services.map((service) => {
       // in case despacing all the services  is required, this is the function needed
@@ -53,7 +51,7 @@ function AddServices(props) {
       );
     });
   };
-  // checking for props.data.refetch()
+
   return (
     <Segment padded="very">
       <Grid centered>
@@ -87,7 +85,7 @@ function AddServices(props) {
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
                   {!props.props.cart.OilChange.selected ? (
-                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('OilChange')} link />
+                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runServiceQuery('OilChange')} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('OilChange')} link />
                 )}
@@ -97,7 +95,7 @@ function AddServices(props) {
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
                 {!props.props.cart.SmokeOrSteamIsComingOutOfMotorcycle.selected ? (
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('SmokeOrSteamIsComingOutOfMotorcycle')} link />
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runServiceQuery('SmokeOrSteamIsComingOutOfMotorcycle')} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('SmokeOrSteamIsComingOutOfMotorcycle')} link />
                 )}
