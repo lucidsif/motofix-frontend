@@ -15,15 +15,17 @@ function QuoteCart(props) {
 
   // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
   const totalServicePrice = () => {
-    let sum = services.map((service) => {
+    let sum = 5;
+
+    const regexedServices = services.map((service) => {
       let regexedService = service.replace(/\s/g, "");
       return regexedService;
-    })
-      .reduce((acc, curr) => {
-      //let objService = props.props[curr];
+    });
+
+    const sumOfLaborTimes = regexedServices.reduce((acc, curr) => {
       if(props.props.cart[curr].selected){
         console.log(`${curr} is selected`);
-        const laborTime = props.props.cart[curr].time
+        const laborTime = props.props.cart[curr].laborTime;
         console.log(laborTime);
         return acc + laborTime;
       }
@@ -31,7 +33,10 @@ function QuoteCart(props) {
         return acc + 0;
       }
     }, 0);
-    return sum * 67;
+    console.log(sumOfLaborTimes);
+
+
+    return sumOfLaborTimes * 67;
     }
   return (
     <Grid.Row>
