@@ -31,7 +31,9 @@ function AddServices(props) {
       variables: { vehicle: props.props.vehicle.appended, service },
       // run onQueryLoad to dispatch setLaborTime action creator
     }).then((result) => props.props.onQueryLoad(service, JSON.parse(result.data.laborEstimates.response).time));
-      // run onCartClick to dispatch addToCart action creator
+    // TODO: add a part query here that will dispatch a setPart action creator
+
+    // run onCartClick to dispatch addToCart action creator
     props.props.onCartClick(service);
   }
 

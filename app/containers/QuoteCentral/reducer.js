@@ -18,10 +18,13 @@ const cart = services.reduce((acc, cur, i) => {
   acc[regexedService] = {selected: false, laborTime: null};
   return acc;
 }, {});
-// start with a single part and later evolve to multiple parts
-const part = cart;
-
+const part = services.reduce((acc, cur, i) => {
+  let regexedService = cur.replace(/\s/g, "");
+  acc[regexedService] = [{ partName: null, partPrice: null, partImageURL: null, partURL: null}];
+  return acc;
+}, {});
 const estimate = { serviceTotal: 0, partsTotal: 0, total: 0, dealer: 0, priceSavings: 0, percentSavings: 0 };
+
 const initialState = fromJS({ cart, part, estimate });
 
 function quoteCentralReducer(state = initialState, action) {
