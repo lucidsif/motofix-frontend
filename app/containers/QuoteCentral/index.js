@@ -8,9 +8,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Grid, Button } from 'semantic-ui-react';
-import { compose } from 'react-apollo';
+//import { compose } from 'react-apollo';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
+
+import ApolloClient from 'apollo-client';
+import { withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import { addToCart, removeFromCart } from './actions';
 
@@ -18,7 +22,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCart, selectEstimate } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
-import * as queries from './queries';
+//import * as queries from './queries';
 
 // TODO: 7.5/10 Create the price breakdown component
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
@@ -57,21 +61,16 @@ function mapDispatchToProps(dispatch) {
   return {
     onCartClick: (service) => {
       console.log(service);
-      // side effect - eventhandler carries both the service and serviceQuery. redux-saga should handle th
-      // serviceQuery by dispatching an action that changes the service labortime in cart state
-      //const responseObj = JSON.parse(serviceQuery.response)
-      //const laborTime = responseObj.time
-      //const serviceObj = {[service]: {selected: true, laborTime, laborPrice: null } };
       dispatch(addToCart(service));
     },
     onTrashClick: (service) => {
-      //const serviceObj = {[service]: {selected: false, laborPrice: null } };
       dispatch(removeFromCart(service));
     },
   };
 }
 
 // order matters, connect must come first for the graphql containers to be able to access the props
+/*
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   queries.AccessoryInstallationData,
@@ -93,8 +92,14 @@ export default compose(
   queries.TireReplacementData,
   queries.ValveAdjustmentData,
   queries.WarningLightData,
-  queries.WinterizationData,
+  //queries.WinterizationData,
 )(QuoteCentral);
+*/
+QuoteCentral = connect(mapStateToProps, mapDispatchToProps)(QuoteCentral);
+
+QuoteCentral = withApollo(QuoteCentral);
+
+export default QuoteCentral;
 
 // ESLint
 //

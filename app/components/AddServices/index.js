@@ -17,7 +17,18 @@ const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad
 
 function AddServices(props) {
   // const { props: { props.onCartClick, props.onTrashClick, cart, OilChange, Winterization }} = props;
-
+  const runQuery = () => {
+    this.props.client.query({
+      query: gql`
+          query laborEstimates($vehicle: String, $service: String) {
+            laborEstimates(vehicle: $vehicle, service: $service) {
+            response
+          }
+        }
+      `,
+      variables: { vehicle: '2005 Kawasaki ZX6R', service },
+    })
+  }
   // .replace(/\s/g,'')
   const ServiceSegments = () => {
     return services.map((service) => {

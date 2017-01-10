@@ -274,3 +274,9 @@ export const WinterizationData = graphql(WINTERIZATION_QUERY, {
     Winterization: laborEstimates,
   }),
 });
+
+// comment out winterization query
+// modify onCartClick so it does an apollo.client.query
+// add winterization query to a winterization prop
+// make sure price is calculated from it
+// * if async error, also extract loading
