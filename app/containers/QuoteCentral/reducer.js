@@ -8,6 +8,7 @@ import { fromJS } from 'immutable';
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  SET_LABORTIME,
 } from './constants';
 import services from './reducerServices';
 
@@ -29,6 +30,8 @@ function quoteCentralReducer(state = initialState, action) {
       return state.setIn(['cart', action.payload, 'selected'], true);
     case REMOVE_FROM_CART:
       return state.setIn(['cart', action.payload, 'selected'], false);
+    case SET_LABORTIME:
+      return state.setIn(['cart', action.service, 'laborTime'], action.laborTime);
     default:
       return state;
   }

@@ -16,12 +16,11 @@ const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 
-// dispatch response to a reducer that updates the state with the action
+// dispatch response to a reducer that updates the cart state laborTime with the payload
 function AddServices(props) {
   // const { props: { props.onCartClick, props.onTrashClick, cart, OilChange, Winterization }} = props;
 
   function runServiceQuery(service) {
-    console.log(props.props);
     console.log(`${service} is being queried`);
     props.props.client.query({
       query: gql`
@@ -32,8 +31,9 @@ function AddServices(props) {
         }
       `,
       variables: { vehicle: props.props.vehicle.appended, service },
-    }).then((result) => console.log(result.data.laborEstimates));
-
+      // run onQueryLoad to dispatch setLaborTime action creator
+    }).then((result) => props.props.onQueryLoad(service, JSON.parse(result.data.laborEstimates.response).time));
+      // run onCartClick to dispatch addToCart action creator
     props.props.onCartClick(service);
   }
   // .replace(/\s/g,'')

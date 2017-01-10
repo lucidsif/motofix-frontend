@@ -7,6 +7,7 @@
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  SET_LABORTIME,
 } from './constants';
 
 export function addToCart(payload) {
@@ -15,10 +16,16 @@ export function addToCart(payload) {
     payload,
   };
 }
-// Find out what the merged object looks like. Preserve the servicename if possibe
 export function removeFromCart(payload) {
   return {
     type: REMOVE_FROM_CART,
     payload,
+  };
+}
+export function setLaborTime(service, laborTime) {
+  return {
+    type: SET_LABORTIME,
+    service,
+    laborTime,
   };
 }

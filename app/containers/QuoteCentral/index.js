@@ -15,7 +15,7 @@ import AddServices from 'components/AddServices';
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 
-import { addToCart, removeFromCart } from './actions';
+import { addToCart, removeFromCart, setLaborTime } from './actions';
 
 import { createStructuredSelector } from 'reselect';
 import { selectCart, selectEstimate } from './selectors';
@@ -64,6 +64,9 @@ function mapDispatchToProps(dispatch) {
     onTrashClick: (service) => {
       dispatch(removeFromCart(service));
     },
+    onQueryLoad: (service, laborTime) => {
+      dispatch(setLaborTime(service, laborTime));
+    }
   };
 }
 
