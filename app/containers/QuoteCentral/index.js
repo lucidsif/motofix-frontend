@@ -59,7 +59,6 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onCartClick: (service) => {
-      console.log(service);
       dispatch(addToCart(service));
     },
     onTrashClick: (service) => {

@@ -16,11 +16,15 @@ const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 
+
+// refactor cart state so each service is an object with a selected and laborTime.
+// make sure adding and removing cart works
+// dispatch response to a reducer that updates the state with the action
 function AddServices(props) {
   // const { props: { props.onCartClick, props.onTrashClick, cart, OilChange, Winterization }} = props;
 
   function runServiceQuery(service) {
-    console.log(props.props.client);
+    console.log(props.props);
     console.log(`${service} is being queried`);
     props.props.client.query({
       query: gql`
@@ -31,9 +35,9 @@ function AddServices(props) {
         }
       `,
       variables: { vehicle: props.props.vehicle.appended, service },
-    });
+    }).then((result) => console.log(result));
+
     props.props.onCartClick(service);
-    console.log(props.props.client);
   }
   // .replace(/\s/g,'')
   const ServiceSegments = () => {
