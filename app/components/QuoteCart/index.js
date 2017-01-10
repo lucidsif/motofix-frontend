@@ -20,10 +20,12 @@ function QuoteCart(props) {
       return regexedService;
     })
       .reduce((acc, curr) => {
-      let objService = props.props[curr];
-      if(objService && props.props.cart[curr]){
-        let parsedResponse = JSON.parse(objService.response);
-        return acc + parsedResponse.time;
+      //let objService = props.props[curr];
+      if(props.props.cart[curr].selected){
+        console.log(`${curr} is selected`);
+        const laborTime = props.props.cart[curr].time
+        console.log(laborTime);
+        return acc + laborTime;
       }
       else {
         return acc + 0;
