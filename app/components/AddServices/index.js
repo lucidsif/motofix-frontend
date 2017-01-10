@@ -16,9 +16,6 @@ const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
 
-
-// refactor cart state so each service is an object with a selected and laborTime.
-// make sure adding and removing cart works
 // dispatch response to a reducer that updates the state with the action
 function AddServices(props) {
   // const { props: { props.onCartClick, props.onTrashClick, cart, OilChange, Winterization }} = props;
@@ -35,7 +32,7 @@ function AddServices(props) {
         }
       `,
       variables: { vehicle: props.props.vehicle.appended, service },
-    }).then((result) => console.log(result));
+    }).then((result) => console.log(result.data.laborEstimates));
 
     props.props.onCartClick(service);
   }
@@ -47,7 +44,7 @@ function AddServices(props) {
       return (
         <Segment attached textAlign="left" key={service}>
           {service}
-          {!props.props.cart[propifiedService] ? (
+          {!props.props.cart[propifiedService].selected ? (
             <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runServiceQuery(propifiedService)} link />
           ) : (
             <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(propifiedService)} link />
@@ -89,7 +86,7 @@ function AddServices(props) {
             <Segment.Group>
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
-                  {!props.props.cart.OilChange ? (
+                  {!props.props.cart.OilChange.selected ? (
                     <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('OilChange')} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('OilChange')} link />
@@ -99,7 +96,7 @@ function AddServices(props) {
               {ServiceSegments()}
               <Segment attached="bottom" textAlign="left">
                 Smoke or steam is coming out of motorcycle
-                {!props.props.cart.SmokeOrSteamIsComingOutOfMotorcycle ? (
+                {!props.props.cart.SmokeOrSteamIsComingOutOfMotorcycle.selected ? (
                   <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick('SmokeOrSteamIsComingOutOfMotorcycle')} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('SmokeOrSteamIsComingOutOfMotorcycle')} link />
