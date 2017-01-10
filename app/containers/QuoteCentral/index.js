@@ -14,7 +14,6 @@ import AddServices from 'components/AddServices';
 
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import { addToCart, removeFromCart } from './actions';
 

@@ -8,6 +8,7 @@ import React from 'react';
 import { Grid, Segment, Input, Icon, Image, Label } from 'semantic-ui-react';
 import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
+import gql from 'graphql-tag';
 
 const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization'];
 
@@ -17,8 +18,11 @@ const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad
 
 function AddServices(props) {
   // const { props: { props.onCartClick, props.onTrashClick, cart, OilChange, Winterization }} = props;
-  const runQuery = () => {
-    this.props.client.query({
+
+  function runServiceQuery(service) {
+    console.log(props.props.client);
+    console.log(`${service} is being queried`);
+    props.props.client.query({
       query: gql`
           query laborEstimates($vehicle: String, $service: String) {
             laborEstimates(vehicle: $vehicle, service: $service) {
@@ -26,19 +30,21 @@ function AddServices(props) {
           }
         }
       `,
-      variables: { vehicle: '2005 Kawasaki ZX6R', service },
-    })
+      variables: { vehicle: props.props.vehicle.appended, service },
+    });
+    props.props.onCartClick(service);
+    console.log(props.props.client);
   }
   // .replace(/\s/g,'')
   const ServiceSegments = () => {
     return services.map((service) => {
       // in case despacing all the services  is required, this is the function needed
-      let propifiedService = service.replace(/\s/g, "")
+      let propifiedService = service.replace(/\s/g, "");
       return (
         <Segment attached textAlign="left" key={service}>
           {service}
           {!props.props.cart[propifiedService] ? (
-            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => props.props.onCartClick(propifiedService)} link />
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runServiceQuery(propifiedService)} link />
           ) : (
             <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(propifiedService)} link />
           )}
@@ -50,7 +56,6 @@ function AddServices(props) {
   return (
     <Segment padded="very">
       <Grid centered>
-
         <Grid.Row>
           <Input className="serviceSearchWidth" icon="search" placeholder="Search services" />
         </Grid.Row>
