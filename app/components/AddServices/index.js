@@ -20,6 +20,7 @@ function AddServices(props) {
 
   function runServiceQuery(service) {
     console.log(`to be queried: ${service}`);
+    let start = (new Date).getTime();
     props.props.client.query({
       query: gql`
           query laborEstimates($vehicle: String, $service: String) {
@@ -30,7 +31,7 @@ function AddServices(props) {
       `,
       variables: { vehicle: props.props.vehicle.appended, service },
       // run onQueryLoad to dispatch setLaborTime action creator
-    }).then((result) => props.props.onQueryLoad(service, JSON.parse(result.data.laborEstimates.response).time));
+    }).then((result) => props.props.onQueryLoad(service, JSON.parse(result.data.laborEstimates.response).time)).then((next) => console.log(`time to finish async & parse result: ${(new Date).getTime() - start}`));
     // TODO: add a part query here that will dispatch a setPart action creator
 
     // run onCartClick to dispatch addToCart action creator
