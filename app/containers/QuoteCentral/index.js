@@ -16,7 +16,7 @@ import { withApollo } from 'react-apollo';
 import { addToCart, removeFromCart, setLaborTime } from './actions';
 
 import { createStructuredSelector } from 'reselect';
-import { selectCart, selectEstimate } from './selectors';
+import { selectCart, selectPart } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 
@@ -44,7 +44,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
 const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
   cart: selectCart(),
-  estimate: selectEstimate(),
+  part: selectPart(),
 });
 // what happens if there is no serviceQuery.response or it fails?
 // mutate props of service to true
