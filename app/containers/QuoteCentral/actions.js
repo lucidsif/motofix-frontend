@@ -8,6 +8,7 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   SET_LABORTIME,
+  SET_PARTS_DATA,
 } from './constants';
 
 export function addToCart(payload) {
@@ -29,4 +30,11 @@ export function setLaborTime(service, laborTime) {
     laborTime,
   };
 }
-// TODO: Create setPartTime action creator here
+export function setPartsData(service, partsObj){
+  return {
+    type: SET_PARTS_DATA,
+    service,
+    partsObj,
+  }
+}
+

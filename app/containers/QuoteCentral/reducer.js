@@ -9,6 +9,7 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   SET_LABORTIME,
+  SET_PARTS_DATA,
 } from './constants';
 import services from './reducerServices';
 
@@ -20,7 +21,7 @@ const cart = services.reduce((acc, cur, i) => {
 }, {});
 const part = services.reduce((acc, cur, i) => {
   let regexedService = cur.replace(/\s/g, "");
-  acc[regexedService] = [{ partName: null, partPrice: null, partImageURL: null, partURL: null}];
+  acc[regexedService] = {};
   return acc;
 }, {});
 const estimate = { serviceTotal: 0, partsTotal: 0, total: 0, dealer: 0, priceSavings: 0, percentSavings: 0 };

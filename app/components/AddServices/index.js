@@ -45,7 +45,7 @@ function AddServices(props) {
       `,
       variables: { vehicle: props.props.vehicle.appended, service },
       // run onQueryLoad to dispatch setLaborTime action creator
-    }).then((result) => console.log(result.data.searchParts)).then((next) => console.log(`time to finish async & parse result for parts queries: ${(new Date).getTime() - start2}`));
+    }).then((result) => console.log(JSON.parse(result.data.searchParts[0].response))).then((next) => console.log(`time to finish async & parse result for parts queries: ${(new Date).getTime() - start2}`));
 
     // run onCartClick to dispatch addToCart action creator
     props.props.onCartClick(service);
