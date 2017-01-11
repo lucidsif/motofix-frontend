@@ -23,8 +23,10 @@ function QuoteCart(props) {
         if(props.props.cart[curr].selected && props.props.part[curr]){
           console.log(`${curr} is selected and a part exists for it`)
           for (var key in props.props.part[curr]){
-            let price = parseInt(props.props.part[curr][key].price.__value__);
-            sum += price
+            if(props.props.part[curr].hasOwnProperty(key)){
+              let price = parseInt(props.props.part[curr][key].price.__value__);
+              sum += price
+            }
           }
         }
         else {

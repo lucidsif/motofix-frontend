@@ -21,7 +21,7 @@ const cart = services.reduce((acc, cur, i) => {
 }, {});
 const part = services.reduce((acc, cur, i) => {
   let regexedService = cur.replace(/\s/g, "");
-  acc[regexedService] = {};
+  acc[regexedService] = '';
   return acc;
 }, {});
 const estimate = { serviceTotal: 0, partsTotal: 0, total: 0, dealer: 0, priceSavings: 0, percentSavings: 0 };
