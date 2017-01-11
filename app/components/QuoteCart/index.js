@@ -13,6 +13,29 @@ const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad
 
 function QuoteCart(props) {
 
+  const totalPartsPrice = () => {
+    let sum = 0;
+    const sumOfParts = services.map((service) => {
+      let regexedService = service.replace(/\s/g, "");
+      return regexedService;
+    })
+      .reduce((acc, curr) => {
+        if(props.props.cart[curr].selected && props.props.part[curr]){
+          console.log(`${curr} is selected and a part exists for it`)
+          for (var key in props.props.part[curr]){
+            let price = parseInt(props.props.part[curr][key].price.__value__);
+            sum += price
+          }
+        }
+        else {
+          return acc + 0;
+        }
+      }, 0);
+    console.log(sum)
+    return sum;
+    // return sumOfParts;
+  }
+
   // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
   const totalServicePrice = () => {
     const sumOfLaborTimes = services.map((service) => {
@@ -39,7 +62,7 @@ function QuoteCart(props) {
         </Grid.Row>
         <Grid centered divided="vertically">
           <Grid.Row>
-            <Label color="teal" size="big">${totalServicePrice()}</Label>
+            <Label color="teal" size="big">${totalServicePrice() + totalPartsPrice()}</Label>
           </Grid.Row>
 
           <Grid.Row columns={2} divided>
