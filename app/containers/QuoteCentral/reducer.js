@@ -36,6 +36,8 @@ function quoteCentralReducer(state = initialState, action) {
       return state.setIn(['cart', action.payload, 'selected'], false);
     case SET_LABORTIME:
       return state.setIn(['cart', action.service, 'laborTime'], action.laborTime);
+    case SET_PARTS_DATA:
+      return state.mergeIn(['part', action.service], action.partsObj);
     default:
       return state;
   }

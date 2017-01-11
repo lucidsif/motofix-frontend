@@ -13,7 +13,7 @@ import AddServices from 'components/AddServices';
 
 import { withApollo } from 'react-apollo';
 
-import { addToCart, removeFromCart, setLaborTime } from './actions';
+import { addToCart, removeFromCart, setLaborTime, setPartsData } from './actions';
 
 import { createStructuredSelector } from 'reselect';
 import { selectCart, selectPart } from './selectors';
@@ -59,7 +59,12 @@ function mapDispatchToProps(dispatch) {
     onQueryLoad: (service, laborTime) => {
       console.log(`${service} with labortime of ${laborTime} picked up from query result`)
       dispatch(setLaborTime(service, laborTime));
-    }
+    },
+    onPartsLoad: (service, partsData) => {
+      console.log(`service: ${service} parts picked up from query result with partsData object below`);
+      console.log(partsData);
+      dispatch(setPartsData(service, partsData));
+    },
   };
 }
 
