@@ -31,8 +31,21 @@ function AddServices(props) {
       `,
       variables: { vehicle: props.props.vehicle.appended, service },
       // run onQueryLoad to dispatch setLaborTime action creator
-    }).then((result) => props.props.onQueryLoad(service, JSON.parse(result.data.laborEstimates.response).time)).then((next) => console.log(`time to finish async & parse result: ${(new Date).getTime() - start}`));
+    }).then((result) => props.props.onQueryLoad(service, JSON.parse(result.data.laborEstimates.response).time)).then((next) => console.log(`time to finish async & parse result for service query: ${(new Date).getTime() - start}`));
     // TODO: add a part query here that will dispatch a setPart action creator
+    console.log(`to be queried: ${service}`);
+    let start2 = (new Date).getTime();
+    props.props.client.query({
+      query: gql`
+          query searchParts($vehicle: String, $service: String) {
+            searchParts(vehicle: $vehicle, service: $service) {
+            response
+          }
+        }
+      `,
+      variables: { vehicle: props.props.vehicle.appended, service },
+      // run onQueryLoad to dispatch setLaborTime action creator
+    }).then((result) => console.log(result.data.searchParts)).then((next) => console.log(`time to finish async & parse result for parts queries: ${(new Date).getTime() - start2}`));
 
     // run onCartClick to dispatch addToCart action creator
     props.props.onCartClick(service);
