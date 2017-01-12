@@ -6,13 +6,14 @@
 
 import React from 'react';
 import { Grid, Segment, Accordion, Icon, Label } from 'semantic-ui-react';
+import PriceBreakDown from 'components/PriceBreakDown';
 const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Smoke Or Steam Is Coming Out Of Motorcycle', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization','Oil Change'];
 
 // TODO: 7/10 make navbar fixed at the top and put props.props.cart price in there
 // TODO: 6.5/10 Find a more functional/cleaner approach to calculate estimate, if possible
 
 function QuoteCart(props) {
-
+// todo
   const totalPartsPrice = () => {
     let sum = 0;
     const sumOfParts = services.map((service) => {
@@ -84,9 +85,7 @@ function QuoteCart(props) {
                 See cost breakdown
             </Accordion.Title>
             <Accordion.Content>
-              <p>
-                Price breakdown component goes here
-              </p>
+                <PriceBreakDown />
             </Accordion.Content>
           </Accordion>
 
