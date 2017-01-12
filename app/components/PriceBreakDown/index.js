@@ -14,32 +14,32 @@ import { Button, Container, List, Image, Item, Grid, Segment, Accordion, Icon, L
 function PriceBreakDown(props) {
   return (
     <Container>
-
         <List>
             <List.Item>
-                <List.Content floated='left'>
-                    <List.Icon name="settings" size='large'/>
+                <List.Icon name='linkify' />
+                <List.Content><p>Oil Change</p></List.Content>
+                <List.Content floated='right' verticalAlign="middle"><p>$40.00</p></List.Content>
+                <List.Content>
+                    <List>
+                        <List.Item>
+                            <List.Content floated='left' verticalAlign='middle'>
+                                <Image size='tiny' src="http://thumbs4.ebaystatic.com/m/mG9XLmyyKHFirCm_qlEv81w/140.jpg" />
+                            </List.Content>
+                            <List.Content floated='left' verticalAlign='middle'> Oil Filter</List.Content>
+                            <List.Content floated='right'> $10.00 </List.Content>
+                        </List.Item>
+                        <List.Item>
+                            <List.Content floated='left' verticalAlign='middle'>
+                                <Image size='tiny' src="http://thumbs4.ebaystatic.com/m/mG9XLmyyKHFirCm_qlEv81w/140.jpg" />
+                            </List.Content>
+                            <List.Content floated='left' verticalAlign='middle'> Oil Filter</List.Content>
+                            <List.Content floated='right'> $10.00 </List.Content>
+                        </List.Item>
+                    </List>
                 </List.Content>
-                <List.Content floated='left'>
-                    <i>Oil Change</i>
-                </List.Content>
-                <List.Content floated='right'>
-                    <i>$45.00</i>
-                </List.Content>
-                <List>
-                    <List.Item>
-                        <Image size='mini' floated='left' src={'http://thumbs4.ebaystatic.com/m/mZWdRMwthT-Y_bX9Hjo6G2Q/140.jpg'} />
-                        <List.Content floated='left' verticalAlign='middle'>
-                            <p>Engine Oil</p>
-                        </List.Content>
-                        <List.Content floated='right'>
-                            <p>$10.00</p>
-                        </List.Content>
-                    </List.Item>
-                </List>
             </List.Item>
         </List>
-
+        <p><a>Have your own parts?</a></p>
         <List divided relaxed>
            <List.Item>
                <List.Content floated='left'>
