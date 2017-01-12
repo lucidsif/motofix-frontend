@@ -6,13 +6,36 @@
 
 import React from 'react';
 import { Button, Container, List, Image } from 'semantic-ui-react';
+//import services from 'components/QuoteCart';
 
-//TODO: try creating a vertical list of horizontal items?
-// TODO: dynamically render services and parts from props.
+// TODO: render calculated price from derived props
 // TODO: calculate prices
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
 
 function PriceBreakDown(props) {
+  
+  function floatServicePrice(){
+    return parseFloat(Math.round(props.totalServicesPrice()*100)/100).toFixed(2);
+  }
+  function floatPartsPrice(){
+    return parseFloat(Math.round(props.totalPartsPrice()*100)/100).toFixed(2);
+  }
+  function floatTax(){
+    let total = props.totalServicesPrice() + props.totalPartsPrice();
+    let taxRate = .0875;
+    let tax = total*taxRate;
+    return parseFloat(Math.round(tax*100)/100).toFixed(2);
+  }
+  function floatTotalPrice(){
+   let subTotal = props.totalServicesPrice() + props.totalPartsPrice();
+
+    let taxRate = .0875;
+    let tax = subTotal*taxRate;
+
+    let total = subTotal + tax;
+    return parseFloat(Math.round(total*100)/100).toFixed(2);
+  }
+
   return (
     <Container>
         <List>
@@ -44,7 +67,7 @@ function PriceBreakDown(props) {
                    <p>Service Total</p>
                </List.Content>
                <List.Content floated='right'>
-                    <p>45.00</p>
+                    <p>{floatServicePrice()}</p>
                </List.Content>
            </List.Item>
            <List.Item>
@@ -52,7 +75,7 @@ function PriceBreakDown(props) {
                    <p>Parts Total</p>
                </List.Content>
                <List.Content floated='right'>
-                    <p>45.00</p>
+                    <p>{floatPartsPrice()}</p>
                </List.Content>
            </List.Item>
            <List.Item>
@@ -60,7 +83,7 @@ function PriceBreakDown(props) {
                    <p> Tax on Parts</p>
                </List.Content>
                <List.Content floated='right'>
-                    <p>45.00</p>
+                    <p>{floatTax()}</p>
                </List.Content>
            </List.Item>
            <List.Item>
@@ -68,7 +91,7 @@ function PriceBreakDown(props) {
                    <p>Total Price</p>
                </List.Content>
                <List.Content floated='right'>
-                    <p>45.00</p>
+                    <p>{floatTotalPrice()}</p>
                </List.Content>
            </List.Item>
        </List>
