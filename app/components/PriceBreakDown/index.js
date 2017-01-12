@@ -18,23 +18,20 @@ function PriceBreakDown(props) {
         <List>
             <List.Item>
                 <List.Content floated='left'><List.Icon name='linkify' /></List.Content>
-                <List.Content floated='left' verticalAlign='middle'><p>Oil Change</p></List.Content>
-                <List.Content floated='right' verticalAlign="middle"><p>$40.00</p></List.Content>
+                <List.Content floated='left' verticalAlign='middle'>
+                    <span className="service-span">Oil Change</span></List.Content>
+                <List.Content floated='right' verticalAlign="middle">
+                    <span className="service-span">$40.00</span></List.Content>
                 <List.Content>
                     <List>
                         <List.Item>
-                            <List.Content floated='left' verticalAlign='middle'>
-                                <Image size='tiny' src="http://thumbs4.ebaystatic.com/m/mG9XLmyyKHFirCm_qlEv81w/140.jpg" />
+                            <Image verticalAlign='middle' floated='left' src="http://thumbs1.ebaystatic.com/m/m62KDAtw-KaYq44wbFJs29A/140.jpg" size="tiny"/>
+                            <List.Content floated='left' verticalAlign="middle">
+                                <span className="part-span">Oil filter</span>
                             </List.Content>
-                            <List.Content floated='left' verticalAlign='bottom'> Oil Filter</List.Content>
-                            <List.Content floated='right'> $10.00 </List.Content>
-                        </List.Item>
-                        <List.Item>
-                            <List.Content floated='left' verticalAlign='middle'>
-                                <Image size='tiny' src="http://thumbs4.ebaystatic.com/m/mG9XLmyyKHFirCm_qlEv81w/140.jpg" />
+                            <List.Content floated='right' verticalAlign="middle">
+                                <span className="'part-span">$10.00</span>
                             </List.Content>
-                            <List.Content floated='left' verticalAlign='middle'> Oil Filter</List.Content>
-                            <List.Content floated='right'> $10.00 </List.Content>
                         </List.Item>
                     </List>
                 </List.Content>

@@ -103,7 +103,15 @@ svg g text.stage {
 }
 
 .totalPriceNum {
-  padding-bottom: 1em
+  padding-bottom: 1em;
+}
+
+.service-span {
+    font-size: 1.2em;
+}
+
+.part-span {
+    font-size: 1em;
 }
 `
 ;
