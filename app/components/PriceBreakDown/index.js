@@ -5,8 +5,9 @@
 */
 
 import React from 'react';
-import { Button, Container, List, Image, Item, Grid, Segment, Accordion, Icon, Label } from 'semantic-ui-react';
+import { Button, Container, List, Image } from 'semantic-ui-react';
 
+//TODO: try creating a vertical list of horizontal items?
 // TODO: dynamically render services and parts from props.
 // TODO: calculate prices
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
@@ -15,13 +16,13 @@ function PriceBreakDown(props) {
   return (
     <Container>
         <List>
-            <List.Item>
-                <List.Icon name='linkify' />
-                <List.Content><p>Oil Change</p></List.Content>
+            <List.Item verticalAlign='middle'>
+                <List.Content floated='left'><List.Icon name='linkify' /></List.Content>
+                <List.Content floated='left' verticalAlign='middle'><p>Oil Change</p></List.Content>
                 <List.Content floated='right' verticalAlign="middle"><p>$40.00</p></List.Content>
                 <List.Content>
                     <List>
-                        <List.Item>
+                        <List.Item verticalAlign='middle'>
                             <List.Content floated='left' verticalAlign='middle'>
                                 <Image size='tiny' src="http://thumbs4.ebaystatic.com/m/mG9XLmyyKHFirCm_qlEv81w/140.jpg" />
                             </List.Content>
