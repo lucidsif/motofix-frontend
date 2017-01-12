@@ -8,8 +8,7 @@ import React from 'react';
 import { Button, Container, List, Image } from 'semantic-ui-react';
 //import services from 'components/QuoteCart';
 
-// TODO: render calculated price from derived props
-// TODO: calculate prices
+// TODO: 7/10 render parts for selected services
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
 
 function PriceBreakDown(props) {

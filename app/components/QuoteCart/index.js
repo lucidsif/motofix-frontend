@@ -34,7 +34,6 @@ function QuoteCart(props) {
           return acc + 0;
         }
       }, 0);
-    console.log(sum)
     return sum;
     // return sumOfParts;
   }
@@ -57,6 +56,16 @@ function QuoteCart(props) {
     }, 0);
     return sumOfLaborTimes * 67;
     }
+
+    function totalPrice(){
+    let subTotal = totalServicesPrice() + totalPartsPrice();
+
+      let taxRate = .0875;
+      let tax = subTotal*taxRate;
+
+      let total = subTotal + tax;
+      return parseFloat(Math.round(total*1)/1);
+    }
   return (
     <Grid.Row>
       <Segment padded="very">
@@ -65,7 +74,7 @@ function QuoteCart(props) {
         </Grid.Row>
         <Grid centered divided="vertically">
           <Grid.Row>
-            <Label color="teal" size="big">${totalServicesPrice() + totalPartsPrice()}</Label>
+            <Label color="teal" size="big">${totalPrice()}</Label>
           </Grid.Row>
 
           <Grid.Row columns={2} divided>
