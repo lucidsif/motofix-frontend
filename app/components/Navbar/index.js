@@ -9,10 +9,12 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
 import logo from './home-logo.png';
+import { services } from 'components/QuoteCart';
 
 import { createStructuredSelector } from 'reselect';
 import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 
+// TODO: 5/10 export all calculating functions into a utility functions file
 export class AppNavBar extends Component {
   constructor(props) {
     super(props);
@@ -23,9 +25,58 @@ export class AppNavBar extends Component {
       this.setState({ activeItem: name });
     };
   }
-  test(){
-    console.log(this.props);
-  }
+  totalPartsPrice() {
+  let sum = 0;
+  const sumOfParts = services.map((service) => {
+    let regexedService = service.replace(/\s/g, "");
+    return regexedService;
+  })
+    .reduce((acc, curr) => {
+      if(this.props.cart[curr].selected && this.props.part[curr]){
+        console.log(`${curr} is selected and a part exists for it`)
+        for (var key in props.part[curr]){
+          if(this.props.part[curr].hasOwnProperty(key)){
+            let price = parseInt(this.props.part[curr][key].price.__value__);
+            sum += price
+          }
+        }
+      }
+      else {
+        return acc + 0;
+      }
+    }, 0);
+  return sum;
+  // return sumOfParts;
+}
+
+  // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
+  totalServicesPrice() {
+  const sumOfLaborTimes = services.map((service) => {
+    let regexedService = service.replace(/\s/g, "");
+    return regexedService;
+  })
+    .reduce((acc, curr) => {
+      if(this.props.cart[curr].selected && typeof this.props.cart[curr].laborTime ==="number" ){
+        const laborTime = this.props.cart[curr].laborTime;
+        console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
+        return acc + laborTime;
+      }
+      else {
+        return acc + 0;
+      }
+    }, 0);
+  return sumOfLaborTimes * 67;
+}
+
+  totalPrice() {
+  let subTotal = this.totalServicesPrice() + this.totalPartsPrice();
+
+  let taxRate = .0875;
+  let tax = subTotal*taxRate;
+
+  let total = subTotal + tax;
+  return parseFloat(Math.round(total*1)/1);
+}
 
   // calc total price in cart
   // replace menu with hamburger
@@ -34,12 +85,11 @@ export class AppNavBar extends Component {
     const { activeItem } = this.state;
     return (
       <Menu secondary>
-        {this.test()}
         <Menu.Item><Image src={logo} size="tiny" /></Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
             <Label color="teal">
-              <Icon name='in cart' /> $140
+              <Icon name='in cart' /> ${this.totalPrice()}
             </Label>
           </Menu.Item>
         </Menu.Menu>
