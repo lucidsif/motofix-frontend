@@ -10,7 +10,8 @@ import toolIcon from './toolIcon.png';
 import diagnoseIcon from './diagnoseIcon.png';
 import gql from 'graphql-tag';
 
-const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization'];
+const activeServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Chain And Sprocket Replacement', 'Clean And Lube Chain', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Winterization'];
+const disabledServices = ['Accessory Installation', 'Brakes Are Squeaking', 'Check Engine Or FI Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Suspension Tuning', 'Valve Adjustment', 'Warning Light Is On'];
 
 // TODO: 6.5/10 add tax calculation and add it to the total
 // TODO: 6/10 Replace segments with animated list
@@ -53,8 +54,9 @@ function AddServices(props) {
     props.props.onCartClick(service);
   }
 
-  const ServiceSegments = () => {
-    return services.map((service) => {
+  // TODO: refactor servicesegments so it first renders active segments and then renders disabled segments
+  const activeServiceSegments = () => {
+    return activeServices.map((service) => {
       // in case despacing all the services  is required, this is the function needed
       let propifiedService = service.replace(/\s/g, "");
       return (
@@ -64,6 +66,23 @@ function AddServices(props) {
             <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runServiceQuery(propifiedService)} link />
           ) : (
             <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(propifiedService)} link />
+          )}
+        </Segment>
+      );
+    });
+  };
+
+  const disabledServiceSegments = () => {
+    return disabledServices.map((service) => {
+      // in case despacing all the services  is required, this is the function needed
+      let propifiedService = service.replace(/\s/g, "");
+      return (
+        <Segment attached disabled textAlign="left" key={service}>
+          {service}
+          {!props.props.cart[propifiedService].selected ? (
+            <Icon name="add to cart" disabled size="large" className="serviceIcon blueIcon" />
+          ) : (
+            <Icon name="trash outline" disabled size="large" className="serviceIcon redIcon" />
           )}
         </Segment>
       );
@@ -109,13 +128,14 @@ function AddServices(props) {
                 )}
                 </p>
               </Segment>
-              {ServiceSegments()}
-              <Segment attached="bottom" textAlign="left">
+              {activeServiceSegments()}
+              {disabledServiceSegments()}
+              <Segment attached="bottom" disabled textAlign="left">
                 Smoke or steam is coming out of motorcycle
                 {!props.props.cart.SmokeOrSteamIsComingOutOfMotorcycle.selected ? (
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runServiceQuery('SmokeOrSteamIsComingOutOfMotorcycle')} link />
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
                 ) : (
-                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('SmokeOrSteamIsComingOutOfMotorcycle')} link />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
                 )}
               </Segment>
             </Segment.Group>
