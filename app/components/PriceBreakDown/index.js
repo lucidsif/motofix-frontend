@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Button, Container, List, Image } from 'semantic-ui-react';
-//import services from 'components/QuoteCart';
+import { services } from 'components/QuoteCart';
 
 // TODO: 7/10 render parts for selected services
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
@@ -35,6 +35,43 @@ function PriceBreakDown(props) {
     return parseFloat(Math.round(total*100)/100).toFixed(2);
   }
 
+  function renderServicesAndParts(){
+
+    //console.log(props.cart['Oil Change'.replace(/\s/g, "")])
+
+    let filtered = services.filter((service) => {
+      return props.cart[service.replace(/\s/g, "")].selected;
+    })
+    console.log(filtered);
+    return filtered.map((filteredService) => {
+      return (
+      <List.Item>
+        <List.Content floated='left'><List.Icon name='linkify' /></List.Content>
+          <List.Content floated='left' verticalAlign='middle'>
+            <span className="service-span">{filteredService}</span></List.Content>
+          <List.Content floated='right' verticalAlign="middle">
+            <span className="service-span">{(props.cart[filteredService.replace(/\s/g, "")].laborTime)*67}</span>
+        </List.Content>
+      </List.Item>
+      )
+    })
+
+    /*
+    return services.map((service) => {
+      return (
+        <List.Item>
+          <List.Content floated='left'><List.Icon name='linkify' /></List.Content>
+          <List.Content floated='left' verticalAlign='middle'>
+            <span className="service-span">{service}</span></List.Content>
+          <List.Content floated='right' verticalAlign="middle">
+            <span className="service-span">{props.props.cart[service.replace(/\s/g, "")].laborTime}</span>
+          </List.Content>
+        </List.Item>
+      )
+    })
+    */
+  }
+
   return (
     <Container>
         <List>
@@ -43,7 +80,8 @@ function PriceBreakDown(props) {
                 <List.Content floated='left' verticalAlign='middle'>
                     <span className="service-span">Oil Change</span></List.Content>
                 <List.Content floated='right' verticalAlign="middle">
-                    <span className="service-span">$40.00</span></List.Content>
+                    <span className="service-span">$40.00</span>
+                </List.Content>
                 <List.Content>
                     <List>
                         <List.Item>
@@ -58,6 +96,7 @@ function PriceBreakDown(props) {
                     </List>
                 </List.Content>
             </List.Item>
+          {renderServicesAndParts()}
         </List>
         <p><a>Have your own parts?</a></p>
         <List divided relaxed>
