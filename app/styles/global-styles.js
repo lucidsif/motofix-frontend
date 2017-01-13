@@ -18,6 +18,7 @@ html, body {
     background-color: #ffffff;
     min-height: 100%;
     min-width: 100%;
+    padding-top: 40px;
   }
 
   p,
