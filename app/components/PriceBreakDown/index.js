@@ -35,10 +35,12 @@ function PriceBreakDown(props) {
     return parseFloat(Math.round(total*100)/100).toFixed(2);
   }
 
-  function renderServicesAndParts(){
+  function multiplyAndFloat(num){
+    let laborPrice = num * 67;
+    return parseFloat(Math.round(laborPrice*100)/100).toFixed(2);
+  }
 
-    //console.log(props.cart['Oil Change'.replace(/\s/g, "")])
-
+  function renderServices(){
     let filtered = services.filter((service) => {
       return props.cart[service.replace(/\s/g, "")].selected;
     })
@@ -50,53 +52,41 @@ function PriceBreakDown(props) {
           <List.Content floated='left' verticalAlign='middle'>
             <span className="service-span">{filteredService}</span></List.Content>
           <List.Content floated='right' verticalAlign="middle">
-            <span className="service-span">{(props.cart[filteredService.replace(/\s/g, "")].laborTime)*67}</span>
+            <span className="service-span">{multiplyAndFloat(props.cart[filteredService.replace(/\s/g, "")].laborTime)}</span>
+        </List.Content>
+        <List.Content>
+          <List>
+            {renderParts(filteredService.replace(/\s/g, ""))}
+          </List>
         </List.Content>
       </List.Item>
       )
     })
-
-    /*
-    return services.map((service) => {
+  }
+  function renderParts(serviceName){
+    console.log('renderPart: ' + serviceName)
+    // todo: dynamically render list of parts and their prices
+    return Object.keys(props.part[serviceName]).map((key) => {
       return (
         <List.Item>
-          <List.Content floated='left'><List.Icon name='linkify' /></List.Content>
-          <List.Content floated='left' verticalAlign='middle'>
-            <span className="service-span">{service}</span></List.Content>
-          <List.Content floated='right' verticalAlign="middle">
-            <span className="service-span">{props.props.cart[service.replace(/\s/g, "")].laborTime}</span>
-          </List.Content>
+          <List.Item>
+            <Image verticalAlign='middle' floated='left' src={props.part[serviceName][key].imageURL} size="tiny"/>
+            <List.Content floated='left' verticalAlign="middle">
+              <span className="part-span">{props.part[serviceName][key].partTitle}</span>
+            </List.Content>
+            <List.Content floated='right' verticalAlign="middle">
+              <span className="'part-span">{props.part[serviceName][key].price.__value__}</span>
+            </List.Content>
+          </List.Item>
         </List.Item>
       )
     })
-    */
   }
 
   return (
     <Container>
         <List>
-            <List.Item>
-                <List.Content floated='left'><List.Icon name='linkify' /></List.Content>
-                <List.Content floated='left' verticalAlign='middle'>
-                    <span className="service-span">Oil Change</span></List.Content>
-                <List.Content floated='right' verticalAlign="middle">
-                    <span className="service-span">$40.00</span>
-                </List.Content>
-                <List.Content>
-                    <List>
-                        <List.Item>
-                            <Image verticalAlign='middle' floated='left' src="http://thumbs1.ebaystatic.com/m/m62KDAtw-KaYq44wbFJs29A/140.jpg" size="tiny"/>
-                            <List.Content floated='left' verticalAlign="middle">
-                                <span className="part-span">Oil filter</span>
-                            </List.Content>
-                            <List.Content floated='right' verticalAlign="middle">
-                                <span className="'part-span">$10.00</span>
-                            </List.Content>
-                        </List.Item>
-                    </List>
-                </List.Content>
-            </List.Item>
-          {renderServicesAndParts()}
+          {renderServices()}
         </List>
         <p><a>Have your own parts?</a></p>
         <List divided relaxed>
