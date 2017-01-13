@@ -8,7 +8,7 @@ import React from 'react';
 import { Button, Container, List, Image } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
 
-// TODO: 7/10 render parts for selected services
+// TODO: 7/10 Save quote by sending user to signup page where they can email themselves the quote
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
 
 function PriceBreakDown(props) {

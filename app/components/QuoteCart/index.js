@@ -66,6 +66,37 @@ function QuoteCart(props) {
       let total = subTotal + tax;
       return parseFloat(Math.round(total*1)/1);
     }
+
+    function totalDealerFloated(){
+      let dealerServicePrice = (totalServicesPrice()/67)*95;
+      let dealerPartsPrice = (totalPartsPrice() + totalPartsPrice()*.10);
+      let dealerSubTotal = dealerPartsPrice + dealerServicePrice;
+      let taxRate = .0875;
+      let tax = dealerSubTotal*taxRate;
+
+      let total = dealerSubTotal + tax;
+      return parseFloat(Math.round(total*1)/1);
+    }
+
+    function totalSavings(){
+      let taxRate = .0875;
+
+      let dealerServicePrice = (totalServicesPrice()/67)*95;
+      let dealerPartsPrice = (totalPartsPrice() + totalPartsPrice()*.10);
+      let dealerSubTotal = dealerPartsPrice + dealerServicePrice;
+
+      let dealerTax = dealerSubTotal*taxRate;
+      let dealerTotal = dealerSubTotal + dealerTax;
+
+      let motofixSubTotal = totalServicesPrice() + totalPartsPrice();
+      let motoFixTax = motofixSubTotal*taxRate;
+
+      let motofixTotal = motofixSubTotal + motoFixTax;
+      let savings = dealerTotal - motofixTotal;
+
+      return parseFloat(Math.round(savings * 1)/1);
+
+    }
   return (
     <Grid.Row>
       <Segment padded="very">
@@ -80,11 +111,11 @@ function QuoteCart(props) {
           <Grid.Row columns={2} divided>
             <Grid.Column>
               <p>Dealer Price:</p>
-              <Label color="red" size="large">~${(totalServicesPrice() / 67) * 95}</Label>
+              <Label color="red" size="large">~${totalDealerFloated()}</Label>
             </Grid.Column>
             <Grid.Column>
               <p>Total Savings:</p>
-              <Label color="teal" size="large">~${((totalServicesPrice() / 67) * 95 - totalServicesPrice())}</Label>
+              <Label color="teal" size="large">~${totalSavings()}</Label>
             </Grid.Column>
           </Grid.Row>
 
