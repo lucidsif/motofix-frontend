@@ -114,5 +114,9 @@ svg g text.stage {
 .part-span {
     font-size: 1em;
 }
+
+.padRight {
+    padding-right: 2em;;
+}
 `
 ;
