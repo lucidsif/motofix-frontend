@@ -6,7 +6,8 @@
 
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import { Dropdown, Menu } from 'semantic-ui-react';
+import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
+import logo from './home-logo.png';
 
 class AppNavbar extends Component {
   constructor(props) {
@@ -19,14 +20,21 @@ class AppNavbar extends Component {
     };
   }
 
+  // add cart icon
+  // calc total price in cart
+  // replace menu with hamburger
+
   render() {
     const { activeItem } = this.state;
     return (
       <Menu secondary>
-        <Menu.Item name="Landing" active={activeItem === 'home'} onClick={this.handleItemClick} />
-        <Menu.Item name="features" active={activeItem === 'features'} onClick={this.handleItemClick} />
+        <Menu.Item><Image src={logo} size="tiny" /></Menu.Item>
         <Menu.Menu position="right">
-          <Menu.Item name="logout" active={activeItem === 'logout'} onClick={this.handleItemClick} />
+          <Menu.Item>
+            <Label color="teal">
+              <Icon name='in cart' /> $140
+            </Label>
+          </Menu.Item>
         </Menu.Menu>
         <Dropdown text="Menu" pointing className="link item">
           <Dropdown.Menu>
@@ -37,6 +45,7 @@ class AppNavbar extends Component {
             <Dropdown.Header>Settings</Dropdown.Header>
             <Dropdown.Item>Payments</Dropdown.Item>
             <Dropdown.Item>Help</Dropdown.Item>
+            <Dropdown.Item>Log in</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu>
