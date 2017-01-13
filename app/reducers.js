@@ -12,6 +12,8 @@ import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import { apolloReducer } from './graphql';
 import { reducer as reduxFormReducer } from 'redux-form/immutable';
 
+import quoteCentralReducer from 'containers/QuoteCentral/reducer';
+
 /*
  * routeReducer
  *
@@ -50,6 +52,7 @@ export default function createReducer(asyncReducers) {
     global: globalReducer,
     language: languageProviderReducer,
     form: reduxFormReducer,
+    quoteCentral: quoteCentralReducer,
     ...asyncReducers,
   });
 }

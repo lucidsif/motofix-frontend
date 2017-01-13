@@ -5,11 +5,15 @@
 */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
 import logo from './home-logo.png';
 
-class AppNavbar extends Component {
+import { createStructuredSelector } from 'reselect';
+import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
+
+export class AppNavBar extends Component {
   constructor(props) {
     super(props);
     this.state = { activeItem: 'home' };
@@ -19,8 +23,10 @@ class AppNavbar extends Component {
       this.setState({ activeItem: name });
     };
   }
+  test(){
+    console.log(this.props);
+  }
 
-  // add cart icon
   // calc total price in cart
   // replace menu with hamburger
 
@@ -28,6 +34,7 @@ class AppNavbar extends Component {
     const { activeItem } = this.state;
     return (
       <Menu secondary>
+        {this.test()}
         <Menu.Item><Image src={logo} size="tiny" /></Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
@@ -53,4 +60,11 @@ class AppNavbar extends Component {
   }
 }
 
-export default AppNavbar;
+const mapStateToProps = createStructuredSelector({
+  cart: selectCart(),
+  part: selectPart(),
+});
+
+AppNavBar = connect(mapStateToProps, null)(AppNavBar);
+
+export default AppNavBar;
