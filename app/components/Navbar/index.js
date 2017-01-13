@@ -14,6 +14,7 @@ import { services } from 'components/QuoteCart';
 import { createStructuredSelector } from 'reselect';
 import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 
+// TODO: handle edge cases like if props is null
 // TODO: 5/10 export all calculating functions into a utility functions file
 export class AppNavBar extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export class AppNavBar extends Component {
     .reduce((acc, curr) => {
       if(this.props.cart[curr].selected && this.props.part[curr]){
         console.log(`${curr} is selected and a part exists for it`)
-        for (var key in props.part[curr]){
+        for (var key in this.props.part[curr]){
           if(this.props.part[curr].hasOwnProperty(key)){
             let price = parseInt(this.props.part[curr][key].price.__value__);
             sum += price
