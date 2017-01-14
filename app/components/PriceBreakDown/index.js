@@ -5,8 +5,9 @@
 */
 
 import React from 'react';
-import { Button, Container, List, Image } from 'semantic-ui-react';
+import { Button, Container, List, Image, Modal, Header, Icon, Input } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
+import FormModal from 'components/FormModal';
 
 // TODO: 7/10 Save quote by sending user to signup page where they can email themselves the quote
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
@@ -125,8 +126,8 @@ function PriceBreakDown(props) {
        </List>
 
       <div>
-        <Button>Save Quote</Button>
-        <Button>Schedule Now</Button>
+        <Button disabled>Schedule Now</Button>
+        <FormModal />
       </div>
     </Container>
   );
