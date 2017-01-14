@@ -15,14 +15,9 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
     super(props);
     this.state = { email: null, modalOpen: false };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-  }
-
-  handleChange(e){
-    this.setState({ email: e.target.value });
   }
 
   handleSubmit(e) {
@@ -50,7 +45,7 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
         <Header icon='mail outline' content='What email should we send your quote to?' />
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
-            <Form.Input type='password' placeholder="email address" icon="mail outline" iconPosition="left" />
+            <Form.Input type='email' placeholder="email address" icon="mail outline" iconPosition="left" />
           </Form>
         </Modal.Content>
         <Modal.Actions>
