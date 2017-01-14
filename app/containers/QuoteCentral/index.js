@@ -32,7 +32,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         <QuoteCart props={this.props} />
         <AddServices props={this.props} />
         <Grid.Row>
-          <Button floated="right" color="teal">Next</Button>
+          <Button floated="right" color="teal">Get $15 off</Button>
           <Button onClick={() => browserHistory.push('/quote/vehicle')} floated="right">Back</Button>
         </Grid.Row>
       </div>
