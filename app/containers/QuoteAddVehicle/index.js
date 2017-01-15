@@ -39,16 +39,15 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ modelValue: null });
     this.props.client.query({
       query: gql`
-      query allMotorcycles($filterByYear: String){
-        allMotorcycles(filterByYear: $filterByYear){
-          id
+      query allVehicles($filterByYear: String){
+        allVehicles(filterByYear: $filterByYear){
           make
         }
       }
       `,
       variables: { filterByYear: newValue },
     }).then((result) => {
-      makesData = result.data.allMotorcycles;
+      makesData = result.data.allVehicles;
       makesFactory = makesData.map((bike) => {
         return { value: bike.make, label: bike.make };
       });
@@ -61,16 +60,15 @@ class QuoteAddVehicle extends React.Component {
     model = '';
     this.props.client.query({
       query: gql`
-      query allMotorcycles($filterByYear: String, $filterByMake: String){
-        allMotorcycles(filterByYear: $filterByYear, filterByMake: $filterByMake){
-          id
+      query allVehicles($filterByYear: String, $filterByMake: String){
+        allVehicles(filterByYear: $filterByYear, filterByMake: $filterByMake){
           model
         }
       }
       `,
       variables: { filterByYear: this.state.yearValue, filterByMake: newValue },
     }).then((result) => {
-      modelsData = result.data.allMotorcycles;
+      modelsData = result.data.allVehicles;
       modelsFactory = modelsData.map((bike) => {
         return { value: bike.model, label: bike.model };
       });
