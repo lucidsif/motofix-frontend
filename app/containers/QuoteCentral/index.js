@@ -19,7 +19,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCart, selectPart } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
-
+// TODO: 7/10 when back button is clicked, reset selected state
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
 // TODO: 6/10 make sure the onclick handler for the back button isn't being recreated on every rerender
 // TODO: 5.5/10 route back buttom backwards instead of to a specific point

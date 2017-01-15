@@ -19,7 +19,6 @@ let make;
 let model;
 let appended;
 
-// TODO: Make it impossible to set make without selecting year first
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 add validation to required fields
 // TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
@@ -37,6 +36,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: newValue });
     this.setState({ makeValue: null });
     this.setState({ modelValue: null });
+    console.time('makes');
     this.props.client.query({
       query: gql`
       query allVehicles($filterByYear: String){
@@ -47,6 +47,8 @@ class QuoteAddVehicle extends React.Component {
       `,
       variables: { filterByYear: newValue },
     }).then((result) => {
+      console.timeEnd('makes');
+      console.log(result);
       makesData = result.data.allVehicles;
       makesFactory = makesData.map((bike) => {
         return { value: bike.make, label: bike.make };
@@ -58,6 +60,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ makeValue: newValue });
     this.setState({ modelValue: null });
     model = '';
+    console.time('model');
     this.props.client.query({
       query: gql`
       query allVehicles($filterByYear: String, $filterByMake: String){
@@ -68,6 +71,7 @@ class QuoteAddVehicle extends React.Component {
       `,
       variables: { filterByYear: this.state.yearValue, filterByMake: newValue },
     }).then((result) => {
+      console.timeEnd('model');
       modelsData = result.data.allVehicles;
       modelsFactory = modelsData.map((bike) => {
         return { value: bike.model, label: bike.model };
@@ -97,7 +101,7 @@ class QuoteAddVehicle extends React.Component {
             value={this.state.yearValue}
             onChange={this.updateYearValueAndGetMakes}
             searchable={this.state.searchable}
-            placeholder="2017"
+            placeholder="Search or select a year"
           />
         </div>
         <div>
@@ -112,7 +116,7 @@ class QuoteAddVehicle extends React.Component {
             value={this.state.makeValue}
             onChange={this.updateMakeValueAndGetModels}
             searchable={this.state.searchable}
-            placeholder="Select a make"
+            placeholder="Search or select a make"
           />
         </div>
         <div>
@@ -126,7 +130,7 @@ class QuoteAddVehicle extends React.Component {
             value={this.state.modelValue}
             onChange={this.updateModelValue}
             searchable={this.state.searchable}
-            placeholder="Select a model"
+            placeholder="Search or select a model"
           />
         </div>
         <Button color="teal" floated="right">Next</Button>
