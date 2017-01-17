@@ -35,7 +35,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         <QuoteCart props={this.props} />
         <AddServices props={this.props} />
         <Grid.Row>
-          <FormModal />
+          <FormModal client={this.props.client} />
           <Button onClick={() => browserHistory.push('/quote/vehicle')} >Back</Button>
         </Grid.Row>
       </div>

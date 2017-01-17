@@ -6,6 +6,8 @@
 
 import React from 'react';
 import { Button, Modal, Header, Icon, Form, Message } from 'semantic-ui-react';
+import gql from 'graphql-tag';
+
 
 // TODO: Send a signup mutation onsubmit
 // TODO: Create a success and error message - Need to share state with redux or have component colocate with parent
@@ -41,6 +43,7 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
     }
     if(validated && pass) {
       console.log(`email and pass is validated, submitting email: ${this.state.email}, pass: ${this.state.password}`);
+      this.signUpMutation()
       return this.handleClose();
     }
   }
@@ -56,6 +59,23 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
   validateEmail(email) {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+  }
+
+  signUpMutation(){
+    console.log(this.props.client);
+    const startMutation = (new Date).getTime();
+    return this.props.client.mutate({
+      mutation: gql`
+      mutation signUp($email: String!, $password: String!){
+        signUp(email: $email, password: $password){
+          id
+          email
+      }
+    }
+    `,
+      variables: { email: this.state.email, password: this.state.password},
+    }).then((response) => console.log(response.data.signUp))
+      .then(() => console.log(`time to finish signup mutation: ${(new Date).getTime() - startMutation}`))
   }
 
   render() {

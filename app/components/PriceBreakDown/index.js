@@ -127,7 +127,7 @@ function PriceBreakDown(props) {
 
       <div>
         <Button disabled>Schedule Now</Button>
-        <FormModal />
+        <FormModal client={props.client} />
       </div>
     </Container>
   );

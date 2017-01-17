@@ -125,7 +125,7 @@ function QuoteCart(props) {
                 See cost breakdown
             </Accordion.Title>
             <Accordion.Content>
-                <PriceBreakDown cart={props.props.cart} part={props.props.part} totalServicesPrice={totalServicesPrice} totalPartsPrice={totalPartsPrice} />
+                <PriceBreakDown cart={props.props.cart} part={props.props.part} client={props.props.client} totalServicesPrice={totalServicesPrice} totalPartsPrice={totalPartsPrice} />
             </Accordion.Content>
           </Accordion>
 

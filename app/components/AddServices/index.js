@@ -54,6 +54,7 @@ function AddServices(props) {
     props.props.onCartClick(service);
   }
 
+  // TODO: refactor servicesegments so it first renders active segments and then renders disabled segments
   const activeServiceSegments = () => {
     return activeServices.map((service) => {
       // in case despacing all the services  is required, this is the function needed
@@ -132,9 +133,9 @@ function AddServices(props) {
               <Segment attached="bottom" disabled textAlign="left">
                 Smoke or steam is coming out of motorcycle
                 {!props.props.cart.SmokeOrSteamIsComingOutOfMotorcycle.selected ? (
-                  <Icon disabled name="add to cart" size="large" className="serviceIcon blueIcon" />
+                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
                 ) : (
-                  <Icon disabled name="trash outline" size="large" className="serviceIcon redIcon" />
+                  <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
                 )}
               </Segment>
             </Segment.Group>
