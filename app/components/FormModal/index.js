@@ -7,6 +7,7 @@
 import React from 'react';
 import { Button, Modal, Header, Icon, Form, Message } from 'semantic-ui-react';
 
+// TODO: Send a signup mutation onsubmit
 // TODO: Create a success and error message - Need to share state with redux or have component colocate with parent
 class FormModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props){

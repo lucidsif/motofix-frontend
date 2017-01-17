@@ -116,7 +116,7 @@ svg g text.stage {
 }
 
 .padRight {
-    padding-right: 2em;;
+    padding-right: 2em;
 }
 `
 ;
