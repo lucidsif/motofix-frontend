@@ -11,27 +11,36 @@ import { Button, Modal, Header, Icon, Form, Message } from 'semantic-ui-react';
 class FormModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props){
     super(props);
-    this.state = { email: null, modalOpen: false };
+    this.state = { email: null, password: null, modalOpen: false };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleChange(e){
-    this.state = { email: e.target.value };
+  handleEmailChange(e){
+    this.setState({ email: e.target.value });
+  }
+
+  handlePasswordChange(e){
+    this.setState({ password: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    let validated = this.validateEmail(this.state.email);
-    if(validated){
-      console.log(`validated internally, submitting email: ${this.state.email}`);
-      return this.handleClose();
+    const validated = this.validateEmail(this.state.email);
+    const pass = this.state.password;
+    if(!validated){
+      console.log(`email: ${this.state.email}, is not valid`)
     }
-    else{
-      console.log(`invalidated internally: ${this.state.email}`)
+    if(!pass){
+      console.log(`password: ${this.state.password}, is not valid`)
+    }
+    if(validated && pass) {
+      console.log(`email and pass is validated, submitting email: ${this.state.email}, pass: ${this.state.password}`);
+      return this.handleClose();
     }
   }
 
@@ -51,27 +60,34 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
   render() {
     return (
       <Modal
-        trigger={<Button color="blue" onClick={this.handleOpen}>Send to Email</Button>}
+        trigger={<Button color="blue" onClick={this.handleOpen}>Get $15 off</Button>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
         size='small'
       >
-        <Header icon='mail outline' content='What email should we send your quote to?' />
+        <Header icon='mail outline' content="Sign up to get full access to your free app and get $15 off your next service on motofix! " />
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
             <Form.Input
-              onChange={this.handleChange}
+              onChange={this.handleEmailChange}
               type='email'
               placeholder="email address"
               icon="mail outline"
+              iconPosition="left"
+            />
+            <Form.Input
+              onChange={this.handlePasswordChange}
+              type='password'
+              placeholder="password"
+              icon="lock"
               iconPosition="left"
             />
           </Form>
         </Modal.Content>
         <Modal.Actions>
           <Button type='submit' color='green' inverted floated="right" onClick={this.handleSubmit}>
-            <Icon name='checkmark' /> Send
+            <Icon name='checkmark' /> Get $15 off
           </Button>
           <Button basic color='red' inverted floated="right" onClick={this.handleClose}>
             <Icon name='remove' /> Cancel
