@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import { Progress, Segment } from 'semantic-ui-react';
+import { Progress, Segment, Label } from 'semantic-ui-react';
 
 
 class QuoteProgressBar extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -17,7 +17,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
   render() {
     return (
       <Segment className="quote" attached="top">
-      <svg>
+        <svg>
             <g>
               <line x1="20%" y1="10%" x2="90%" y2="10%"></line>
               <circle cx="90%" cy="10%" r="1.25em"></circle>

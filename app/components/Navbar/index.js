@@ -86,7 +86,9 @@ export class AppNavBar extends Component {
     const { activeItem } = this.state;
     return (
       <Menu secondary fixed='top' className='padRight'>
-        <Menu.Item><Image src={logo} size="tiny" /></Menu.Item>
+        <Menu.Item>
+          <Image src={logo} size="tiny" />
+        </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
             <Label color="teal">
