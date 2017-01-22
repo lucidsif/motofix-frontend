@@ -14,11 +14,7 @@ let modelData = [];
 let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
-let yearsData = [];
-//let year;
-//let make;
-//let model;
-//let appended;
+let mid;
 
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 add validation to required fields
@@ -27,8 +23,15 @@ class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { manufacturerValue: null, modelValue: null, subModelValue: null, yearValue: null,
-                    modelOptions: null, subModelOptions: null, yearOptions: null };
+    this.state = {
+      manufacturerValue: null,
+      modelValue: null,
+      subModelValue: null,
+      yearValue: null,
+      modelOptions: null,
+      subModelOptions: null,
+      yearOptions: null
+    };
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
     this.updateModelValueAndGetSubModels = this.updateModelValueAndGetSubModels.bind(this);
@@ -69,10 +72,12 @@ class QuoteAddVehicle extends React.Component {
     this.props.client.query({
       query: gql`
       query allSubModels($modelID: Int){
-        allSubModels(modelID: $modelID){
+        allSubModels(modelID: $modelID){        
           mid
+          manufacturer
           model
           model_variant
+          tuning_description
           start_year
           end_year
         }
@@ -83,15 +88,18 @@ class QuoteAddVehicle extends React.Component {
       console.timeEnd('allSubModels');
       subModelData = result.data.allSubModels;
       subModelFactory = subModelData.map((bike) => {
-        return { value: bike.mid, label: bike.model_variant };
+        let bikeLabel = `${bike.model_variant} ${bike.tuning_description || ''} - [${bike.start_year} - ${bike.end_year}]`
+        return { value: bike.mid, label: bikeLabel };
       });
       this.setState({ subModelOptions: subModelFactory });
+
     });
   }
 
   updateSubModelValueAndRenderYears(newValue) {
     console.time('years');
     this.setState({ subModelValue: newValue });
+    mid = this.state.subModelValue
     this.setState({ yearValue: null})
     let selectedSubModel = subModelData.filter((bike) =>  {
       return bike.mid === newValue
@@ -114,38 +122,6 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: newValue })
   }
 
-  /*
-  updateManufacturerValueAndGetModels(newValue) {
-    this.setState({ makeValue: newValue });
-    this.setState({ modelValue: null });
-    model = '';
-    console.time('model');
-    this.props.client.query({
-      query: gql`
-      query allVehicles($filterByYear: String, $filterByMake: String){
-        allVehicles(filterByYear: $filterByYear, filterByMake: $filterByMake){
-          model
-        }
-      }
-      `,
-      variables: { filterByYear: this.state.manufacturerValue, filterByMake: newValue },
-    }).then((result) => {
-      console.timeEnd('model');
-      modelData = result.data.allVehicles;
-      modelsFactory = modelData.map((bike) => {
-        return { value: bike.model, label: bike.model };
-      });
-      this.setState({ subModelOptions: modelsFactory });
-    });
-  }
-  updateModelValue(newValue) {
-    this.setState({ modelValue: newValue });
-    year = this.state.manufacturerValue;
-    make = this.state.makeValue;
-    model = newValue;
-    appended = `${year} ${make} ${model}`;
-  }
-  */
   render() {
     return (
       <form onSubmit={this.props.onSubmitForm}>
@@ -222,15 +198,22 @@ QuoteAddVehicle.propTypes = {
 export function mapDispatchToProps(dispatch){
   return {
     onSubmitForm: (evt) => {
-      const vehicle = { appended, year, make, model };
+      console.log(subModelData)
+      const midArr = subModelData.filter((vehicle) => {
+        return vehicle.mid === mid
+      })
+      const mid = midArr[0]
+      console.log(mid)
+      // const vehicle = { mid: this.state.subModelValue };
       evt.preventDefault();
-      if (year && make && model){
+
+      if (mid){
         console.log('all fields submitted');
-        dispatch(addVehicle(vehicle));
+        dispatch(addVehicle(mid));
         browserHistory.push('/quote/services');
       } else {
         console.log('please fill out all fields');
-        browserHistory.push('/quote/vehicle');
+        // browserHistory.push('/quote/vehicle');
       }
     },
   };
