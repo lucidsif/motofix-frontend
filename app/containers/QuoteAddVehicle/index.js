@@ -36,7 +36,6 @@ class QuoteAddVehicle extends React.Component {
     this.updateYear = this.updateYear.bind(this)
   }
   updateManufacturerValueAndGetModels(newValue) {
-    console.log(newValue);
     this.setState({ manufacturerValue: newValue });
     this.setState({ modelValue: null });
     this.setState({ subModelValue: null });
@@ -54,18 +53,15 @@ class QuoteAddVehicle extends React.Component {
       variables: { manufacturer: newValue },
     }).then((result) => {
       console.timeEnd('allModels');
-      console.log(result);
       modelData = result.data.allModels;
       modelsFactory = modelData.map((bike) => {
         return { value: bike.model_id, label: bike.model };
       });
-      console.log(modelsFactory)
       this.setState({ modelOptions: modelsFactory });
     });
   }
   // add logic here somehow to generate a years array or maybe anothe func
   updateModelValueAndGetSubModels(newValue) {
-    console.log(newValue);
     this.setState({ modelValue: newValue });
     this.setState({ subModelValue: null });
     this.setState({ yearValue: null})
@@ -85,27 +81,23 @@ class QuoteAddVehicle extends React.Component {
       variables: { modelID: newValue },
     }).then((result) => {
       console.timeEnd('allSubModels');
-      console.log(result);
       subModelData = result.data.allSubModels;
       subModelFactory = subModelData.map((bike) => {
         return { value: bike.mid, label: bike.model_variant };
       });
-      console.log(subModelFactory)
       this.setState({ subModelOptions: subModelFactory });
     });
   }
 
   updateSubModelValueAndRenderYears(newValue) {
     console.time('years');
-    console.log(newValue);
     this.setState({ subModelValue: newValue });
     this.setState({ yearValue: null})
     let selectedSubModel = subModelData.filter((bike) =>  {
       return bike.mid === newValue
     });
-    console.log(selectedSubModel)
     let yearsArr = []
-    createYearsArr(selectedSubModel.start_year, selectedSubModel.end_year)
+    createYearsArr(selectedSubModel[0].start_year, selectedSubModel[0].end_year)
     this.setState({ yearOptions: yearsArr })
 
     function createYearsArr(startYear, endYear){
@@ -119,8 +111,7 @@ class QuoteAddVehicle extends React.Component {
   }
 
   updateYear(newValue){
-    console.log(newValue)
-    this.setState({ yearValue: null })
+    this.setState({ yearValue: newValue })
   }
 
   /*
