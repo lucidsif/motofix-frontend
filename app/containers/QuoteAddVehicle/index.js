@@ -10,10 +10,11 @@ import Select from 'react-select';
 
 import manufacturerData from './manufacturers';
 
-let modelsData = [];
+let modelData = [];
 let modelsFactory = [];
-let subModelsData = [];
-let subModelsFactory = [];
+let subModelData = [];
+let subModelFactory = [];
+let yearsData = [];
 //let year;
 //let make;
 //let model;
@@ -26,12 +27,13 @@ class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { manufacturerValue: null, modelValue: null, subModelValue: null, yearValue: null, modelOptions: null, subModelOptions: null };
+    this.state = { manufacturerValue: null, modelValue: null, subModelValue: null, yearValue: null,
+                    modelOptions: null, subModelOptions: null, yearOptions: null };
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
     this.updateModelValueAndGetSubModels = this.updateModelValueAndGetSubModels.bind(this);
-    //this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
-    //this.updateModelValue = this.updateModelValue.bind(this);
+    this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this)
+    this.updateYear = this.updateYear.bind(this)
   }
   updateManufacturerValueAndGetModels(newValue) {
     console.log(newValue);
@@ -53,8 +55,8 @@ class QuoteAddVehicle extends React.Component {
     }).then((result) => {
       console.timeEnd('allModels');
       console.log(result);
-      modelsData = result.data.allModels;
-      modelsFactory = modelsData.map((bike) => {
+      modelData = result.data.allModels;
+      modelsFactory = modelData.map((bike) => {
         return { value: bike.model_id, label: bike.model };
       });
       console.log(modelsFactory)
@@ -84,14 +86,43 @@ class QuoteAddVehicle extends React.Component {
     }).then((result) => {
       console.timeEnd('allSubModels');
       console.log(result);
-      subModelsData = result.data.allSubModels;
-      subModelsFactory = subModelsData.map((bike) => {
+      subModelData = result.data.allSubModels;
+      subModelFactory = subModelData.map((bike) => {
         return { value: bike.mid, label: bike.model_variant };
       });
-      console.log(subModelsFactory)
-      this.setState({ subModelsOptions: subModelsFactory });
+      console.log(subModelFactory)
+      this.setState({ subModelOptions: subModelFactory });
     });
   }
+
+  updateSubModelValueAndRenderYears(newValue) {
+    console.time('years');
+    console.log(newValue);
+    this.setState({ subModelValue: newValue });
+    this.setState({ yearValue: null})
+    let selectedSubModel = subModelData.filter((bike) =>  {
+      return bike.mid === newValue
+    });
+    console.log(selectedSubModel)
+    let yearsArr = []
+    createYearsArr(selectedSubModel.start_year, selectedSubModel.end_year)
+    this.setState({ yearOptions: yearsArr })
+
+    function createYearsArr(startYear, endYear){
+      let currYear = startYear
+      if(currYear <= endYear){
+        yearsArr.push({ value: startYear, label: startYear })
+        currYear += 1
+        return createYearsArr(currYear, endYear)
+      }
+    }
+  }
+
+  updateYear(newValue){
+    console.log(newValue)
+    this.setState({ yearValue: null })
+  }
+
   /*
   updateManufacturerValueAndGetModels(newValue) {
     this.setState({ makeValue: newValue });
@@ -109,8 +140,8 @@ class QuoteAddVehicle extends React.Component {
       variables: { filterByYear: this.state.manufacturerValue, filterByMake: newValue },
     }).then((result) => {
       console.timeEnd('model');
-      modelsData = result.data.allVehicles;
-      modelsFactory = modelsData.map((bike) => {
+      modelData = result.data.allVehicles;
+      modelsFactory = modelData.map((bike) => {
         return { value: bike.model, label: bike.model };
       });
       this.setState({ subModelOptions: modelsFactory });
@@ -154,6 +185,34 @@ class QuoteAddVehicle extends React.Component {
             onChange={this.updateModelValueAndGetSubModels}
             searchable={this.state.searchable}
             placeholder="Search or select a model"
+          />
+        </div>
+        <div>
+          <label>Select a sub-model </label>
+          <Select
+            autofocus
+            options={this.state.subModelOptions}
+            simpleValue
+            clearable
+            name="selected-submodel"
+            value={this.state.subModelValue}
+            onChange={this.updateSubModelValueAndRenderYears}
+            searchable={this.state.searchable}
+            placeholder="Search or select a sub-model"
+          />
+        </div>
+        <div>
+          <label>Select a year </label>
+          <Select
+            autofocus
+            options={this.state.yearOptions}
+            simpleValue
+            clearable
+            name="selected-year"
+            value={this.state.yearValue}
+            onChange={this.updateYear}
+            searchable={this.state.searchable}
+            placeholder="Search or select a year"
           />
         </div>
         <Button color="teal" floated="right">Next</Button>
