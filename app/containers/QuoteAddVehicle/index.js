@@ -12,6 +12,8 @@ import manufacturerData from './manufacturers';
 
 let modelsData = [];
 let modelsFactory = [];
+let subModelsData = [];
+let subModelsFactory = [];
 //let year;
 //let make;
 //let model;
@@ -27,6 +29,7 @@ class QuoteAddVehicle extends React.Component {
     this.state = { manufacturerValue: null, modelValue: null, subModelValue: null, yearValue: null, modelOptions: null, subModelOptions: null };
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
+    this.updateModelValueAndGetSubModels = this.updateModelValueAndGetSubModels.bind(this);
     //this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
     //this.updateModelValue = this.updateModelValue.bind(this);
   }
@@ -56,6 +59,37 @@ class QuoteAddVehicle extends React.Component {
       });
       console.log(modelsFactory)
       this.setState({ modelOptions: modelsFactory });
+    });
+  }
+  // add logic here somehow to generate a years array or maybe anothe func
+  updateModelValueAndGetSubModels(newValue) {
+    console.log(newValue);
+    this.setState({ modelValue: newValue });
+    this.setState({ subModelValue: null });
+    this.setState({ yearValue: null})
+    console.time('allSubModels');
+    this.props.client.query({
+      query: gql`
+      query allSubModels($modelID: Int){
+        allSubModels(modelID: $modelID){
+          mid
+          model
+          model_variant
+          start_year
+          end_year
+        }
+      }
+      `,
+      variables: { modelID: newValue },
+    }).then((result) => {
+      console.timeEnd('allSubModels');
+      console.log(result);
+      subModelsData = result.data.allSubModels;
+      subModelsFactory = subModelsData.map((bike) => {
+        return { value: bike.mid, label: bike.model_variant };
+      });
+      console.log(subModelsFactory)
+      this.setState({ subModelsOptions: subModelsFactory });
     });
   }
   /*
@@ -95,17 +129,31 @@ class QuoteAddVehicle extends React.Component {
       <form onSubmit={this.props.onSubmitForm}>
         <h3 className="section-heading">Add your motorcycle</h3>
         <div>
-          <label>Select a year </label>
+          <label>Select a make </label>
           <Select
             autofocus
             options={manufacturerData}
             simpleValue
             clearable
-            name="selected-year"
+            name="selected-manufacturer"
             value={this.state.manufacturerValue}
             onChange={this.updateManufacturerValueAndGetModels}
             searchable={this.state.searchable}
-            placeholder="Search or select a year"
+            placeholder="Search or select a make"
+          />
+        </div>
+        <div>
+          <label>Select a model </label>
+          <Select
+            autofocus
+            options={this.state.modelOptions}
+            simpleValue
+            clearable
+            name="selected-model"
+            value={this.state.modelValue}
+            onChange={this.updateModelValueAndGetSubModels}
+            searchable={this.state.searchable}
+            placeholder="Search or select a model"
           />
         </div>
         <Button color="teal" floated="right">Next</Button>
