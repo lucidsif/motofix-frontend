@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
 
-import yearsData from './years';
+import manufacturerData from './manufacturers';
 
 let makesData = [];
 let makesFactory = [];
@@ -26,14 +26,14 @@ class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { yearValue: 2016, makeValue: null, modelValue: null, makeOptions: null, modelOptions: null };
+    this.state = { manufacturerValue: null, modelValue: null, subModelValue: null, subModelOptions: null, subModelOptions: null };
 
-    this.updateYearValueAndGetMakes = this.updateYearValueAndGetMakes.bind(this);
     this.updateMakeValueAndGetModels = this.updateMakeValueAndGetModels.bind(this);
-    this.updateModelValue = this.updateModelValue.bind(this);
+    //this.updateMakeValueAndGetModels = this.updateMakeValueAndGetModels.bind(this);
+    //this.updateModelValue = this.updateModelValue.bind(this);
   }
-  updateYearValueAndGetMakes(newValue) {
-    this.setState({ yearValue: newValue });
+  updateMakeValueAndGetModels(newValue) {
+    this.setState({ manufacturerValue: newValue });
     this.setState({ makeValue: null });
     this.setState({ modelValue: null });
     console.time('makes');
@@ -53,9 +53,10 @@ class QuoteAddVehicle extends React.Component {
       makesFactory = makesData.map((bike) => {
         return { value: bike.make, label: bike.make };
       });
-      this.setState({ makeOptions: makesFactory });
+      this.setState({ subModelOptions: makesFactory });
     });
   }
+  /*
   updateMakeValueAndGetModels(newValue) {
     this.setState({ makeValue: newValue });
     this.setState({ modelValue: null });
@@ -69,23 +70,24 @@ class QuoteAddVehicle extends React.Component {
         }
       }
       `,
-      variables: { filterByYear: this.state.yearValue, filterByMake: newValue },
+      variables: { filterByYear: this.state.manufacturerValue, filterByMake: newValue },
     }).then((result) => {
       console.timeEnd('model');
       modelsData = result.data.allVehicles;
       modelsFactory = modelsData.map((bike) => {
         return { value: bike.model, label: bike.model };
       });
-      this.setState({ modelOptions: modelsFactory });
+      this.setState({ subModelOptions: modelsFactory });
     });
   }
   updateModelValue(newValue) {
     this.setState({ modelValue: newValue });
-    year = this.state.yearValue;
+    year = this.state.manufacturerValue;
     make = this.state.makeValue;
     model = newValue;
     appended = `${year} ${make} ${model}`;
   }
+  */
   render() {
     return (
       <form onSubmit={this.props.onSubmitForm}>
@@ -94,43 +96,14 @@ class QuoteAddVehicle extends React.Component {
           <label>Select a year </label>
           <Select
             autofocus
-            options={yearsData}
+            options={manufacturerData}
             simpleValue
             clearable
             name="selected-year"
-            value={this.state.yearValue}
-            onChange={this.updateYearValueAndGetMakes}
-            searchable={this.state.searchable}
-            placeholder="Search or select a year"
-          />
-        </div>
-        <div>
-          <label>Select a make {makesData.length}, {makesFactory.length} </label>
-          <Select
-            autofocus
-            options={this.state.makeOptions}
-            simpleValue
-            clearable
-
-            name="selected-make"
-            value={this.state.makeValue}
+            value={this.state.manufacturerValue}
             onChange={this.updateMakeValueAndGetModels}
             searchable={this.state.searchable}
-            placeholder="Search or select a make"
-          />
-        </div>
-        <div>
-          <label>Select a model {modelsData.length}, {modelsFactory.length} </label>
-          <Select
-            autofocus
-            options={this.state.modelOptions}
-            simpleValue
-            clearable
-            name="selected-model"
-            value={this.state.modelValue}
-            onChange={this.updateModelValue}
-            searchable={this.state.searchable}
-            placeholder="Search or select a model"
+            placeholder="Search or select a year"
           />
         </div>
         <Button color="teal" floated="right">Next</Button>

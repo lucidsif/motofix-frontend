@@ -13,7 +13,7 @@ import gql from 'graphql-tag';
 const activeServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Chain And Sprocket Replacement', 'Clean And Lube Chain', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Winterization'];
 const disabledServices = ['Accessory Installation', 'Brakes Are Squeaking', 'Check Engine Or FI Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Suspension Tuning', 'Valve Adjustment', 'Warning Light Is On'];
 
-// TODO: 6.5/10 add tax calculation and add it to the total
+// TODO: 9/10 Disable all services except oil change
 // TODO: 6/10 Replace segments with animated list
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
