@@ -11,10 +11,14 @@ import {
 } from './constants';
 
 const initialState = fromJS({
-  appended: null,
-  year: null,
-  make: null,
+  mid: null,
+  manufacturer: null,
   model: null,
+  model_variant: null,
+  tuning_description: null,
+  start_year: null,
+  end_year: null,
+  year: null,
 });
 
 function quoteAddVehicleReducer(state = initialState, action) {

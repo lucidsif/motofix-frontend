@@ -8,19 +8,31 @@ const selectVehicleDomain = () => (state) => state.get('quoteAddVehicle');
 /**
  * Other specific selectors
  */
-const selectYear = () => createSelector(
+
+
+const selectMid = () => createSelector(
   selectVehicleDomain(),
-  (vehicleState) => vehicleState.get('year')
+  (vehicleState) => vehicleState.get('mid')
 );
 
-const selectMake = () => createSelector(
+const selectManufacturer = () => createSelector(
   selectVehicleDomain(),
-  (vehicleState) => vehicleState.get('make')
+  (vehicleState) => vehicleState.get('manufacturer')
 );
 
 const selectModel = () => createSelector(
   selectVehicleDomain(),
   (vehicleState) => vehicleState.get('model')
+);
+
+const selectModelVariant = () => createSelector(
+  selectVehicleDomain(),
+  (vehicleState) => vehicleState.get('model_variant')
+);
+
+const selectYear = () => createSelector(
+  selectVehicleDomain(),
+  (vehicleState) => vehicleState.get('year')
 );
 
 // Default selector used by QuoteAddVehicle
@@ -32,7 +44,9 @@ const selectVehicle = () => createSelector(
 
 export default selectVehicle;
 export {
-  selectYear,
-  selectMake,
+  selectMid,
+  selectManufacturer,
   selectModel,
+  selectModelVariant,
+  selectYear,
 };

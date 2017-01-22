@@ -14,7 +14,7 @@ let modelData = [];
 let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
-let mid;
+let motorcycle;
 
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 add validation to required fields
@@ -99,11 +99,12 @@ class QuoteAddVehicle extends React.Component {
   updateSubModelValueAndRenderYears(newValue) {
     console.time('years');
     this.setState({ subModelValue: newValue });
-    mid = this.state.subModelValue
     this.setState({ yearValue: null})
     let selectedSubModel = subModelData.filter((bike) =>  {
       return bike.mid === newValue
     });
+    motorcycle = selectedSubModel[0]
+    motorcycle.year = newValue
     let yearsArr = []
     createYearsArr(selectedSubModel[0].start_year, selectedSubModel[0].end_year)
     this.setState({ yearOptions: yearsArr })
@@ -198,18 +199,12 @@ QuoteAddVehicle.propTypes = {
 export function mapDispatchToProps(dispatch){
   return {
     onSubmitForm: (evt) => {
+      console.log(motorcycle)
       console.log(subModelData)
-      const midArr = subModelData.filter((vehicle) => {
-        return vehicle.mid === mid
-      })
-      const mid = midArr[0]
-      console.log(mid)
-      // const vehicle = { mid: this.state.subModelValue };
       evt.preventDefault();
-
-      if (mid){
+      if (motorcycle) {
         console.log('all fields submitted');
-        dispatch(addVehicle(mid));
+        dispatch(addVehicle(motorcycle));
         browserHistory.push('/quote/services');
       } else {
         console.log('please fill out all fields');
