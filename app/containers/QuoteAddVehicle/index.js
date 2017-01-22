@@ -10,14 +10,12 @@ import Select from 'react-select';
 
 import manufacturerData from './manufacturers';
 
-let makesData = [];
-let makesFactory = [];
 let modelsData = [];
 let modelsFactory = [];
-let year;
-let make;
-let model;
-let appended;
+//let year;
+//let make;
+//let model;
+//let appended;
 
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 add validation to required fields
@@ -26,38 +24,42 @@ class QuoteAddVehicle extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { manufacturerValue: null, modelValue: null, subModelValue: null, subModelOptions: null, subModelOptions: null };
+    this.state = { manufacturerValue: null, modelValue: null, subModelValue: null, yearValue: null, modelOptions: null, subModelOptions: null };
 
-    this.updateMakeValueAndGetModels = this.updateMakeValueAndGetModels.bind(this);
-    //this.updateMakeValueAndGetModels = this.updateMakeValueAndGetModels.bind(this);
+    this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
+    //this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
     //this.updateModelValue = this.updateModelValue.bind(this);
   }
-  updateMakeValueAndGetModels(newValue) {
+  updateManufacturerValueAndGetModels(newValue) {
+    console.log(newValue);
     this.setState({ manufacturerValue: newValue });
-    this.setState({ makeValue: null });
     this.setState({ modelValue: null });
-    console.time('makes');
+    this.setState({ subModelValue: null });
+    this.setState({ yearValue: null})
+    console.time('allModels');
     this.props.client.query({
       query: gql`
-      query allVehicles($filterByYear: String){
-        allVehicles(filterByYear: $filterByYear){
-          make
+      query allModels($manufacturer: String){
+        allModels(manufacturer: $manufacturer){
+          model
+          model_id
         }
       }
       `,
-      variables: { filterByYear: newValue },
+      variables: { manufacturer: newValue },
     }).then((result) => {
-      console.timeEnd('makes');
+      console.timeEnd('allModels');
       console.log(result);
-      makesData = result.data.allVehicles;
-      makesFactory = makesData.map((bike) => {
-        return { value: bike.make, label: bike.make };
+      modelsData = result.data.allModels;
+      modelsFactory = modelsData.map((bike) => {
+        return { value: bike.model_id, label: bike.model };
       });
-      this.setState({ subModelOptions: makesFactory });
+      console.log(modelsFactory)
+      this.setState({ modelOptions: modelsFactory });
     });
   }
   /*
-  updateMakeValueAndGetModels(newValue) {
+  updateManufacturerValueAndGetModels(newValue) {
     this.setState({ makeValue: newValue });
     this.setState({ modelValue: null });
     model = '';
@@ -101,7 +103,7 @@ class QuoteAddVehicle extends React.Component {
             clearable
             name="selected-year"
             value={this.state.manufacturerValue}
-            onChange={this.updateMakeValueAndGetModels}
+            onChange={this.updateManufacturerValueAndGetModels}
             searchable={this.state.searchable}
             placeholder="Search or select a year"
           />
