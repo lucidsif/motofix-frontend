@@ -12,6 +12,14 @@ import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 import FormModal from 'components/FormModal';
 
+// uninstall
+// TODO: remove onclick query when add service
+// install
+// TODO: query when loaded and save results to state
+// autocalc from state
+// TODO: each service in state should extract its labortime from the repairtimes state
+// requirement
+// TODO: ensure that onclick service, adds to cart and gets laborTime
 
 import { withApollo } from 'react-apollo';
 
