@@ -22,22 +22,6 @@ const disabledServices = ['Accessory Installation', 'Brakes Are Squeaking', 'Che
 function AddServices(props) {
 
   function runServiceQuery(service) {
-    console.log(`to be queried: ${service}`);
-    let start = (new Date).getTime();
-    props.props.client.query({
-      query: gql`
-          query laborEstimates($year: String, $make: String, $model: String, $service: String) {
-            laborEstimates(year: $year, make: $make, model: $model, service: $service) {
-            response
-          }
-        }
-      `,
-      variables: { year: props.props.vehicle.year, make: props.props.vehicle.make, model: props.props.vehicle.model, service },
-      // run onQueryLoad to dispatch setLaborTime action creator
-    }).then((result) => props.props.onQueryLoad(service, JSON.parse(result.data.laborEstimates.response).time)).then((next) => console.log(`time to finish async & parse result for service query: ${(new Date).getTime() - start}`));
-    // TODO: add a part query here that will dispatch a setPart action creator
-    console.log(`to be queried: ${service}`);
-    let start2 = (new Date).getTime();
     props.props.client.query({
       query: gql`
           query searchParts($year: String, $service: String) {

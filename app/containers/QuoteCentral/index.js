@@ -12,8 +12,9 @@ import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 import FormModal from 'components/FormModal';
 
+
 // uninstall
-// TODO: remove onclick query when add service
+// TODO: remove onclick query when add service - DONE
 // install
 // TODO: query when loaded and save results to state
 // autocalc from state
@@ -21,7 +22,8 @@ import FormModal from 'components/FormModal';
 // requirement
 // TODO: ensure that onclick service, adds to cart and gets laborTime
 
-import { withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
+import { withApollo, graphql, compose } from 'react-apollo';
 
 import { addToCart, removeFromCart, setLaborTime, setPartsData } from './actions';
 
@@ -40,6 +42,8 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
   render() {
     return (
       <div>
+        {console.log(this.props)}
+        {console.log(this.props.vehicle.mid)}
         <QuoteCart props={this.props} />
         <AddServices props={this.props} />
         <Grid.Row>
@@ -78,8 +82,31 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-QuoteCentral = connect(mapStateToProps, mapDispatchToProps)(QuoteCentral);
+const RepairTimes = gql`
+  query allRepairTimes($midID: String) {
+    allRepairTimes(midID: $midID){
+      response
+    }
+  }
+`;
 
-QuoteCentral = withApollo(QuoteCentral);
+const QuoteCentralRedux = connect(mapStateToProps, mapDispatchToProps)
 
-export default QuoteCentral;
+const withRepairTimesData = graphql(RepairTimes, {
+  options: { variables: { midID: 'KAW08823' } }
+  //options: ({ownProps}) => ({ variables: { midID: ownProps.vehicle.mid } }),
+  /*
+  props: ({ ownProps, data: { loading, allRepairTimes } }) => ({
+    loading,
+    allRepairTimes,
+  }),
+  */
+})
+
+//const withOnClickData = withApollo(QuoteCentral);
+
+export default compose(
+  QuoteCentralRedux,
+  withApollo,
+  withRepairTimesData
+)(QuoteCentral);
