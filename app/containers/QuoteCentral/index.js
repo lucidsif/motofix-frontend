@@ -82,7 +82,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const RepairTimes = gql`
+const RepairTimesQuery = gql`
   query allRepairTimes($midID: String) {
     allRepairTimes(midID: $midID){
       response
@@ -90,22 +90,37 @@ const RepairTimes = gql`
   }
 `;
 
+const LubricantsAndCapacitiesQuery = gql`
+  query allLubricantsAndCapacities($midID: String){
+    allLubricantsAndCapacities(midID: $midID){
+      response
+  }
+}
+`;
+
+
+
 const QuoteCentralRedux = connect(mapStateToProps, mapDispatchToProps)
 
-const withRepairTimesData = graphql(RepairTimes, {
+const withRepairTimesData = graphql(RepairTimesQuery, {
   options: (ownProps) => ({ variables: { midID: ownProps.vehicle.mid } }),
-  /*
   props: ({ ownProps, data: { loading, allRepairTimes } }) => ({
-    loading,
+    allRepairTimesLoading: loading,
     allRepairTimes,
   }),
-  */
 })
 
-//const withOnClickData = withApollo(QuoteCentral);
+const withLubricantsAndCapacitiesData = graphql(LubricantsAndCapacitiesQuery, {
+  options: (ownProps) => ({ variables: { midID: ownProps.vehicle.mid } }),
+  props: ({ ownProps, data: { loading, allLubricantsAndCapacities } }) => ({
+    allLubricantsAndCapacitiesLoading: loading,
+    allLubricantsAndCapacities,
+  }),
+})
 
 export default compose(
   QuoteCentralRedux,
   withRepairTimesData,
+  withLubricantsAndCapacitiesData,
   withApollo,
 )(QuoteCentral);

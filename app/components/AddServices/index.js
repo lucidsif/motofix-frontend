@@ -25,7 +25,7 @@ function AddServices(props) {
     console.log(`service added: ${service}`)
 
     const vehicleSearchTerm = `${props.props.vehicle.year} ${props.props.vehicle.manufacturer} ${props.props.vehicle.model_variant}`
-    const parsedRepairTimes = JSON.parse(props.props.data.allRepairTimes.response)
+    const parsedRepairTimes = JSON.parse(props.props.allRepairTimes.response)
 
     if(service === 'OilChange'){
       console.log(parsedRepairTimes)
