@@ -104,7 +104,6 @@ class QuoteAddVehicle extends React.Component {
       return bike.mid === newValue
     });
     motorcycle = selectedSubModel[0]
-    motorcycle.year = newValue
     let yearsArr = []
     createYearsArr(selectedSubModel[0].start_year, selectedSubModel[0].end_year)
     this.setState({ yearOptions: yearsArr })
@@ -120,6 +119,7 @@ class QuoteAddVehicle extends React.Component {
   }
 
   updateYear(newValue){
+    motorcycle.year = newValue
     this.setState({ yearValue: newValue })
   }
 
