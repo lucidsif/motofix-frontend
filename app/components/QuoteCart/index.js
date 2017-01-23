@@ -58,41 +58,41 @@ function QuoteCart(props) {
     }
 
     function totalPrice(){
-    let subTotal = totalServicesPrice() + totalPartsPrice();
+    const subTotal = totalServicesPrice() + totalPartsPrice();
 
-      let taxRate = .0875;
-      let tax = subTotal*taxRate;
+      const taxRate = .0875;
+      const tax = subTotal*taxRate;
 
-      let total = subTotal + tax;
+      const total = subTotal + tax;
       return parseFloat(Math.round(total*1)/1);
     }
 
     function totalDealerFloated(){
-      let dealerServicePrice = (totalServicesPrice()/67)*95;
-      let dealerPartsPrice = (totalPartsPrice() + totalPartsPrice()*.10);
-      let dealerSubTotal = dealerPartsPrice + dealerServicePrice;
-      let taxRate = .0875;
-      let tax = dealerSubTotal*taxRate;
+      const dealerServicePrice = (totalServicesPrice()/67)*95;
+      const dealerPartsPrice = (totalPartsPrice() + totalPartsPrice()*.10);
+      const dealerSubTotal = dealerPartsPrice + dealerServicePrice;
+      const taxRate = .0875;
+      const tax = dealerSubTotal*taxRate;
 
-      let total = dealerSubTotal + tax;
+      const total = dealerSubTotal + tax;
       return parseFloat(Math.round(total*1)/1);
     }
 
     function totalSavings(){
-      let taxRate = .0875;
+      const taxRate = .0875;
 
-      let dealerServicePrice = (totalServicesPrice()/67)*95;
-      let dealerPartsPrice = (totalPartsPrice() + totalPartsPrice()*.10);
-      let dealerSubTotal = dealerPartsPrice + dealerServicePrice;
+      const dealerServicePrice = (totalServicesPrice()/67)*95;
+      const dealerPartsPrice = (totalPartsPrice() + totalPartsPrice()*.10);
+      const dealerSubTotal = dealerPartsPrice + dealerServicePrice;
 
-      let dealerTax = dealerSubTotal*taxRate;
-      let dealerTotal = dealerSubTotal + dealerTax;
+      const dealerTax = dealerSubTotal*taxRate;
+      const dealerTotal = dealerSubTotal + dealerTax;
 
-      let motofixSubTotal = totalServicesPrice() + totalPartsPrice();
-      let motoFixTax = motofixSubTotal*taxRate;
+      const motofixSubTotal = totalServicesPrice() + totalPartsPrice();
+      const motoFixTax = motofixSubTotal*taxRate;
 
-      let motofixTotal = motofixSubTotal + motoFixTax;
-      let savings = dealerTotal - motofixTotal;
+      const motofixTotal = motofixSubTotal + motoFixTax;
+      const savings = dealerTotal - motofixTotal;
 
       return parseFloat(Math.round(savings * 1)/1);
 
