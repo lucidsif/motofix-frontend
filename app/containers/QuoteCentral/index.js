@@ -121,6 +121,6 @@ const withLubricantsAndCapacitiesData = graphql(LubricantsAndCapacitiesQuery, {
 export default compose(
   QuoteCentralRedux,
   withRepairTimesData,
-  withLubricantsAndCapacitiesData,
+  //withLubricantsAndCapacitiesData,
   withApollo,
 )(QuoteCentral);
