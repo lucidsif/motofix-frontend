@@ -204,8 +204,8 @@ export function mapDispatchToProps(dispatch){
       const vehicle = {
         mid: 'HDA06327',
         manufacturer: 'Honda',
-        model: 'CBR911',
-        model_variant: '600',
+        model: 'CBR',
+        model_variant: 'CBR600',
         tuning_description: 'SE',
         start_year: 2008,
         end_year: 2011,

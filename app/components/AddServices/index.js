@@ -20,8 +20,20 @@ const disabledServices = ['Accessory Installation', 'Brakes Are Squeaking', 'Che
 
 // dispatch response to a reducer that updates the cart state laborTime with the payload
 function AddServices(props) {
+  // change name of func
+  function runPartsQueryAndUpdateLaborTimes(service) {
+    console.log(`service added: ${service}`)
 
-  function runServiceQuery(service) {
+    const vehicleSearchTerm = `${props.props.vehicle.year} ${props.props.vehicle.manufacturer} ${props.props.vehicle.model_variant}`
+    const parsedRepairTimes = JSON.parse(props.props.data.allRepairTimes.response)
+
+    if(service === 'OilChange'){
+      console.log(parsedRepairTimes)
+      //let oilChangeLaborTime = parsedResult.data.repair_times[0].sub_groups[5].components[0].time_hrs
+      //let oilChangeDescription = parsedResult.data.repair_times[0].sub_groups[5].components[0].component_description
+      const oilChangeLaborTime = parsedRepairTimes.data[0].laborTime
+      props.props.onQueryLoad(service, oilChangeLaborTime)
+    }
     props.props.client.query({
       query: gql`
           query searchParts($year: String, $service: String) {
@@ -30,10 +42,11 @@ function AddServices(props) {
           }
         }
       `,
-      variables: { vehicle: props.props.vehicle.appended, service },
+      variables: { vehicle: vehicleSearchTerm, service },
       // run onQueryLoad to dispatch setLaborTime action creator
     }).then((result) => props.props.onPartsLoad(service, JSON.parse(result.data.searchParts[0].response)))
       .then((next) => console.log(`time to finish async & parse result for parts queries: ${(new Date).getTime() - start2}`))
+
     // run onCartClick to dispatch addToCart action creator
     props.props.onCartClick(service);
   }
@@ -47,7 +60,7 @@ function AddServices(props) {
         <Segment attached textAlign="left" key={service}>
           {service}
           {!props.props.cart[propifiedService].selected ? (
-            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runServiceQuery(propifiedService)} link />
+            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runPartsQueryAndUpdateLaborTimes(propifiedService)} link />
           ) : (
             <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(propifiedService)} link />
           )}
@@ -106,7 +119,7 @@ function AddServices(props) {
               <Segment attached="top" textAlign="left">
                 <p>Oil Change
                   {!props.props.cart.OilChange.selected ? (
-                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runServiceQuery('OilChange')} link />
+                    <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runPartsQueryAndUpdateLaborTimes('OilChange')} link />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick('OilChange')} link />
                 )}
