@@ -43,7 +43,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     return (
       <div>
         {console.log(this.props)}
-        {console.log(this.props.vehicle.mid)}
+        {console.log(this.props.vehicle)}
         <QuoteCart props={this.props} />
         <AddServices props={this.props} />
         <Grid.Row>
@@ -93,8 +93,7 @@ const RepairTimes = gql`
 const QuoteCentralRedux = connect(mapStateToProps, mapDispatchToProps)
 
 const withRepairTimesData = graphql(RepairTimes, {
-  options: { variables: { midID: 'KAW08823' } }
-  //options: ({ownProps}) => ({ variables: { midID: ownProps.vehicle.mid } }),
+  options: (ownProps) => ({ variables: { midID: ownProps.vehicle.mid } }),
   /*
   props: ({ ownProps, data: { loading, allRepairTimes } }) => ({
     loading,
@@ -107,6 +106,6 @@ const withRepairTimesData = graphql(RepairTimes, {
 
 export default compose(
   QuoteCentralRedux,
+  withRepairTimesData,
   withApollo,
-  withRepairTimesData
 )(QuoteCentral);

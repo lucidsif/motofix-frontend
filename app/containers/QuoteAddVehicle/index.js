@@ -199,6 +199,21 @@ QuoteAddVehicle.propTypes = {
 export function mapDispatchToProps(dispatch){
   return {
     onSubmitForm: (evt) => {
+      evt.preventDefault();
+      console.log('mock vehicle selected and merged to state')
+      const vehicle = {
+        mid: 'HDA06327',
+        manufacturer: 'Honda',
+        model: 'CBR911',
+        model_variant: '600',
+        tuning_description: 'SE',
+        start_year: 2008,
+        end_year: 2011,
+        year: 2010
+      }
+      dispatch(addVehicle(vehicle))
+      browserHistory.push('/quote/services');
+      /*
       console.log(motorcycle)
       console.log(subModelData)
       evt.preventDefault();
@@ -210,6 +225,7 @@ export function mapDispatchToProps(dispatch){
         console.log('please fill out all fields');
         // browserHistory.push('/quote/vehicle');
       }
+      */
     },
   };
 }
