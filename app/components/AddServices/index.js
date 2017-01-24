@@ -13,7 +13,6 @@ import gql from 'graphql-tag';
 const activeServices = [];
 const disabledServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Chain And Sprocket Replacement', 'Clean And Lube Chain', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Winterization', 'Accessory Installation', 'Brakes Are Squeaking', 'Check Engine Or FI Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Valve Adjustment', 'Warning Light Is On'];
 
-//TODO: 8/10 make it impossible to select a service before the repairtimess are fetched
 // TODO: 7/10 create a way to display loading icon during a fetch
 // TODO: 6/10 Replace segments with animated list
 // TODO: 5/10 Make text in segments responsive

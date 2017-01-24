@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { Grid, Button } from 'semantic-ui-react';
+import { Grid, Button, Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 import FormModal from 'components/FormModal';
@@ -40,12 +40,24 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    let renderAddServicesUponRepairTimesFetch = null
+    if(this.props.allRepairTimesLoading){
+      renderAddServicesUponRepairTimesFetch = <Segment>
+        <Dimmer active inverted>
+          <Loader inverted content='Loading Services' />
+        </Dimmer>
+        <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
+      </Segment>;
+    } else {
+      renderAddServicesUponRepairTimesFetch = <AddServices props={this.props} />;
+    }
+
     return (
       <div>
         {console.log(this.props)}
         <QuoteCart props={this.props} />
-        <AddServices props={this.props} />
         <Grid.Row>
+          {renderAddServicesUponRepairTimesFetch}
           <FormModal client={this.props.client} />
           <Button onClick={() => browserHistory.push('/quote/vehicle')} >Back</Button>
         </Grid.Row>
