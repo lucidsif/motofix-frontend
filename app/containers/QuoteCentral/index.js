@@ -70,7 +70,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(removeFromCart(service));
     },
     // TODO: change name to something more fitting
-    getAndCalculateLaborTime: (service, laborTime, unavailable) => {
+    getAndSetLaborTime: (service, laborTime, unavailable) => {
       console.log(`${service} with labortime of ${laborTime} picked up from query result`)
       dispatch(setLaborTime(service, laborTime, unavailable));
     },
@@ -90,16 +90,6 @@ const RepairTimesQuery = gql`
   }
 `;
 
-const LubricantsAndCapacitiesQuery = gql`
-  query allLubricantsAndCapacities($midID: String){
-    allLubricantsAndCapacities(midID: $midID){
-      response
-  }
-}
-`;
-
-
-
 const QuoteCentralRedux = connect(mapStateToProps, mapDispatchToProps)
 
 const withRepairTimesData = graphql(RepairTimesQuery, {
@@ -110,17 +100,9 @@ const withRepairTimesData = graphql(RepairTimesQuery, {
   }),
 })
 
-const withLubricantsAndCapacitiesData = graphql(LubricantsAndCapacitiesQuery, {
-  options: (ownProps) => ({ variables: { midID: ownProps.vehicle.mid } }),
-  props: ({ ownProps, data: { loading, allLubricantsAndCapacities } }) => ({
-    allLubricantsAndCapacitiesLoading: loading,
-    allLubricantsAndCapacities,
-  }),
-})
 
 export default compose(
   QuoteCentralRedux,
   withRepairTimesData,
-  //withLubricantsAndCapacitiesData,
   withApollo,
 )(QuoteCentral);
