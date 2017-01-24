@@ -25,6 +25,7 @@ function AddServices(props) {
     console.log(`service added: ${service}`)
 
     const vehicleSearchTerm = `${props.props.vehicle.year} ${props.props.vehicle.manufacturer} ${props.props.vehicle.model_variant}`
+    const midID = props.props.vehicle.mid
     const parsedRepairTimes = JSON.parse(props.props.allRepairTimes.response)
 
     if(service === 'OilChange'){
@@ -40,15 +41,18 @@ function AddServices(props) {
     var t0 = performance.now()
     props.props.client.query({
       query: gql`
-          query searchParts($vehicle: String, $service: String) {
-            searchParts(vehicle: $vehicle, service: $service) {
+          query searchParts($vehicle: String, $service: String, $midID: String) {
+            searchParts(vehicle: $vehicle, service: $service, midID: $midID) {
             response
           }
         }
       `,
-      variables: { vehicle: vehicleSearchTerm, service },
+      variables: { vehicle: vehicleSearchTerm, service, midID },
       // run onQueryLoad to dispatch setLaborTime action creator
-    }).then((result) => props.props.onPartsLoad(service, JSON.parse(result.data.searchParts[0].response)))
+    }).then((result) => {
+      console.log(result)
+      props.props.onPartsLoad(service, JSON.parse(result.data.searchParts[0].response))
+    })
       .then(() => {
         var t1 = performance.now()
         console.log(`parts query took ${(t1-t0)}`)
