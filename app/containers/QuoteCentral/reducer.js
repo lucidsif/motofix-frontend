@@ -16,7 +16,7 @@ import services from './reducerServices';
 
 const cart = services.reduce((acc, cur, i) => {
   let regexedService = cur.replace(/\s/g, "");
-  acc[regexedService] = {selected: false, laborTime: null};
+  acc[regexedService] = {selected: false, laborTime: null, unavailable: null};
   return acc;
 }, {});
 const part = services.reduce((acc, cur, i) => {
@@ -24,7 +24,6 @@ const part = services.reduce((acc, cur, i) => {
   acc[regexedService] = '';
   return acc;
 }, {});
-const estimate = { serviceTotal: 0, partsTotal: 0, total: 0, dealer: 0, priceSavings: 0, percentSavings: 0 };
 
 const initialState = fromJS({ cart, part, estimate });
 
@@ -35,7 +34,7 @@ function quoteCentralReducer(state = initialState, action) {
     case REMOVE_FROM_CART:
       return state.setIn(['cart', action.payload, 'selected'], false);
     case SET_LABORTIME:
-      return state.setIn(['cart', action.service, 'laborTime'], action.laborTime);
+      return state.mergeIn(['cart', action.service], action.payload);
     case SET_PARTS_DATA:
       return state.mergeIn(['part', action.service], action.partsObj);
     default:
@@ -44,3 +43,4 @@ function quoteCentralReducer(state = initialState, action) {
 }
 
 export default quoteCentralReducer;
+// pickup and set unavailableBoolean

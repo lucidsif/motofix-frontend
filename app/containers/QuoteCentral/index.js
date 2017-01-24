@@ -69,9 +69,9 @@ function mapDispatchToProps(dispatch) {
     onTrashClick: (service) => {
       dispatch(removeFromCart(service));
     },
-    onQueryLoad: (service, laborTime) => {
+    onQueryLoad: (service, laborTime, unavailable) => {
       console.log(`${service} with labortime of ${laborTime} picked up from query result`)
-      dispatch(setLaborTime(service, laborTime));
+      dispatch(setLaborTime(service, laborTime, unavailable));
     },
     onPartsLoad: (service, partsData) => {
       console.log(`service: ${service} parts picked up from query result with partsData object below`);

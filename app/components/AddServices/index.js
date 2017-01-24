@@ -28,38 +28,44 @@ function AddServices(props) {
     const midID = props.props.vehicle.mid
     const parsedRepairTimes = JSON.parse(props.props.allRepairTimes.response)
 
-    if(service === 'OilChange'){
-      console.log(parsedRepairTimes)
-      const lubrication = parsedRepairTimes[0].sub_groups.filter((sub_group) => {
-        return sub_group.sub_group_description === 'Lubrication'
-      })
-      const oilChangeLaborTime = lubrication[0].components[0].time_hrs
-      console.log(`oilchangelabortime: ${oilChangeLaborTime}`)
-
-      props.props.onQueryLoad(service, oilChangeLaborTime)
+    if(parsedRepairTimes.unavailable){
+      console.log(`labortime is unavailable for ${service}`)
+      props.props.onQueryLoad(service, 0, true)
+      return props.props.onCartClick(service);
     }
-    var t0 = performance.now()
-    props.props.client.query({
-      query: gql`
+      if (service === 'OilChange'){
+        // dispatch error message if false
+        console.log(parsedRepairTimes)
+        const lubrication = parsedRepairTimes[0].sub_groups.filter((sub_group) => {
+          return sub_group.sub_group_description === 'Lubrication'
+        })
+        const oilChangeLaborTime = lubrication[0].components[0].time_hrs
+        console.log(`oilchangelabortime: ${oilChangeLaborTime}`)
+
+        props.props.onQueryLoad(service, oilChangeLaborTime)
+      }
+      var t0 = performance.now()
+      props.props.client.query({
+        query: gql`
           query searchParts($vehicle: String, $service: String, $midID: String) {
             searchParts(vehicle: $vehicle, service: $service, midID: $midID) {
             response
           }
         }
       `,
-      variables: { vehicle: vehicleSearchTerm, service, midID },
-      // run onQueryLoad to dispatch setLaborTime action creator
-    }).then((result) => {
-      console.log(result)
-      props.props.onPartsLoad(service, JSON.parse(result.data.searchParts[0].response))
-    })
-      .then(() => {
-        var t1 = performance.now()
-        console.log(`parts query took ${(t1-t0)}`)
-      });
+        variables: { vehicle: vehicleSearchTerm, service, midID },
+        // run onQueryLoad to dispatch setLaborTime action creator
+      }).then((result) => {
+        console.log(result)
+        props.props.onPartsLoad(service, JSON.parse(result.data.searchParts[0].response))
+      })
+        .then(() => {
+          var t1 = performance.now()
+          console.log(`parts query took ${(t1-t0)}`)
+        });
 
     // run onCartClick to dispatch addToCart action creator
-    props.props.onCartClick(service);
+    return props.props.onCartClick(service);
   }
 
   // TODO: refactor servicesegments so it first renders active segments and then renders disabled segments

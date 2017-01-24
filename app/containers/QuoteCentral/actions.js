@@ -23,11 +23,16 @@ export function removeFromCart(payload) {
     payload,
   };
 }
-export function setLaborTime(service, laborTime) {
+export function setLaborTime(service, laborTime, unavailable) {
+  const payload = {
+    service,
+    laborTime,
+    unavailable
+  }
   return {
     type: SET_LABORTIME,
     service,
-    laborTime,
+    payload
   };
 }
 export function setPartsData(service, partsObj){
