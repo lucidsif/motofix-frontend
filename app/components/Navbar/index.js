@@ -14,6 +14,7 @@ import { services } from 'components/QuoteCart';
 import { createStructuredSelector } from 'reselect';
 import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 
+// TODO: 7/10 when cart is clicked, it should route to quotecart
 // TODO: handle edge cases like if props is null
 // TODO: 5/10 export all calculating functions into a utility functions file
 export class AppNavBar extends Component {
@@ -49,9 +50,16 @@ export class AppNavBar extends Component {
   return sum;
   // return sumOfParts;
 }
+  totalServicesPrice(){
 
-  // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
-  totalServicesPrice() {
+    let selectedUnavailableServices = Object.keys(this.props.cart).filter((key) => {
+      return this.props.cart[key].selected && this.props.cart[key].unavailable
+    })
+    if(selectedUnavailableServices && selectedUnavailableServices.length > 0){
+      console.log(selectedUnavailableServices)
+      return 'N/A'
+    }
+    
   const sumOfLaborTimes = services.map((service) => {
     let regexedService = service.replace(/\s/g, "");
     return regexedService;

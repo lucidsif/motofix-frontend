@@ -40,6 +40,16 @@ function QuoteCart(props) {
 
   // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
   const totalServicesPrice = () => {
+
+    // return N/A if any selected service has an unavailable labortime
+    let selectedUnavailableServices = Object.keys(props.props.cart).filter((key) => {
+      return props.props.cart[key].selected && props.props.cart[key].unavailable
+    })
+    if(selectedUnavailableServices && selectedUnavailableServices.length > 0){
+      console.log(selectedUnavailableServices)
+      return 'N/A'
+    }
+
     const sumOfLaborTimes = services.map((service) => {
       let regexedService = service.replace(/\s/g, "");
       return regexedService;
@@ -54,6 +64,7 @@ function QuoteCart(props) {
         return acc + 0;
       }
     }, 0);
+
     return sumOfLaborTimes * 67;
     }
 
