@@ -93,7 +93,7 @@ function PriceBreakDown(props) {
         <List divided relaxed>
            <List.Item>
                <List.Content floated='left'>
-                   <p>Service Total</p>
+                   <p>Labor Total</p>
                </List.Content>
                <List.Content floated='right'>
                     <p>{floatServicePrice()}</p>

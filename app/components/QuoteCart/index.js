@@ -54,7 +54,7 @@ function QuoteCart(props) {
         return acc + 0;
       }
     }, 0);
-    return sumOfLaborTimes * 67 * 2;
+    return sumOfLaborTimes * 67;
     }
 
     function totalPrice(){

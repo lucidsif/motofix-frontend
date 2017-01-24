@@ -29,9 +29,12 @@ function AddServices(props) {
 
     if(service === 'OilChange'){
       console.log(parsedRepairTimes)
-      //let oilChangeLaborTime = parsedResult.data.repair_times[0].sub_groups[5].components[0].time_hrs
-      //let oilChangeDescription = parsedResult.data.repair_times[0].sub_groups[5].components[0].component_description
-      const oilChangeLaborTime = parsedRepairTimes.data[0].laborTime
+      const lubrication = parsedRepairTimes[0].sub_groups.filter((sub_group) => {
+        return sub_group.sub_group_description === 'Lubrication'
+      })
+      const oilChangeLaborTime = lubrication[0].components[0].time_hrs
+      console.log(`oilchangelabortime: ${oilChangeLaborTime}`)
+
       props.props.onQueryLoad(service, oilChangeLaborTime)
     }
     var t0 = performance.now()

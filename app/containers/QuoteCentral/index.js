@@ -43,7 +43,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     return (
       <div>
         {console.log(this.props)}
-        {console.log(this.props.vehicle)}
         <QuoteCart props={this.props} />
         <AddServices props={this.props} />
         <Grid.Row>
