@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { Grid, Button, Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
+import { Grid, Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 import FormModal from 'components/FormModal';
@@ -40,6 +40,7 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    // conditional render that will either render loading or addservices component
     let renderAddServicesUponRepairTimesFetch = null
     if(this.props.allRepairTimesLoading){
       renderAddServicesUponRepairTimesFetch = <Segment>
@@ -51,16 +52,45 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     } else {
       renderAddServicesUponRepairTimesFetch = <AddServices props={this.props} />;
     }
+    //
+
+    let selectedUnavailableServices = Object.keys(this.props.cart).filter((key) => {
+      return this.props.cart[key].selected && this.props.cart[key].unavailable
+    }).
+      map((serviceName) => {
+      return serviceName
+    })
+
+    let conditionalServicesMessage = null
+    if(selectedUnavailableServices.length > 0){
+      conditionalServicesMessage =
+        <Message info>
+        <Message.Header>
+          An instant quote is unavailable for the currently selected service(s):
+        </Message.Header>
+        <Message.List>
+          {selectedUnavailableServices}
+        </Message.List>
+      </Message>
+    } else {
+      conditionalServicesMessage =
+        <Message hidden>
+          You can't see me
+        </Message>
+    }
+
+      // create a conditional variable that shows all the services that are selected and unavailable
+    // create a button that can allow the customer to request a fair quote estimate for unavailable services
+//           content='While we may not have the fair estimates immediately available for these services, we can get back to you with a fair estimate.'
 
     return (
       <div>
         {console.log(this.props)}
+        {conditionalServicesMessage}
         <QuoteCart props={this.props} />
-        <Grid.Row>
           {renderAddServicesUponRepairTimesFetch}
           <FormModal client={this.props.client} />
           <Button onClick={() => browserHistory.push('/quote/vehicle')} >Back</Button>
-        </Grid.Row>
       </div>
     );
   }
