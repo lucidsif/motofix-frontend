@@ -31,6 +31,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCart, selectPart } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
+// TODO: 7.5/10 Replace request button in message with form modal
 // TODO: 7/10 when back button is clicked, reset selected state
 // TODO: 6.7/10 float the buttons ot the right
 // TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
@@ -41,6 +42,7 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     // conditional render that will either render loading or addservices component
+    const vehicleSearchTerm = `${this.props.vehicle.year} ${this.props.vehicle.manufacturer} ${this.props.vehicle.model_variant}`
     let renderAddServicesUponRepairTimesFetch = null
     if(this.props.allRepairTimesLoading){
       renderAddServicesUponRepairTimesFetch = <Segment>
@@ -58,7 +60,12 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
       return this.props.cart[key].selected && this.props.cart[key].unavailable
     }).
       map((serviceName) => {
-      return serviceName
+      let spacedServiceName = serviceName.replace(/([a-z])([A-Z])/g, '$1 $2');
+      return (
+      <Message.Item>
+        {spacedServiceName}
+      </Message.Item>
+      )
     })
 
     let conditionalServicesMessage = null
@@ -66,11 +73,15 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
       conditionalServicesMessage =
         <Message info>
         <Message.Header>
-          An instant quote is unavailable for the currently selected service(s):
+          An instant quote for the <span>{vehicleSearchTerm}</span> is unavailable for the currently selected service(s):
         </Message.Header>
         <Message.List>
           {selectedUnavailableServices}
         </Message.List>
+        <Message.Content>
+          You can still request a fair quote and we'll notify you when it is available.
+        </Message.Content>
+          <Button>Request Custom Quote</Button>
       </Message>
     } else {
       conditionalServicesMessage =

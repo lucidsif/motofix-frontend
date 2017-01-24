@@ -106,7 +106,7 @@ function AddServices(props) {
     <Segment padded="very">
       <Grid centered>
         <Grid.Row>
-          <Input className="serviceSearchWidth" icon="search" placeholder="Search services" />
+          <Input disabled className="serviceSearchWidth" icon="search" placeholder="Search services" />
         </Grid.Row>
 
         <Grid.Row columns={2}>
