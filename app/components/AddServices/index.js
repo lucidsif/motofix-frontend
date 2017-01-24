@@ -61,7 +61,7 @@ function AddServices(props) {
         // run getAndSetLaborTime to dispatch setLaborTime action creator
       }).then((result) => {
         console.log(result)
-        props.props.onPartsLoad(service, JSON.parse(result.data.searchParts[0].response))
+        props.props.onPartsQuery(service, JSON.parse(result.data.searchParts[0].response))
       })
         .then(() => {
           var t1 = performance.now()

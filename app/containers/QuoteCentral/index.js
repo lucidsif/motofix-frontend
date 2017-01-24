@@ -128,7 +128,7 @@ function mapDispatchToProps(dispatch) {
       console.log(`${service} with labortime of ${laborTime} picked up from query result`)
       dispatch(setLaborTime(service, laborTime, unavailable));
     },
-    onPartsLoad: (service, partsData) => {
+    onPartsQuery: (service, partsData) => {
       console.log(`service: ${service} parts picked up from query result with partsData object below`);
       console.log(partsData);
       dispatch(setPartsData(service, partsData));
