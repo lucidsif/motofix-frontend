@@ -30,7 +30,8 @@ function AddServices(props) {
     if(parsedRepairTimes.unavailable){
       console.log(`labortime is unavailable for ${service}`)
       props.props.getAndSetLaborTime(service, 0, true)
-      return props.props.onCartClick(service);
+      props.props.onCartClick(service);
+      return runSearchPartsQuery()
     }
       if (service === 'OilChange'){
         // dispatch error message if false
@@ -44,6 +45,10 @@ function AddServices(props) {
         props.props.getAndSetLaborTime(service, oilChangeLaborTime)
       }
       var t0 = performance.now()
+    runSearchPartsQuery()
+    return props.props.onCartClick(service);
+
+    function runSearchPartsQuery(){
       props.props.client.query({
         query: gql`
           query searchParts($vehicle: String, $service: String, $midID: String) {
@@ -62,9 +67,8 @@ function AddServices(props) {
           var t1 = performance.now()
           console.log(`parts query took ${(t1-t0)}`)
         });
-
+      }
     // run onCartClick to dispatch addToCart action creator
-    return props.props.onCartClick(service);
   }
 
   // TODO: refactor servicesegments so it first renders active segments and then renders disabled segments

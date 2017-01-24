@@ -47,13 +47,18 @@ function PriceBreakDown(props) {
     })
     console.log(filtered);
     return filtered.map((filteredService) => {
+      let laborTime = multiplyAndFloat(props.cart[filteredService.replace(/\s/g, "")].laborTime)
+      let unAvailableLaborTime = props.cart[filteredService.replace(/\s/g, "")].unavailable
+      if(unAvailableLaborTime){
+        laborTime = 'N/A'
+      }
       return (
       <List.Item key={filteredService}>
         <List.Content floated='left'><List.Icon name='linkify' /></List.Content>
           <List.Content floated='left' verticalAlign='middle'>
             <span className="service-span">{filteredService}</span></List.Content>
           <List.Content floated='right' verticalAlign="middle">
-            <span className="service-span">{multiplyAndFloat(props.cart[filteredService.replace(/\s/g, "")].laborTime)}</span>
+            <span className="service-span">{laborTime}</span>
         </List.Content>
         <List.Content>
           <List>

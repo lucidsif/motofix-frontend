@@ -43,11 +43,12 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
   render() {
     // conditional render that will either render loading or addservices component
     const vehicleSearchTerm = `${this.props.vehicle.year} ${this.props.vehicle.manufacturer} ${this.props.vehicle.model_variant}`
+    const loadingMessage = `Loading Services for ${vehicleSearchTerm}`;
     let renderAddServicesUponRepairTimesFetch = null
     if(this.props.allRepairTimesLoading){
       renderAddServicesUponRepairTimesFetch = <Segment>
         <Dimmer active inverted>
-          <Loader inverted content='Loading Services' />
+          <Loader inverted content={loadingMessage} />
         </Dimmer>
         <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
       </Segment>;
@@ -62,7 +63,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
       map((serviceName) => {
       let spacedServiceName = serviceName.replace(/([a-z])([A-Z])/g, '$1 $2');
       return (
-      <Message.Item>
+      <Message.Item key={serviceName}>
         {spacedServiceName}
       </Message.Item>
       )
