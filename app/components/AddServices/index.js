@@ -30,7 +30,7 @@ function AddServices(props) {
 
     if(parsedRepairTimes.unavailable){
       console.log(`labortime is unavailable for ${service}`)
-      props.props.onQueryLoad(service, 0, true)
+      props.props.getAndCalculateLaborTime(service, 0, true)
       return props.props.onCartClick(service);
     }
       if (service === 'OilChange'){
@@ -42,7 +42,7 @@ function AddServices(props) {
         const oilChangeLaborTime = lubrication[0].components[0].time_hrs
         console.log(`oilchangelabortime: ${oilChangeLaborTime}`)
 
-        props.props.onQueryLoad(service, oilChangeLaborTime)
+        props.props.getAndCalculateLaborTime(service, oilChangeLaborTime)
       }
       var t0 = performance.now()
       props.props.client.query({
@@ -54,7 +54,7 @@ function AddServices(props) {
         }
       `,
         variables: { vehicle: vehicleSearchTerm, service, midID },
-        // run onQueryLoad to dispatch setLaborTime action creator
+        // run getAndCalculateLaborTime to dispatch setLaborTime action creator
       }).then((result) => {
         console.log(result)
         props.props.onPartsLoad(service, JSON.parse(result.data.searchParts[0].response))

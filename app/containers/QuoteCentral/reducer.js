@@ -25,7 +25,7 @@ const part = services.reduce((acc, cur, i) => {
   return acc;
 }, {});
 
-const initialState = fromJS({ cart, part, estimate });
+const initialState = fromJS({ cart, part });
 
 function quoteCentralReducer(state = initialState, action) {
   switch (action.type) {

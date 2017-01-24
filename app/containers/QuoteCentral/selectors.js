@@ -13,11 +13,6 @@ const selectCart = () => createSelector(
      (quoteCentralState) => quoteCentralState.get('cart').toJS()
  );
 
-const selectEstimate = () => createSelector(
-   selectQuoteCentralDomain(),
-   (quoteCentralState) => quoteCentralState.get('estimate').toJS()
-);
-
 const selectPart = () => createSelector(
    selectQuoteCentralDomain(),
    (quoteCentralState) => quoteCentralState.get('part').toJS()
@@ -34,6 +29,5 @@ const selectQuoteCentral = () => createSelector(
 export default selectQuoteCentral;
 export {
    selectCart,
-   selectEstimate,
    selectPart,
 };

@@ -48,7 +48,7 @@ function PriceBreakDown(props) {
     console.log(filtered);
     return filtered.map((filteredService) => {
       return (
-      <List.Item>
+      <List.Item key={filteredService}>
         <List.Content floated='left'><List.Icon name='linkify' /></List.Content>
           <List.Content floated='left' verticalAlign='middle'>
             <span className="service-span">{filteredService}</span></List.Content>
@@ -70,7 +70,7 @@ function PriceBreakDown(props) {
     // todo: dynamically render list of parts and their prices
     return Object.keys(props.part[serviceName]).map((key) => {
       return (
-        <List.Item>
+        <List.Item key={serviceName+key}>
           <List.Item>
             <Image verticalAlign='middle' floated='left' src={props.part[serviceName][key].imageURL} size="tiny"/>
             <List.Content floated='left' verticalAlign="middle">
