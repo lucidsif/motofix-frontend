@@ -28,64 +28,61 @@ export class AppNavBar extends Component {
     };
   }
   totalPartsPrice() {
-  let sum = 0;
-  const sumOfParts = services.map((service) => {
-    let regexedService = service.replace(/\s/g, "");
-    return regexedService;
-  })
+    let sum = 0;
+    const sumOfParts = services.map((service) => {
+      const regexedService = service.replace(/\s/g, '');
+      return regexedService;
+    })
     .reduce((acc, curr) => {
-      if(this.props.cart[curr].selected && this.props.part[curr]){
-        console.log(`${curr} is selected and a part exists for it`)
-        for (var key in this.props.part[curr]){
-          if(this.props.part[curr].hasOwnProperty(key) && this.props.part[curr][key].valid){
-            let price = parseInt(this.props.part[curr][key].price.__value__);
-            sum += price
+      if (this.props.cart[curr].selected && this.props.part[curr]) {
+        console.log(`${curr} is selected and a part exists for it`);
+        for (const key in this.props.part[curr]) {
+          if (this.props.part[curr].hasOwnProperty(key) && this.props.part[curr][key].valid) {
+            const price = parseInt(this.props.part[curr][key].price.__value__);
+            sum += price;
           }
         }
-      }
-      else {
+      } else {
         return acc + 0;
       }
     }, 0);
-  return sum;
+    return sum;
   // return sumOfParts;
-}
-  totalServicesPrice(){
-
-    let selectedUnavailableServices = Object.keys(this.props.cart).filter((key) => {
-      return this.props.cart[key].selected && this.props.cart[key].unavailable
-    })
-    if(selectedUnavailableServices && selectedUnavailableServices.length > 0){
-      console.log(selectedUnavailableServices)
-      return 'N/A'
+  }
+  totalServicesPrice() {
+    const selectedUnavailableServices = Object.keys(this.props.cart).filter((key) =>
+       this.props.cart[key].selected && this.props.cart[key].unavailable
+    );
+    if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
+      console.log(selectedUnavailableServices);
+      return 'N/A';
     }
-    
-  const sumOfLaborTimes = services.map((service) => {
-    let regexedService = service.replace(/\s/g, "");
-    return regexedService;
-  })
+
+    const sumOfLaborTimes = services.map((service) => {
+      const regexedService = service.replace(/\s/g, '');
+      return regexedService;
+    })
     .reduce((acc, curr) => {
-      if(this.props.cart[curr].selected && typeof this.props.cart[curr].laborTime ==="number" ){
+      if (this.props.cart[curr].selected && typeof this.props.cart[curr].laborTime === 'number') {
         const laborTime = this.props.cart[curr].laborTime;
         console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
         return acc + laborTime;
-      }
-      else {
+      } else {
         return acc + 0;
       }
     }, 0);
-  return sumOfLaborTimes * 67;
-}
+    return sumOfLaborTimes * 67;
+  }
 
   totalPrice() {
-  let subTotal = this.totalServicesPrice() + this.totalPartsPrice();
+    const subTotal = this.totalServicesPrice() + this.totalPartsPrice();
 
-  let taxRate = .0875;
-  let tax = subTotal*taxRate;
+    const taxRate = 0.0875;
+    const tax = subTotal * taxRate;
 
-  let total = subTotal + tax;
-  return parseFloat(Math.round(total*1)/1);
-}
+    const total = subTotal + tax;
+    return parseFloat(Math.round(total * 1) / 1);
+  }
 
   // calc total price in cart
   // replace menu with hamburger
@@ -93,23 +90,20 @@ export class AppNavBar extends Component {
   render() {
     const { activeItem } = this.state;
     return (
-      <Menu secondary fixed='top' className='padRight'>
+      <Menu secondary fixed="top" className="padRight">
         <Menu.Item>
           <Image src={logo} size="tiny" />
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
             <Label color="teal">
-              <Icon name='in cart' /> ${this.totalPrice()}
+              <Icon name="in cart" /> ${this.totalPrice()}
             </Label>
           </Menu.Item>
         </Menu.Menu>
-        <Dropdown text="Menu" pointing className="link item">
+        <Dropdown className="link item" icon="bars">
           <Dropdown.Menu>
-            <Dropdown.Header>Main</Dropdown.Header>
             <Dropdown.Item>New Quote</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Header>Settings</Dropdown.Header>
             <Dropdown.Item>Log in</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

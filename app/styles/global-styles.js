@@ -116,7 +116,15 @@ svg g text.stage {
 }
 
 .padRight {
-    padding-right: 2em;
+    padding-right: 5em;
+}
+
+.ui.menu .item>i.icon {
+    color: gray;
+}
+
+.ui.secondary.menu .item {
+    padding-right: 2.2em;
 }
 `
 ;
