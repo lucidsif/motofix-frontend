@@ -15,7 +15,7 @@ export class QuoteContainer extends React.Component { // eslint-disable-line rea
     return (
       <Grid centered>
         <QuoteProgressBar />
-        <Segment attached="bottom">
+        <Segment attached="bottom" textAlign="center">
           {this.props.children}
         </Segment>
       </Grid>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button } from 'semantic-ui-react';
+import { Button, Header } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
@@ -126,9 +126,11 @@ class QuoteAddVehicle extends React.Component {
   render() {
     return (
       <form onSubmit={this.props.onSubmitForm}>
-        <h3 className="section-heading">Add your motorcycle</h3>
+        <Header as='h3' textAlign='center'>
+          Add your motorcycle
+        </Header>
         <div>
-          <label>Select a make </label>
+          <label>Select a model </label>
           <Select
             autofocus
             options={manufacturerData}

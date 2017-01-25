@@ -126,5 +126,9 @@ svg g text.stage {
 .ui.secondary.menu .item {
     padding-right: 2.2em;
 }
+
+h3.ui.center.aligned.header {
+  font-weight: 500;
+}
 `
 ;
