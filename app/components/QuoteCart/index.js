@@ -21,11 +21,12 @@ function QuoteCart(props) {
       return regexedService;
     })
       .reduce((acc, curr) => {
-        if(props.props.cart[curr].selected && props.props.part[curr]){
+        if (props.props.cart[curr].selected && props.props.part[curr]){
           console.log(`${curr} is selected and a part exists for it`)
           for (var key in props.props.part[curr]){
-            if(props.props.part[curr].hasOwnProperty(key)){
-              let price = parseInt(props.props.part[curr][key].price.__value__);
+            if (props.props.part[curr].hasOwnProperty(key) && props.props.part[curr][key].valid){
+              console.log(props.props.part[curr][key].valid)
+              const price = parseInt(props.props.part[curr][key].price.__value__);
               sum += price
             }
           }
@@ -55,7 +56,7 @@ function QuoteCart(props) {
       return regexedService;
     })
       .reduce((acc, curr) => {
-      if(props.props.cart[curr].selected && typeof props.props.cart[curr].laborTime ==="number" ){
+      if(props.props.cart[curr].selected && typeof props.props.cart[curr].laborTime === "number" ){
         const laborTime = props.props.cart[curr].laborTime;
         console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
         return acc + laborTime;

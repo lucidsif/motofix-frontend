@@ -74,19 +74,35 @@ function PriceBreakDown(props) {
     console.log('renderPart: ' + serviceName)
     // todo: dynamically render list of parts and their prices
     return Object.keys(props.part[serviceName]).map((key) => {
-      return (
-        <List.Item key={serviceName+key}>
-          <List.Item>
-            <Image verticalAlign='middle' floated='left' src={props.part[serviceName][key].imageURL} size="tiny"/>
-            <List.Content floated='left' verticalAlign="middle">
-              <span className="part-span">{props.part[serviceName][key].partTitle}</span>
-            </List.Content>
-            <List.Content floated='right' verticalAlign="middle">
-              <span className="'part-span">{props.part[serviceName][key].price.__value__}</span>
-            </List.Content>
+      if(props.part[serviceName][key].valid){
+        return (
+          <List.Item key={serviceName+key}>
+            <List.Item>
+              <Image verticalAlign='middle' floated='left' src={props.part[serviceName][key].imageURL} size="tiny"/>
+              <List.Content floated='left' verticalAlign="middle">
+                <span className="part-span">{props.part[serviceName][key].partTitle}</span>
+              </List.Content>
+              <List.Content floated='right' verticalAlign="middle">
+                <span className="'part-span">{props.part[serviceName][key].price.__value__}</span>
+              </List.Content>
+            </List.Item>
           </List.Item>
-        </List.Item>
-      )
+        )
+      } else {
+        return (
+          <List.Item key={serviceName+key}>
+            <List.Item>
+              <Image verticalAlign='middle' floated='left' src={'http://authoritywebsiteincome.com/wp-content/uploads/2013/11/mystery-landing-page.png'} size="tiny"/>
+              <List.Content floated='left' verticalAlign="middle">
+                <span className="part-span">{key} could not be found for this model at this time</span>
+              </List.Content>
+              <List.Content floated='right' verticalAlign="middle">
+                <span className="'part-span">N/A</span>
+              </List.Content>
+            </List.Item>
+          </List.Item>
+        )
+      }
     })
   }
 

@@ -13,6 +13,8 @@ import gql from 'graphql-tag';
 const activeServices = [];
 const disabledServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Chain And Sprocket Replacement', 'Clean And Lube Chain', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Winterization', 'Accessory Installation', 'Brakes Are Squeaking', 'Check Engine Or FI Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Valve Adjustment', 'Warning Light Is On'];
 
+// TODO: 6.2 Find way to get loading boolean from searchparts query and pass it to quotecart
+// Perhaps create a redux state called parts loading and dispatch an action that will either make it true or false
 // TODO: 6/10 Replace segments with animated list
 // TODO: 5/10 Make text in segments responsive
 // TODO: 3/10 make search input full width of the screen and responsive
@@ -58,7 +60,6 @@ function AddServices(props) {
         }
       `,
         variables: { vehicle: vehicleSearchTerm, service, midID },
-        // run getAndSetLaborTime to dispatch setLaborTime action creator
       }).then((result) => {
         console.log(result)
         props.props.onPartsQuery(service, JSON.parse(result.data.searchParts[0].response))
