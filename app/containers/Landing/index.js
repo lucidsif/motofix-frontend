@@ -5,10 +5,12 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-//import logo from 'components/BackgroundImg/logo@2x.png';
-import logo from './logo.png'
+import { browserHistory } from 'react-router';
+import logo from './logo.png';
 import image from './motowoman.png';
-import QuoteStyledButton from 'components/Button/QuoteStyledButton';
+import { Button } from 'semantic-ui-react';
+
+// TODO: convert to functional component
 
 export class Landing extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
@@ -20,7 +22,9 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           <img src={logo} alt="logo" />
         </div>
         <div className="img-overlay-button">
-          <QuoteStyledButton> Get a Free Quote </QuoteStyledButton>
+          <Button onClick={() => browserHistory.push('/quote/vehicle')} primary size="large">
+            Get a Free Quote
+          </Button>
         </div>
       </div>
     );
