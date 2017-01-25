@@ -107,12 +107,9 @@ export class AppNavBar extends Component {
         <Dropdown text="Menu" pointing className="link item">
           <Dropdown.Menu>
             <Dropdown.Header>Main</Dropdown.Header>
-            <Dropdown.Item>Dashboard</Dropdown.Item>
             <Dropdown.Item>New Quote</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Header>Settings</Dropdown.Header>
-            <Dropdown.Item>Payments</Dropdown.Item>
-            <Dropdown.Item>Help</Dropdown.Item>
             <Dropdown.Item>Log in</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
