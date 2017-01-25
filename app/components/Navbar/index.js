@@ -92,7 +92,7 @@ export class AppNavBar extends Component {
     return (
       <Menu secondary fixed="top" className="padRight">
         <Menu.Item>
-          <Image src={logo} size="tiny" />
+          <Image src={logo} size="tiny" href="#" onClick={() => browserHistory.push('/')}/>
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
