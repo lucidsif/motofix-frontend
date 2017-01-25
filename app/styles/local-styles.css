@@ -17,14 +17,24 @@
   position: relative;
  }
 
-.img-overlay {
+.img-overlay-logo {
   position: relative;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   text-align: center;
-  margin-top: 8em;
+  margin-top: 10em;
+}
+
+.img-overlay-button {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin-top: 5em;
 }
 
 .img-overlay:before {

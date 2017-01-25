@@ -5,7 +5,8 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import logo from 'components/BackgroundImg/logo@2x.png';
+//import logo from 'components/BackgroundImg/logo@2x.png';
+import logo from './logo.png'
 import image from './motowoman.png';
 import QuoteStyledButton from 'components/Button/QuoteStyledButton';
 
@@ -15,11 +16,11 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
     return (
       <div className="img-wrapper">
         <img className="img-responsive bg" alt="bg-img" src={image} />
-        <div className="img-overlay">
+        <div className="img-overlay-logo">
           <img src={logo} alt="logo" />
         </div>
-        <div className="img-overlay">
-          <QuoteStyledButton> Get a quote </QuoteStyledButton>
+        <div className="img-overlay-button">
+          <QuoteStyledButton> Get a Free Quote </QuoteStyledButton>
         </div>
       </div>
     );
