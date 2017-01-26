@@ -73,9 +73,9 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     if(!this.props.allRepairTimes){
       conditionalServicesMessage =
         <Message negative>
-          <Message.Header> Warning: No Server Connection</Message.Header>
+          <Message.Header> Uh oh!: No Server Connection</Message.Header>
           <Message.Content>
-            Please try again in a few minutes or move to an area where network connection exists.
+            Please refresh or try again in a few minutes :(
           </Message.Content>
         </Message>
     } else if(selectedUnavailableServices.length > 0){
