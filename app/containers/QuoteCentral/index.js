@@ -57,7 +57,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     })
 
     let conditionalServicesMessage = null
-    if(!this.props.allRepairTimes){
+    if(!this.props.allRepairTimes && !this.props.allRepairTimesLoading){
       conditionalServicesMessage =
         <Message negative>
           <Message.Header> Uh oh! No Server Connection</Message.Header>
