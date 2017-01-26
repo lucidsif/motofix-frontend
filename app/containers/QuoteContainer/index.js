@@ -10,11 +10,12 @@ import selectQuoteContainer from './selectors';
 import { Grid, Segment } from 'semantic-ui-react';
 import QuoteProgressBar from 'components/QuoteProgressBar';
 
+
 export class QuoteContainer extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <Grid centered>
-        <QuoteProgressBar />
+        <QuoteProgressBar currentLocation={this.props.location.pathname} />
         <Segment attached="bottom" textAlign="center">
           {this.props.children}
         </Segment>

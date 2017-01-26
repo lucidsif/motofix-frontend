@@ -41,25 +41,30 @@ svg g line {
   stroke: #ecf0f1;
   stroke-width: 2px;
 }
-svg g.active line,
-svg g.active ~ g line {
-  stroke: orange;
-}
+
 svg g circle {
   fill: #95a5a6;
 }
-svg g.active circle,
-svg g.active ~ g circle {
+svg g.active circle {
   fill: orange;
+}
+svg g.completed circle {
+  fill: #00b5ad;
 }
 svg g text {
   fill: white;
   text-anchor: middle;
   dominant-baseline: central;
 }
-svg g.active text,
-svg g.active ~ g text {
+svg g.active text {
   fill: #FFF;
+}
+svg g.completed text {
+  fill: #FFF;
+}
+svg g.completed text, 
+svg g.completed ~ g text {
+    fill: #FFF;
 }
 /* Make the active group bigger*/
 
