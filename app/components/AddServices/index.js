@@ -6,47 +6,51 @@
 
 import React from 'react';
 import { Grid, Segment, Input, Icon, Image, Label } from 'semantic-ui-react';
+// noinspection JSUnresolvedVariable
 import toolIcon from './toolIcon.png';
+// noinspection JSUnresolvedVariable
 import diagnoseIcon from './diagnoseIcon.png';
 import gql from 'graphql-tag';
-
 const activeServices = [];
 const disabledServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Chain And Sprocket Replacement', 'Clean And Lube Chain', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Winterization', 'Accessory Installation', 'Brakes Are Squeaking', 'Check Engine Or FI Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Valve Adjustment', 'Warning Light Is On'];
 
-// TODO: 6.2 Find way to get loading boolean from searchparts query and pass it to quotecart
-// Perhaps create a redux state called parts loading and dispatch an action that will either make it true or false
-// TODO: 6/10 Replace segments with animated list
-// TODO: 5/10 Make text in segments responsive
-// TODO: 3/10 make search input full width of the screen and responsive
+/*
+ TODO: 6.2 Find way to get loading boolean from searchparts query and pass it to QuoteCart
+ Perhaps create a redux state called parts loading and dispatch an action that will either make it true or false
+ TODO: 6/10 Replace segments with animated list
+ TODO: 5/10 Make text in segments responsive
+ TODO: 3/10 make search input full width of the screen and responsive
 
-// dispatch response to a reducer that updates the cart state laborTime with the payload
+ dispatch response to a reducer that updates the cart state laborTime with the payload
+ */
 function AddServices(props) {
   // change name of func
   function runPartsQueryAndUpdateLaborTimes(service) {
-    const vehicleSearchTerm = `${props.props.vehicle.year} ${props.props.vehicle.manufacturer} ${props.props.vehicle.model_variant}`
-    const midID = props.props.vehicle.mid
-    const parsedRepairTimes = JSON.parse(props.props.allRepairTimes.response)
+    const vehicleSearchTerm = `${props.props.vehicle.year} ${props.props.vehicle.manufacturer} ${props.props.vehicle.model_variant}`;
+    const midID = props.props.vehicle.mid;
+    const parsedRepairTimes = JSON.parse(props.props.allRepairTimes.response);
 
-    if(parsedRepairTimes.unavailable){
-      console.log(`labortime is unavailable for ${service}`)
-      props.props.getAndSetLaborTime(service, 0, true)
+    if (parsedRepairTimes.unavailable) {
+      console.log(`LaborTime is unavailable for ${service}`);
+      props.props.getAndSetLaborTime(service, 0, true);
       props.props.onCartClick(service);
-      return runSearchPartsQuery()
+      return runSearchPartsQuery();
     }
-      if (service === 'OilChange'){
-        // dispatch error message if false
-        console.log(parsedRepairTimes)
-        const lubrication = parsedRepairTimes[0].sub_groups.filter((sub_group) => {
-          return sub_group.sub_group_description === 'Lubrication'
-        })
-        const oilChangeLaborTime = lubrication[0].components[0].time_hrs
-        props.props.getAndSetLaborTime(service, oilChangeLaborTime)
-      }
-      var t0 = performance.now()
-    runSearchPartsQuery()
+    if (service === 'OilChange') {
+      // dispatch error message if false
+      console.log(parsedRepairTimes);
+      // noinspection JSUnresolvedVariable
+      const lubrication = parsedRepairTimes[0].sub_groups.filter((subGroup) => subGroup.sub_group_description === 'Lubrication');
+      // noinspection JSUnresolvedVariable
+      const oilChangeLaborTime = lubrication[0].components[0].time_hrs;
+      props.props.getAndSetLaborTime(service, oilChangeLaborTime);
+    }
+      // noinspection JSUnresolvedVariable
+    const t0 = performance.now();
+    runSearchPartsQuery();
     return props.props.onCartClick(service);
 
-    function runSearchPartsQuery(){
+    function runSearchPartsQuery() {
       props.props.client.query({
         query: gql`
           query searchParts($vehicle: String, $service: String, $midID: String) {
@@ -57,51 +61,46 @@ function AddServices(props) {
       `,
         variables: { vehicle: vehicleSearchTerm, service, midID },
       }).then((result) => {
-        console.log(result)
-        props.props.onPartsQuery(service, JSON.parse(result.data.searchParts[0].response))
-      })
-        .then(() => {
-          var t1 = performance.now()
-          console.log(`parts query took ${(t1-t0)}`)
-        });
-      }
-    // run onCartClick to dispatch addToCart action creator
+        console.log(result);
+        // noinspection JSUnresolvedVariable
+        props.props.onPartsQuery(service, JSON.parse(result.data.searchParts[0].response));
+        // noinspection JSUnresolvedVariable
+        const t1 = performance.now();
+        console.log(`parts query took ${(t1 - t0)}`);
+      });
+    }
   }
 
-  // TODO: refactor servicesegments so it first renders active segments and then renders disabled segments
-  const activeServiceSegments = () => {
-    return activeServices.map((service) => {
-      // in case despacing all the services  is required, this is the function needed
-      let propifiedService = service.replace(/\s/g, "");
-      return (
-        <Segment attached textAlign="left" key={service}>
-          {service}
-          {!props.props.cart[propifiedService].selected ? (
-            <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runPartsQueryAndUpdateLaborTimes(propifiedService)} link />
+  // TODO: refactor ServiceSegments so it first renders active segments and then renders disabled segments
+  const activeServiceSegments = () => activeServices.map((service) => {
+      /* in case despacing all the services  is required, this is the function needed*/
+    const deSpacedService = service.replace(/\s/g, '');
+    return (
+      <Segment attached textAlign="left" key={service}>
+        {service}
+        {!props.props.cart[deSpacedService].selected ? (
+          <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runPartsQueryAndUpdateLaborTimes(deSpacedService)} link />
           ) : (
-            <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(propifiedService)} link />
+            <Icon name="trash outline" size="large" className="serviceIcon redIcon" onClick={() => props.props.onTrashClick(deSpacedService)} link />
           )}
-        </Segment>
-      );
-    });
-  };
+      </Segment>
+    );
+  });
 
-  const disabledServiceSegments = () => {
-    return disabledServices.map((service) => {
+  const disabledServiceSegments = () => disabledServices.map((service) => {
       // in case despacing all the services  is required, this is the function needed
-      let propifiedService = service.replace(/\s/g, "");
-      return (
-        <Segment attached disabled textAlign="left" key={service}>
-          {service}
-          {!props.props.cart[propifiedService].selected ? (
-            <Icon name="add to cart" disabled size="large" className="serviceIcon blueIcon" />
+    const deSpacedService = service.replace(/\s/g, '');
+    return (
+      <Segment attached disabled textAlign="left" key={service}>
+        {service}
+        {!props.props.cart[deSpacedService].selected ? (
+          <Icon name="add to cart" disabled size="large" className="serviceIcon blueIcon" />
           ) : (
             <Icon name="trash outline" disabled size="large" className="serviceIcon redIcon" />
           )}
-        </Segment>
-      );
-    });
-  };
+      </Segment>
+    );
+  });
 
   return (
     <Segment padded="very">
@@ -161,5 +160,10 @@ function AddServices(props) {
     </Segment>
   );
 }
+
+// noinspection JSUnresolvedVariable
+AddServices.propTypes = {
+  props: React.PropTypes.object,
+};
 
 export default AddServices;
