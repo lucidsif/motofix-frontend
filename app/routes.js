@@ -109,6 +109,22 @@ export default function createRoutes(store) {
         },
       ],
     }, {
+      path: '/privacy-policy',
+      name: 'privacyPolicy',
+      getComponent(location, cb) {
+        System.import('containers/PrivacyPolicy')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/terms-and-conditions',
+      name: 'termsAndConditions',
+      getComponent(location, cb) {
+        System.import('containers/TermsAndConditions')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
