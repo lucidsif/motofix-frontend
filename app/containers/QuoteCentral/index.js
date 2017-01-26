@@ -75,9 +75,9 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           {selectedUnavailableServices}
         </Message.List>
         <Message.Content>
-          You can still request a fair quote and we'll notify you when it is available.
+          You can still request a fair quote and we'll send you one you when it is available (feature is currently disabled).
         </Message.Content>
-          <Button>Request Custom Quote</Button>
+          <Button disabled>Request Custom Quote</Button>
       </Message>
     } else {
       conditionalServicesMessage =
@@ -85,10 +85,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           You can't see me
         </Message>
     }
-
-      // create a conditional variable that shows all the services that are selected and unavailable
-    // create a button that can allow the customer to request a fair quote estimate for unavailable services
-//           content='While we may not have the fair estimates immediately available for these services, we can get back to you with a fair estimate.'
 
     return (
       <div>
