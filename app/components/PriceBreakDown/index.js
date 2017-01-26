@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import { Button, Container, List, Image, Modal, Header, Icon, Input } from 'semantic-ui-react';
+import { Button, Container, List, Image, Label } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
 import FormModal from 'components/FormModal';
 
@@ -80,7 +80,8 @@ function PriceBreakDown(props) {
             <List.Item>
               <Image verticalAlign='middle' floated='left' src={props.part[serviceName][key].imageURL} size="tiny"/>
               <List.Content floated='left' verticalAlign="middle">
-                <span className="part-span">{props.part[serviceName][key].partTitle}</span>
+                <span className="part-span">
+                  <Label>{props.part[serviceName][key].quantity}x</Label> {props.part[serviceName][key].partTitle}</span>
               </List.Content>
               <List.Content floated='right' verticalAlign="middle">
                 <span className="'part-span">{props.part[serviceName][key].price.__value__}</span>

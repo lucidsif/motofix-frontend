@@ -16,11 +16,9 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
 // TODO: Make sure progress bar is fully responsive and visible on mobile devices
   render() {
     var currentLocation = this.props.currentLocation
-    console.log(currentLocation)
 
     var renderProgressStage = null
     if(currentLocation === '/quote/vehicle'){
-      console.log('vehicle stage')
       renderProgressStage =
           <Segment className="quote" attached="top">
             <svg>
@@ -45,7 +43,6 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
           </Segment>
     }
     else if(currentLocation = '/quote/service'){
-      console.log('service stage')
       renderProgressStage =
         <Segment className="quote" attached="top">
           <svg>
