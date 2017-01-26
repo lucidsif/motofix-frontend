@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import logo from './logo.png';
 import image from './motowoman.png';
-import { Button } from 'semantic-ui-react';
+import { Button, Label } from 'semantic-ui-react';
 
 // TODO: convert to functional component
 
