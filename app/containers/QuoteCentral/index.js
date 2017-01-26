@@ -10,7 +10,7 @@ import { browserHistory } from 'react-router';
 import { Grid, Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
-import FormModal from 'components/FormModal';
+import StyledFormModal from 'components/FormModal/styled';
 
 
 // uninstall
@@ -73,7 +73,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     if(!this.props.allRepairTimes){
       conditionalServicesMessage =
         <Message negative>
-          <Message.Header> Uh oh!: No Server Connection</Message.Header>
+          <Message.Header> Uh oh! No Server Connection</Message.Header>
           <Message.Content>
             Please refresh or try again in a few minutes :(
           </Message.Content>
@@ -109,8 +109,8 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         {conditionalServicesMessage}
         <QuoteCart props={this.props} />
           {renderAddServicesUponRepairTimesFetch}
-          <FormModal client={this.props.client} />
-          <Button onClick={() => browserHistory.push('/quote/vehicle')} >Change Motorcycle</Button>
+        <Button onClick={() => browserHistory.push('/quote/vehicle')} >Change Motorcycle</Button>
+        <StyledFormModal client={this.props.client} />
       </div>
     );
   }
