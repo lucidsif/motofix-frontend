@@ -38,8 +38,9 @@ export class AppNavBar extends Component {
         console.log(`${curr} is selected and a part exists for it`);
         for (const key in this.props.part[curr]) {
           if (this.props.part[curr].hasOwnProperty(key) && this.props.part[curr][key].valid) {
-            const price = parseInt(this.props.part[curr][key].price.__value__);
-            sum += price;
+            const price = parseFloat(this.props.part[curr][key].price.__value__)
+            const quantity = parseFloat(this.props.part[curr][key].quantity)
+            sum += price * quantity
           }
         }
       } else {

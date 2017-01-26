@@ -132,7 +132,7 @@ function PriceBreakDown(props) {
            </List.Item>
            <List.Item>
                <List.Content floated='left'>
-                   <p> Tax on Parts</p>
+                   <p> Tax</p>
                </List.Content>
                <List.Content floated='right'>
                     <p>{floatTax()}</p>

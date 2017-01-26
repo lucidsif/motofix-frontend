@@ -25,9 +25,9 @@ function QuoteCart(props) {
           console.log(`${curr} is selected and a part exists for it`)
           for (var key in props.props.part[curr]){
             if (props.props.part[curr].hasOwnProperty(key) && props.props.part[curr][key].valid){
-              console.log(props.props.part[curr][key].valid)
-              const price = parseInt(props.props.part[curr][key].price.__value__);
-              sum += price
+              const price = parseFloat(props.props.part[curr][key].price.__value__)
+              const quantity = parseFloat(props.props.part[curr][key].quantity)
+              sum += price * quantity
             }
           }
         }
