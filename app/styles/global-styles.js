@@ -135,5 +135,9 @@ svg g text.stage {
 h3.ui.center.aligned.header {
   font-weight: 500;
 }
+
+.betaLabel {
+  margin-left: 0.3em;
+}
 `
 ;
