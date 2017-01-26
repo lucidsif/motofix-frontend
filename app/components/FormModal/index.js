@@ -5,14 +5,15 @@
 */
 
 import React from 'react';
-import { Button, Modal, Header, Icon, Form, Message } from 'semantic-ui-react';
+import { Button, Modal, Header, Icon, Form } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 
 
 // TODO: Send a signup mutation onsubmit
-// TODO: Create a success and error message - Need to share state with redux or have component colocate with parent
-class FormModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props){
+// TODO: Create a success and error message - Need to share state with redux or have component CoLocate with parent
+/** @namespace React.Component */
+class FormModal extends React.Component { // EsLint-disable-line react/prefer-stateless-function
+  constructor(props) {
     super(props);
     this.state = { email: null, password: null, modalOpen: false };
 
@@ -23,11 +24,13 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleEmailChange(e){
+  handleEmailChange(e) {
+    // noinspection JSUnresolvedFunction
     this.setState({ email: e.target.value });
   }
 
-  handlePasswordChange(e){
+  handlePasswordChange(e) {
+    // noinspection JSUnresolvedFunction
     this.setState({ password: e.target.value });
   }
 
@@ -35,35 +38,44 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
     e.preventDefault();
     const validated = this.validateEmail(this.state.email);
     const pass = this.state.password;
-    if(!validated){
-      console.log(`email: ${this.state.email}, is not valid`)
+    if (!validated) {
+      console.log(`email: ${this.state.email}, is not valid`);
+      return;
     }
-    if(!pass){
-      console.log(`password: ${this.state.password}, is not valid`)
+    if (!pass) {
+      console.log(`password: ${this.state.password}, is not valid`);
+      return;
     }
-    if(validated && pass) {
+    if (validated && pass) {
       console.log(`email and pass is validated, submitting email: ${this.state.email}, pass: ${this.state.password}`);
-      this.signUpMutation()
-      return this.handleClose();
+      this.signUpMutation();
+      this.handleClose();
+      return;
     }
   }
 
-  handleOpen(e){
+  handleOpen(e) {
+    // noinspection JSUnresolvedFunction
     this.setState({ modalOpen: true });
+    return e;
   }
 
   handleClose(e) {
+    // noinspection JSUnresolvedFunction
     this.setState({ modalOpen: false });
+    return e;
   }
 
   validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    // noinspection JSUnresolvedFunction
+    // const re = new RegExp('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/');
+    const sanitizePattern = new RegExp('[^@]+@[^@]+\\.[^@]+');
+    return sanitizePattern.test(email);
   }
 
-  signUpMutation(){
+  signUpMutation() {
     console.log(this.props.client);
-    const startMutation = (new Date).getTime();
+    // noinspection JSUnresolvedFunction
     return this.props.client.mutate({
       mutation: gql`
       mutation signUp($email: String!, $password: String!){
@@ -73,9 +85,8 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
       }
     }
     `,
-      variables: { email: this.state.email, password: this.state.password},
-    }).then((response) => console.log(response.data.signUp))
-      .then(() => console.log(`time to finish signup mutation: ${(new Date).getTime() - startMutation}`))
+      variables: { email: this.state.email, password: this.state.password },
+    }).then((response) => console.log(response.data.signUp));
   }
 
   render() {
@@ -85,21 +96,21 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
-        size='small'
+        size="small"
       >
-        <Header icon='mail outline' content="Sign up to get full access to your free app and get $15 off your next service on motofix! " />
+        <Header icon="mail outline" content="Sign up to get full access to your free app and get $15 off your next service on motofix! " />
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
             <Form.Input
               onChange={this.handleEmailChange}
-              type='email'
+              type="email"
               placeholder="email address"
               icon="mail outline"
               iconPosition="left"
             />
             <Form.Input
               onChange={this.handlePasswordChange}
-              type='password'
+              type="password"
               placeholder="password"
               icon="lock"
               iconPosition="left"
@@ -107,16 +118,20 @@ class FormModal extends React.Component { // eslint-disable-line react/prefer-st
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button type='submit' color='green' inverted floated="right" onClick={this.handleSubmit}>
-            <Icon name='checkmark' /> Get $15 off
+          <Button type="submit" color="green" inverted floated="right" onClick={this.handleSubmit}>
+            <Icon name="checkmark" /> Get $15 off
           </Button>
-          <Button basic color='red' inverted floated="right" onClick={this.handleClose}>
-            <Icon name='remove' /> Cancel
+          <Button basic color="red" inverted floated="right" onClick={this.handleClose}>
+            <Icon name="remove" /> Cancel
           </Button>
         </Modal.Actions>
       </Modal>
     );
   }
 }
+
+FormModal.propTypes = {
+  client: React.PropTypes.object,
+};
 
 export default FormModal;
