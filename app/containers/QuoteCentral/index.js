@@ -52,7 +52,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         </Dimmer>
         <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
       </Segment>;
-    } else {
+    }  else {
       renderAddServicesUponRepairTimesFetch = <AddServices props={this.props} />;
     }
     //
@@ -70,7 +70,15 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     })
 
     let conditionalServicesMessage = null
-    if(selectedUnavailableServices.length > 0){
+    if(!this.props.allRepairTimes){
+      conditionalServicesMessage =
+        <Message negative>
+          <Message.Header> Warning: No Server Connection</Message.Header>
+          <Message.Content>
+            Please try again in a few minutes or move to an area where network connection exists.
+          </Message.Content>
+        </Message>
+    } else if(selectedUnavailableServices.length > 0){
       conditionalServicesMessage =
         <Message info>
         <Message.Header>
