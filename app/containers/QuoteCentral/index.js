@@ -11,22 +11,9 @@ import { Grid, Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 import StyledFormModal from 'components/FormModal/styled';
-
-
-// uninstall
-// TODO: remove onclick query when add service - DONE
-// install
-// TODO: query when loaded and save results to state
-// autocalc from state
-// TODO: each service in state should extract its labortime from the repairtimes state
-// requirement
-// TODO: ensure that onclick service, adds to cart and gets laborTime
-
 import gql from 'graphql-tag';
 import { withApollo, graphql, compose } from 'react-apollo';
-
 import { addToCart, removeFromCart, setLaborTime, setPartsData } from './actions';
-
 import { createStructuredSelector } from 'reselect';
 import { selectCart, selectPart } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
@@ -105,7 +92,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
 
     return (
       <div>
-        {console.log(this.props)}
         {conditionalServicesMessage}
         <QuoteCart props={this.props} />
           {renderAddServicesUponRepairTimesFetch}

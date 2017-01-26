@@ -7,15 +7,15 @@
 import React from 'react';
 import { Progress, Segment, Label } from 'semantic-ui-react';
 
+// TODO: Make sure progress bar is fully responsive and visible on mobile devices
+// TODO: Determine if model or vehicle information should be in step 1
 // TODO: incrementally fill progressbar
 class QuoteProgressBar extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  constructor(props) {
-    super(props);
-    this.state = { percent: 15 };
-  }
-// TODO: Make sure progress bar is fully responsive and visible on mobile devices
   render() {
-    var currentLocation = this.props.currentLocation
+    var { currentLocation, selectedVehicle } = this.props;
+    var year = selectedVehicle.year
+    var make = selectedVehicle.manufacturer;
+    var model = selectedVehicle.model;
 
     var renderProgressStage = null
     if(currentLocation === '/quote/vehicle'){
@@ -61,7 +61,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
             <g className="completed">
               <circle cx="10%" cy="10%" r="1.25em"></circle>
               <text x="10%" y="10%">1</text>
-              <text className="stage" x="10%" y="30%">Vehicle Information</text>
+              <text className="stage" x="10%" y="30%">{year} {make} {model}</text>
             </g>
           </svg>
         </Segment>
