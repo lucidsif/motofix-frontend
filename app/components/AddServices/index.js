@@ -23,8 +23,6 @@ const disabledServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Ch
 function AddServices(props) {
   // change name of func
   function runPartsQueryAndUpdateLaborTimes(service) {
-    console.log(`service added: ${service}`)
-
     const vehicleSearchTerm = `${props.props.vehicle.year} ${props.props.vehicle.manufacturer} ${props.props.vehicle.model_variant}`
     const midID = props.props.vehicle.mid
     const parsedRepairTimes = JSON.parse(props.props.allRepairTimes.response)
@@ -42,8 +40,6 @@ function AddServices(props) {
           return sub_group.sub_group_description === 'Lubrication'
         })
         const oilChangeLaborTime = lubrication[0].components[0].time_hrs
-        console.log(`oilchangelabortime: ${oilChangeLaborTime}`)
-
         props.props.getAndSetLaborTime(service, oilChangeLaborTime)
       }
       var t0 = performance.now()

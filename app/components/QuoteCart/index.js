@@ -22,7 +22,6 @@ function QuoteCart(props) {
     })
       .reduce((acc, curr) => {
         if (props.props.cart[curr].selected && props.props.part[curr]){
-          console.log(`${curr} is selected and a part exists for it`)
           for (var key in props.props.part[curr]){
             if (props.props.part[curr].hasOwnProperty(key) && props.props.part[curr][key].valid){
               const price = parseFloat(props.props.part[curr][key].price.__value__)
@@ -47,6 +46,7 @@ function QuoteCart(props) {
       return props.props.cart[key].selected && props.props.cart[key].unavailable
     })
     if(selectedUnavailableServices && selectedUnavailableServices.length > 0){
+      console.log('unavailable services below:')
       console.log(selectedUnavailableServices)
       return 'N/A'
     }
@@ -58,7 +58,6 @@ function QuoteCart(props) {
       .reduce((acc, curr) => {
       if(props.props.cart[curr].selected && typeof props.props.cart[curr].laborTime === "number" ){
         const laborTime = props.props.cart[curr].laborTime;
-        console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
         return acc + laborTime;
       }
       else {

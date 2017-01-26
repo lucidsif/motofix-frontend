@@ -45,7 +45,6 @@ function PriceBreakDown(props) {
     let filtered = services.filter((service) => {
       return props.cart[service.replace(/\s/g, "")].selected;
     })
-    console.log(filtered);
     return filtered.map((filteredService) => {
       let laborTime = multiplyAndFloat(props.cart[filteredService.replace(/\s/g, "")].laborTime)
       let unAvailableLaborTime = props.cart[filteredService.replace(/\s/g, "")].unavailable
@@ -71,7 +70,6 @@ function PriceBreakDown(props) {
   }
   function renderParts(serviceName){
     console.log(props.part)
-    console.log('renderPart: ' + serviceName)
     // todo: dynamically render list of parts and their prices
     return Object.keys(props.part[serviceName]).map((key) => {
       if(props.part[serviceName][key].valid){
