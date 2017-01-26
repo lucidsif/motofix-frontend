@@ -105,8 +105,7 @@ export class AppNavBar extends Component {
         </Menu.Menu>
         <Dropdown className="link item" icon="bars">
           <Dropdown.Menu>
-            <Dropdown.Item>New Quote</Dropdown.Item>
-            <Dropdown.Item>Log in</Dropdown.Item>
+            <Dropdown.Item onClick={() => browserHistory.push('/quote/vehicle')}>New Quote</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu>
