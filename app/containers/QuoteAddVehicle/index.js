@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ApolloClient from 'apollo-client';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Header } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
@@ -126,11 +126,9 @@ class QuoteAddVehicle extends React.Component {
   render() {
     return (
       <form onSubmit={this.props.onSubmitForm}>
-        <Header as='h3' textAlign='center'>
-          Add your motorcycle
-        </Header>
+        <h3 className="section-heading">Add your motorcycle</h3>
         <div>
-          <label>Select a model </label>
+          <label>Select a make </label>
           <Select
             autofocus
             options={manufacturerData}
@@ -201,7 +199,6 @@ QuoteAddVehicle.propTypes = {
 export function mapDispatchToProps(dispatch){
   return {
     onSubmitForm: (evt) => {
-      /*
       evt.preventDefault();
       console.log('mock vehicle selected and merged to state')
       const vehicle = {
@@ -216,7 +213,7 @@ export function mapDispatchToProps(dispatch){
       }
       dispatch(addVehicle(vehicle))
       browserHistory.push('/quote/services');
-      */
+      /*
       evt.preventDefault();
       if (motorcycle) {
         console.log('all fields submitted');
@@ -227,6 +224,7 @@ export function mapDispatchToProps(dispatch){
         console.log('please fill out all fields');
         // browserHistory.push('/quote/vehicle');
       }
+      */
     },
   };
 }
