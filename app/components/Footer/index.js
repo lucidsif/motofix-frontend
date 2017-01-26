@@ -7,8 +7,12 @@ function Footer() {
       <section>
         © 2017 motofix All rights reserved. Made with awesomeness in NYC.
       </section>
-      <section>
-      </section>
+      <div>
+        <a href="/privacy-policy">Privacy</a>
+      </div>
+      <div>
+        <a href="/terms-and-conditions">Terms and Conditions</a>
+      </div>
     </Wrapper>
   );
 }
