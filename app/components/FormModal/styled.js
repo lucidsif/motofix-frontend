@@ -1,7 +1,6 @@
 /**
  * Created by Sif on 1/26/17.
  */
-import React from 'react';
 import styled from 'styled-components';
 
 import FormModal from './index';

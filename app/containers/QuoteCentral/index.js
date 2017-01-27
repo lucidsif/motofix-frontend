@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { Grid, Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
+import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 import StyledFormModal from 'components/FormModal/styled';

@@ -27,19 +27,19 @@ export function setLaborTime(service, laborTime, unavailable) {
   const payload = {
     service,
     laborTime,
-    unavailable
-  }
+    unavailable,
+  };
   return {
     type: SET_LABORTIME,
     service,
-    payload
+    payload,
   };
 }
-export function setPartsData(service, partsObj){
+export function setPartsData(service, partsObj) {
   return {
     type: SET_PARTS_DATA,
     service,
     partsObj,
-  }
+  };
 }
 
