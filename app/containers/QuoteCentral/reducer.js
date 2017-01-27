@@ -13,14 +13,15 @@ import {
 } from './constants';
 import services from './reducerServices';
 
-
-const cart = services.reduce((acc, cur, i) => {
-  let regexedService = cur.replace(/\s/g, "");
-  acc[regexedService] = {selected: false, laborTime: null, unavailable: null};
+const cart = services.reduce((acc, cur) => {
+  const regexedService = cur.replace(/\s/g, '');
+  // eslint-disable-next-line
+  acc[regexedService] = { selected: false, laborTime: null, unavailable: null }; // eslint-disable-line no-param-reassign.
   return acc;
 }, {});
-const part = services.reduce((acc, cur, i) => {
-  let regexedService = cur.replace(/\s/g, "");
+const part = services.reduce((acc, cur) => {
+  const regexedService = cur.replace(/\s/g, '');
+  // eslint-disable-next-line
   acc[regexedService] = '';
   return acc;
 }, {});
@@ -43,4 +44,4 @@ function quoteCentralReducer(state = initialState, action) {
 }
 
 export default quoteCentralReducer;
-// pickup and set unavailableBoolean
+
