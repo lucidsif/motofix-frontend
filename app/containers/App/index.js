@@ -38,7 +38,7 @@ function App(props) {
       />
       <Header />
       {React.Children.toArray(props.children)}
-      <Footer/>
+      <Footer />
     </AppWrapper>
   );
 }
