@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ApolloClient from 'apollo-client';
-import { withApollo } from 'react-apollo';
+import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Button } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
@@ -16,8 +15,9 @@ let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
 
+// TODO: 7/10 half the size of the select menus
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
-// TODO: 6/10 add validation to required fields
+// TODO: 6/10 replace spans with labels
 // TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
 class QuoteAddVehicle extends React.Component {
 
@@ -30,19 +30,19 @@ class QuoteAddVehicle extends React.Component {
       yearValue: null,
       modelOptions: null,
       subModelOptions: null,
-      yearOptions: null
+      yearOptions: null,
     };
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
     this.updateModelValueAndGetSubModels = this.updateModelValueAndGetSubModels.bind(this);
-    this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this)
-    this.updateYear = this.updateYear.bind(this)
+    this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this);
+    this.updateYear = this.updateYear.bind(this);
   }
   updateManufacturerValueAndGetModels(newValue) {
     this.setState({ manufacturerValue: newValue });
     this.setState({ modelValue: null });
     this.setState({ subModelValue: null });
-    this.setState({ yearValue: null})
+    this.setState({ yearValue: null });
     console.time('allModels');
     this.props.client.query({
       query: gql`
@@ -57,9 +57,7 @@ class QuoteAddVehicle extends React.Component {
     }).then((result) => {
       console.timeEnd('allModels');
       modelData = result.data.allModels;
-      modelsFactory = modelData.map((bike) => {
-        return { value: bike.model_id, label: bike.model };
-      });
+      modelsFactory = modelData.map((bike) => ({ value: bike.model_id, label: bike.model }));
       this.setState({ modelOptions: modelsFactory });
     });
   }
@@ -67,7 +65,7 @@ class QuoteAddVehicle extends React.Component {
   updateModelValueAndGetSubModels(newValue) {
     this.setState({ modelValue: newValue });
     this.setState({ subModelValue: null });
-    this.setState({ yearValue: null})
+    this.setState({ yearValue: null });
     console.time('allSubModels');
     this.props.client.query({
       query: gql`
@@ -88,39 +86,37 @@ class QuoteAddVehicle extends React.Component {
       console.timeEnd('allSubModels');
       subModelData = result.data.allSubModels;
       subModelFactory = subModelData.map((bike) => {
-        let bikeLabel = `${bike.model_variant} ${bike.tuning_description || ''} - [${bike.start_year} - ${bike.end_year}]`
+        const bikeLabel = `${bike.model_variant} ${bike.tuning_description || ''} - [${bike.start_year} - ${bike.end_year}]`;
         return { value: bike.mid, label: bikeLabel };
       });
       this.setState({ subModelOptions: subModelFactory });
-
     });
   }
 
   updateSubModelValueAndRenderYears(newValue) {
     console.time('years');
     this.setState({ subModelValue: newValue });
-    this.setState({ yearValue: null})
-    let selectedSubModel = subModelData.filter((bike) =>  {
-      return bike.mid === newValue
-    });
-    motorcycle = selectedSubModel[0]
-    let yearsArr = []
-    createYearsArr(selectedSubModel[0].start_year, selectedSubModel[0].end_year)
-    this.setState({ yearOptions: yearsArr })
+    this.setState({ yearValue: null });
+    const selectedSubModel = subModelData.filter((bike) => bike.mid === newValue);
+    motorcycle = selectedSubModel[0];
+    const yearsArr = [];
+    createYearsArr(selectedSubModel[0].start_year, selectedSubModel[0].end_year);
+    this.setState({ yearOptions: yearsArr });
 
-    function createYearsArr(startYear, endYear){
-      let currYear = startYear
-      if(currYear <= endYear){
-        yearsArr.push({ value: startYear, label: startYear })
-        currYear += 1
-        return createYearsArr(currYear, endYear)
+    function createYearsArr(startYear, endYear) {
+      let currYear = startYear;
+      if (currYear <= endYear) {
+        yearsArr.push({ value: startYear, label: startYear });
+        currYear += 1;
+        return createYearsArr(currYear, endYear);
       }
+      return yearsArr;
     }
   }
 
-  updateYear(newValue){
-    motorcycle.year = newValue
-    this.setState({ yearValue: newValue })
+  updateYear(newValue) {
+    motorcycle.year = newValue;
+    this.setState({ yearValue: newValue });
   }
 
   render() {
@@ -128,7 +124,7 @@ class QuoteAddVehicle extends React.Component {
       <form onSubmit={this.props.onSubmitForm}>
         <h3 className="section-heading">Add your motorcycle</h3>
         <div>
-          <label>Select a make </label>
+          <span>Select a make</span>
           <Select
             autofocus
             options={manufacturerData}
@@ -142,7 +138,7 @@ class QuoteAddVehicle extends React.Component {
           />
         </div>
         <div>
-          <label>Select a model </label>
+          <span>Select a model </span>
           <Select
             autofocus
             options={this.state.modelOptions}
@@ -156,7 +152,7 @@ class QuoteAddVehicle extends React.Component {
           />
         </div>
         <div>
-          <label>Select a sub-model </label>
+          <span>Select a sub-model </span>
           <Select
             autofocus
             options={this.state.subModelOptions}
@@ -170,7 +166,7 @@ class QuoteAddVehicle extends React.Component {
           />
         </div>
         <div>
-          <label>Select a year </label>
+          <span>Select a year </span>
           <Select
             autofocus
             options={this.state.yearOptions}
@@ -196,11 +192,11 @@ QuoteAddVehicle.propTypes = {
 };
 */
 
-export function mapDispatchToProps(dispatch){
+export function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
       evt.preventDefault();
-      console.log('mock vehicle selected and merged to state')
+      console.log('mock vehicle selected and merged to state');
       const vehicle = {
         mid: 'HDA06327',
         manufacturer: 'Honda',
@@ -209,9 +205,9 @@ export function mapDispatchToProps(dispatch){
         tuning_description: 'SE',
         start_year: 2008,
         end_year: 2011,
-        year: 2010
-      }
-      dispatch(addVehicle(vehicle))
+        year: 2010,
+      };
+      dispatch(addVehicle(vehicle));
       browserHistory.push('/quote/services');
       /*
       evt.preventDefault();
@@ -229,9 +225,14 @@ export function mapDispatchToProps(dispatch){
   };
 }
 
+QuoteAddVehicle.propTypes = {
+  client: React.PropTypes.object,
+  onSubmitForm: React.PropTypes.func,
+};
 
-QuoteAddVehicle = withApollo(QuoteAddVehicle);
+const QuoteAddVehicleRedux = connect(null, mapDispatchToProps);
 
-QuoteAddVehicle = connect(null, mapDispatchToProps)(QuoteAddVehicle);
-
-export default QuoteAddVehicle;
+export default compose(
+  QuoteAddVehicleRedux,
+  withApollo,
+)(QuoteAddVehicle);
