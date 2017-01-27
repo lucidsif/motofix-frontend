@@ -4,11 +4,10 @@
  *
  */
 import React from 'react';
-import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import logo from './logo.png';
 import image from './motowoman.png';
-import { Button, Label } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
 // TODO: convert to functional component
 
@@ -31,20 +30,4 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
   }
 }
 
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-export default connect(null, mapDispatchToProps)(Landing);
-/*
-.background-img{
-  background: url('./motowoman.png') no-repeat center center fixed;
-  background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  -webkit-background-size: cover;
-}
-*/
+export default Landing;

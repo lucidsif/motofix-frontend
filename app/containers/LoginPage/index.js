@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import LoginForm from './LoginForm'
+import LoginForm from './LoginForm';
 
 export class LoginPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
@@ -29,7 +29,7 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
               {/* From onSubmit you would be dispatching your action passing in
                   the values of the forms. For this dummy example we just
                   display the values. */}
-              <LoginForm onSubmit={this.login} locale={this.props.locale} />
+              <LoginForm onSubmit={this.login} />
             </div>
           </div>
         </div>
