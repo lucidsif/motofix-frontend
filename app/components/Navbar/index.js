@@ -4,7 +4,7 @@
 *
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
@@ -17,7 +17,7 @@ import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 // TODO: 7/10 when cart is clicked, it should route to quotecart
 // TODO: handle edge cases like if props is null
 // TODO: 5/10 export all calculating functions into a utility functions file
-export class AppNavBar extends Component {
+export class AppNavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { activeItem: 'home' };
@@ -29,26 +29,30 @@ export class AppNavBar extends Component {
   }
   totalPartsPrice() {
     let sum = 0;
-    const sumOfParts = services.map((service) => {
+    services.map((service) => {
       const regexedService = service.replace(/\s/g, '');
       return regexedService;
     })
     .reduce((acc, curr) => {
       if (this.props.cart[curr].selected && this.props.part[curr]) {
         console.log(`${curr} is selected and a part exists for it`);
-        for (const key in this.props.part[curr]) {
-          if (this.props.part[curr].hasOwnProperty(key) && this.props.part[curr][key].valid) {
-            const price = parseFloat(this.props.part[curr][key].price.__value__)
-            const quantity = parseFloat(this.props.part[curr][key].quantity)
-            sum += price * quantity
+        // serviceparts shouls be an array of parts belonging to a service
+        const servicePartKeys = Object.keys(this.props.part[curr]);
+        console.log(servicePartKeys);
+        return servicePartKeys.reduce((accu, currKey) => {
+          if (this.props.part[curr][currKey].valid) {
+            /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
+            const price = parseFloat(this.props.part[curr][currKey].price.__value__);
+            const quantity = parseFloat(this.props.part[curr][currKey].quantity);
+            sum += price * quantity;
+            return sum;
           }
-        }
-      } else {
-        return acc + 0;
+          return sum;
+        }, 0);
       }
+      return acc + 0;
     }, 0);
     return sum;
-  // return sumOfParts;
   }
   totalServicesPrice() {
     const selectedUnavailableServices = Object.keys(this.props.cart).filter((key) =>
@@ -68,9 +72,8 @@ export class AppNavBar extends Component {
         const laborTime = this.props.cart[curr].laborTime;
         console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
         return acc + laborTime;
-      } else {
-        return acc + 0;
       }
+      return acc + 0;
     }, 0);
     return sumOfLaborTimes * 67;
   }
@@ -89,12 +92,11 @@ export class AppNavBar extends Component {
   // replace menu with hamburger
 
   render() {
-    const { activeItem } = this.state;
     return (
       <Menu secondary fixed="top" className="padRight">
         <Menu.Item>
           <Image src={logo} size="tiny" href="#" onClick={() => browserHistory.push('/')} />
-          <Label color='orange' horizontal className="betaLabel">beta</Label>
+          <Label color="orange" horizontal className="betaLabel">beta</Label>
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
@@ -113,11 +115,16 @@ export class AppNavBar extends Component {
   }
 }
 
+AppNavBar.propTypes = {
+  cart: React.PropTypes.object,
+  part: React.PropTypes.object,
+};
+
 const mapStateToProps = createStructuredSelector({
   cart: selectCart(),
   part: selectPart(),
 });
 
-AppNavBar = connect(mapStateToProps, null)(AppNavBar);
+const AppNavBarConnect = connect(mapStateToProps, null)(AppNavBar);
 
-export default AppNavBar;
+export default AppNavBarConnect;
