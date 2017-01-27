@@ -5,45 +5,46 @@
 */
 
 import React from 'react';
-import { Progress, Segment, Label } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 
 // TODO: Make sure progress bar is fully responsive and visible on mobile devices
 // TODO: Determine if model or vehicle information should be in step 1
 // TODO: incrementally fill progressbar
 class QuoteProgressBar extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    var { currentLocation, selectedVehicle } = this.props;
-    var year = selectedVehicle.year
-    var make = selectedVehicle.manufacturer;
-    var model = selectedVehicle.model;
+    const { selectedVehicle, currentLocation } = this.props;
+    const year = selectedVehicle.year;
+    const make = selectedVehicle.manufacturer;
+    const model = selectedVehicle.model;
 
-    var renderProgressStage = null
-    if(currentLocation === '/quote/vehicle'){
-      renderProgressStage =
-          <Segment className="quote" attached="top">
-            <svg>
-              <g>
-                <line x1="20%" y1="10%" x2="87%" y2="10%"></line>
-                <circle cx="87%" cy="10%" r="1.25em"></circle>
-                <text x="87%" y="10%">3</text>
-                <text className="stage" x="87%" y="30%">Schedule</text>
-              </g>
-              <g className>
-                <line x1="13%" y1="10%" x2="20%" y2="10%"></line>
-                <circle cx="50%" cy="10%" r="1.25em"></circle>
-                <text x="50%" y="10%">2</text>
-                <text className="stage" x="50%" y="30%">Services & Estimates</text>
-              </g>
-              <g className="active">
-                <circle cx="13%" cy="10%" r="1.25em"></circle>
-                <text x="13%" y="10%">1</text>
-                <text className="stage" x="13%" y="30%">Vehicle Information</text>
-              </g>
-            </svg>
-          </Segment>
+    let renderProgressStage = null;
+    if (currentLocation === '/quote/vehicle') {
+      renderProgressStage = (
+        <Segment className="quote" attached="top">
+          <svg>
+            <g>
+              <line x1="20%" y1="10%" x2="87%" y2="10%"></line>
+              <circle cx="87%" cy="10%" r="1.25em"></circle>
+              <text x="87%" y="10%">3</text>
+              <text className="stage" x="87%" y="30%">Schedule</text>
+            </g>
+            <g className>
+              <line x1="13%" y1="10%" x2="20%" y2="10%"></line>
+              <circle cx="50%" cy="10%" r="1.25em"></circle>
+              <text x="50%" y="10%">2</text>
+              <text className="stage" x="50%" y="30%">Services & Estimates</text>
+            </g>
+            <g className="active">
+              <circle cx="13%" cy="10%" r="1.25em"></circle>
+              <text x="13%" y="10%">1</text>
+              <text className="stage" x="13%" y="30%">Vehicle Information</text>
+            </g>
+          </svg>
+        </Segment>
+      );
     }
-    else if(currentLocation = '/quote/service'){
-      renderProgressStage =
+    if (currentLocation === '/quote/services') {
+      renderProgressStage = (
         <Segment className="quote" attached="top">
           <svg>
             <g>
@@ -65,9 +66,15 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
             </g>
           </svg>
         </Segment>
+      );
     }
-    return renderProgressStage
+    return renderProgressStage;
   }
 }
+
+QuoteProgressBar.propTypes = {
+  selectedVehicle: React.PropTypes.object,
+  currentLocation: React.PropTypes.string,
+};
 
 export default QuoteProgressBar;
