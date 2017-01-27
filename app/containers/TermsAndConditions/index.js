@@ -5,7 +5,6 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
 export class TermsAndConditions extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -17,9 +16,9 @@ export class TermsAndConditions extends React.Component { // eslint-disable-line
         <p>
         Introduction
         </p>
-<p>
-        Welcome to motofixes.com. This website is owned and operated by motofix. By visiting our website and accessing the information, resources, services, products, and tools we provide, you understand and agree to accept and adhere to the following terms and conditions as stated in this policy (hereafter referred to as 'User Agreement'), along with the terms and conditions as stated in our Privacy Policy (please refer to the Privacy Policy section below for more information).
-</p>
+        <p>
+        Welcome to motofixes.com. This website is owned and operated by motofix. By visiting our website and accessing the information, resources, services, products, and tools we provide, you understand and agree to accept and adhere to the following terms and conditions as stated in this policy (hereafter referred to as User Agreement), along with the terms and conditions as stated in our Privacy Policy (please refer to the Privacy Policy section below for more information).
+        </p>
         <p>
         This agreement is in effect as of Jan 26, 2017.
         </p>
@@ -30,7 +29,7 @@ export class TermsAndConditions extends React.Component { // eslint-disable-line
         Responsible Use and Conduct
         </p>
         <p>
-        By visiting our website and accessing the information, resources, services, products, and tools we provide for you, either directly or indirectly (hereafter referred to as 'Resources'), you agree to use these Resources only for the purposes intended as permitted by (a) the terms of this User Agreement, and (b) applicable laws, regulations and generally accepted online practices or guidelines.
+        By visiting our website and accessing the information, resources, services, products, and tools we provide for you, either directly or indirectly (hereafter referred to as Resources), you agree to use these Resources only for the purposes intended as permitted by (a) the terms of this User Agreement, and (b) applicable laws, regulations and generally accepted online practices or guidelines.
         </p>
         <p>
         Wherein, you understand that:
@@ -60,26 +59,26 @@ export class TermsAndConditions extends React.Component { // eslint-disable-line
         <p>
         We have the right at our sole discretion to remove any content that, we feel in our judgment does not comply with this User Agreement, along with any content that we feel is otherwise offensive, harmful, objectionable, inaccurate, or violates any 3rd party copyrights or trademarks. We are not responsible for any delay or failure in removing such content. If you post content that we choose to remove, you hereby consent to such removal, and consent to waive any claim against us.
 
-        h. We do not assume any liability for any content posted by you or any other 3rd party users of our website. However, any content posted by you using any open communication tools on our website, provided that it doesn't violate or infringe on any 3rd party copyrights or trademarks, becomes the property of motofix, and as such, gives us a perpetual, irrevocable, worldwide, royalty-free, exclusive license to reproduce, modify, adapt, translate, publish, publicly display and/or distribute as we see fit. This only refers and applies to content posted via open communication tools as described, and does not refer to information that is provided as part of the registration process, necessary in order to use our Resources. All information provided as part of our registration process is covered by our privacy policy.
+        h. We do not assume any liability for any content posted by you or any other 3rd party users of our website. However, any content posted by you using any open communication tools on our website, provided that it doesnt violate or infringe on any 3rd party copyrights or trademarks, becomes the property of motofix, and as such, gives us a perpetual, irrevocable, worldwide, royalty-free, exclusive license to reproduce, modify, adapt, translate, publish, publicly display and/or distribute as we see fit. This only refers and applies to content posted via open communication tools as described, and does not refer to information that is provided as part of the registration process, necessary in order to use our Resources. All information provided as part of our registration process is covered by our privacy policy.
 
-        i. You agree to indemnify and hold harmless motofix and its parent company and affiliates, and their directors, officers, managers, employees, donors, agents, and licensors, from and against all losses, expenses, damages and costs, including reasonable attorneys' fees, resulting from any violation of this User Agreement or the failure to fulfill any obligations relating to your account incurred by you or any other person using your account. We reserve the right to take over the exclusive defense of any claim for which we are entitled to indemnification under this User Agreement. In such event, you shall provide us with such cooperation as is reasonably requested by us.
+        i. You agree to indemnify and hold harmless motofix and its parent company and affiliates, and their directors, officers, managers, employees, donors, agents, and licensors, from and against all losses, expenses, damages and costs, including reasonable attorneys fees, resulting from any violation of this User Agreement or the failure to fulfill any obligations relating to your account incurred by you or any other person using your account. We reserve the right to take over the exclusive defense of any claim for which we are entitled to indemnification under this User Agreement. In such event, you shall provide us with such cooperation as is reasonably requested by us.
         </p>
         <p>
         Privacy
         </p>
         <p>
-        Your privacy is very important to us, which is why we've created a separate Privacy Policy in order to explain in detail how we collect, manage, process, secure, and store your private information. Our privacy policy is included under the scope of this User Agreement. To read our privacy policy in its entirety, click here.
+        Your privacy is very important to us, which is why weve created a separate Privacy Policy in order to explain in detail how we collect, manage, process, secure, and store your private information. Our privacy policy is included under the scope of this User Agreement. To read our privacy policy in its entirety, click here.
         </p>
         <p>
         Limitation of Warranties
         </p>
 
         <p>
-        By using our website, you understand and agree that all Resources we provide are "as is" and "as available". This means that we do not represent or warrant to you that:
+        By using our website, you understand and agree that all Resources we provide are as is and as available. This means that we do not represent or warrant to you that:
         i) the use of our Resources will meet your needs or requirements.
         ii) the use of our Resources will be uninterrupted, timely, secure or free from errors.
         iii) the information obtained by using our Resources will be accurate or reliable, and
-        iv) any defects in the operation or functionality of any Resources we provide	will be repaired or corrected.
+        iv) any defects in the operation or functionality of any Resources we provide will be repaired or corrected.
         </p>
 
         <p>
@@ -90,9 +89,9 @@ export class TermsAndConditions extends React.Component { // eslint-disable-line
         v) any content downloaded or otherwise obtained through the use of our Resources is done at your own discretion and risk, and that you are solely responsible for any damage to your computer or other devices for any loss of data that may result from the download of such content.
         vi) no information or advice, whether expressed, implied, oral or written, obtained by you from motofix or through any Resources we provide shall create any warranty, guarantee, or conditions of any kind, except for those expressly outlined in this User Agreement.
         </p>
-<p>
+        <p>
         Limitation of Liability
-</p>
+        </p>
         <p>
         In conjunction with the Limitation of Warranties as explained above, you expressly understand and agree that any claim against us shall be limited to the amount you paid, if any, for use of products and/or services. Motofix will not be liable for any direct, indirect, incidental, consequential or exemplary loss or damages which may be incurred by you as a result of using our Resources, or as a result of any changes, data loss or corruption, cancellation, loss of access, or downtime to the full extent that applicable limitation of liability laws apply.
         </p>
@@ -141,11 +140,4 @@ export class TermsAndConditions extends React.Component { // eslint-disable-line
   }
 }
 
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-export default connect(null, mapDispatchToProps)(TermsAndConditions);
+export default TermsAndConditions;

@@ -29,4 +29,10 @@ const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
 });
 
+QuoteContainer.propTypes = {
+  location: React.PropTypes.object,
+  vehicle: React.PropTypes.object,
+  children: React.PropTypes.object,
+};
+
 export default connect(mapStateToProps, null)(QuoteContainer);
