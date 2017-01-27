@@ -13,7 +13,6 @@ import FormModal from 'components/FormModal';
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
 
 function PriceBreakDown(props) {
-  
   function floatServicePrice(){
     return parseFloat(Math.round(props.totalServicesPrice()*100)/100).toFixed(2);
   }

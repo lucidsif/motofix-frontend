@@ -67,7 +67,13 @@ function AddServices(props) {
         // noinspection JSUnresolvedVariable
         const t1 = performance.now();
         console.log(`parts query took ${(t1 - t0)}`);
-      });
+      })
+        .catch((e) => {
+          const err = e;
+          if (err.statusCode === 403) {
+            console.log(' query error, pop fail parts query message');
+          }
+        });
     }
   }
 
