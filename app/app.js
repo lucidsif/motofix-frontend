@@ -34,7 +34,7 @@ import LanguageProvider from 'containers/LanguageProvider';
 import 'sanitize.css/sanitize.css';
 import 'styles/global-styles';
 import '!!style-loader!css-loader!./styles/local-styles.css';
-import 'react-select/dist/react-select.css';
+import '!!style-loader!css-loader!./styles/react-select.css';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
