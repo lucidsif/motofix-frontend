@@ -13,7 +13,6 @@
   "author": "Max Stoiber",
   "license": "MIT",
   "scripts": {
-    "install": "npm run install --unsafe-perm",
     "analyze:clean": "rimraf stats.json",
     "preanalyze": "npm run analyze:clean",
     "analyze": "node ./internals/scripts/analyze.js",
