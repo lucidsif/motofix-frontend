@@ -21,8 +21,8 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           <img src={logo} alt="logo" />
         </div>
         <div className="img-overlay-button">
-          <Button onClick={() => browserHistory.push('/quote/vehicle')} primary size="large">
-            Get a Free Quote
+          <Button circular color="orange" onClick={() => browserHistory.push('/quote/vehicle')} size="huge">
+            Get a free quote
           </Button>
         </div>
       </div>
