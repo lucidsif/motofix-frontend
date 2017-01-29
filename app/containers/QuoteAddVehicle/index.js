@@ -195,6 +195,7 @@ QuoteAddVehicle.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
+      /*
       evt.preventDefault();
       console.log('mock vehicle selected and merged to state');
       const vehicle = {
@@ -209,7 +210,7 @@ export function mapDispatchToProps(dispatch) {
       };
       dispatch(addVehicle(vehicle));
       browserHistory.push('/quote/services');
-      /*
+      */
       evt.preventDefault();
       if (motorcycle) {
         console.log('all fields submitted');
@@ -220,7 +221,6 @@ export function mapDispatchToProps(dispatch) {
         console.log('please fill out all fields');
         // browserHistory.push('/quote/vehicle');
       }
-      */
     },
   };
 }
