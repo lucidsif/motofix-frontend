@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button } from 'semantic-ui-react';
+import { Button, Message } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
@@ -31,6 +31,7 @@ class QuoteAddVehicle extends React.Component {
       modelOptions: null,
       subModelOptions: null,
       yearOptions: null,
+      asyncError: false,
     };
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
@@ -59,7 +60,11 @@ class QuoteAddVehicle extends React.Component {
       modelData = result.data.allModels;
       modelsFactory = modelData.map((bike) => ({ value: bike.model_id, label: bike.model }));
       this.setState({ modelOptions: modelsFactory });
-    });
+    })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ asyncError: true });
+      });
   }
   // add logic here somehow to generate a years array or maybe anothe func
   updateModelValueAndGetSubModels(newValue) {
@@ -90,7 +95,11 @@ class QuoteAddVehicle extends React.Component {
         return { value: bike.mid, label: bikeLabel };
       });
       this.setState({ subModelOptions: subModelFactory });
-    });
+    })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ asyncError: true });
+      });
   }
 
   updateSubModelValueAndRenderYears(newValue) {
@@ -119,9 +128,23 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: newValue });
   }
 
+  conditionalAsyncErrorMessage() {
+    const error = this.state.asyncError;
+    if (error) {
+      return (
+        <Message negative>
+          <p>Max API calls reached for the day :(</p>
+          <p>We have a limited # of API calls to our data provider until they upgrade us. Please try again tomorrow.</p>
+        </Message>
+      );
+    }
+    return null;
+  }
+
   render() {
     return (
       <form onSubmit={this.props.onSubmitForm}>
+        {this.conditionalAsyncErrorMessage()}
         <h3 className="section-heading">Add your motorcycle</h3>
         <div>
           <span>Select a make</span>
@@ -214,7 +237,7 @@ export function mapDispatchToProps(dispatch) {
       evt.preventDefault();
       if (motorcycle) {
         console.log('all fields submitted');
-        console.log(motorcycle)
+        console.log(motorcycle);
         dispatch(addVehicle(motorcycle));
         browserHistory.push('/quote/services');
       } else {
