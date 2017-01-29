@@ -15,7 +15,7 @@ let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
 
-//TODO: 7.1/10 add form validation
+// TODO: 7.1/10 add form validation
 // TODO: 7/10 half the size of the select menus
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 replace spans with labels
