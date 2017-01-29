@@ -15,6 +15,7 @@ let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
 
+//TODO: 7.1/10 add form validation
 // TODO: 7/10 half the size of the select menus
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 replace spans with labels
@@ -38,6 +39,7 @@ class QuoteAddVehicle extends React.Component {
     this.updateModelValueAndGetSubModels = this.updateModelValueAndGetSubModels.bind(this);
     this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this);
     this.updateYear = this.updateYear.bind(this);
+    this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
   }
   updateManufacturerValueAndGetModels(newValue) {
     this.setState({ manufacturerValue: newValue });
@@ -133,7 +135,7 @@ class QuoteAddVehicle extends React.Component {
     if (error) {
       return (
         <Message negative>
-          <p>Max API calls reached for the day :(</p>
+          <p>Warning: Max API calls reached for the day :(</p>
           <p>We have a limited # of API calls to our data provider until they upgrade us. Please try again tomorrow.</p>
         </Message>
       );
@@ -242,7 +244,6 @@ export function mapDispatchToProps(dispatch) {
         browserHistory.push('/quote/services');
       } else {
         console.log('please fill out all fields');
-        // browserHistory.push('/quote/vehicle');
       }
     },
   };
