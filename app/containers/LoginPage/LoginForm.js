@@ -41,6 +41,18 @@ const LoginForm = (props) => {
   );
 };
 
+renderField.propTypes = {
+  input: React.PropTypes.object,
+  type: React.PropTypes.string,
+  meta: React.PropTypes.object,
+};
+
+LoginForm.propTypes = {
+  error: React.PropTypes.object,
+  handleSubmit: React.PropTypes.func,
+  submitting: React.PropTypes.bool,
+};
+
 export default reduxForm({
   // Per Step# 2: http://redux-form.com/6.2.0/docs/GettingStarted.md/
   // A unique identifier for this form
