@@ -5,9 +5,10 @@ import { Field, reduxForm } from 'redux-form/immutable';
 import { Form, Button, Header } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 
+// TODO: Style in a semantic ui way by adding icons, removing labels, adding placeholders and adding wide buttons
 const renderField = ({ input, type, meta: { touched, error } }) => (
   <div>
-    <input {...input} className="form-control" type={type} />
+    <input {...input} type={type} />
     {touched && error && <span>{error}</span>}
   </div>
 );
@@ -40,9 +41,8 @@ const LoginForm = (props) => {
 
       {/* Render error if any. */}
       {error && <strong>{error}</strong>}
-
-      <Button circular primary disabled={submitting} floated="right">Log In</Button>
-      <Button onClick={(evt) => routeToSignUp(evt)} hidden floated="right">No Account?</Button>
+      <Button fluid onClick={(evt) => routeToSignUp(evt)} hidden>No Account?</Button>
+      <Button color="teal" fluid disabled={submitting}>Log In</Button>
     </Form>
   );
 };
