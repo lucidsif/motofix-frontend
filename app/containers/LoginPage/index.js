@@ -4,12 +4,57 @@ import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import Helmet from 'react-helmet';
 import LoginForm from './LoginForm';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Message } from 'semantic-ui-react';
 
-export class LoginPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      inAuthenticated: null,
+    }
+    this.loginMutation = this.loginMutation.bind(this);
+  }
   // Display values, which is a Map when using immutables
   login = (values) => alert(`It's a map thanks to immutables with redux-form: ${values}`);
+
+  loginMutation(formMap) {
+    const email = formMap._root.entries[0][1];
+    const password = formMap._root.entries[1][1];
+    // noinspection JSUnresolvedFunction
+    return this.props.client.mutate({
+      mutation: gql`
+      mutation logIn($email: String!, $password: String!){
+        logIn(email: $email, password: $password){
+          data {
+            id
+            email
+          }
+      }
+    }
+    `,
+      variables: { email, password },
+    }).then((response) => {
+      console.log(response.data.logIn)
+      if (!response.data.logIn) {
+        console.log('inauthenticated');
+        this.setState({ inAuthenticated: true });
+      }
+    });
+  }
+
+  conditionalInauthenticatedMessage() {
+    const inAuthenticated = this.state.inAuthenticated;
+    if (inAuthenticated) {
+      return (
+        <Message negative>
+          <p>Incorrect user credentials :(</p>
+          <p>Please try again</p>
+        </Message>
+      );
+    }
+    return null;
+  }
 
   render() {
     return (
@@ -21,11 +66,12 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
               { name: 'description', content: 'Description of LoginPage' },
             ]}
           />
+          {this.conditionalInauthenticatedMessage()}
           <Segment padded="very">
             {/* From onSubmit you would be dispatching your action passing in
               the values of the forms. For this dummy example we just
               display the values. */}
-            <LoginForm onSubmit={this.login} />
+            <LoginForm onSubmit={this.loginMutation} />
           </Segment>
         </div>
       </section>
@@ -35,7 +81,6 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
 
 LoginPage.propTypes = {
   client: React.PropTypes.object,
-  onSubmitForm: React.PropTypes.func,
 };
 
 

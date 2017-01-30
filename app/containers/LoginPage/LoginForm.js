@@ -23,7 +23,6 @@ const renderGroup = (field) => (
 const LoginForm = (props) => {
   const { error, handleSubmit, submitting } = props;
   function routeToSignUp(evt) {
-    evt.preventDefault();
     browserHistory.push('/signup');
   }
   return (
