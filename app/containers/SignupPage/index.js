@@ -23,6 +23,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
   }
 
   signUpMutation(formMap) {
+    /* eslint no-underscore-dangle: ["error", { "allow": ["formMap_", "_root"] }] */
     const email = formMap._root.entries[0][1];
     const password = formMap._root.entries[1][1];
     // noinspection JSUnresolvedFunction

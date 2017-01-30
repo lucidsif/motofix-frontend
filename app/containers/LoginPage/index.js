@@ -21,6 +21,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
   login = (values) => alert(`It's a map thanks to immutables with redux-form: ${values}`);
 
   loginMutation(formMap) {
+    /* eslint no-underscore-dangle: ["error", { "allow": ["formMap_", "_root"] }] */
     const email = formMap._root.entries[0][1];
     const password = formMap._root.entries[1][1];
     // noinspection JSUnresolvedFunction

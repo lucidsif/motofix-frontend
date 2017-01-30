@@ -22,6 +22,7 @@ const renderGroup = (field) => (
 */
 const LoginForm = (props) => {
   const { error, handleSubmit, submitting } = props;
+  // eslint-disable-next-line no-unused-vars
   function routeToSignUp(evt) {
     browserHistory.push('/signup');
   }
@@ -29,12 +30,12 @@ const LoginForm = (props) => {
     <Form onSubmit={handleSubmit}>
       <Header as="h2" textAlign="center"> Log In </Header>
       <Form.Field>
-        <label>Email</label>
+       Email
         <Field name="email" type="email" component={renderField} />
       </Form.Field>
 
       <Form.Field>
-        <label>Password</label>
+        Password
         <Field name="password" type="password" component={renderField} label="Password" />
       </Form.Field>
 
