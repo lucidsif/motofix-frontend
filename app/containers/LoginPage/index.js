@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 import LoginForm from './LoginForm';
 import { Segment, Message } from 'semantic-ui-react';
 
+// TODO: add non null git apassword validation
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props) {
@@ -38,8 +39,10 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
       console.log(response.data.logIn)
       if (!response.data.logIn) {
         console.log('inauthenticated');
-        this.setState({ inAuthenticated: true });
+        return this.setState({ inAuthenticated: true });
       }
+      console.log('authenticated');
+      return this.setState({ inAuthenticated: false });
     });
   }
 
