@@ -18,6 +18,7 @@ export class SignupPage extends React.PureComponent { // eslint-disable-line rea
             { name: 'description', content: 'Description of SignupPage' },
           ]}
         />
+        Test signup
       </div>
     );
   }

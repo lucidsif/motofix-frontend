@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withApollo, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 import Helmet from 'react-helmet';
 import LoginForm from './LoginForm';
 import { Segment } from 'semantic-ui-react';
@@ -31,6 +33,11 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
   }
 }
 
+LoginPage.propTypes = {
+  client: React.PropTypes.object,
+  onSubmitForm: React.PropTypes.func,
+};
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -38,4 +45,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+const LoginPageRedux = connect(null, mapDispatchToProps);
+
+export default compose(
+  LoginPageRedux,
+  withApollo,
+)(LoginPage);
