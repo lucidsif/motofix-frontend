@@ -19,7 +19,21 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
+  AUTHENTICATE,
+  DE_AUTHENTICATE,
 } from './constants';
+
+export function authenticateUser() {
+  return {
+    type: AUTHENTICATE,
+  };
+}
+
+export function deAuthenticateUser() {
+  return {
+    type: DE_AUTHENTICATE,
+  };
+}
 
 /**
  * Load the repositories, this action starts the request saga

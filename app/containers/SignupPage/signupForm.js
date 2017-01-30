@@ -13,24 +13,24 @@ const renderField = ({ input, type, meta: { touched, error } }) => (
   </div>
 );
 /*
-const renderGroup = (field) => (
-  <div className="form-group">
-    <label><FormattedMessage {...messages[field]} /></label>
-    <Field name={field} type={field} component={renderField} />
-  </div>
-)
-*/
-const LoginForm = (props) => {
+ const renderGroup = (field) => (
+ <div className="form-group">
+ <label><FormattedMessage {...messages[field]} /></label>
+ <Field name={field} type={field} component={renderField} />
+ </div>
+ )
+ */
+const SignupForm = (props) => {
   const { error, handleSubmit, submitting } = props;
   // eslint-disable-next-line no-unused-vars
-  function routeToSignUp(evt) {
-    browserHistory.push('/signup');
+  function routeToLogin(evt) {
+    browserHistory.push('/login');
   }
   return (
     <Form onSubmit={handleSubmit}>
-      <Header as="h2" textAlign="center"> Log In </Header>
+      <Header as="h2" textAlign="center"> Sign Up </Header>
       <Form.Field>
-       Email
+        Email
         <Field name="email" type="email" component={renderField} />
       </Form.Field>
 
@@ -41,8 +41,8 @@ const LoginForm = (props) => {
 
       {/* Render error if any. */}
       {error && <strong>{error}</strong>}
-      <Button fluid onClick={(evt) => { evt.preventDefault(); routeToSignUp(evt); }} hidden>No Account?</Button>
-      <Button color="teal" fluid disabled={submitting}>Log In</Button>
+      <Button fluid onClick={(evt) => { evt.preventDefault(); routeToLogin(evt); }} hidden>Already have an account?</Button>
+      <Button color="teal" fluid disabled={submitting}>Sign Up</Button>
     </Form>
   );
 };
@@ -53,7 +53,7 @@ renderField.propTypes = {
   meta: React.PropTypes.object,
 };
 
-LoginForm.propTypes = {
+SignupForm.propTypes = {
   error: React.PropTypes.object,
   handleSubmit: React.PropTypes.func,
   submitting: React.PropTypes.bool,
@@ -62,6 +62,6 @@ LoginForm.propTypes = {
 export default reduxForm({
   // Per Step# 2: http://redux-form.com/6.2.0/docs/GettingStarted.md/
   // A unique identifier for this form
-  form: 'loginForm',
-})(LoginForm);
+  form: 'SignupForm',
+})(SignupForm);
 

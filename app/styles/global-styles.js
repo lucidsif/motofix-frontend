@@ -139,5 +139,9 @@ h3.ui.center.aligned.header {
 .betaLabel {
   margin-left: 0.3em;
 }
+
+.footer-link {
+  padding-left: 1em
+  padding-right: 1em;
 `
 ;

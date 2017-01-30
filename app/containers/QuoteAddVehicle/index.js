@@ -220,22 +220,6 @@ class QuoteAddVehicle extends React.Component {
 export function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
-      /*
-       evt.preventDefault();
-       console.log('mock vehicle selected and merged to state');
-       const vehicle = {
-       mid: 'HDA06327',
-       manufacturer: 'Honda',
-       model: 'CBR',
-       model_variant: 'CBR600',
-       tuning_description: 'SE',
-       start_year: 2008,
-       end_year: 2011,
-       year: 2010,
-       };
-       dispatch(addVehicle(vehicle));
-       browserHistory.push('/quote/services');
-       */
       evt.preventDefault();
       if (motorcycle) {
         console.log('all fields submitted');

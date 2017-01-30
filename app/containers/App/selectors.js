@@ -6,6 +6,11 @@ import { createSelector } from 'reselect';
 
 const selectGlobal = () => (state) => state.get('global');
 
+const selectAuthenticated = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('authenticated')
+);
+
 const selectCurrentUser = () => createSelector(
   selectGlobal(),
   (globalState) => globalState.get('currentUser')
@@ -44,6 +49,7 @@ const selectLocationState = () => {
 
 export {
   selectGlobal,
+  selectAuthenticated,
   selectCurrentUser,
   selectLoading,
   selectError,
