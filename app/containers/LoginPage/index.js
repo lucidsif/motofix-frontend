@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -42,7 +43,8 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
         return this.setState({ inAuthenticated: true });
       }
       console.log('authenticated');
-      return this.setState({ inAuthenticated: false });
+      this.setState({ inAuthenticated: false });
+      return browserHistory.push('/account/quotes');
     });
   }
 

@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -38,11 +39,12 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
     }).then((response) => {
       console.log(response.data.signUp);
       if (!response.data.signUp) {
-        console.log('A user with that email already exists');
+        console.log('Account creation failed');
         return this.setState({ accountCreated: false });
       }
       console.log('Account created!');
-      return this.setState({ accountCreated: true });
+      this.setState({ accountCreated: true });
+      return browserHistory.push('/account/quotes');
     });
   }
 
