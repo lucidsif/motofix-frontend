@@ -13,7 +13,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
     super(props);
     this.state = {
       inAuthenticated: null,
-    }
+    };
     this.loginMutation = this.loginMutation.bind(this);
   }
   // Display values, which is a Map when using immutables
@@ -36,7 +36,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
     `,
       variables: { email, password },
     }).then((response) => {
-      console.log(response.data.logIn)
+      console.log(response.data.logIn);
       if (!response.data.logIn) {
         console.log('inauthenticated');
         return this.setState({ inAuthenticated: true });
@@ -53,6 +53,14 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
         <Message negative>
           <p>Incorrect user credentials :(</p>
           <p>Please try again</p>
+        </Message>
+      );
+    }
+    if (inAuthenticated === false) {
+      return (
+        <Message positive>
+          <p>Success: You have been logged in!</p>
+          <p>Routing you in just a sec...</p>
         </Message>
       );
     }
