@@ -1,13 +1,8 @@
-/*
- *
- * LoginPage
- *
- */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import LoginForm from './LoginForm';
+import { Segment } from 'semantic-ui-react';
 
 export class LoginPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
@@ -24,14 +19,12 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
               { name: 'description', content: 'Description of LoginPage' },
             ]}
           />
-          <div className="row">
-            <div className="col-md-4 col-md-offset-4">
-              {/* From onSubmit you would be dispatching your action passing in
-                  the values of the forms. For this dummy example we just
-                  display the values. */}
-              <LoginForm onSubmit={this.login} />
-            </div>
-          </div>
+          <Segment padded="very">
+            {/* From onSubmit you would be dispatching your action passing in
+              the values of the forms. For this dummy example we just
+              display the values. */}
+            <LoginForm onSubmit={this.login} />
+          </Segment>
         </div>
       </section>
     );

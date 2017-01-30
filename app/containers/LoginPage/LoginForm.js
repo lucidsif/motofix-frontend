@@ -2,7 +2,7 @@ import React from 'react';
 // Notice that we need redux-form/immutable for the boilerplate
 // http://redux-form.com/6.2.0/examples/immutable/
 import { Field, reduxForm } from 'redux-form/immutable';
-// import { FormattedMessage } from 'react-intl';
+import { Form, Button, Header } from 'semantic-ui-react';
 
 const renderField = ({ input, type, meta: { touched, error } }) => (
   <div>
@@ -16,40 +16,29 @@ const renderGroup = (field) => (
     <label><FormattedMessage {...messages[field]} /></label>
     <Field name={field} type={field} component={renderField} />
   </div>
-);
+)
 */
 const LoginForm = (props) => {
   const { error, handleSubmit, submitting } = props;
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
+    <Form onSubmit={handleSubmit}>
+      <Header as="h2" textAlign="center"> Log In </Header>
+      <Form.Field>
+        <label>Email</label>
         <Field name="email" type="email" component={renderField} />
-      </div>
+      </Form.Field>
 
-      <div className="form-group">
+      <Form.Field>
+        <label>Password</label>
         <Field name="password" type="password" component={renderField} label="Password" />
-      </div>
+      </Form.Field>
 
       {/* Render error if any. */}
       {error && <strong>{error}</strong>}
 
-      <div>
-        <button type="submit" className="btn btn-primary" disabled={submitting}></button>
-      </div>
-    </form>
+      <Button circular primary disabled={submitting} floated="right">Log In</Button>
+    </Form>
   );
-};
-
-renderField.propTypes = {
-  input: React.PropTypes.object,
-  meta: React.PropTypes.object,
-  type: React.PropTypes.object,
-};
-
-LoginForm.propTypes = {
-  error: React.PropTypes.string,
-  handleSubmit: React.PropTypes.func,
-  submitting: React.PropTypes.object,
 };
 
 export default reduxForm({
@@ -57,3 +46,4 @@ export default reduxForm({
   // A unique identifier for this form
   form: 'loginForm',
 })(LoginForm);
+
