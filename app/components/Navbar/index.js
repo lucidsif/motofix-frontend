@@ -6,6 +6,8 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { selectAuthenticated } from 'containers/App/selectors';
+import { deAuthenticateUser } from 'containers/App/actions';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
 import logo from './home-logo.png';
@@ -108,6 +110,12 @@ export class AppNavBar extends React.Component {
         <Dropdown className="link item" icon="bars">
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => browserHistory.push('/quote/vehicle')}>New Quote</Dropdown.Item>
+            {this.props.authenticated &&
+            <Dropdown.Item onClick={() => { localStorage.removeItem('token'); this.props.onDeAuthentication(); }}> Sign Out</Dropdown.Item>
+            }
+            {!this.props.authenticated &&
+            <Dropdown.Item onClick={() => browserHistory.push('/login')}>Log In</Dropdown.Item>
+            }
           </Dropdown.Menu>
         </Dropdown>
       </Menu>
@@ -116,15 +124,26 @@ export class AppNavBar extends React.Component {
 }
 
 AppNavBar.propTypes = {
+  authenticated: React.PropTypes.bool,
+  onDeAuthentication: React.PropTypes.func,
   cart: React.PropTypes.object,
   part: React.PropTypes.object,
 };
 
+function mapDispatchToProps(dispatch) {
+  return {
+    onDeAuthentication: () => {
+      dispatch(deAuthenticateUser());
+    },
+  };
+}
+
 const mapStateToProps = createStructuredSelector({
+  authenticated: selectAuthenticated(),
   cart: selectCart(),
   part: selectPart(),
 });
 
-const AppNavBarConnect = connect(mapStateToProps, null)(AppNavBar);
+const AppNavBarConnect = connect(mapStateToProps, mapDispatchToProps)(AppNavBar);
 
 export default AppNavBarConnect;

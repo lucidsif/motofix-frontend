@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import Helmet from 'react-helmet';
 import LoginForm from './LoginForm';
 import { Segment, Message } from 'semantic-ui-react';
-
+import { authenticateUser } from '../App/actions';
 // TODO: add non null git apassword validation
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -33,6 +33,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
             id
             email
           }
+          token
       }
     }
     `,
@@ -45,6 +46,8 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
       }
       console.log('authenticated');
       this.setState({ inAuthenticated: false });
+      this.props.onAuthentication();
+      localStorage.setItem('authToken', response.data.logIn.token);
       return browserHistory.push('/account/quotes');
     });
   }
@@ -95,12 +98,15 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
 
 LoginPage.propTypes = {
   client: React.PropTypes.object,
+  onAuthentication: React.PropTypes.func,
 };
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onAuthentication: () => {
+      dispatch(authenticateUser());
+    },
   };
 }
 
