@@ -3,6 +3,7 @@ import React from 'react';
 // http://redux-form.com/6.2.0/examples/immutable/
 import { Field, reduxForm } from 'redux-form/immutable';
 import { Form, Button, Header } from 'semantic-ui-react';
+import { browserHistory } from 'react-router';
 
 const renderField = ({ input, type, meta: { touched, error } }) => (
   <div>
@@ -20,6 +21,10 @@ const renderGroup = (field) => (
 */
 const LoginForm = (props) => {
   const { error, handleSubmit, submitting } = props;
+  function routeToSignUp(evt) {
+    evt.preventDefault();
+    browserHistory.push('/signup');
+  }
   return (
     <Form onSubmit={handleSubmit}>
       <Header as="h2" textAlign="center"> Log In </Header>
@@ -37,6 +42,7 @@ const LoginForm = (props) => {
       {error && <strong>{error}</strong>}
 
       <Button circular primary disabled={submitting} floated="right">Log In</Button>
+      <Button onClick={(evt) => routeToSignUp(evt)} hidden floated="right">No Account?</Button>
     </Form>
   );
 };

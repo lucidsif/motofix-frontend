@@ -5,14 +5,10 @@ function Footer() {
   return (
     <Wrapper>
       <section>
-        © 2017 motofix All rights reserved. Made with awesomeness in NYC.
+        © 2017 motofix All rights reserved.
+        <a href="/privacy-policy" className="footer-link">Privacy</a>
+        <a href="/terms-and-conditions" className="footer-link">Terms and Conditions</a>
       </section>
-      <div>
-        <a href="/privacy-policy">Privacy</a>
-      </div>
-      <div>
-        <a href="/terms-and-conditions">Terms and Conditions</a>
-      </div>
     </Wrapper>
   );
 }
