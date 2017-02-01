@@ -19,6 +19,7 @@ import { selectAuthenticated } from 'containers/App/selectors';
 import { selectCart, selectPart, selectSavedQuote } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
+// TODO: Use redux-auth wrapper to reroute to vehicle is no vehicle
 // TODO: 7.5/10 Replace request button in message with form modal
 // TODO: 7/10 when back button is clicked, reset selected state
 // TODO: 6.7/10 float the buttons ot the right
