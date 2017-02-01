@@ -8,7 +8,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { selectAuthenticated } from 'containers/App/selectors';
 import { createStructuredSelector } from 'reselect';
-
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 
@@ -33,18 +34,37 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   }
 }
 
-
 const mapStateToProps = createStructuredSelector({
   authenticated: selectAuthenticated(),
 });
 
-const SavedQuotesConnect = connect(mapStateToProps, null)(SavedQuotes);
+const CurrentUserQuotesQuery = gql`
+query allUserQuotes($token: String){
+  allUserQuotes(token: $token){
+    id
+    fk_users_id
+    motorcycle_json
+    cart_json
+    part_json
+    createdAt
+    updatedAt
+  }
+}
+`;
 
-export default UserIsAuthenticated(SavedQuotesConnect); // eslint-disable-line new-cap
+const SavedQuotesConnect = connect(mapStateToProps, null)
 
-/*
-export default UserIsAuthenticated(connect(createSelector(
-  selectAuthenticated(),
-  (authenticated) => ({ authenticated })
-), null)(SavedQuotes));
-*/
+const withSavedQuotesData = graphql(CurrentUserQuotesQuery, {
+  options: { variables: { token: localStorage.getItem('authToken') } },
+  props: ({ ownProps, data: { loading, allUserQuotes } }) => ({
+    allUserQuotesLoading: loading,
+    allUserQuotes,
+    ownProps,
+  }),
+});
+
+export default compose(
+  SavedQuotesConnect,
+  UserIsAuthenticated,
+  withSavedQuotesData,
+)(SavedQuotes);
