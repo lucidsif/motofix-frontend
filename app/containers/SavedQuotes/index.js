@@ -7,8 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { selectAuthenticated } from 'containers/App/selectors';
-import { createSelector } from 'reselect';
-import { browserHistory } from 'react-router';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
@@ -40,9 +39,17 @@ SavedQuotes.propTypes = {
   authData: React.PropTypes.object,
 };
 
-//export default connect(mapStateToProps, null)(SavedQuotes);
+const mapStateToProps = createStructuredSelector({
+  authenticated: selectAuthenticated(),
+});
 
+const SavedQuotesConnect = connect(mapStateToProps, null)(SavedQuotes);
+
+export default UserIsAuthenticated(SavedQuotesConnect);
+
+/*
 export default UserIsAuthenticated(connect(createSelector(
   selectAuthenticated(),
   (authenticated) => ({ authenticated })
 ), null)(SavedQuotes));
+*/
