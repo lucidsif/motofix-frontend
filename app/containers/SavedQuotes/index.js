@@ -12,7 +12,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
-import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
+import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
 
 
 // TODO: Require authentication to see this page. redirect to login if inauthenticated
@@ -27,7 +27,7 @@ const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
 
 export class SavedQuotes extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const loadingMessage = `Loading your saved quotes...`;
+    const loadingMessage = 'Loading your saved quotes...';
     console.log(this.props);
     if (this.props.allUserQuotesLoading) {
       return (
@@ -47,6 +47,10 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   }
 }
 
+SavedQuotes.propTypes = {
+  allUserQuotesLoading: React.PropTypes.bool,
+};
+
 const mapStateToProps = createStructuredSelector({
   authenticated: selectAuthenticated(),
 });
@@ -65,7 +69,7 @@ query allUserQuotes($token: String){
 }
 `;
 
-const SavedQuotesConnect = connect(mapStateToProps, null)
+const SavedQuotesConnect = connect(mapStateToProps, null);
 
 const withSavedQuotesData = graphql(CurrentUserQuotesQuery, {
   options: { variables: { token: localStorage.getItem('authToken') } },
