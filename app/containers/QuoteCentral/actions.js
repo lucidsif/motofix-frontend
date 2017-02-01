@@ -7,8 +7,10 @@
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  RESET_CART,
   SET_LABORTIME,
   SET_PARTS_DATA,
+  RESET_PART,
   SAVE_QUOTE,
   RESET_SAVED_QUOTE,
 } from './constants';
@@ -25,6 +27,13 @@ export function removeFromCart(payload) {
     payload,
   };
 }
+
+export function resetCart() {
+  return {
+    type: RESET_CART,
+  };
+}
+
 export function setLaborTime(service, laborTime, unavailable) {
   const payload = {
     service,
@@ -42,6 +51,12 @@ export function setPartsData(service, partsObj) {
     type: SET_PARTS_DATA,
     service,
     partsObj,
+  };
+}
+
+export function resetPart() {
+  return {
+    type: RESET_PART,
   };
 }
 

@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
 import { deAuthenticateUser } from 'containers/App/actions';
 import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
-import { resetSavedQuote } from 'containers/QuoteCentral/actions';
+import { resetCart, resetPart, resetSavedQuote } from 'containers/QuoteCentral/actions';
 import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
@@ -150,6 +150,8 @@ function mapDispatchToProps(dispatch) {
     },
     onNewQuoteClick: () => {
       dispatch(resetVehicle());
+      dispatch(resetCart());
+      dispatch(resetPart());
       dispatch(resetSavedQuote());
       browserHistory.push('/quote/vehicle');
     },

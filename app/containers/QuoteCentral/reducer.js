@@ -8,8 +8,10 @@ import { fromJS } from 'immutable';
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  RESET_CART,
   SET_LABORTIME,
   SET_PARTS_DATA,
+  RESET_PART,
   SAVE_QUOTE,
   RESET_SAVED_QUOTE,
 } from './constants';
@@ -38,10 +40,14 @@ function quoteCentralReducer(state = initialState, action) {
       return state.setIn(['cart', action.payload, 'selected'], true);
     case REMOVE_FROM_CART:
       return state.setIn(['cart', action.payload, 'selected'], false);
+    case RESET_CART:
+      return state.mergeIn(['cart'], cart)
     case SET_LABORTIME:
       return state.mergeIn(['cart', action.service], action.payload);
     case SET_PARTS_DATA:
       return state.mergeIn(['part', action.service], action.partsObj);
+    case RESET_PART:
+      return state.mergeIn(['part'], part)
     case SAVE_QUOTE:
       return state.set('quoteSaved', true);
     case RESET_SAVED_QUOTE:
