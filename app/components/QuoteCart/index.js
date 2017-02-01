@@ -118,24 +118,24 @@ function QuoteCart(props) {
           </Grid.Row>
 
           <Accordion>
-            <Accordion.Title>
-              <Icon name="dropdown" />
-                See cost breakdown
-            </Accordion.Title>
-            <Accordion.Content>
-              <PriceBreakDown
-                authenticated={props.props.authenticated}
-                quoteSaved={props.props.quoteSaved}
-                vehicle={props.props.vehicle}
-                cart={props.props.cart}
-                part={props.props.part}
-                client={props.props.client}
-                onSaveQuoteClick={props.props.onSaveQuoteClick}
-                totalServicesPrice={totalServicesPrice}
-                totalPartsPrice={totalPartsPrice}
-              />
-            </Accordion.Content>
-          </Accordion>
+          <Accordion.Title>
+            <Icon name="dropdown" />
+            See cost breakdown
+          </Accordion.Title>
+          <Accordion.Content>
+            <PriceBreakDown
+              authenticated={props.props.authenticated}
+              quoteSaved={props.props.quoteSaved}
+              vehicle={props.props.vehicle}
+              cart={props.props.cart}
+              part={props.props.part}
+              client={props.props.client}
+              onSaveQuoteClick={props.props.onSaveQuoteClick}
+              totalServicesPrice={totalServicesPrice}
+              totalPartsPrice={totalPartsPrice}
+            />
+          </Accordion.Content>
+        </Accordion>
 
         </Grid>
       </Segment>

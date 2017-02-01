@@ -12,7 +12,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
-import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
+import { Item, Segment, Accordion, Icon, Dimmer, Loader, Image } from 'semantic-ui-react';
 
 
 // TODO: Require authentication to see this page. redirect to login if inauthenticated
@@ -41,7 +41,30 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
     }
     return (
       <div>
-        secret message
+        <Segment>
+          <Item.Group divided>
+            <Item>
+              <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
+              <Item.Content>
+                <Item.Header as='a'>Header</Item.Header>
+                <Item.Meta>Description</Item.Meta>
+                <Item.Description>
+                  <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
+                </Item.Description>
+                <Item.Extra>Additional Details</Item.Extra>
+                <Accordion>
+                  <Accordion.Title>
+                    <Icon name="dropdown" />
+                    See Quote Breakdown
+                  </Accordion.Title>
+                  <Accordion.Content>
+                    quote breakdown
+                  </Accordion.Content>
+                </Accordion>
+              </Item.Content>
+            </Item>
+          </Item.Group>
+        </Segment>
       </div>
     );
   }
