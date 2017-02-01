@@ -5,14 +5,17 @@
 */
 
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { Button, Container, List, Image, Label } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
 import FormModal from 'components/FormModal';
+import gql from 'graphql-tag';
 
 // TODO: 7/10 Save quote by sending user to signup page where they can email themselves the quote
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
 
 function PriceBreakDown(props) {
+  console.log(props);
   function floatServicePrice() {
     return parseFloat(Math.round(props.totalServicesPrice() * 100) / 100).toFixed(2);
   }
@@ -101,6 +104,34 @@ function PriceBreakDown(props) {
     });
   }
 
+  function createQuoteMutation() {
+    // noinspection JSUnresolvedFunction
+    if (props.authenticated) {
+      return props.client.mutate({
+        mutation: gql`
+       mutation createUserQuote($token: String, $motorcycleJSON: JSON, $cartJSON: JSON, $partJSON: JSON){
+        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON){
+          id
+          fk_users_id
+          motorcycle_json
+          cart_json
+          part_json
+          createdAt
+          updatedAt
+         }
+       }
+      `,
+        variables: {
+          token: localStorage.getItem('authToken'),
+          motorcycleJSON: JSON.stringify(props.vehicle),
+          cartJSON: JSON.stringify(props.cart),
+          partJSON: JSON.stringify(props.part),
+        },
+      }).then((response) => console.log(response.data.createUserQuote));
+    }
+    return browserHistory.push('/login');
+  }
+
   return (
     <Container>
       <List>
@@ -143,7 +174,7 @@ function PriceBreakDown(props) {
       </List>
 
       <div>
-        <Button>Save Quote</Button>
+        <Button onClick={() => createQuoteMutation()}>Save Quote</Button>
         <FormModal client={props.client} />
       </div>
     </Container>
@@ -152,6 +183,9 @@ function PriceBreakDown(props) {
 
 PriceBreakDown.propTypes = {
   client: React.PropTypes.object,
+  authenticated: React.PropTypes.bool,
+  vehicle: React.PropTypes.object,
+  cart: React.PropTypes.object,
   part: React.PropTypes.object,
 };
 

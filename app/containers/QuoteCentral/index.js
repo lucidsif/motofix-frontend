@@ -15,6 +15,7 @@ import gql from 'graphql-tag';
 import { withApollo, graphql, compose } from 'react-apollo';
 import { addToCart, removeFromCart, setLaborTime, setPartsData } from './actions';
 import { createStructuredSelector } from 'reselect';
+import { selectAuthenticated } from 'containers/App/selectors';
 import { selectCart, selectPart } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
@@ -104,6 +105,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
 }
 
 const mapStateToProps = createStructuredSelector({
+  authenticated: selectAuthenticated(),
   vehicle: selectVehicleDomain(),
   cart: selectCart(),
   part: selectPart(),
@@ -131,6 +133,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 QuoteCentral.propTypes = {
+  authenticated: React.PropTypes.bool,
   vehicle: React.PropTypes.object,
   cart: React.PropTypes.object,
   allRepairTimes: React.PropTypes.object,

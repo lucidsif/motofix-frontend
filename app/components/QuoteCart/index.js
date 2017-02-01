@@ -123,7 +123,7 @@ function QuoteCart(props) {
                 See cost breakdown
             </Accordion.Title>
             <Accordion.Content>
-              <PriceBreakDown cart={props.props.cart} part={props.props.part} client={props.props.client} totalServicesPrice={totalServicesPrice} totalPartsPrice={totalPartsPrice} />
+              <PriceBreakDown authenticated={props.props.authenticated} vehicle={props.props.vehicle} cart={props.props.cart} part={props.props.part} client={props.props.client} totalServicesPrice={totalServicesPrice} totalPartsPrice={totalPartsPrice} />
             </Accordion.Content>
           </Accordion>
 
@@ -135,7 +135,9 @@ function QuoteCart(props) {
 
 QuoteCart.propTypes = {
   props: React.PropTypes.object,
+  authenticated: React.PropTypes.bool,
   client: React.PropTypes.object,
+  vehicle: React.PropTypes.object,
   cart: React.PropTypes.object,
   part: React.PropTypes.object,
 };

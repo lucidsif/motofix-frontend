@@ -110,6 +110,7 @@ export class AppNavBar extends React.Component {
         <Dropdown className="link item" icon="bars">
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => browserHistory.push('/quote/vehicle')}>New Quote</Dropdown.Item>
+            <Dropdown.Item onClick={() => browserHistory.push('/dashboard/quotes')}>Saved Quotes</Dropdown.Item>
             {this.props.authenticated &&
             <Dropdown.Item onClick={() => { localStorage.removeItem('authToken'); this.props.onDeAuthentication(); }}> Sign Out</Dropdown.Item>
             }

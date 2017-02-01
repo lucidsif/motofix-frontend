@@ -72,7 +72,10 @@ query allUserQuotes($token: String){
 const SavedQuotesConnect = connect(mapStateToProps, null);
 
 const withSavedQuotesData = graphql(CurrentUserQuotesQuery, {
-  options: { variables: { token: localStorage.getItem('authToken') } },
+  options: {
+    variables: { token: localStorage.getItem('authToken') },
+    forceFetch: true,
+  },
   props: ({ ownProps, data: { loading, allUserQuotes } }) => ({
     allUserQuotesLoading: loading,
     allUserQuotes,

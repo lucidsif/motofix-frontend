@@ -45,7 +45,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
       }
       console.log('Account created!');
       this.setState({ accountCreated: true });
-      return browserHistory.push('/account/quotes');
+      return browserHistory.push('/quote/services');
     });
   }
 
