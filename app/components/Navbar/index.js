@@ -90,8 +90,7 @@ export class AppNavBar extends React.Component {
     return parseFloat(Math.round(total * 1) / 1);
   }
 
-  // calc total price in cart
-  // replace menu with hamburger
+ // TODO: link to quote/services by clicking on cartbutton without breaking page style and only link if vehicle exists
 
   render() {
     return (

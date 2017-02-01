@@ -11,7 +11,7 @@ import { services } from 'components/QuoteCart';
 import FormModal from 'components/FormModal';
 import gql from 'graphql-tag';
 
-// TODO: 7/10 Save quote by sending user to signup page where they can email themselves the quote
+// TODO: Add one time click save button
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
 
 function PriceBreakDown(props) {
