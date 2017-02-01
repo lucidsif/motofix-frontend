@@ -9,6 +9,8 @@ import {
   REMOVE_FROM_CART,
   SET_LABORTIME,
   SET_PARTS_DATA,
+  SAVE_QUOTE,
+  RESET_SAVED_QUOTE,
 } from './constants';
 
 export function addToCart(payload) {
@@ -43,3 +45,14 @@ export function setPartsData(service, partsObj) {
   };
 }
 
+export function setSavedQuoteTrue() {
+  return {
+    type: SAVE_QUOTE,
+  };
+}
+
+export function resetSavedQuote() {
+  return {
+    type: RESET_SAVED_QUOTE,
+  };
+}

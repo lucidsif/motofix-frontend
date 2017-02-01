@@ -13,10 +13,10 @@ import AddServices from 'components/AddServices';
 import StyledFormModal from 'components/FormModal/styled';
 import gql from 'graphql-tag';
 import { withApollo, graphql, compose } from 'react-apollo';
-import { addToCart, removeFromCart, setLaborTime, setPartsData } from './actions';
+import { addToCart, removeFromCart, setLaborTime, setPartsData, setSavedQuoteTrue } from './actions';
 import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
-import { selectCart, selectPart } from './selectors';
+import { selectCart, selectPart, selectSavedQuote } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 // TODO: 7.5/10 Replace request button in message with form modal
@@ -29,6 +29,8 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    console.log('quotecentral props:');
+    console.log(this.props);
     // conditional render that will either render loading or addservices component
     const vehicleSearchTerm = `${this.props.vehicle.year} ${this.props.vehicle.manufacturer} ${this.props.vehicle.model_variant}`;
     const loadingMessage = `Loading Services for ${vehicleSearchTerm}`;
@@ -109,6 +111,7 @@ const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
   cart: selectCart(),
   part: selectPart(),
+  quoteSaved: selectSavedQuote(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -128,6 +131,10 @@ function mapDispatchToProps(dispatch) {
       console.log(`service: ${service} parts picked up from query result with partsData object below`);
       console.log(partsData);
       dispatch(setPartsData(service, partsData));
+    },
+    onSaveQuoteClick: () => {
+      console.log('savequote action dispatched');
+      dispatch(setSavedQuoteTrue());
     },
   };
 }

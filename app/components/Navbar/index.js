@@ -90,7 +90,7 @@ export class AppNavBar extends React.Component {
     return parseFloat(Math.round(total * 1) / 1);
   }
 
- // TODO: link to quote/services by clicking on cartbutton without breaking page style and only link if vehicle exists
+ // TODO: link to quote/services by clicking on cart button without breaking page style and only link if vehicle exists
 
   render() {
     return (

@@ -10,6 +10,8 @@ import {
   REMOVE_FROM_CART,
   SET_LABORTIME,
   SET_PARTS_DATA,
+  SAVE_QUOTE,
+  RESET_SAVED_QUOTE,
 } from './constants';
 import services from './reducerServices';
 
@@ -26,7 +28,9 @@ const part = services.reduce((acc, cur) => {
   return acc;
 }, {});
 
-const initialState = fromJS({ cart, part });
+const quoteSaved = false;
+
+const initialState = fromJS({ cart, part, quoteSaved });
 
 function quoteCentralReducer(state = initialState, action) {
   switch (action.type) {
@@ -38,6 +42,10 @@ function quoteCentralReducer(state = initialState, action) {
       return state.mergeIn(['cart', action.service], action.payload);
     case SET_PARTS_DATA:
       return state.mergeIn(['part', action.service], action.partsObj);
+    case SAVE_QUOTE:
+      return state.set('quoteSaved', true);
+    case RESET_SAVED_QUOTE:
+      return state.set('quoteSaved', false);
     default:
       return state;
   }

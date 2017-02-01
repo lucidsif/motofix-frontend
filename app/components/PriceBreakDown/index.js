@@ -174,7 +174,12 @@ function PriceBreakDown(props) {
       </List>
 
       <div>
-        <Button onClick={() => createQuoteMutation()}>Save Quote</Button>
+        {props.quoteSaved &&
+        <Button disabled>Quote Saved</Button>
+        }
+        {!props.quoteSaved &&
+        <Button onClick={() => { createQuoteMutation(); props.onSaveQuoteClick(); }}>Save Quote</Button>
+        }
         <FormModal client={props.client} />
       </div>
     </Container>
@@ -184,6 +189,8 @@ function PriceBreakDown(props) {
 PriceBreakDown.propTypes = {
   client: React.PropTypes.object,
   authenticated: React.PropTypes.bool,
+  quoteSaved: React.PropTypes.bool,
+  onSaveQuoteClick: React.PropTypes.func,
   vehicle: React.PropTypes.object,
   cart: React.PropTypes.object,
   part: React.PropTypes.object,

@@ -18,6 +18,11 @@ const selectPart = () => createSelector(
    (quoteCentralState) => quoteCentralState.get('part').toJS()
 );
 
+const selectSavedQuote = () => createSelector(
+  selectQuoteCentralDomain(),
+  (quoteCentralState) => quoteCentralState.get('quoteSaved')
+);
+
 /*
  * Default selector used by QuoteCentralService
  */
@@ -28,6 +33,7 @@ const selectQuoteCentral = () => createSelector(
 
 export default selectQuoteCentral;
 export {
-   selectCart,
-   selectPart,
+  selectCart,
+  selectPart,
+  selectSavedQuote,
 };
