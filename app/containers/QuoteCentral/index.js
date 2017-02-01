@@ -7,6 +7,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import { routerActions } from 'react-router-redux';
+import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
@@ -19,6 +21,7 @@ import { selectAuthenticated } from 'containers/App/selectors';
 import { selectCart, selectPart, selectSavedQuote } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
+
 // TODO: Use redux-auth wrapper to reroute to vehicle is no vehicle
 // TODO: 7.5/10 Replace request button in message with form modal
 // TODO: 7/10 when back button is clicked, reset selected state
@@ -27,6 +30,13 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 // TODO: 6/10 make sure the onclick handler for the back button isn't being recreated on every rerender
 // TODO: 5.5/10 route back buttom backwards instead of to a specific point
 // TODO: 5/10 modularize queries completely with single import
+
+const VehicleIsSelected = UserAuthWrapper({ // eslint-disable-line new-cap
+  authSelector: (state) => state.get('quoteAddVehicle').toJS(),
+  predicate: (state) => state.mid,
+  redirectAction: routerActions.replace('/quote/vehicle'),
+  wrapperDisplayName: 'VehicleIsSelected',
+});
 
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -170,6 +180,7 @@ const withRepairTimesData = graphql(RepairTimesQuery, {
 
 
 export default compose(
+  VehicleIsSelected,
   QuoteCentralRedux,
   withRepairTimesData,
   withApollo,

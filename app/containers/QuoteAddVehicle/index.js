@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Message } from 'semantic-ui-react';
+import { Button, Message, Label } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
+import { createStructuredSelector } from 'reselect';
+import selectVehicleDomain from './selectors';
 
 import manufacturerData from './manufacturers';
 
@@ -144,10 +146,22 @@ class QuoteAddVehicle extends React.Component {
   }
 
   render() {
+    var renderVehicleModel = null;
+    const vehicle = this.props.vehicle;
+    if (this.props.vehicle.mid) {
+      renderVehicleModel = (
+        <div>
+        <Label>Currently Selected Motorcycle: {vehicle.year} {vehicle.manufacturer} {vehicle.model} {vehicle.model_variant}</Label>
+      </div>
+      );
+    }
     return (
       <form onSubmit={this.props.onSubmitForm}>
         {this.conditionalAsyncErrorMessage()}
         <h3 className="section-heading">Add your motorcycle</h3>
+        {renderVehicleModel &&
+        <div>{renderVehicleModel}</div>
+        }
         <div>
           <span>Select a make</span>
           <Select
@@ -210,14 +224,16 @@ class QuoteAddVehicle extends React.Component {
   }
 }
 
-/*
 QuoteAddVehicle.propTypes = {
-  loading: React.PropTypes.bool,
-  motorcycles: React.PropTypes.array,
+  client: React.PropTypes.object,
+  onSubmitForm: React.PropTypes.func,
 };
-*/
 
-export function mapDispatchToProps(dispatch) {
+const mapStateToProps = createStructuredSelector({
+  vehicle: selectVehicleDomain(),
+});
+
+function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
       evt.preventDefault();
@@ -249,12 +265,7 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-QuoteAddVehicle.propTypes = {
-  client: React.PropTypes.object,
-  onSubmitForm: React.PropTypes.func,
-};
-
-const QuoteAddVehicleRedux = connect(null, mapDispatchToProps);
+const QuoteAddVehicleRedux = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(
   QuoteAddVehicleRedux,
