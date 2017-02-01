@@ -96,6 +96,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         <QuoteCart props={this.props} />
         {renderAddServicesUponRepairTimesFetch}
         <Button onClick={() => browserHistory.push('/quote/vehicle')} >Change Motorcycle</Button>
+        <Button>Save Quote</Button>
         <StyledFormModal client={this.props.client} />
       </div>
     );
