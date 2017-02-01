@@ -78,7 +78,7 @@ function PriceBreakDown(props) {
               <Image verticalAlign="middle" floated="left" src={props.part[serviceName][key].imageURL} size="tiny" />
               <List.Content floated="left" verticalAlign="middle">
                 <span className="part-span">
-                  <Label>{props.part[serviceName][key].quantity}x</Label> {props.part[serviceName][key].partTitle}</span>
+                  <Label>{props.part[serviceName][key].quantity}x</Label> {props.part[serviceName][key].partTitle.substring(0, 60)}</span>
               </List.Content>
               <List.Content floated="right" verticalAlign="middle">
                 { /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */ }
@@ -188,12 +188,12 @@ function PriceBreakDown(props) {
 
 PriceBreakDown.propTypes = {
   client: React.PropTypes.object,
-  authenticated: React.PropTypes.bool,
+  authenticated: React.PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   quoteSaved: React.PropTypes.bool,
   onSaveQuoteClick: React.PropTypes.func,
-  vehicle: React.PropTypes.object,
-  cart: React.PropTypes.object,
-  part: React.PropTypes.object,
+  vehicle: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+  cart: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+  part: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
 };
 
 export default PriceBreakDown;
