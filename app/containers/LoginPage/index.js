@@ -39,7 +39,6 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
     `,
       variables: { email, password },
     }).then((response) => {
-      console.log(response.data.logIn);
       if (!response.data.logIn) {
         console.log('inauthenticated');
         return this.setState({ inAuthenticated: true });
