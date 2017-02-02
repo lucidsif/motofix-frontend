@@ -21,10 +21,8 @@ function QuoteCart(props) {
     })
       .reduce((acc, curr) => {
         if (props.props.cart[curr].selected && props.props.part[curr]) {
-          console.log(`${curr} is selected and a part exists for it`);
           // serviceparts shouls be an array of parts belonging to a service
           const servicePartKeys = Object.keys(props.props.part[curr]);
-          console.log(servicePartKeys);
           return servicePartKeys.reduce((accu, currKey) => {
             if (props.props.part[curr][currKey].valid) {
               /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
@@ -47,7 +45,7 @@ function QuoteCart(props) {
     const selectedUnavailableServices = Object.keys(props.props.cart).filter((key) => props.props.cart[key].selected && props.props.cart[key].unavailable);
 
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
-      console.log('unavailable services below:');
+      console.log('unavailable services');
       console.log(selectedUnavailableServices);
       return 'N/A';
     }

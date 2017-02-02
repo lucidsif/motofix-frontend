@@ -5,11 +5,10 @@
 */
 
 import React from 'react';
-import { Button, Container, List, Image, Label } from 'semantic-ui-react';
+import { Container, List, Image, Label } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
 
 function SavedQuoteBreakDown(props) {
-
   const totalPartsPrice = () => {
     let sum = 0;
     services.map((service) => {
@@ -18,10 +17,8 @@ function SavedQuoteBreakDown(props) {
     })
       .reduce((acc, curr) => {
         if (props.cart[curr].selected && props.part[curr]) {
-          console.log(`${curr} is selected and a part exists for it`);
           // serviceparts shouls be an array of parts belonging to a service
           const servicePartKeys = Object.keys(props.part[curr]);
-          console.log(servicePartKeys);
           return servicePartKeys.reduce((accu, currKey) => {
             if (props.part[curr][currKey].valid) {
               /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
@@ -44,8 +41,6 @@ function SavedQuoteBreakDown(props) {
     const selectedUnavailableServices = Object.keys(props.cart).filter((key) => props.cart[key].selected && props.cart[key].unavailable);
 
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
-      console.log('unavailable services below:');
-      console.log(selectedUnavailableServices);
       return 'N/A';
     }
 
@@ -63,6 +58,7 @@ function SavedQuoteBreakDown(props) {
 
     return sumOfLaborTimes * 67;
   };
+  /*
   function totalPrice() {
     const subTotal = totalServicesPrice() + totalPartsPrice();
     const taxRate = 0.0875;
@@ -92,7 +88,7 @@ function SavedQuoteBreakDown(props) {
     const savings = dealerTotal - motofixTotal;
     return parseFloat(Math.round(savings * 1) / 1);
   }
-
+*/
   function floatServicePrice() {
     return parseFloat(Math.round(totalServicesPrice() * 100) / 100).toFixed(2);
   }
@@ -146,7 +142,6 @@ function SavedQuoteBreakDown(props) {
     });
   }
   function renderParts(serviceName) {
-    console.log(props.part);
     return Object.keys(props.part[serviceName]).map((key) => {
       if (props.part[serviceName][key].valid) {
         return (
@@ -225,7 +220,7 @@ function SavedQuoteBreakDown(props) {
 }
 
 SavedQuoteBreakDown.propTypes = {
-  cart: React.PropTypes.object,
+  cart: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   part: React.PropTypes.object,
 };
 

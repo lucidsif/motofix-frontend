@@ -14,7 +14,6 @@ import gql from 'graphql-tag';
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
 
 function PriceBreakDown(props) {
-  console.log(props);
   function floatServicePrice() {
     return parseFloat(Math.round(props.totalServicesPrice() * 100) / 100).toFixed(2);
   }
@@ -68,7 +67,6 @@ function PriceBreakDown(props) {
     });
   }
   function renderParts(serviceName) {
-    console.log(props.part);
     return Object.keys(props.part[serviceName]).map((key) => {
       if (props.part[serviceName][key].valid) {
         return (

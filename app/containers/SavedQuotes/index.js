@@ -15,10 +15,8 @@ import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { Header, Item, Segment, Accordion, Icon, Dimmer, Loader, Image } from 'semantic-ui-react';
 import SavedQuoteBreakDown from 'components/SavedQuoteBreakDown';
 
-
-// TODO: Require authentication to see this page. redirect to login if inauthenticated
-// TODO: Wrap container with graphql, fetch quotes on mount, and map the quotes.
-
+// TODO: Add total, dealer, and savings to each segment
+// TODO: Create better styling
 const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
   authSelector: (state) => state.get('global').toJS(),
   predicate: (state) => state.authenticated,
@@ -64,10 +62,8 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   }
 
   render() {
-    console.log('savedquotes');
     console.log(this.props);
     const loadingMessage = 'Loading your saved quotes...';
-    console.log(this.props);
     if (this.props.allUserQuotesLoading) {
       return (
         <Segment>
