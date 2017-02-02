@@ -149,11 +149,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(deAuthenticateUser());
     },
     onNewQuoteClick: () => {
+      browserHistory.push('/quote/vehicle');
       dispatch(resetVehicle());
       dispatch(resetCart());
       dispatch(resetPart());
       dispatch(resetSavedQuote());
-      browserHistory.push('/quote/vehicle');
     },
   };
 }

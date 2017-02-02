@@ -13,7 +13,7 @@ import Helmet from 'react-helmet';
 import SignupForm from './signupForm';
 import { Segment, Message } from 'semantic-ui-react';
 import { authenticateUser } from '../App/actions';
-//TODO: Make sure signing up gets the token from the response and set it in localstorage (implement in backend first, then here)
+
 export class SignupPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -46,7 +46,27 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
       }
       console.log(response)
       this.setState({ accountCreated: true });
-      return this.props.onAccountCreation();
+      this.props.client.mutate({
+        mutation: gql`
+        mutation logIn($email: String!, $password: String!){
+        logIn(email: $email, password: $password){
+          data {
+            id
+            email
+          }
+          token
+      }
+    }
+    `,
+        variables: { email, password },
+      }).then((loginResponse) => {
+        if (!loginResponse.data.logIn) {
+          console.log('inauthenticated');
+          return this.setState({ inAuthenticated: true });
+        }
+        localStorage.setItem('authToken', loginResponse.data.logIn.token);
+        return this.props.onAccountCreation();
+      });
     });
   }
 
@@ -101,11 +121,10 @@ SignupPage.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAccountCreation: (token) => {
+    onAccountCreation: () => {
       console.log('Account created!');
-      // dispatch(authenticateUser());
-      // TODO: route to page prior to auth
-      return browserHistory.goBack();
+      dispatch(authenticateUser());
+      return browserHistory.go(-2);
     },
   };
 }

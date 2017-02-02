@@ -31,6 +31,7 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 // TODO: 5.5/10 route back buttom backwards instead of to a specific point
 // TODO: 5/10 modularize queries completely with single import
 
+// TODO: FIx this bug. why do i get 'redirectAction is not a func' after clickinig new quote?
 const VehicleIsSelected = UserAuthWrapper({ // eslint-disable-line new-cap
   authSelector: (state) => state.get('quoteAddVehicle').toJS(),
   predicate: (state) => state.mid,
