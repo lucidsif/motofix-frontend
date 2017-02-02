@@ -13,6 +13,7 @@ import gql from 'graphql-tag';
 import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { Header, Item, Segment, Accordion, Icon, Dimmer, Loader, Image } from 'semantic-ui-react';
+import SavedQuoteBreakDown from 'components/SavedQuoteBreakDown';
 
 
 // TODO: Require authentication to see this page. redirect to login if inauthenticated
@@ -29,25 +30,34 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   renderItems() {
     const quotes = this.props.allUserQuotes;
     return quotes.map((quote) => {
-      var date = new Date(quote.createdAt);
-      var formattedDate = date.toString()
+      const date = new Date(quote.createdAt);
+      const formattedDate = date.toString();
+      const motorcycle = JSON.parse(quote.motorcycle_json);
+      // cart and part will both be sent to savedquotebreakdown component
+      const cart = JSON.parse(quote.cart_json);
+      const part = JSON.parse(quote.part_json);
+
+      const selectedServices = Object.keys(cart).filter((key) => {
+        return cart[key].selected;
+      }).map((item) => {
+        const str = item.replace(/([a-z])([A-Z])/g, '$1 $2');
+        return <Item.Description key={str}>{str}</Item.Description>;
+      });
+
       return (
         <Item key={formattedDate}>
           <Item.Image size="tiny" src="http://semantic-ui.com/images/wireframe/image.png" />
           <Item.Content>
-          <Item.Header as="a">Header</Item.Header>
+            <Item.Header as="a">{motorcycle.year} {motorcycle.manufacturer} {motorcycle.model} ({motorcycle.model_variant})</Item.Header>
             <Item.Meta>{formattedDate}</Item.Meta>
-            <Item.Description>
-              <Image src="http://semantic-ui.com/images/wireframe/short-paragraph.png" />
-            </Item.Description>
-            <Item.Extra>Additional Details</Item.Extra>
+            {selectedServices}
             <Accordion>
               <Accordion.Title>
                 <Icon name="dropdown" />
                 See Quote Breakdown
               </Accordion.Title>
               <Accordion.Content>
-                quote breakdown
+                <SavedQuoteBreakDown cart={cart} part={part} />
               </Accordion.Content>
             </Accordion>
           </Item.Content>
@@ -57,6 +67,8 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   }
 
   render() {
+    console.log('savedquotes');
+    console.log(this.props);
     const loadingMessage = 'Loading your saved quotes...';
     console.log(this.props);
     if (this.props.allUserQuotesLoading) {

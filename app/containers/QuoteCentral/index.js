@@ -41,7 +41,6 @@ const VehicleIsSelected = UserAuthWrapper({ // eslint-disable-line new-cap
 
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    console.log(localStorage.getItem('authToken'))
     console.log('quotecentral props:');
     console.log(this.props);
     // conditional render that will either render loading or addservices component
