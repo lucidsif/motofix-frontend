@@ -37,18 +37,15 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
       const cart = JSON.parse(quote.cart_json);
       const part = JSON.parse(quote.part_json);
 
-      const selectedServices = Object.keys(cart).filter((key) => {
-        return cart[key].selected;
-      }).map((item) => {
+      const selectedServices = Object.keys(cart).filter((key) => cart[key].selected).map((item) => {
         const str = item.replace(/([a-z])([A-Z])/g, '$1 $2');
         return <Item.Description key={str}>{str}</Item.Description>;
       });
 
       return (
-        <Item key={formattedDate}>
-          <Item.Image size="tiny" src="http://semantic-ui.com/images/wireframe/image.png" />
+        <Segment key={formattedDate}>
           <Item.Content>
-            <Item.Header as="a">{motorcycle.year} {motorcycle.manufacturer} {motorcycle.model} ({motorcycle.model_variant})</Item.Header>
+            <Item.Header>{motorcycle.year} {motorcycle.manufacturer} {motorcycle.model} ({motorcycle.model_variant})</Item.Header>
             <Item.Meta>{formattedDate}</Item.Meta>
             {selectedServices}
             <Accordion>
@@ -61,7 +58,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
               </Accordion.Content>
             </Accordion>
           </Item.Content>
-        </Item>
+        </Segment>
       );
     });
   }
@@ -85,9 +82,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
       <div>
         <Segment>
           <Header size="large" textAlign="center"> My Saved Quotes</Header>
-          <Item.Group divided>
-            {this.renderItems()}
-          </Item.Group>
+          {this.renderItems()}
         </Segment>
       </div>
     );
