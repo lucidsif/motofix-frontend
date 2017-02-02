@@ -138,7 +138,7 @@ class QuoteAddVehicle extends React.Component {
       return (
         <Message negative>
           <p>Warning: Max API calls reached for the day :(</p>
-          <p>We have a limited # of API calls to our data provider until they upgrade us. Please try again tomorrow.</p>
+          <p>We have a limited # of API calls to our data provider until they upgrade us. Please try again after 8PM.</p>
         </Message>
       );
     }
