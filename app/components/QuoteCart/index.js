@@ -21,10 +21,8 @@ function QuoteCart(props) {
     })
       .reduce((acc, curr) => {
         if (props.props.cart[curr].selected && props.props.part[curr]) {
-          console.log(`${curr} is selected and a part exists for it`);
           // serviceparts shouls be an array of parts belonging to a service
           const servicePartKeys = Object.keys(props.props.part[curr]);
-          console.log(servicePartKeys);
           return servicePartKeys.reduce((accu, currKey) => {
             if (props.props.part[curr][currKey].valid) {
               /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
@@ -47,7 +45,7 @@ function QuoteCart(props) {
     const selectedUnavailableServices = Object.keys(props.props.cart).filter((key) => props.props.cart[key].selected && props.props.cart[key].unavailable);
 
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
-      console.log('unavailable services below:');
+      console.log('unavailable services');
       console.log(selectedUnavailableServices);
       return 'N/A';
     }
@@ -120,13 +118,22 @@ function QuoteCart(props) {
           <Accordion>
             <Accordion.Title>
               <Icon name="dropdown" />
-                See cost breakdown
+              See cost breakdown
             </Accordion.Title>
             <Accordion.Content>
-              <PriceBreakDown cart={props.props.cart} part={props.props.part} client={props.props.client} totalServicesPrice={totalServicesPrice} totalPartsPrice={totalPartsPrice} />
+              <PriceBreakDown
+                authenticated={props.props.authenticated}
+                quoteSaved={props.props.quoteSaved}
+                vehicle={props.props.vehicle}
+                cart={props.props.cart}
+                part={props.props.part}
+                client={props.props.client}
+                onSaveQuoteClick={props.props.onSaveQuoteClick}
+                totalServicesPrice={totalServicesPrice}
+                totalPartsPrice={totalPartsPrice}
+              />
             </Accordion.Content>
           </Accordion>
-
         </Grid>
       </Segment>
     </Grid.Row>
@@ -135,7 +142,11 @@ function QuoteCart(props) {
 
 QuoteCart.propTypes = {
   props: React.PropTypes.object,
+  authenticated: React.PropTypes.bool,
+  quoteSaved: React.PropTypes.bool,
+  onSaveQuoteClick: React.PropTypes.func,
   client: React.PropTypes.object,
+  vehicle: React.PropTypes.object,
   cart: React.PropTypes.object,
   part: React.PropTypes.object,
 };

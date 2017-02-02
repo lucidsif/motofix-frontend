@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Message } from 'semantic-ui-react';
+import { Button, Message, Label } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
+import { createStructuredSelector } from 'reselect';
+import selectVehicleDomain from './selectors';
 
 import manufacturerData from './manufacturers';
 
@@ -144,86 +146,102 @@ class QuoteAddVehicle extends React.Component {
   }
 
   render() {
+    let renderVehicleModel = null;
+    const vehicle = this.props.vehicle;
+    if (this.props.vehicle.mid) {
+      renderVehicleModel = (
+        <div>
+          <Label>Currently Selected Motorcycle: {vehicle.year} {vehicle.manufacturer} {vehicle.model} ({vehicle.model_variant})</Label>
+        </div>
+      );
+    }
     return (
-      <form onSubmit={this.props.onSubmitForm}>
-        {this.conditionalAsyncErrorMessage()}
-        <h3 className="section-heading">Add your motorcycle</h3>
-        <div>
-          <span>Select a make</span>
-          <Select
-            autofocus
-            options={manufacturerData}
-            simpleValue
-            clearable
-            name="selected-manufacturer"
-            value={this.state.manufacturerValue}
-            onChange={this.updateManufacturerValueAndGetModels}
-            searchable={this.state.searchable}
-            placeholder="Search or select a make"
-          />
-        </div>
-        <div>
-          <span>Select a model </span>
-          <Select
-            autofocus
-            options={this.state.modelOptions}
-            simpleValue
-            clearable
-            name="selected-model"
-            value={this.state.modelValue}
-            onChange={this.updateModelValueAndGetSubModels}
-            searchable={this.state.searchable}
-            placeholder="Search or select a model"
-          />
-        </div>
-        <div>
-          <span>Select a sub-model </span>
-          <Select
-            autofocus
-            options={this.state.subModelOptions}
-            simpleValue
-            clearable
-            name="selected-submodel"
-            value={this.state.subModelValue}
-            onChange={this.updateSubModelValueAndRenderYears}
-            searchable={this.state.searchable}
-            placeholder="Search or select a sub-model"
-          />
-        </div>
-        <div>
-          <span>Select a year </span>
-          <Select
-            autofocus
-            options={this.state.yearOptions}
-            simpleValue
-            clearable
-            name="selected-year"
-            value={this.state.yearValue}
-            onChange={this.updateYear}
-            searchable={this.state.searchable}
-            placeholder="Search or select a year"
-          />
-        </div>
-        <Button color="teal" floated="right">Next</Button>
-      </form>
+      <div>
+        {renderVehicleModel &&
+          <div>{renderVehicleModel}</div>
+        }
+        <form onSubmit={this.props.onSubmitForm}>
+          {this.conditionalAsyncErrorMessage()}
+          <h3 className="section-heading">Add your motorcycle</h3>
+          <div>
+            <span>Select a make</span>
+            <Select
+              autofocus
+              options={manufacturerData}
+              simpleValue
+              clearable
+              name="selected-manufacturer"
+              value={this.state.manufacturerValue}
+              onChange={this.updateManufacturerValueAndGetModels}
+              searchable={this.state.searchable}
+              placeholder="Search or select a make"
+            />
+          </div>
+          <div>
+            <span>Select a model </span>
+            <Select
+              autofocus
+              options={this.state.modelOptions}
+              simpleValue
+              clearable
+              name="selected-model"
+              value={this.state.modelValue}
+              onChange={this.updateModelValueAndGetSubModels}
+              searchable={this.state.searchable}
+              placeholder="Search or select a model"
+            />
+          </div>
+          <div>
+            <span>Select a sub-model </span>
+            <Select
+              autofocus
+              options={this.state.subModelOptions}
+              simpleValue
+              clearable
+              name="selected-submodel"
+              value={this.state.subModelValue}
+              onChange={this.updateSubModelValueAndRenderYears}
+              searchable={this.state.searchable}
+              placeholder="Search or select a sub-model"
+            />
+          </div>
+          <div>
+            <span>Select a year </span>
+            <Select
+              autofocus
+              options={this.state.yearOptions}
+              simpleValue
+              clearable
+              name="selected-year"
+              value={this.state.yearValue}
+              onChange={this.updateYear}
+              searchable={this.state.searchable}
+              placeholder="Search or select a year"
+            />
+          </div>
+          <Button color="teal" floated="right">Next</Button>
+        </form>
+      </div>
     );
   }
 }
 
-/*
- QuoteAddVehicle.propTypes = {
- loading: React.PropTypes.bool,
- motorcycles: React.PropTypes.array,
- };
- */
+QuoteAddVehicle.propTypes = {
+  client: React.PropTypes.object,
+  vehicle: React.PropTypes.object,
+  onSubmitForm: React.PropTypes.func,
+};
 
-export function mapDispatchToProps(dispatch) {
+const mapStateToProps = createStructuredSelector({
+  vehicle: selectVehicleDomain(),
+});
+
+function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
       evt.preventDefault();
       if (motorcycle) {
         console.log('all fields submitted');
-        console.log(motorcycle);
         dispatch(addVehicle(motorcycle));
         browserHistory.push('/quote/services');
       } else {
@@ -233,12 +251,7 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-QuoteAddVehicle.propTypes = {
-  client: React.PropTypes.object,
-  onSubmitForm: React.PropTypes.func,
-};
-
-const QuoteAddVehicleRedux = connect(null, mapDispatchToProps);
+const QuoteAddVehicleRedux = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(
   QuoteAddVehicleRedux,

@@ -6,15 +6,19 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
 import { deAuthenticateUser } from 'containers/App/actions';
+import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
+import { resetCart, resetPart, resetSavedQuote } from 'containers/QuoteCentral/actions';
+import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
 import logo from './home-logo.png';
 import { services } from 'components/QuoteCart';
 
-import { createStructuredSelector } from 'reselect';
-import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
+// TODO: resetSavedQuote should reset cart and part as well!
+
 
 // TODO: 7/10 when cart is clicked, it should route to quotecart
 // TODO: handle edge cases like if props is null
@@ -90,10 +94,11 @@ export class AppNavBar extends React.Component {
     return parseFloat(Math.round(total * 1) / 1);
   }
 
-  // calc total price in cart
-  // replace menu with hamburger
+ // TODO: link to quote/services by clicking on cart button without breaking page style and only link if vehicle exists
 
   render() {
+    console.log('navbar props');
+    console.log(this.props);
     return (
       <Menu secondary fixed="top" className="padRight">
         <Menu.Item>
@@ -109,9 +114,10 @@ export class AppNavBar extends React.Component {
         </Menu.Menu>
         <Dropdown className="link item" icon="bars">
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => browserHistory.push('/quote/vehicle')}>New Quote</Dropdown.Item>
+            <Dropdown.Item onClick={() => this.props.onNewQuoteClick()}>New Quote</Dropdown.Item>
+            <Dropdown.Item onClick={() => browserHistory.push('/dashboard/quotes')}>Saved Quotes</Dropdown.Item>
             {this.props.authenticated &&
-            <Dropdown.Item onClick={() => { localStorage.removeItem('token'); this.props.onDeAuthentication(); }}> Sign Out</Dropdown.Item>
+            <Dropdown.Item onClick={() => { localStorage.removeItem('authToken'); this.props.onDeAuthentication(); }}> Sign Out</Dropdown.Item>
             }
             {!this.props.authenticated &&
             <Dropdown.Item onClick={() => browserHistory.push('/login')}>Log In</Dropdown.Item>
@@ -126,23 +132,31 @@ export class AppNavBar extends React.Component {
 AppNavBar.propTypes = {
   authenticated: React.PropTypes.bool,
   onDeAuthentication: React.PropTypes.func,
+  onNewQuoteClick: React.PropTypes.func,
   cart: React.PropTypes.object,
   part: React.PropTypes.object,
 };
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onDeAuthentication: () => {
-      dispatch(deAuthenticateUser());
-    },
-  };
-}
 
 const mapStateToProps = createStructuredSelector({
   authenticated: selectAuthenticated(),
   cart: selectCart(),
   part: selectPart(),
 });
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onDeAuthentication: () => {
+      dispatch(deAuthenticateUser());
+    },
+    onNewQuoteClick: () => {
+      browserHistory.push('/quote/vehicle');
+      dispatch(resetVehicle());
+      dispatch(resetCart());
+      dispatch(resetPart());
+      dispatch(resetSavedQuote());
+    },
+  };
+}
 
 const AppNavBarConnect = connect(mapStateToProps, mapDispatchToProps)(AppNavBar);
 

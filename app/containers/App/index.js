@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 import Header from 'components/Header';
 // TODO: Fix footer so it's always at bottom
-import Footer from 'components/Footer';
+// import Footer from 'components/Footer';
 
 const AppWrapper = styled.div`
   max-width: calc(968px + 16px * 2);
@@ -22,7 +22,7 @@ const AppWrapper = styled.div`
   padding: 0 16px;
   flex-direction: column;
 `;
-
+// TODO: add and ensure footer stays on the bottom of every page
 function App(props) {
   return (
     <AppWrapper>
@@ -38,7 +38,6 @@ function App(props) {
       />
       <Header />
       {React.Children.toArray(props.children)}
-      <Footer />
     </AppWrapper>
   );
 }

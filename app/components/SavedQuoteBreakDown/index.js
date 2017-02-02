@@ -1,33 +1,109 @@
 /**
 *
-* PriceBreakDown
+* SavedQuoteBreakDown
 *
 */
 
 import React from 'react';
-import { browserHistory } from 'react-router';
-import { Button, Container, List, Image, Label } from 'semantic-ui-react';
+import { Container, List, Image, Label } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
-import FormModal from 'components/FormModal';
-import gql from 'graphql-tag';
 
-// TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
+// TODO: Order from most recent
+function SavedQuoteBreakDown(props) {
+  const totalPartsPrice = () => {
+    let sum = 0;
+    services.map((service) => {
+      const regexedService = service.replace(/\s/g, '');
+      return regexedService;
+    })
+      .reduce((acc, curr) => {
+        if (props.cart[curr].selected && props.part[curr]) {
+          // serviceparts shouls be an array of parts belonging to a service
+          const servicePartKeys = Object.keys(props.part[curr]);
+          return servicePartKeys.reduce((accu, currKey) => {
+            if (props.part[curr][currKey].valid) {
+              /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
+              const price = parseFloat(props.part[curr][currKey].price.__value__);
+              const quantity = parseFloat(props.part[curr][currKey].quantity);
+              sum += price * quantity;
+              return sum;
+            }
+            return sum;
+          }, 0);
+        }
+        return acc + 0;
+      }, 0);
+    return sum;
+  };
 
-function PriceBreakDown(props) {
+  // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
+  const totalServicesPrice = () => {
+    // return N/A if any selected service has an unavailable labortime
+    const selectedUnavailableServices = Object.keys(props.cart).filter((key) => props.cart[key].selected && props.cart[key].unavailable);
+
+    if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
+      return 'N/A';
+    }
+
+    const sumOfLaborTimes = services.map((service) => {
+      const regexedService = service.replace(/\s/g, '');
+      return regexedService;
+    })
+      .reduce((acc, curr) => {
+        if (props.cart[curr].selected && typeof props.cart[curr].laborTime === 'number') {
+          const laborTime = props.cart[curr].laborTime;
+          return acc + laborTime;
+        }
+        return acc + 0;
+      }, 0);
+
+    return sumOfLaborTimes * 67;
+  };
+  /*
+  function totalPrice() {
+    const subTotal = totalServicesPrice() + totalPartsPrice();
+    const taxRate = 0.0875;
+    const tax = subTotal * taxRate;
+    const total = subTotal + tax;
+    return parseFloat(Math.round(total * 1) / 1);
+  }
+  function totalDealerFloated() {
+    const dealerServicePrice = (totalServicesPrice() / 67) * 95;
+    const dealerPartsPrice = (totalPartsPrice() + (totalPartsPrice() * 0.10));
+    const dealerSubTotal = dealerPartsPrice + dealerServicePrice;
+    const taxRate = 0.0875;
+    const tax = dealerSubTotal * taxRate;
+    const total = dealerSubTotal + tax;
+    return parseFloat(Math.round(total * 1) / 1);
+  }
+  function totalSavings() {
+    const taxRate = 0.0875;
+    const dealerServicePrice = (totalServicesPrice() / 67) * 95;
+    const dealerPartsPrice = (totalPartsPrice() + (totalPartsPrice() * 0.10));
+    const dealerSubTotal = dealerPartsPrice + dealerServicePrice;
+    const dealerTax = dealerSubTotal * taxRate;
+    const dealerTotal = dealerSubTotal + dealerTax;
+    const motofixSubTotal = totalServicesPrice() + totalPartsPrice();
+    const motoFixTax = motofixSubTotal * taxRate;
+    const motofixTotal = motofixSubTotal + motoFixTax;
+    const savings = dealerTotal - motofixTotal;
+    return parseFloat(Math.round(savings * 1) / 1);
+  }
+*/
   function floatServicePrice() {
-    return parseFloat(Math.round(props.totalServicesPrice() * 100) / 100).toFixed(2);
+    return parseFloat(Math.round(totalServicesPrice() * 100) / 100).toFixed(2);
   }
   function floatPartsPrice() {
-    return parseFloat(Math.round(props.totalPartsPrice() * 100) / 100).toFixed(2);
+    return parseFloat(Math.round(totalPartsPrice() * 100) / 100).toFixed(2);
   }
   function floatTax() {
-    const total = props.totalServicesPrice() + props.totalPartsPrice();
+    const total = totalServicesPrice() + totalPartsPrice();
     const taxRate = 0.0875;
     const tax = total * taxRate;
     return parseFloat(Math.round(tax * 100) / 100).toFixed(2);
   }
   function floatTotalPrice() {
-    const subTotal = props.totalServicesPrice() + props.totalPartsPrice();
+    const subTotal = totalServicesPrice() + totalPartsPrice();
 
     const taxRate = 0.0875;
     const tax = subTotal * taxRate;
@@ -100,43 +176,6 @@ function PriceBreakDown(props) {
       );
     });
   }
-
-  function createQuoteMutation() {
-    // noinspection JSUnresolvedFunction
-    if (props.authenticated) {
-      return props.client.mutate({
-        mutation: gql`
-       mutation createUserQuote($token: String, $motorcycleJSON: JSON, $cartJSON: JSON, $partJSON: JSON){
-        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON){
-          id
-          fk_users_id
-          motorcycle_json
-          cart_json
-          part_json
-          createdAt
-          updatedAt
-         }
-       }
-      `,
-        variables: {
-          token: localStorage.getItem('authToken'),
-          motorcycleJSON: JSON.stringify(props.vehicle),
-          cartJSON: JSON.stringify(props.cart),
-          partJSON: JSON.stringify(props.part),
-        },
-      }).then((response) => console.log(response.data.createUserQuote));
-    }
-    return browserHistory.push('/login');
-  }
-  function onSaveBtnClick() {
-    // only allow if authenticated and localToken exists
-    if (props.authenticated && localStorage.getItem('authToken')) {
-      createQuoteMutation();
-      return props.onSaveQuoteClick();
-    }
-    return browserHistory.push('/login');
-  }
-
   return (
     <Container>
       <List>
@@ -177,28 +216,13 @@ function PriceBreakDown(props) {
           </List.Content>
         </List.Item>
       </List>
-
-      <div>
-        {props.quoteSaved &&
-        <Button disabled>Quote Saved</Button>
-        }
-        {!props.quoteSaved && // only only to save quote and dispatch action if authenticated
-        <Button onClick={() => onSaveBtnClick()}>Save Quote</Button>
-        }
-        <FormModal client={props.client} />
-      </div>
     </Container>
   );
 }
 
-PriceBreakDown.propTypes = {
-  client: React.PropTypes.object,
-  authenticated: React.PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
-  quoteSaved: React.PropTypes.bool,
-  onSaveQuoteClick: React.PropTypes.func, // eslint-disable-line react/no-unused-prop-types
-  vehicle: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+SavedQuoteBreakDown.propTypes = {
   cart: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
-  part: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+  part: React.PropTypes.object,
 };
 
-export default PriceBreakDown;
+export default SavedQuoteBreakDown;

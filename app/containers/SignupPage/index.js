@@ -12,6 +12,7 @@ import gql from 'graphql-tag';
 import Helmet from 'react-helmet';
 import SignupForm from './signupForm';
 import { Segment, Message } from 'semantic-ui-react';
+import { authenticateUser } from '../App/actions';
 
 export class SignupPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -43,9 +44,29 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
         console.log('Account creation failed');
         return this.setState({ accountCreated: false });
       }
-      console.log('Account created!');
+      console.log(response)
       this.setState({ accountCreated: true });
-      return browserHistory.push('/account/quotes');
+      this.props.client.mutate({
+        mutation: gql`
+        mutation logIn($email: String!, $password: String!){
+        logIn(email: $email, password: $password){
+          data {
+            id
+            email
+          }
+          token
+      }
+    }
+    `,
+        variables: { email, password },
+      }).then((loginResponse) => {
+        if (!loginResponse.data.logIn) {
+          console.log('inauthenticated');
+          return this.setState({ inAuthenticated: true });
+        }
+        localStorage.setItem('authToken', loginResponse.data.logIn.token);
+        return this.props.onAccountCreation();
+      });
     });
   }
 
@@ -100,7 +121,11 @@ SignupPage.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onAccountCreation: () => {
+      console.log('Account created!');
+      dispatch(authenticateUser());
+      return browserHistory.go(-2);
+    },
   };
 }
 
