@@ -12,7 +12,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
-import { Item, Segment, Accordion, Icon, Dimmer, Loader, Image } from 'semantic-ui-react';
+import { Header, Item, Segment, Accordion, Icon, Dimmer, Loader, Image } from 'semantic-ui-react';
 
 
 // TODO: Require authentication to see this page. redirect to login if inauthenticated
@@ -21,11 +21,41 @@ import { Item, Segment, Accordion, Icon, Dimmer, Loader, Image } from 'semantic-
 const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
   authSelector: (state) => state.get('global').toJS(),
   predicate: (state) => state.authenticated,
-  redirectAction: routerActions.replace,
+  redirectAction: routerActions.push,
   wrapperDisplayName: 'UserIsAuthenticated',
 });
 
 export class SavedQuotes extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  renderItems() {
+    const quotes = this.props.allUserQuotes;
+    return quotes.map((quote) => {
+      var date = new Date(quote.createdAt);
+      var formattedDate = date.toString()
+      return (
+        <Item key={formattedDate}>
+          <Item.Image size="tiny" src="http://semantic-ui.com/images/wireframe/image.png" />
+          <Item.Content>
+          <Item.Header as="a">Header</Item.Header>
+            <Item.Meta>{formattedDate}</Item.Meta>
+            <Item.Description>
+              <Image src="http://semantic-ui.com/images/wireframe/short-paragraph.png" />
+            </Item.Description>
+            <Item.Extra>Additional Details</Item.Extra>
+            <Accordion>
+              <Accordion.Title>
+                <Icon name="dropdown" />
+                See Quote Breakdown
+              </Accordion.Title>
+              <Accordion.Content>
+                quote breakdown
+              </Accordion.Content>
+            </Accordion>
+          </Item.Content>
+        </Item>
+      );
+    });
+  }
+
   render() {
     const loadingMessage = 'Loading your saved quotes...';
     console.log(this.props);
@@ -42,27 +72,9 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
     return (
       <div>
         <Segment>
+          <Header size="large" textAlign="center"> My Saved Quotes</Header>
           <Item.Group divided>
-            <Item>
-              <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
-              <Item.Content>
-                <Item.Header as='a'>Header</Item.Header>
-                <Item.Meta>Description</Item.Meta>
-                <Item.Description>
-                  <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
-                </Item.Description>
-                <Item.Extra>Additional Details</Item.Extra>
-                <Accordion>
-                  <Accordion.Title>
-                    <Icon name="dropdown" />
-                    See Quote Breakdown
-                  </Accordion.Title>
-                  <Accordion.Content>
-                    quote breakdown
-                  </Accordion.Content>
-                </Accordion>
-              </Item.Content>
-            </Item>
+            {this.renderItems()}
           </Item.Group>
         </Segment>
       </div>
@@ -71,6 +83,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
 }
 
 SavedQuotes.propTypes = {
+  allUserQuotes: React.PropTypes.array,
   allUserQuotesLoading: React.PropTypes.bool,
 };
 
@@ -93,7 +106,6 @@ query allUserQuotes($token: String){
 `;
 
 const SavedQuotesConnect = connect(mapStateToProps, null);
-
 const withSavedQuotesData = graphql(CurrentUserQuotesQuery, {
   options: {
     variables: { token: localStorage.getItem('authToken') },

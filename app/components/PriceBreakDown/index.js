@@ -11,7 +11,6 @@ import { services } from 'components/QuoteCart';
 import FormModal from 'components/FormModal';
 import gql from 'graphql-tag';
 
-// TODO: Add one time click save button
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
 
 function PriceBreakDown(props) {
@@ -131,6 +130,14 @@ function PriceBreakDown(props) {
     }
     return browserHistory.push('/login');
   }
+  function onSaveBtnClick() {
+    // only allow if authenticated and localToken exists
+    if (props.authenticated && localStorage.getItem('authToken')) {
+      createQuoteMutation();
+      return props.onSaveQuoteClick();
+    }
+    return browserHistory.push('/login');
+  }
 
   return (
     <Container>
@@ -177,8 +184,8 @@ function PriceBreakDown(props) {
         {props.quoteSaved &&
         <Button disabled>Quote Saved</Button>
         }
-        {!props.quoteSaved &&
-        <Button onClick={() => { createQuoteMutation(); props.onSaveQuoteClick(); }}>Save Quote</Button>
+        {!props.quoteSaved && // only only to save quote and dispatch action if authenticated
+        <Button onClick={() => onSaveBtnClick()}>Save Quote</Button>
         }
         <FormModal client={props.client} />
       </div>
@@ -190,7 +197,7 @@ PriceBreakDown.propTypes = {
   client: React.PropTypes.object,
   authenticated: React.PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   quoteSaved: React.PropTypes.bool,
-  onSaveQuoteClick: React.PropTypes.func,
+  onSaveQuoteClick: React.PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   vehicle: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   cart: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   part: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types

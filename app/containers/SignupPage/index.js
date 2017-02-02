@@ -12,7 +12,8 @@ import gql from 'graphql-tag';
 import Helmet from 'react-helmet';
 import SignupForm from './signupForm';
 import { Segment, Message } from 'semantic-ui-react';
-
+import { authenticateUser } from '../App/actions';
+//TODO: Make sure signing up gets the token from the response and set it in localstorage (implement in backend first, then here)
 export class SignupPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -43,9 +44,9 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
         console.log('Account creation failed');
         return this.setState({ accountCreated: false });
       }
-      console.log('Account created!');
+      console.log(response)
       this.setState({ accountCreated: true });
-      return browserHistory.push('/quote/services');
+      return this.props.onAccountCreation();
     });
   }
 
@@ -100,7 +101,12 @@ SignupPage.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onAccountCreation: (token) => {
+      console.log('Account created!');
+      // dispatch(authenticateUser());
+      // TODO: route to page prior to auth
+      return browserHistory.goBack();
+    },
   };
 }
 

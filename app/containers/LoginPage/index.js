@@ -44,10 +44,10 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
         return this.setState({ inAuthenticated: true });
       }
       console.log('authenticated');
+      localStorage.setItem('authToken', response.data.logIn.token);
       this.setState({ inAuthenticated: false });
       this.props.onAuthentication();
-      localStorage.setItem('authToken', response.data.logIn.token);
-      return browserHistory.push('/quote/services');
+      return browserHistory.goBack();
     });
   }
 
