@@ -165,21 +165,19 @@ class QuoteAddVehicle extends React.Component {
 
   validateMotorcycleForm(e) {
     e.preventDefault();
-    console.log(this.state.manufacturerValue, this.state.modelValue)
+    if (!this.state.zipcode) {
+      this.setState({ zipcode: false});
+    }
     if (!this.state.manufacturerValue) {
-      console.log(this.state.manufacturerValue);
-      return this.setState({ manufacturerValue: false });
+      this.setState({ manufacturerValue: false });
     }
     if (!this.state.modelValue) {
-      console.log(this.state.modelValue);
-      return this.setState({ modelValue: false });
+      this.setState({ modelValue: false });
     }
     if (!this.state.subModelValue) {
-      console.log(this.state.subModelValue);
-      return this.setState({ subModelValue: false });
+      this.setState({ subModelValue: false });
     }
     if (!this.state.yearValue) {
-      console.log(this.state.yearValue);
       return this.setState({ yearValue: false });
     }
     return this.props.onSubmitForm(e);
@@ -284,9 +282,6 @@ class QuoteAddVehicle extends React.Component {
             <Label basic color="red" pointing>Please select a year</Label>
             }
           </div>
-          {motorcycle === false &&
-          <Label basic color="red" pointing="left">Please enter a valid zipcode</Label>
-          }
           <Button color="teal" floated="right">Next</Button>
         </form>
       </div>
@@ -307,8 +302,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
-      console.log(zipcode);
-      if (zipcode) {
+      if (motorcycle) {
         console.log('mock vehicle selected and merged to state');
         const vehicle = {
           zipcode,
@@ -327,7 +321,7 @@ function mapDispatchToProps(dispatch) {
       //TODO: Add zipcode to motorcycle object
       /*
       evt.preventDefault();
-      if (motorcycle && zipcode) {
+      if (motorcycle) {
         console.log('all fields submitted');
         dispatch(addVehicle(motorcycle));
         browserHistory.push('/quote/services');
