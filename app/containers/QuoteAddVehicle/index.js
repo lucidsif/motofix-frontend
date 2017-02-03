@@ -37,6 +37,7 @@ class QuoteAddVehicle extends React.Component {
       subModelOptions: null,
       yearOptions: null,
       asyncError: false,
+      motorcycleSelected: null,
     };
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
@@ -156,6 +157,7 @@ class QuoteAddVehicle extends React.Component {
       return this.setState({ zipcode });
     }
     console.log('invalid zip');
+    zipcode = false;
     return this.setState({ zipcode: false });
   }
 
@@ -173,7 +175,7 @@ class QuoteAddVehicle extends React.Component {
     return (
       <div>
         {renderVehicleModel &&
-          <div>{renderVehicleModel}</div>
+        <div>{renderVehicleModel}</div>
         }
         <form onSubmit={this.props.onSubmitForm}>
           {this.conditionalAsyncErrorMessage()}
@@ -203,7 +205,6 @@ class QuoteAddVehicle extends React.Component {
               searchable={this.state.searchable}
               placeholder="Search or select a make"
             />
-            <Label basic color="red" pointing>Please enter a value</Label>
           </div>
           <div>
             <span>Model </span>
@@ -247,6 +248,9 @@ class QuoteAddVehicle extends React.Component {
               placeholder="Search or select a year"
             />
           </div>
+          {motorcycle === false &&
+          <Label basic color="red" pointing="left">Please enter a valid zipcode</Label>
+          }
           <Button color="teal" floated="right">Next</Button>
         </form>
       </div>
@@ -268,24 +272,27 @@ function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
       evt.preventDefault();
-      console.log('mock vehicle selected and merged to state');
-      const vehicle = {
-        zipcode,
-        mid: 'HDA06327',
-        manufacturer: 'Honda',
-        model: 'CBR',
-        model_variant: 'CBR600',
-        tuning_description: 'SE',
-        start_year: 2008,
-        end_year: 2011,
-        year: 2010,
-      };
-      dispatch(addVehicle(vehicle));
-      browserHistory.push('/quote/services');
+      console.log(zipcode);
+      if (zipcode) {
+        console.log('mock vehicle selected and merged to state');
+        const vehicle = {
+          zipcode,
+          mid: 'HDA06327',
+          manufacturer: 'Honda',
+          model: 'CBR',
+          model_variant: 'CBR600',
+          tuning_description: 'SE',
+          start_year: 2008,
+          end_year: 2011,
+          year: 2010,
+        };
+        dispatch(addVehicle(vehicle));
+        browserHistory.push('/quote/services');
+      }
       //TODO: Add zipcode to motorcycle object
       /*
       evt.preventDefault();
-      if (motorcycle) {
+      if (motorcycle && zipcode) {
         console.log('all fields submitted');
         dispatch(addVehicle(motorcycle));
         browserHistory.push('/quote/services');
