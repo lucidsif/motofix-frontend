@@ -84,7 +84,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         <Message negative>
           <Message.Header> Uh oh! Max API calls reached for the day :( </Message.Header>
           <Message.Content>
-            Until our data provider upgrades us, please try again after 8PM.
+            Until our data provider upgrades us, please try again after 8PM next day.
           </Message.Content>
         </Message>
       );
