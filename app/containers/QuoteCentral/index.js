@@ -79,6 +79,15 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
             </Message.Content>
           </Message>
         );
+    } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited') {
+      conditionalServicesMessage = (
+        <Message negative>
+          <Message.Header> Uh oh! Max API calls reached for the day :( </Message.Header>
+          <Message.Content>
+            Until our data provider upgrades us, please try again after 8PM.
+          </Message.Content>
+        </Message>
+      );
     } else if (selectedUnavailableServices.length > 0) {
       conditionalServicesMessage = (
         <Message info>
@@ -134,16 +143,13 @@ function mapDispatchToProps(dispatch) {
     },
     // TODO: change name to something more fitting
     getAndSetLaborTime: (service, laborTime, unavailable) => {
-      console.log(`${service} with labortime of ${laborTime} picked up from query result`);
       dispatch(setLaborTime(service, laborTime, unavailable));
     },
     onPartsQuery: (service, partsData) => {
-      console.log(`service: ${service} parts picked up from query result with partsData object below`);
-      console.log(partsData);
+      dispatch(setPartsData(service, partsData));
       dispatch(setPartsData(service, partsData));
     },
     onSaveQuoteClick: () => {
-      console.log('savequote action dispatched');
       dispatch(setSavedQuoteTrue());
     },
   };
