@@ -18,7 +18,8 @@ let subModelFactory = [];
 let zipcode;
 let motorcycle;
 
-// TODO: 7.1/10 add form validation
+// TODO: Ensure that vehicle obj is submitted to application state on submit
+// TODO: Clean up validation logic and shit like file level variables
 // TODO: 7/10 half the size of the select menus
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 replace spans with labels
@@ -45,7 +46,7 @@ class QuoteAddVehicle extends React.Component {
     this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this);
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
-    this.validateAndSaveZip = this.validateAndSaveZip.bind(this);
+    this.validateAndUpdateZip = this.validateAndUpdateZip.bind(this);
     this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
   }
   updateManufacturerValueAndGetModels(newValue) {
@@ -150,7 +151,7 @@ class QuoteAddVehicle extends React.Component {
     return null;
   }
 
-  validateAndSaveZip(evt) {
+  validateAndUpdateZip(evt) {
     const isValid = /^\b\d{5}(-\d{4})?\b$/.test(evt.target.value);
     if (isValid) {
       console.log('zip is valid');
@@ -205,7 +206,7 @@ class QuoteAddVehicle extends React.Component {
           <h3 className="section-heading">Motorcycle Information</h3>
           <div>
             <Input
-              onBlur={this.validateAndSaveZip}
+              onBlur={this.validateAndUpdateZip}
               icon="location arrow"
               placeholder="Zipcode of motorcycle"
               size="large"
