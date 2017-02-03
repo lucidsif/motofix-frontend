@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Message, Label } from 'semantic-ui-react';
+import { Button, Message, Label, Input, Divider } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
@@ -162,9 +162,16 @@ class QuoteAddVehicle extends React.Component {
         }
         <form onSubmit={this.props.onSubmitForm}>
           {this.conditionalAsyncErrorMessage()}
-          <h3 className="section-heading">Add your motorcycle</h3>
+          <h3 className="section-heading">Motorcycle Information</h3>
+          <Input
+            floated="left"
+            icon="location arrow"
+            placeholder="Zipcode of motorcycle"
+            size="large"
+          />
+          <Divider section horizontal> Select Model</Divider>
           <div>
-            <span>Select a make</span>
+            <span>Make</span>
             <Select
               autofocus
               options={manufacturerData}
@@ -178,7 +185,7 @@ class QuoteAddVehicle extends React.Component {
             />
           </div>
           <div>
-            <span>Select a model </span>
+            <span>Model </span>
             <Select
               autofocus
               options={this.state.modelOptions}
@@ -192,7 +199,7 @@ class QuoteAddVehicle extends React.Component {
             />
           </div>
           <div>
-            <span>Select a sub-model </span>
+            <span>Sub-model </span>
             <Select
               autofocus
               options={this.state.subModelOptions}
@@ -206,7 +213,7 @@ class QuoteAddVehicle extends React.Component {
             />
           </div>
           <div>
-            <span>Select a year </span>
+            <span>Year </span>
             <Select
               autofocus
               options={this.state.yearOptions}

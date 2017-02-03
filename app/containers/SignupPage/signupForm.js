@@ -2,7 +2,7 @@ import React from 'react';
 // Notice that we need redux-form/immutable for the boilerplate
 // http://redux-form.com/6.2.0/examples/immutable/
 import { Field, reduxForm } from 'redux-form/immutable';
-import { Form, Button, Header } from 'semantic-ui-react';
+import { Form, Button, Header, Divider } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 
 // TODO: Style in a semantic ui way by adding icons, removing labels, adding placeholders and adding wide buttons
@@ -42,6 +42,7 @@ const SignupForm = (props) => {
       {/* Render error if any. */}
       {error && <strong>{error}</strong>}
       <Button fluid onClick={(evt) => { evt.preventDefault(); routeToLogin(evt); }} hidden>Already have an account?</Button>
+      <Divider horizontal>Or</Divider>
       <Button color="teal" fluid disabled={submitting}>Sign Up</Button>
     </Form>
   );
