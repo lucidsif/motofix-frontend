@@ -27,9 +27,6 @@ import configureStore from './store';
 import { ApolloProvider } from 'react-apollo';
 import apolloClient from './graphql';
 
-// Import Language Provider
-import LanguageProvider from 'containers/LanguageProvider';
-
 // Import CSS reset and Styles
 import 'sanitize.css/sanitize.css';
 import 'styles/global-styles';
@@ -76,7 +73,6 @@ const rootRoute = {
 const render = (messages) => {
   ReactDOM.render(
     <ApolloProvider immutable store={store} client={apolloClient}>
-      <LanguageProvider messages={messages}>
         <Router
           history={history}
           routes={rootRoute}
@@ -86,7 +82,6 @@ const render = (messages) => {
             applyRouterMiddleware(useScroll())
           }
         />
-      </LanguageProvider>
     </ApolloProvider>,
     document.getElementById('app')
   );

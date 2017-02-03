@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
 import { deAuthenticateUser } from 'containers/App/actions';
+import { selectMid } from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 import { resetCart, resetPart, resetSavedQuote } from 'containers/QuoteCentral/actions';
 import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
@@ -107,9 +108,16 @@ export class AppNavBar extends React.Component {
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
-            <Label color="teal">
+            {this.props.vehicleMid &&
+            <Label as="a" color="teal" onClick={() => browserHistory.push('quote/services')}>
               <Icon name="in cart" /> ${this.totalPrice()}
             </Label>
+            }
+            {!this.props.vehicleMid &&
+              <Label color="teal">
+                <Icon name="in cart" /> ${this.totalPrice()}
+              </Label>
+            }
           </Menu.Item>
         </Menu.Menu>
         <Dropdown className="link item" icon="bars">
@@ -131,6 +139,7 @@ export class AppNavBar extends React.Component {
 
 AppNavBar.propTypes = {
   authenticated: React.PropTypes.bool,
+  vehicleMid: React.PropTypes.string,
   onDeAuthentication: React.PropTypes.func,
   onNewQuoteClick: React.PropTypes.func,
   cart: React.PropTypes.object,
@@ -139,6 +148,7 @@ AppNavBar.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   authenticated: selectAuthenticated(),
+  vehicleMid: selectMid(),
   cart: selectCart(),
   part: selectPart(),
 });

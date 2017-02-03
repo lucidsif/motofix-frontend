@@ -8,11 +8,11 @@ import { combineReducers } from 'redux-immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
 import globalReducer from 'containers/App/reducer';
-import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import { apolloReducer } from './graphql';
 import { reducer as reduxFormReducer } from 'redux-form/immutable';
 
 import quoteCentralReducer from 'containers/QuoteCentral/reducer';
+import quoteAddVehicleReducer from 'containers/QuoteAddVehicle/reducer';
 
 /*
  * routeReducer
@@ -50,9 +50,9 @@ export default function createReducer(asyncReducers) {
     apollo: apolloReducer,
     route: routeReducer,
     global: globalReducer,
-    language: languageProviderReducer,
     form: reduxFormReducer,
     quoteCentral: quoteCentralReducer,
+    quoteAddVehicle: quoteAddVehicleReducer,
     ...asyncReducers,
   });
 }

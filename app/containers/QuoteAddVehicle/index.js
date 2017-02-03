@@ -239,7 +239,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
-      /*
+
       evt.preventDefault();
       console.log('mock vehicle selected and merged to state');
       const vehicle = {
@@ -254,7 +254,7 @@ function mapDispatchToProps(dispatch) {
       };
       dispatch(addVehicle(vehicle));
       browserHistory.push('/quote/services');
-      */
+      /*
       evt.preventDefault();
       if (motorcycle) {
         console.log('all fields submitted');
@@ -263,6 +263,7 @@ function mapDispatchToProps(dispatch) {
       } else {
         console.log('please fill out all fields');
       }
+      */
     },
   };
 }
