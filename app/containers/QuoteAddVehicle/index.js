@@ -15,7 +15,7 @@ let modelData = [];
 let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
-var zipcode;
+let zipcode;
 let motorcycle;
 
 // TODO: 7.1/10 add form validation
@@ -46,6 +46,7 @@ class QuoteAddVehicle extends React.Component {
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
     this.validateAndSaveZip = this.validateAndSaveZip.bind(this);
+    this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
   }
   updateManufacturerValueAndGetModels(newValue) {
     this.setState({ manufacturerValue: newValue });
@@ -161,6 +162,28 @@ class QuoteAddVehicle extends React.Component {
     return this.setState({ zipcode: false });
   }
 
+  validateMotorcycleForm(e) {
+    e.preventDefault();
+    console.log(this.state.manufacturerValue, this.state.modelValue)
+    if (!this.state.manufacturerValue) {
+      console.log(this.state.manufacturerValue);
+      return this.setState({ manufacturerValue: false });
+    }
+    if (!this.state.modelValue) {
+      console.log(this.state.modelValue);
+      return this.setState({ modelValue: false });
+    }
+    if (!this.state.subModelValue) {
+      console.log(this.state.subModelValue);
+      return this.setState({ subModelValue: false });
+    }
+    if (!this.state.yearValue) {
+      console.log(this.state.yearValue);
+      return this.setState({ yearValue: false });
+    }
+    return this.props.onSubmitForm(e);
+  }
+
   render() {
     console.log(zipcode)
     let renderVehicleModel = null;
@@ -177,7 +200,7 @@ class QuoteAddVehicle extends React.Component {
         {renderVehicleModel &&
         <div>{renderVehicleModel}</div>
         }
-        <form onSubmit={this.props.onSubmitForm}>
+        <form onSubmit={this.validateMotorcycleForm}>
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
           <div>
@@ -205,6 +228,9 @@ class QuoteAddVehicle extends React.Component {
               searchable={this.state.searchable}
               placeholder="Search or select a make"
             />
+            {this.state.manufacturerValue === false &&
+            <Label basic color="red" pointing>Please select a make</Label>
+            }
           </div>
           <div>
             <span>Model </span>
@@ -219,6 +245,9 @@ class QuoteAddVehicle extends React.Component {
               searchable={this.state.searchable}
               placeholder="Search or select a model"
             />
+            {this.state.modelValue === false &&
+            <Label basic color="red" pointing>Please select a model</Label>
+            }
           </div>
           <div>
             <span>Sub-model </span>
@@ -233,6 +262,9 @@ class QuoteAddVehicle extends React.Component {
               searchable={this.state.searchable}
               placeholder="Search or select a sub-model"
             />
+            {this.state.subModelValue === false &&
+            <Label basic color="red" pointing>Please select a sub-model</Label>
+            }
           </div>
           <div>
             <span>Year </span>
@@ -247,6 +279,9 @@ class QuoteAddVehicle extends React.Component {
               searchable={this.state.searchable}
               placeholder="Search or select a year"
             />
+            {this.state.yearValue === false &&
+            <Label basic color="red" pointing>Please select a year</Label>
+            }
           </div>
           {motorcycle === false &&
           <Label basic color="red" pointing="left">Please enter a valid zipcode</Label>
@@ -271,7 +306,6 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
-      evt.preventDefault();
       console.log(zipcode);
       if (zipcode) {
         console.log('mock vehicle selected and merged to state');
