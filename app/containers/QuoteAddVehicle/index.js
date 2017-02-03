@@ -15,6 +15,7 @@ let modelData = [];
 let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
+let zipcode;
 let motorcycle;
 
 // TODO: 7.1/10 add form validation
@@ -27,6 +28,7 @@ class QuoteAddVehicle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      zipcode: null,
       manufacturerValue: null,
       modelValue: null,
       subModelValue: null,
@@ -42,6 +44,7 @@ class QuoteAddVehicle extends React.Component {
     this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this);
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
+    this.validateAndSaveZip = this.validateAndSaveZip.bind(this);
   }
   updateManufacturerValueAndGetModels(newValue) {
     this.setState({ manufacturerValue: newValue });
@@ -145,6 +148,17 @@ class QuoteAddVehicle extends React.Component {
     return null;
   }
 
+  validateAndSaveZip(evt) {
+    const isValid = /^\b\d{5}(-\d{4})?\b$/.test(evt.target.value);
+    if (isValid) {
+      console.log('zip is valid');
+      zipcode = parseInt(evt.target.value);
+      return isValid;
+    }
+    console.log('invalid zip');
+    return isValid;
+  }
+
   render() {
     let renderVehicleModel = null;
     const vehicle = this.props.vehicle;
@@ -164,7 +178,7 @@ class QuoteAddVehicle extends React.Component {
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
           <Input
-            floated="left"
+            onBlur={this.validateAndSaveZip}
             icon="location arrow"
             placeholder="Zipcode of motorcycle"
             size="large"
@@ -246,10 +260,10 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (evt) => {
-
       evt.preventDefault();
       console.log('mock vehicle selected and merged to state');
       const vehicle = {
+        zipcode,
         mid: 'HDA06327',
         manufacturer: 'Honda',
         model: 'CBR',
