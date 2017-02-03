@@ -15,7 +15,7 @@ let modelData = [];
 let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
-let zipcode;
+var zipcode;
 let motorcycle;
 
 // TODO: 7.1/10 add form validation
@@ -152,14 +152,15 @@ class QuoteAddVehicle extends React.Component {
     const isValid = /^\b\d{5}(-\d{4})?\b$/.test(evt.target.value);
     if (isValid) {
       console.log('zip is valid');
-      zipcode = parseInt(evt.target.value);
-      return isValid;
+      zipcode = parseInt(evt.target.value, 10);
+      return this.setState({ zipcode });
     }
     console.log('invalid zip');
-    return isValid;
+    return this.setState({ zipcode: false });
   }
 
   render() {
+    console.log(zipcode)
     let renderVehicleModel = null;
     const vehicle = this.props.vehicle;
     if (this.props.vehicle.mid) {
@@ -177,12 +178,17 @@ class QuoteAddVehicle extends React.Component {
         <form onSubmit={this.props.onSubmitForm}>
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
-          <Input
-            onBlur={this.validateAndSaveZip}
-            icon="location arrow"
-            placeholder="Zipcode of motorcycle"
-            size="large"
-          />
+          <div>
+            <Input
+              onBlur={this.validateAndSaveZip}
+              icon="location arrow"
+              placeholder="Zipcode of motorcycle"
+              size="large"
+            />
+            {this.state.zipcode === false &&
+            <Label basic color="red" pointing="left">Please enter a valid zipcode</Label>
+            }
+          </div>
           <Divider section horizontal> Select Model</Divider>
           <div>
             <span>Make</span>
@@ -197,6 +203,7 @@ class QuoteAddVehicle extends React.Component {
               searchable={this.state.searchable}
               placeholder="Search or select a make"
             />
+            <Label basic color="red" pointing>Please enter a value</Label>
           </div>
           <div>
             <span>Model </span>
@@ -275,6 +282,7 @@ function mapDispatchToProps(dispatch) {
       };
       dispatch(addVehicle(vehicle));
       browserHistory.push('/quote/services');
+      //TODO: Add zipcode to motorcycle object
       /*
       evt.preventDefault();
       if (motorcycle) {
