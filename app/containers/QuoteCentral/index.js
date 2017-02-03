@@ -33,7 +33,7 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 const VehicleIsSelected = UserAuthWrapper({ // eslint-disable-line new-cap
   authSelector: (state) => state.get('quoteAddVehicle').toJS(),
   predicate: (state) => state.mid,
-  redirectAction: browserHistory.replace('/quote/vehicle'),
+  failureRedirectPath: '/quote/vehicle',
   wrapperDisplayName: 'VehicleIsSelected',
 });
 

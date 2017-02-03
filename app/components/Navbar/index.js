@@ -75,7 +75,7 @@ export class AppNavBar extends React.Component {
       return regexedService;
     })
     .reduce((acc, curr) => {
-      if (this.props.cart[curr].selected && typeof this.props.cart[curr].laborTime === 'number') {
+      if (this.props.cart[curr].selected && this.props.cart[curr].laborTime) {
         const laborTime = this.props.cart[curr].laborTime;
         console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
         return acc + laborTime;
