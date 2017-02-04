@@ -8,6 +8,7 @@ import { addVehicle } from './actions';
 import Select from 'react-select';
 import { createStructuredSelector } from 'reselect';
 import selectVehicleDomain from './selectors';
+import Geosuggest from 'react-geosuggest';
 
 import manufacturerData from './manufacturers';
 
@@ -205,6 +206,9 @@ class QuoteAddVehicle extends React.Component {
     return this.props.onSubmitForm(vehicle);
   }
 
+  // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
+  // if distance is within x miles -> allow to pass otherwise fail to pass and render message
+
   render() {
     let renderVehicleModel = null;
     const vehicle = this.props.vehicle;
@@ -223,17 +227,11 @@ class QuoteAddVehicle extends React.Component {
         <form onSubmit={this.validateMotorcycleForm}>
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
-          <div>
-            <Input
-              onBlur={this.validateAndUpdateZip}
-              icon="location arrow"
-              placeholder="Zipcode of motorcycle"
-              size="large"
-            />
-            {this.state.zipcode === false &&
-            <Label basic color="red" pointing="left">Please enter a valid zipcode</Label>
-            }
-          </div>
+          <Geosuggest
+            placeholder="Enter zipcode of motorcycle"
+            country="us"
+            onBlur={(e) => console.log(e)}
+          />
           <Divider section horizontal> Select Model</Divider>
           <div>
             <span>Make</span>

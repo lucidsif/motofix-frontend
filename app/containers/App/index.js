@@ -30,6 +30,9 @@ function App(props) {
         link={[
         { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css' },
         ]}
+        script={[
+          { src: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAVnEr30TZi8hdLf7UZsYTv8HjekSiGpYA&libraries=places', type: 'text/javascript' },
+        ]}
         titleTemplate="%s - motofix"
         defaultTitle="motofix"
         meta={[
@@ -48,3 +51,14 @@ App.propTypes = {
 };
 
 export default App;
+/*
+ <Input
+ onBlur={this.validateAndUpdateZip}
+ icon="location arrow"
+ placeholder="Zipcode of motorcycle"
+ size="large"
+ />
+ {this.state.zipcode === false &&
+ <Label basic color="red" pointing="left">Please enter a valid zipcode</Label>
+ }
+ */
