@@ -70,18 +70,18 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
-const render = (messages) => {
+const render = () => {
   ReactDOM.render(
     <ApolloProvider immutable store={store} client={apolloClient}>
-        <Router
-          history={history}
-          routes={rootRoute}
-          render={
+      <Router
+        history={history}
+        routes={rootRoute}
+        render={
             // Scroll to top when going to a new page, imitating default browser
             // behaviour
             applyRouterMiddleware(useScroll())
           }
-        />
+      />
     </ApolloProvider>,
     document.getElementById('app')
   );

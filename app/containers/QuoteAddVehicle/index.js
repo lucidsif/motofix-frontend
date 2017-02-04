@@ -18,7 +18,7 @@ let subModelFactory = [];
 let zipcode;
 let motorcycle;
 
-// TODO: Ensure that vehicle obj is submitted to application state on submit
+// TODO: detect ip address using ipinfo.io
 // TODO: Clean up validation logic and shit like file level variables
 // TODO: 7/10 half the size of the select menus
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
