@@ -16,7 +16,6 @@ let modelData = [];
 let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
-let zipcode;
 let motorcycle;
 
 // TODO: detect ip address using ipinfo.io
@@ -30,7 +29,7 @@ class QuoteAddVehicle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      zipcode: null,
+      location: null,
       manufacturerValue: null,
       modelValue: null,
       subModelValue: null,
@@ -49,6 +48,7 @@ class QuoteAddVehicle extends React.Component {
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
     this.validateAndUpdateZip = this.validateAndUpdateZip.bind(this);
     this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
+    this.onSuggestSelect = this.onSuggestSelect.bind(this);
   }
   updateManufacturerValueAndGetModels(newValue) {
     this.setState({ manufacturerValue: newValue });
@@ -151,7 +151,7 @@ class QuoteAddVehicle extends React.Component {
     }
     return null;
   }
-
+// find way to disinclude invalid zipcode
   validateAndUpdateZip(evt) {
     const isValid = /^\b\d{5}(-\d{4})?\b$/.test(evt.target.value);
     if (isValid) {
@@ -164,6 +164,14 @@ class QuoteAddVehicle extends React.Component {
     return this.setState({ zipcode: false });
   }
 
+  onSuggestSelect(mapsObj){
+    const label = mapsObj.label;
+    const coordinates = mapsObj.location;
+    const locationObj = { label, coordinates };
+    this.setState({ location: locationObj });
+    console.log(this.state.location);
+  }
+
   validateMotorcycleForm(e) {
     e.preventDefault();
     //TODO: Comment these out in production. WHY AREN"T THESE SETTING?
@@ -172,9 +180,10 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ modelValue: 'CBR' });
     this.setState({ subModelValue: 'CBR600' });
     this.setState({ yearValue: 2005 });
+    console.log(this.state);
 
-    if (!this.state.zipcode) {
-      return this.setState({ zipcode: false });
+    if (!this.state.location || /^\b\d{5}(-\d{4})?\b$/.test(this.state.location.label)) {
+      return this.setState({ location: false });
     }
     /*
     if (!this.state.manufacturerValue) {
@@ -228,10 +237,14 @@ class QuoteAddVehicle extends React.Component {
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
           <Geosuggest
-            placeholder="Enter zipcode of motorcycle"
+            placeholder="Enter your zipcode or city"
             country="us"
-            onBlur={(e) => console.log(e)}
+            types={['(regions)']}
+            onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
           />
+          {this.state.location === false &&
+          <Label basic color="red" pointing>Please enter a valid city or zipcode</Label>
+          }
           <Divider section horizontal> Select Model</Divider>
           <div>
             <span>Make</span>
