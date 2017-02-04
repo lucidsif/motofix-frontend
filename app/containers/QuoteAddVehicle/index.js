@@ -165,9 +165,17 @@ class QuoteAddVehicle extends React.Component {
 
   validateMotorcycleForm(e) {
     e.preventDefault();
+    //TODO: Comment these out in production. WHY AREN"T THESE SETTING?
+    this.setState({ manufacturerValue: 'Honda' });
+    console.log(this.state.manufacturerValue);
+    this.setState({ modelValue: 'CBR' });
+    this.setState({ subModelValue: 'CBR600' });
+    this.setState({ yearValue: 2005 });
+
     if (!this.state.zipcode) {
-      this.setState({ zipcode: false});
+      return this.setState({ zipcode: false });
     }
+    /*
     if (!this.state.manufacturerValue) {
       this.setState({ manufacturerValue: false });
     }
@@ -180,11 +188,24 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
-    return this.props.onSubmitForm(e);
+    */
+    console.log('mock vehicle selected and merged to state');
+    //TODO: Create actual vehicle object in this format
+    const vehicle = {
+      zipcode: this.state.zipcode,
+      mid: 'HDA06327',
+      manufacturer: 'Honda',
+      model: 'CBR',
+      model_variant: 'CBR600',
+      tuning_description: 'SE',
+      start_year: 2008,
+      end_year: 2011,
+      year: 2010,
+    };
+    return this.props.onSubmitForm(vehicle);
   }
 
   render() {
-    console.log(zipcode)
     let renderVehicleModel = null;
     const vehicle = this.props.vehicle;
     if (this.props.vehicle.mid) {
@@ -301,26 +322,10 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSubmitForm: (evt) => {
-      if (motorcycle) {
-        console.log('mock vehicle selected and merged to state');
-        const vehicle = {
-          zipcode,
-          mid: 'HDA06327',
-          manufacturer: 'Honda',
-          model: 'CBR',
-          model_variant: 'CBR600',
-          tuning_description: 'SE',
-          start_year: 2008,
-          end_year: 2011,
-          year: 2010,
-        };
-        dispatch(addVehicle(vehicle));
-        browserHistory.push('/quote/services');
-      }
-      //TODO: Add zipcode to motorcycle object
-      /*
-      evt.preventDefault();
+    onSubmitForm: (vehicleObj) => {
+      dispatch(addVehicle(vehicleObj));
+      browserHistory.push('/quote/services');
+      /* this code will not exist here
       if (motorcycle) {
         console.log('all fields submitted');
         dispatch(addVehicle(motorcycle));
