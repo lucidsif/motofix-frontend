@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Message, Label, Input, Divider } from 'semantic-ui-react';
+import { Button, Message, Label, Divider } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
@@ -49,7 +49,7 @@ class QuoteAddVehicle extends React.Component {
     this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
   }
-  updateManufacturerValueAndGetModels(newValue) {
+  updateManufacturerValueAndGetModels(newValue) { // eslint-disable-line react/sort-comp
     this.setState({ manufacturerValue: newValue });
     this.setState({ modelValue: null });
     this.setState({ subModelValue: null });
@@ -161,7 +161,7 @@ class QuoteAddVehicle extends React.Component {
     return this.setState({ location: { label: newValue } });
   }
 
-  onSuggestSelect(mapsObj){
+  onSuggestSelect(mapsObj) {
     const label = mapsObj.label;
     const coordinates = mapsObj.location;
     const locationObj = { label, coordinates };
@@ -171,7 +171,7 @@ class QuoteAddVehicle extends React.Component {
 
   validateMotorcycleForm(e) {
     e.preventDefault();
-    //TODO: Comment these out in production. WHY AREN"T THESE SETTING?
+    // TODO: Comment these out in production. WHY AREN"T THESE SETTING?
     this.setState({ manufacturerValue: 'Honda' });
     console.log(this.state.manufacturerValue);
     this.setState({ modelValue: 'CBR' });
@@ -197,7 +197,7 @@ class QuoteAddVehicle extends React.Component {
     }
     */
     console.log('mock vehicle selected and merged to state');
-    //TODO: Create actual vehicle object in this format
+    // TODO: Create actual vehicle object in this format
     const vehicle = {
       zipcode: this.state.zipcode,
       mid: 'HDA06327',
@@ -233,15 +233,18 @@ class QuoteAddVehicle extends React.Component {
         <form onSubmit={this.validateMotorcycleForm}>
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
-          <Geosuggest
-            placeholder="Enter your zipcode or city"
-            country="us"
-            types={['(regions)']}
-            onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
-            onBlur={(e) => this.validateAndUpdateZip(e)}
-          />
+          <div className="ui large icon input">
+            <Geosuggest
+              placeholder="Enter zipcode or city"
+              country="us"
+              types={['(regions)']}
+              onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
+              onBlur={(e) => this.validateAndUpdateZip(e)}
+            />
+            <i className="location arrow icon"></i>
+          </div>
           {this.state.location === false &&
-          <Label basic color="red" pointing>Please enter a valid city or zipcode</Label>
+          <Label basic color="red" pointing="left">Please enter a valid city or zipcode</Label>
           }
           <Divider section horizontal> Select Model</Divider>
           <div>

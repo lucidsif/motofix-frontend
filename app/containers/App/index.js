@@ -58,7 +58,6 @@ export default App;
  placeholder="Zipcode of motorcycle"
  size="large"
  />
- {this.state.zipcode === false &&
- <Label basic color="red" pointing="left">Please enter a valid zipcode</Label>
- }
+// use this message 4 geosgggest
+
  */
