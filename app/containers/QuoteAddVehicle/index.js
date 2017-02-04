@@ -18,8 +18,7 @@ let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
 
-// TODO: detect ip address using ipinfo.io
-// TODO: Clean up validation logic and shit like file level variables
+// TODO: Add pass coordinates and add icon to input
 // TODO: 7/10 half the size of the select menus
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 replace spans with labels
@@ -151,17 +150,15 @@ class QuoteAddVehicle extends React.Component {
     }
     return null;
   }
-// find way to disinclude invalid zipcode
-  validateAndUpdateZip(evt) {
-    const isValid = /^\b\d{5}(-\d{4})?\b$/.test(evt.target.value);
-    if (isValid) {
-      console.log('zip is valid');
-      zipcode = parseInt(evt.target.value, 10);
-      return this.setState({ zipcode });
+  validateAndUpdateZip(newValue) {
+    const isValid = /^\b\d{5}(-\d{4})?\b$/.test(newValue);
+    if (!isValid) {
+      console.log('zip is invalid');
+      return this.setState({ location: false });
     }
-    console.log('invalid zip');
-    zipcode = false;
-    return this.setState({ zipcode: false });
+    console.log('valid zip');
+    // TODO: get coordinates of this zipcode and pass it to location state obj
+    return this.setState({ location: { label: newValue } });
   }
 
   onSuggestSelect(mapsObj){
@@ -182,7 +179,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: 2005 });
     console.log(this.state);
 
-    if (!this.state.location || /^\b\d{5}(-\d{4})?\b$/.test(this.state.location.label)) {
+    if (!this.state.location) {
       return this.setState({ location: false });
     }
     /*
@@ -241,6 +238,7 @@ class QuoteAddVehicle extends React.Component {
             country="us"
             types={['(regions)']}
             onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
+            onBlur={(e) => this.validateAndUpdateZip(e)}
           />
           {this.state.location === false &&
           <Label basic color="red" pointing>Please enter a valid city or zipcode</Label>
