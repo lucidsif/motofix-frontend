@@ -37,7 +37,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
             <g className="active">
               <circle cx="13%" cy="10%" r="1.25em"></circle>
               <text x="13%" y="10%">1</text>
-              <text className="stage" x="13%" y="30%">Vehicle Information</text>
+              <text className="stage" x="13%" y="30%">Motorcycle Information</text>
             </g>
           </svg>
         </Segment>
