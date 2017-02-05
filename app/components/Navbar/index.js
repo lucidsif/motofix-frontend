@@ -102,7 +102,7 @@ export class AppNavBar extends React.Component {
 
   render() {
     return (
-      <Menu secondary fixed="top" className="padRight">
+      <Menu secondary fixed="top" className="padRight ">
         <Menu.Item>
           <Image src={logo} size="tiny" href="#" onClick={() => browserHistory.push('/')} />
           <Label color="orange" horizontal className="betaLabel">beta</Label>

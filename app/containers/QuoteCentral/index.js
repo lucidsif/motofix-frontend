@@ -31,7 +31,6 @@ const VehicleIsSelected = UserAuthWrapper({ // eslint-disable-line new-cap
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     console.log('quotecentral props:');
-    console.log(this.props);
     // conditional render that will either render loading or addservices component
     const vehicleSearchTerm = `${this.props.vehicle.year} ${this.props.vehicle.manufacturer} ${this.props.vehicle.model_variant}`;
     const loadingMessage = `Loading Services for ${vehicleSearchTerm}`;
