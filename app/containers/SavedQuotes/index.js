@@ -31,6 +31,12 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
       const date = new Date(quote.createdAt);
       const formattedDate = date.toString();
       const motorcycle = JSON.parse(quote.motorcycle_json);
+      let location;
+      if(motorcycle.location){
+        location = motorcycle.location.customerLocation;
+      } else {
+        location = 'unavailable'
+      }
       // cart and part will both be sent to savedquotebreakdown component
       const cart = JSON.parse(quote.cart_json);
       const part = JSON.parse(quote.part_json);
@@ -44,6 +50,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
         <Segment key={formattedDate}>
           <Item.Content>
             <Item.Header>{motorcycle.year} {motorcycle.manufacturer} {motorcycle.model} ({motorcycle.model_variant})</Item.Header>
+            <Item.Meta>{location}</Item.Meta>
             <Item.Meta>{formattedDate}</Item.Meta>
             {selectedServices}
             <Accordion>

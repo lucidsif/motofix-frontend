@@ -42,10 +42,8 @@ export class AppNavBar extends React.Component {
     })
     .reduce((acc, curr) => {
       if (this.props.cart[curr].selected && this.props.part[curr]) {
-        console.log(`${curr} is selected and a part exists for it`);
         // serviceparts shouls be an array of parts belonging to a service
         const servicePartKeys = Object.keys(this.props.part[curr]);
-        console.log(servicePartKeys);
         return servicePartKeys.reduce((accu, currKey) => {
           if (this.props.part[curr][currKey].valid) {
             /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
@@ -77,7 +75,6 @@ export class AppNavBar extends React.Component {
     .reduce((acc, curr) => {
       if (this.props.cart[curr].selected && this.props.cart[curr].laborTime) {
         const laborTime = this.props.cart[curr].laborTime;
-        console.log(`service: ${curr} with labortime: ${laborTime} is selected`);
         return acc + laborTime;
       }
       return acc + 0;
@@ -98,8 +95,6 @@ export class AppNavBar extends React.Component {
  // TODO: link to quote/services by clicking on cart button without breaking page style and only link if vehicle exists
 
   render() {
-    console.log('navbar props');
-    console.log(this.props);
     return (
       <Menu secondary fixed="top" className="padRight">
         <Menu.Item>

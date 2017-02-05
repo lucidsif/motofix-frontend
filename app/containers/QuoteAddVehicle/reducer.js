@@ -12,7 +12,6 @@ import {
 } from './constants';
 
 const initialState = fromJS({
-  zipcode: null,
   mid: null,
   manufacturer: null,
   model: null,
@@ -21,10 +20,10 @@ const initialState = fromJS({
   start_year: null,
   end_year: null,
   year: null,
+  location: null,
 });
 
 const resetVehicleState = {
-  zipcode: null,
   mid: null,
   manufacturer: null,
   model: null,
@@ -33,6 +32,7 @@ const resetVehicleState = {
   start_year: null,
   end_year: null,
   year: null,
+  location: null
 };
 
 
