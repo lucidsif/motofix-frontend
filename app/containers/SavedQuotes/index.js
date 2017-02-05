@@ -32,10 +32,10 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
       const formattedDate = date.toString();
       const motorcycle = JSON.parse(quote.motorcycle_json);
       let location;
-      if(motorcycle.location){
+      if (motorcycle.location) {
         location = motorcycle.location.customerLocation;
       } else {
-        location = 'unavailable'
+        location = 'unavailable';
       }
       // cart and part will both be sent to savedquotebreakdown component
       const cart = JSON.parse(quote.cart_json);

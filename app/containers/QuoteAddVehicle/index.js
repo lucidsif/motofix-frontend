@@ -185,9 +185,12 @@ class QuoteAddVehicle extends React.Component {
     }).then((response) => {
       const data = response.data.checkDistance;
       const distance = data.rows[0].elements[0].distance.value;
+      console.log(distance);
       // if distance is greater than or equal to 40mi, render error message
       if (distance >= 211200) {
-        return this.setState({ overDistance: true });
+        this.setState({ overDistance: true });
+      } else {
+        this.setState({ overDistance: false });
       }
       const locationObj = {
         mechanicLocations: data.origin_addresses,
@@ -196,7 +199,6 @@ class QuoteAddVehicle extends React.Component {
         duration: data.rows[0].elements[0].duration.value,
       };
       this.setState({ location: locationObj });
-      return this.setState({ overDistance: false });
     });
   }
 
