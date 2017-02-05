@@ -64,8 +64,7 @@ export class AppNavBar extends React.Component {
        this.props.cart[key].selected && this.props.cart[key].unavailable
     );
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
-      console.log(selectedUnavailableServices);
-      return 'N/A';
+      return -9;
     }
 
     const sumOfLaborTimes = services.map((service) => {
@@ -92,6 +91,13 @@ export class AppNavBar extends React.Component {
     return parseFloat(Math.round(total * 1) / 1);
   }
 
+  ifNegativeNum(num) {
+    if (num < 0) {
+      return 'n/a';
+    }
+    return num;
+  }
+
  // TODO: link to quote/services by clicking on cart button without breaking page style and only link if vehicle exists
 
   render() {
@@ -105,12 +111,12 @@ export class AppNavBar extends React.Component {
           <Menu.Item>
             {this.props.vehicleMid &&
             <Label as="a" color="teal" onClick={() => browserHistory.push('quote/services')}>
-              <Icon name="in cart" /> ${this.totalPrice()}
+              <Icon name="in cart" /> ${this.ifNegativeNum(this.totalPrice())}
             </Label>
             }
             {!this.props.vehicleMid &&
               <Label color="teal">
-                <Icon name="in cart" /> ${this.totalPrice()}
+                <Icon name="in cart" /> ${this.ifNegativeNum(this.totalPrice())}
               </Label>
             }
           </Menu.Item>

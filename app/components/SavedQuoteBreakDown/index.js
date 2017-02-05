@@ -42,7 +42,7 @@ function SavedQuoteBreakDown(props) {
     const selectedUnavailableServices = Object.keys(props.cart).filter((key) => props.cart[key].selected && props.cart[key].unavailable);
 
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
-      return 'N/A';
+      return -9;
     }
 
     const sumOfLaborTimes = services.map((service) => {
@@ -117,13 +117,20 @@ function SavedQuoteBreakDown(props) {
     return parseFloat(Math.round(laborPrice * 100) / 100).toFixed(2);
   }
 
+  function ifNegativeNum(num) {
+    if (num < 0) {
+      return 'n/a';
+    }
+    return num;
+  }
+
   function renderServices() {
     const filtered = services.filter((service) => props.cart[service.replace(/\s/g, '')].selected);
     return filtered.map((filteredService) => {
       let laborTime = multiplyAndFloat(props.cart[filteredService.replace(/\s/g, '')].laborTime);
       const unAvailableLaborTime = props.cart[filteredService.replace(/\s/g, '')].unavailable;
       if (unAvailableLaborTime) {
-        laborTime = 'N/A';
+        laborTime = -9;
       }
       return (
         <List.Item key={filteredService}>
@@ -131,7 +138,7 @@ function SavedQuoteBreakDown(props) {
           <List.Content floated="left" verticalAlign="middle">
             <span className="service-span">{filteredService}</span></List.Content>
           <List.Content floated="right" verticalAlign="middle">
-            <span className="service-span">{laborTime}</span>
+            <span className="service-span">{ifNegativeNum(laborTime)}</span>
           </List.Content>
           <List.Content>
             <List>
@@ -188,7 +195,7 @@ function SavedQuoteBreakDown(props) {
             <p>Labor Total</p>
           </List.Content>
           <List.Content floated="right">
-            <p>{floatServicePrice()}</p>
+            <p>{ifNegativeNum(floatServicePrice())}</p>
           </List.Content>
         </List.Item>
         <List.Item>
@@ -196,7 +203,7 @@ function SavedQuoteBreakDown(props) {
             <p>Parts Total</p>
           </List.Content>
           <List.Content floated="right">
-            <p>{floatPartsPrice()}</p>
+            <p>{ifNegativeNum(floatPartsPrice())}</p>
           </List.Content>
         </List.Item>
         <List.Item>
@@ -204,7 +211,7 @@ function SavedQuoteBreakDown(props) {
             <p> Tax</p>
           </List.Content>
           <List.Content floated="right">
-            <p>{floatTax()}</p>
+            <p>{ifNegativeNum(floatTax())}</p>
           </List.Content>
         </List.Item>
         <List.Item>
@@ -212,7 +219,7 @@ function SavedQuoteBreakDown(props) {
             <p>Total Price</p>
           </List.Content>
           <List.Content floated="right">
-            <p>{floatTotalPrice()}</p>
+            <p>{ifNegativeNum(floatTotalPrice())}</p>
           </List.Content>
         </List.Item>
       </List>

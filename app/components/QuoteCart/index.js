@@ -45,9 +45,7 @@ function QuoteCart(props) {
     const selectedUnavailableServices = Object.keys(props.props.cart).filter((key) => props.props.cart[key].selected && props.props.cart[key].unavailable);
 
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
-      console.log('unavailable services');
-      console.log(selectedUnavailableServices);
-      return 'N/A';
+      return -9;
     }
 
     const sumOfLaborTimes = services.map((service) => {
@@ -93,6 +91,13 @@ function QuoteCart(props) {
     const savings = dealerTotal - motofixTotal;
     return parseFloat(Math.round(savings * 1) / 1);
   }
+
+  function ifNegativeNum(num) {
+    if (num < 0) {
+      return 'n/a';
+    }
+    return num;
+  }
   return (
     <Grid.Row>
       <Segment padded="very">
@@ -101,17 +106,17 @@ function QuoteCart(props) {
         </Grid.Row>
         <Grid centered divided="vertically">
           <Grid.Row>
-            <Label color="teal" size="big">${totalPrice()}</Label>
+            <Label color="teal" size="big">${ifNegativeNum(totalPrice())}</Label>
           </Grid.Row>
 
           <Grid.Row columns={2} divided>
             <Grid.Column>
               <p>Dealer Price:</p>
-              <Label color="red" size="large">~${totalDealerFloated()}</Label>
+              <Label color="red" size="large">~${ifNegativeNum(totalDealerFloated())}</Label>
             </Grid.Column>
             <Grid.Column>
               <p>Total Savings:</p>
-              <Label color="teal" size="large">~${totalSavings()}</Label>
+              <Label color="teal" size="large">~${ifNegativeNum(totalSavings())}</Label>
             </Grid.Column>
           </Grid.Row>
 
