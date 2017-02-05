@@ -7,7 +7,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import logo from './logo.png';
 import image from './motowoman.png';
-import { Button } from 'semantic-ui-react';
+import { Button, Image } from 'semantic-ui-react';
 
 // TODO: convert to functional component
 
@@ -16,16 +16,9 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
   render() {
     return (
       <div className="pusher">
-        <div className="ui inverted vertical masthead center aligned segment">
-
-          <div className="ui text container">
-            <h1 className="ui inverted header">
-              Imagine-a-Company
-            </h1>
-            <h2>Do whatever you want when you want to.</h2>
-            <div className="ui huge primary button">Get Started <i className="right arrow icon"></i></div>
-          </div>
-
+        <div className="ui inverted vertical masthead center aligned segment landing-image">
+          <Image size="large" src={logo} centered className="padUp"/>
+          <Button color="orange" size="huge" circular>Get a free quote</Button>
         </div>
 
         <div className="ui vertical stripe segment">
@@ -38,7 +31,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
                 <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>
               </div>
               <div className="six wide right floated column">
-                <img src="assets/images/wireframe/white-image.png" className="ui large bordered rounded image" />
+                <img src={image} className="ui large bordered rounded image" />
               </div>
             </div>
             <div className="row">
@@ -70,7 +63,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
         <div className="ui vertical stripe segment">
           <div className="ui text container">
             <h3 className="ui header">Breaking The Grid, Grabs Your Attention</h3>
-            <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>
+            <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing big amounts of whitespace and generic content that can seem big, monolithic and worth your attention.</p>
             <a className="ui large button">Read More</a>
             <h4 className="ui horizontal header divider">
               <a href="#">Case Studies</a>

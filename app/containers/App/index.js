@@ -18,10 +18,12 @@ import Footer from 'components/Footer';
 
 // TODO: add and ensure footer stays on the bottom of every page
 function App(props) {
-  console.log(props)
   var AppWrapper;
+  var FooterWrapper
 if(props.location.pathname === '/') {
   AppWrapper = styled.div`
+`;
+  FooterWrapper = styled.div`
 `;
 } else {
   AppWrapper = styled.div`
@@ -33,13 +35,19 @@ if(props.location.pathname === '/') {
   padding: 0 16px;
   flex-direction: column;
 `;
-}
 
-const FooterWrapper = styled.div`
+  FooterWrapper = styled.div`
+  max-width: calc(968px + 16px * 2);
+  margin: 0 auto;
+  margin-bottom: 2em;
   display: flex;
+  min-height: 100%;
+  padding: 0 16px;
   flex-direction: column;
 `;
+}
   return (
+    <div>
       <AppWrapper>
         <Helmet
           link={[
@@ -56,10 +64,11 @@ const FooterWrapper = styled.div`
         />
         <Header />
         {React.Children.toArray(props.children)}
+      </AppWrapper>
       <FooterWrapper>
         <Footer />
       </FooterWrapper>
-      </AppWrapper>
+    </div>
 
   );
 }
