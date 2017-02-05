@@ -4,7 +4,7 @@
  *
  */
 import React from 'react';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import logo from './logo.png';
 import image from './motowoman.png';
 import { Button, Image } from 'semantic-ui-react';
@@ -17,8 +17,13 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
     return (
       <div className="pusher">
         <div className="ui inverted vertical masthead center aligned segment landing-image">
-          <Image size="large" src={logo} centered className="padUp"/>
-          <Button color="orange" size="huge" circular>Get a free quote</Button>
+          <Image size="large" src={logo} centered className="padUp" />
+          <Link
+            className="ui orange huge circular button"
+            to="/quote/vehicle"
+          >
+            Get a free quote
+          </Link>
         </div>
 
         <div className="ui vertical stripe segment">
