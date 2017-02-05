@@ -45,9 +45,10 @@ class QuoteAddVehicle extends React.Component {
     this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this);
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
-    this.validateAndUpdateZip = this.validateAndUpdateZip.bind(this);
-    this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
+    this.onBlurError = this.onBlurError.bind(this);
+    this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
+
   }
   updateManufacturerValueAndGetModels(newValue) { // eslint-disable-line react/sort-comp
     this.setState({ manufacturerValue: newValue });
@@ -150,23 +151,37 @@ class QuoteAddVehicle extends React.Component {
     }
     return null;
   }
-  validateAndUpdateZip(newValue) {
-    const isValid = /^\b\d{5}(-\d{4})?\b$/.test(newValue);
-    if (!isValid) {
-      console.log('zip is invalid');
-      return this.setState({ location: false });
-    }
-    console.log('valid zip');
-    // TODO: get coordinates of this zipcode and pass it to location state obj
-    return this.setState({ location: { label: newValue } });
+  onBlurError() {
+    console.log('valid location from suggestselect was not clicked');
+    return this.setState({ location: false });
   }
 
   onSuggestSelect(mapsObj) {
     const label = mapsObj.label;
-    const coordinates = mapsObj.location;
-    const locationObj = { label, coordinates };
+    const coordinatesObj = mapsObj.location;
+    const lat = coordinatesObj.lat;
+    const lng = coordinatesObj.lng;
+    const locationObj = { label, coordinatesObj };
     this.setState({ location: locationObj });
-    console.log(this.state.location);
+
+    console.log(coordinatesObj);
+    console.log('coordinates');
+    console.log(`${lat}, ${lng}`);
+    this.props.client.query({
+      query: gql`
+      query checkDistance($zipOrCoordinates: String){
+        checkDistance(zipOrCoordinates: $zipOrCoordinates){
+          destination_addresses
+          origin_addresses
+          status
+          rows
+        }
+      }
+      `,
+      variables: { zipOrCoordinates: `${lat}, ${lng}` },
+    }).then((response) => {
+      console.log(response.data.checkDistance);
+    });
   }
 
   validateMotorcycleForm(e) {
@@ -239,12 +254,12 @@ class QuoteAddVehicle extends React.Component {
               country="us"
               types={['(regions)']}
               onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
-              onBlur={(e) => this.validateAndUpdateZip(e)}
+              onBlur={() => this.onBlurError}
             />
             <i className="location arrow icon"></i>
           </div>
           {this.state.location === false &&
-          <Label basic color="red" pointing="left">Please enter a valid city or zipcode</Label>
+          <Label basic color="red" pointing="left">Please enter or select a valid location among the suggestions</Label>
           }
           <Divider section horizontal> Select Model</Divider>
           <div>
