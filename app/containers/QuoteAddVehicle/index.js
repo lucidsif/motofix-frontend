@@ -18,8 +18,9 @@ let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
 
-// TODO: Add pass coordinates and add icon to input
-// TODO: 7/10 half the size of the select menus
+// TODO: Pass location to app state and to saved quotes
+// TODO 7/10 add error message if no location can be found or autosuggest query async error
+// TODO: 6.6/10 half the size of the select menus
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: 6/10 replace spans with labels
 // TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
@@ -37,6 +38,7 @@ class QuoteAddVehicle extends React.Component {
       subModelOptions: null,
       yearOptions: null,
       asyncError: false,
+      overDistance: null,
       motorcycleSelected: null,
     };
 
@@ -140,12 +142,21 @@ class QuoteAddVehicle extends React.Component {
   }
 
   conditionalAsyncErrorMessage() {
-    const error = this.state.asyncError;
-    if (error) {
+    const asyncError = this.state.asyncError;
+    const overDistance = this.state.overDistance;
+    if (asyncError) {
       return (
         <Message negative>
           <p>Warning: Max API calls reached for the day :(</p>
           <p>We have a limited # of API calls to our data provider until they upgrade us. Please try again after 8PM EST next day.</p>
+        </Message>
+      );
+    } else if (overDistance) {
+      return (
+        <Message warning>
+          <p>Warning: Your motorcycle is currently out of our service area :(</p>
+          <p>We are only servicing the NYC region during this time. </p>
+          <p>You may still get and save quotes, but they may not be accurate for your area.</p>
         </Message>
       );
     }
@@ -180,15 +191,19 @@ class QuoteAddVehicle extends React.Component {
       `,
       variables: { zipOrCoordinates: `${lat}, ${lng}` },
     }).then((response) => {
-      console.log(response.data.checkDistance);
+      const data = response.data.checkDistance;
+      const distance = data.rows[0].elements[0].distance.value;
+      // if distance is greater than or equal to 40mi, render error message
+      if (distance >= 211200) {
+        return this.setState({ overDistance: true });
+      }
+      return this.setState({ overDistance: false });
     });
   }
 
   validateMotorcycleForm(e) {
     e.preventDefault();
-    // TODO: Comment these out in production. WHY AREN"T THESE SETTING?
     this.setState({ manufacturerValue: 'Honda' });
-    console.log(this.state.manufacturerValue);
     this.setState({ modelValue: 'CBR' });
     this.setState({ subModelValue: 'CBR600' });
     this.setState({ yearValue: 2005 });
