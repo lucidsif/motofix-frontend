@@ -7,7 +7,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
@@ -21,15 +20,7 @@ import { selectAuthenticated } from 'containers/App/selectors';
 import { selectCart, selectPart, selectSavedQuote } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
-// TODO: Ensure new labortimes are fetched when new vehicle is selected
-// TODO: Use redux-auth wrapper to reroute to vehicle is no vehicle
-// TODO: 6.7/10 float the buttons ot the right
-// TODO: 6.5/10 add conditional rendering: if no vehicle => route back to select vehicle
-// TODO: 6/10 make sure the onclick handler for the back button isn't being recreated on every rerender
-// TODO: 5.5/10 route back buttom backwards instead of to a specific point
-// TODO: 5/10 modularize queries completely with single import
 
-// TODO: FIx this bug. why do i get 'redirectAction is not a func' after clickinig new quote?
 const VehicleIsSelected = UserAuthWrapper({ // eslint-disable-line new-cap
   authSelector: (state) => state.get('quoteAddVehicle').toJS(),
   predicate: (state) => state.mid,
@@ -82,9 +73,9 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited') {
       conditionalServicesMessage = (
         <Message negative>
-          <Message.Header> Uh oh! Max API calls reached for the day :( </Message.Header>
+          <Message.Header> Uh oh! We reached max API calls reached for the day :( </Message.Header>
           <Message.Content>
-            Until our data provider upgrades us, please try again after 8PM next day.
+            Please try again after 8PM next day.
           </Message.Content>
         </Message>
       );

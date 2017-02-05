@@ -50,7 +50,6 @@ class QuoteAddVehicle extends React.Component {
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
     this.onBlurError = this.onBlurError.bind(this);
     this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
-
   }
   updateManufacturerValueAndGetModels(newValue) { // eslint-disable-line react/sort-comp
     this.setState({ manufacturerValue: newValue });
@@ -155,8 +154,7 @@ class QuoteAddVehicle extends React.Component {
       return (
         <Message warning>
           <p>Warning: Your motorcycle is currently out of our service area :(</p>
-          <p>We are only servicing the NYC region during this time. </p>
-          <p>You may still get and save quotes, but they may not be accurate for your area.</p>
+          <p>You may still get and save quotes for now, but we cannot offer any convenience services or guarantee any estimate. </p>
         </Message>
       );
     }
@@ -168,16 +166,10 @@ class QuoteAddVehicle extends React.Component {
   }
 
   onSuggestSelect(mapsObj) {
-    const label = mapsObj.label;
     const coordinatesObj = mapsObj.location;
     const lat = coordinatesObj.lat;
     const lng = coordinatesObj.lng;
-    const locationObj = { label, coordinatesObj };
-    this.setState({ location: locationObj });
 
-    console.log(coordinatesObj);
-    console.log('coordinates');
-    console.log(`${lat}, ${lng}`);
     this.props.client.query({
       query: gql`
       query checkDistance($zipOrCoordinates: String){
@@ -193,10 +185,18 @@ class QuoteAddVehicle extends React.Component {
     }).then((response) => {
       const data = response.data.checkDistance;
       const distance = data.rows[0].elements[0].distance.value;
+      console.log(data);
       // if distance is greater than or equal to 40mi, render error message
       if (distance >= 211200) {
         return this.setState({ overDistance: true });
       }
+      const locationObj = {
+        mechanicLocations: data.origin_addresses,
+        customerLocation: data.destination_addresses[0],
+        distance,
+        duration: data.rows[0].elements[0].duration.value,
+      };
+      this.setState({ location: locationObj });
       return this.setState({ overDistance: false });
     });
   }
@@ -229,7 +229,7 @@ class QuoteAddVehicle extends React.Component {
     console.log('mock vehicle selected and merged to state');
     // TODO: Create actual vehicle object in this format
     const vehicle = {
-      zipcode: this.state.zipcode,
+      location: this.state.location,
       mid: 'HDA06327',
       manufacturer: 'Honda',
       model: 'CBR',
