@@ -6,18 +6,20 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { withApollo } from 'react-apollo';
+import FormModal from 'components/FormModal';
+import { Image } from 'semantic-ui-react';
 
-
+import fellowDev from './fellow-dev.png';
 import logo from './logo.png';
 import greatIdea from './great-idea.png';
 import gladIdea from './glad-read.png';
 import likeIdea from './like-idea.png';
-import fellowDev from './fellow-dev.png';
-import { Image } from 'semantic-ui-react';
-import FormModal from 'components/FormModal';
 
-// TODO: convert to functional component
+import mechanicIcon from './mechanic.png';
+import piggyBank from './piggy-bank.png';
+import controller from './controller.png';
 
+// TODO: Create successful signup mutation message
 export class Landing extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
   render() {
@@ -65,18 +67,23 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             <div className="center aligned row">
               <div className="column">
                 <h3>Honest, Professional Mechanics</h3>
-                <p>All work is backed by our 6 month, 5,000 mile warranty.</p>
+                <p>We only work with the best and all work is backed by our 5,000 mile warranty.</p>
+                <Image size="tiny" src={mechanicIcon} centered />
               </div>
               <div className="column">
                 <h3>Save Money</h3>
-                <p>Up-front, consistent pricing that is up to 30% lower than your local dealership. </p>
+                <p>Up-front pricing that is up to 30% lower than your local dealership. </p>
+                <Image size="tiny" src={piggyBank} centered />
               </div>
             </div>
             <div className="center aligned row">
               <div className="column">
                 <h3>Convenience & Ease</h3>
-                <p>Get quotes on your phone or on your computer, anytime.</p>
-                <p>No more quote shopping, taxis, buses, begging rides from friends, rushing after work, or driving back and forth between maintenance. </p>
+                <p>Get instant, free quotes on your phone or on your computer, anytime. <br />
+                  No more quote shopping, taxis, buses, begging rides from friends, rushing after work, or driving back and forth between maintenance. <br />
+                  Now you can use the extra time and cognitive resources to do more important things, like videogames. <br />
+                </p>
+                <Image size="tiny" src={controller} centered />
               </div>
             </div>
           </div>
@@ -84,15 +91,9 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
 
         <div className="ui vertical stripe segment">
           <div className="ui text container">
-            <h3 className="ui header">Breaking The Grid, Grabs Your Attention</h3>
-            <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>
-            <a className="ui large button">Read More</a>
-            <h4 className="ui horizontal header divider">
-              <a href="#">Case Studies</a>
-            </h4>
-            <h3 className="ui header">Did We Tell You About Our Bananas?</h3>
-            <p>Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.</p>
-            <a className="ui large button">I'm Still Quite Interested</a>
+            <h3 className="ui header">What are you waiting for?</h3>
+            <p>{"We believe you'll love us so much that we're giving you an additional $15 off your next service if you sign up during this beta period."}</p>
+            <FormModal client={this.props.client} />
           </div>
         </div>
 
@@ -108,11 +109,3 @@ Landing.propTypes = {
 const LandingWithApollo = withApollo(Landing);
 
 export default LandingWithApollo;
-
-/*
- <div className="row">
- <div className="center aligned column">
- <FormModal client={this.props.client} />
- </div>
- </div>
- */
