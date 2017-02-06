@@ -5,14 +5,16 @@
  */
 import React from 'react';
 import { Link } from 'react-router';
+import { withApollo } from 'react-apollo';
+
+
 import logo from './logo.png';
 import greatIdea from './great-idea.png';
 import gladIdea from './glad-read.png';
 import likeIdea from './like-idea.png';
-import anyTimeQuote from './anytime-quote.png';
 import fellowDev from './fellow-dev.png';
 import { Image } from 'semantic-ui-react';
-import FormModal from 'components/FormModal'
+import FormModal from 'components/FormModal';
 
 // TODO: convert to functional component
 
@@ -40,23 +42,23 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             </div>
             <div className="row">
               <div className="eight wide column">
-                <img src={greatIdea} className="ui huge rounded image" />
+                <Image src={greatIdea} size="huge" />
               </div>
               <div className="eight wide column">
-                <img src={gladIdea} className="ui huge rounded image" />
+                <Image src={gladIdea} size="huge" />
               </div>
             </div>
             <div className="row">
               <div className="eight wide column">
-                <img src={likeIdea} className="ui huge rounded image" />
+                <Image src={likeIdea} size="huge" />
               </div>
               <div className="eight wide column">
-                <img src={fellowDev} className="ui huge rounded image" />
+                <Image src={fellowDev} size="huge" />
               </div>
             </div>
             <div className="row">
               <div className="center aligned column">
-                <FormModal />
+                <FormModal client={this.props.client} />
               </div>
             </div>
           </div>
@@ -67,4 +69,10 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
   }
 }
 
-export default Landing;
+Landing.propTypes = {
+  client: React.PropTypes.object,
+};
+
+const LandingWithApollo = withApollo(Landing);
+
+export default LandingWithApollo;

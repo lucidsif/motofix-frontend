@@ -18,15 +18,15 @@ import Footer from 'components/Footer';
 
 // TODO: add and ensure footer stays on the bottom of every page
 function App(props) {
-  var AppWrapper;
-  var FooterWrapper
-if(props.location.pathname === '/') {
-  AppWrapper = styled.div`
+  let AppWrapper;
+  let FooterWrapper;
+  if (props.location.pathname === '/') {
+    AppWrapper = styled.div`
 `;
-  FooterWrapper = styled.div`
+    FooterWrapper = styled.div`
 `;
-} else {
-  AppWrapper = styled.div`
+  } else {
+    AppWrapper = styled.div`
   max-width: calc(968px + 16px * 2);
   margin: 0 auto;
   margin-bottom: 2em;
@@ -36,7 +36,7 @@ if(props.location.pathname === '/') {
   flex-direction: column;
 `;
 
-  FooterWrapper = styled.div`
+    FooterWrapper = styled.div`
   max-width: calc(968px + 16px * 2);
   margin: 0 auto;
   margin-bottom: 2em;
@@ -45,7 +45,7 @@ if(props.location.pathname === '/') {
   padding: 0 16px;
   flex-direction: column;
 `;
-}
+  }
   return (
     <div>
       <AppWrapper>
