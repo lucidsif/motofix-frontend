@@ -92,7 +92,7 @@ class FormModal extends React.Component { // EsLint-disable-line react/prefer-st
   render() {
     return (
       <Modal
-        trigger={<Button color="blue" onClick={this.handleOpen}>Get $15 off</Button>}
+        trigger={<Button color="teal" circular size="huge" onClick={this.handleOpen}>Get $15 off</Button>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
