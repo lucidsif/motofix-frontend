@@ -16,12 +16,12 @@ import { authenticateUser } from '../App/actions';
 
 export class SignupPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
-  super(props);
-  this.state = {
-    accountCreated: null,
-  };
-  this.signUpMutation = this.signUpMutation.bind(this);
-}
+    super(props);
+    this.state = {
+      accountCreated: null,
+    };
+    this.signUpMutation = this.signUpMutation.bind(this);
+  }
 
   signUpMutation(formMap) {
     /* eslint no-underscore-dangle: ["error", { "allow": ["formMap_", "_root"] }] */
@@ -44,9 +44,9 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
         console.log('Account creation failed');
         return this.setState({ accountCreated: false });
       }
-      console.log(response)
+      console.log(response);
       this.setState({ accountCreated: true });
-      this.props.client.mutate({
+      return this.props.client.mutate({
         mutation: gql`
         mutation logIn($email: String!, $password: String!){
         logIn(email: $email, password: $password){
@@ -116,6 +116,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
 
 SignupPage.propTypes = {
   client: React.PropTypes.object,
+  onAccountCreation: React.PropTypes.func,
 };
 
 
