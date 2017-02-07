@@ -18,6 +18,7 @@ import likeIdea from './like-idea.png';
 import mechanicIcon from './mechanic.png';
 import piggyBank from './piggy-bank.png';
 import controller from './controller.png';
+import fiveSteps from './5steps2.png';
 
 // TODO: Create successful signup mutation message
 export class Landing extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -67,7 +68,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             <div className="center aligned row">
               <div className="column">
                 <h3>Honest, Professional Mechanics</h3>
-                <p>We only work with the best and all work is backed by our 5,000 mile warranty.</p>
+                <p>You only get the best and all work is backed by our 5,000 mile warranty.</p>
                 <Image size="tiny" src={mechanicIcon} centered />
               </div>
               <div className="column">
@@ -91,12 +92,14 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
 
         <div className="ui vertical stripe segment">
           <div className="ui text container">
-            <h3 className="ui header">What are you waiting for?</h3>
-            <p>{"We believe you'll love us so much that we're giving you an additional $15 off your next service if you sign up during this beta period."}</p>
+            <Image size="huge" src={fiveSteps} centered />
+            <h4 className="ui horizontal header divider">
+              Well, what are you waiting for?
+            </h4>
+            <p>{"We believe you'll love us so much that we're giving you $15 off your next service if you sign up during this beta period."}</p>
             <FormModal client={this.props.client} />
           </div>
         </div>
-
       </div>
     );
   }
