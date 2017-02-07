@@ -8,6 +8,8 @@ import React from 'react';
 import { Button, Modal, Header, Icon, Form, Message } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 
+// TODO: Add validation messages
+// TODO: Log in user by dispatching the login action and setting the token after a successful signup.
 
 // TODO: Send a signup mutation onsubmit
 // TODO: Create a success and error message - Need to share state with redux or have component CoLocate with parent
@@ -112,6 +114,7 @@ class FormModal extends React.Component { // EsLint-disable-line react/prefer-st
       return (
         <Message positive>
           <p>Thank you for signing up! We will send you a confirmation email for your $15 off coupon.</p>
+          <p>Feel free to explore the rest of our app. It is designed to achieve maximal rider happiness in the context of motorcycle maintenance and it only gets better here on!</p>
         </Message>
       );
     }
