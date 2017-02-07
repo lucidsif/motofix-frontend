@@ -50,9 +50,6 @@ function App(props) {
     <div>
       <AppWrapper>
         <Helmet
-          link={[
-            { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css' },
-          ]}
           script={[
             { src: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAVnEr30TZi8hdLf7UZsYTv8HjekSiGpYA&libraries=places', type: 'text/javascript' },
           ]}

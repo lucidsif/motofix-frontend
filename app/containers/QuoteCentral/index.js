@@ -11,7 +11,6 @@ import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
 import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
-import StyledFormModal from 'components/FormModal/styled';
 import gql from 'graphql-tag';
 import { withApollo, graphql, compose } from 'react-apollo';
 import { addToCart, removeFromCart, setLaborTime, setPartsData, setSavedQuoteTrue } from './actions';
@@ -109,7 +108,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         {renderAddServicesUponRepairTimesFetch}
         <Button onClick={() => browserHistory.push('/quote/vehicle')} >Change Motorcycle</Button>
         <Button>Save Quote</Button>
-        <StyledFormModal client={this.props.client} />
       </div>
     );
   }
@@ -180,10 +178,3 @@ export default compose(
   withRepairTimesData,
   withApollo,
 )(QuoteCentral);
-
-  /*
-   <h4 className="ui horizontal header divider">What are you waiting for?</h4>
-   <p>{"We believe you'll love us so much that we're giving you an additional $15 off your next service if you sign up during this beta period."}</p>
-   <FormModal client={this.props.client} />
-   </div>
-   */

@@ -30,6 +30,7 @@ import apolloClient from './graphql';
 // Import CSS reset and Styles
 import 'sanitize.css/sanitize.css';
 import 'styles/global-styles';
+import '!!style-loader!css-loader!../node_modules/semantic-ui-css/semantic.min.css';
 import '!!style-loader!css-loader!./styles/local-styles.css';
 import '!!style-loader!css-loader!./styles/react-select.css';
 import '!!style-loader!css-loader!./styles/geosuggest.css';

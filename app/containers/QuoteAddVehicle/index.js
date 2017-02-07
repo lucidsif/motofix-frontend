@@ -201,18 +201,16 @@ class QuoteAddVehicle extends React.Component {
       this.setState({ location: locationObj });
     });
   }
-
+// TODO: Fix this shit
   validateMotorcycleForm(e) {
     e.preventDefault();
-    this.setState({ manufacturerValue: 'Honda' });
     this.setState({ modelValue: 'CBR' });
     this.setState({ subModelValue: 'CBR600' });
     this.setState({ yearValue: 2005 });
 
     if (!this.state.location) {
-      return this.setState({ location: false });
+      this.setState({ location: false });
     }
-    /*
     if (!this.state.manufacturerValue) {
       this.setState({ manufacturerValue: false });
     }
@@ -225,13 +223,12 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
-    */
     console.log('mock vehicle selected and merged to state');
     // TODO: Create actual vehicle object in this format
     const vehicle = {
       location: this.state.location,
       mid: 'HDA06327',
-      manufacturer: 'Honda',
+      manufacturer: this.state.manufacturerValue,
       model: 'CBR',
       model_variant: 'CBR600',
       tuning_description: 'SE',
@@ -274,7 +271,7 @@ class QuoteAddVehicle extends React.Component {
             <i className="location arrow icon"></i>
           </div>
           {this.state.location === false &&
-          <Label basic color="red" pointing="left">Please enter or select a valid location among the suggestions</Label>
+          <Label basic color="red" pointing="left">Please type or select a valid location among the suggestions</Label>
           }
           <Divider section horizontal> Select Model</Divider>
           <div>
