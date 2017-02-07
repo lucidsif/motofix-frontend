@@ -209,6 +209,7 @@
     "react-router-redux": "4.0.6",
     "react-router-scroll": "0.3.3",
     "react-select": "^1.0.0-rc.2",
+    "react-slick": "^0.14.6",
     "react-virtualized-select": "^2.1.1",
     "redux": "3.6.0",
     "redux-auth-wrapper": "^1.0.0",

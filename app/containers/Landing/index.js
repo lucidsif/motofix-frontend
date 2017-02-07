@@ -6,19 +6,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { withApollo } from 'react-apollo';
+import RedditCarousel from 'components/RedditCarousel';
 import FormModal from 'components/FormModal';
 import { Image } from 'semantic-ui-react';
-
-import fellowDev from './fellow-dev.png';
 import logo from './logo.png';
-import greatIdea from './great-idea.png';
-import gladIdea from './glad-read.png';
-import likeIdea from './like-idea.png';
-
 import mechanicIcon from './mechanic.png';
 import piggyBank from './piggy-bank.png';
 import controller from './controller.png';
 import fiveStepsInfographic from 'containers/HowItWorks/5steps.png';
+
 
 // TODO: Create successful signup mutation message
 export class Landing extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -36,27 +32,16 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           </Link>
         </div>
 
-        <div className="ui vertical stripe segment padSegmentTop">
+        <div className="ui vertical stripe segment padSegment">
           <div className="ui middle aligned stackable grid container">
             <div className="center aligned row">
               <div className="column">
                 <h3>What do riders on the internet have to say about us?</h3>
               </div>
             </div>
-            <div className="row">
-              <div className="eight wide column">
-                <Image src={greatIdea} size="huge" />
-              </div>
-              <div className="eight wide column">
-                <Image src={gladIdea} size="huge" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="eight wide column">
-                <Image src={likeIdea} size="huge" />
-              </div>
-              <div className="eight wide column">
-                <Image src={fellowDev} size="huge" />
+            <div className="center aligned row">
+              <div className="column">
+                <RedditCarousel />
               </div>
             </div>
           </div>
