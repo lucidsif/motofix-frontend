@@ -16,12 +16,12 @@ import { authenticateUser } from '../App/actions';
 
 export class SignupPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
-    super(props);
-    this.state = {
-      accountCreated: null,
-    };
-    this.signUpMutation = this.signUpMutation.bind(this);
-  }
+  super(props);
+  this.state = {
+    accountCreated: null,
+  };
+  this.signUpMutation = this.signUpMutation.bind(this);
+}
 
   signUpMutation(formMap) {
     /* eslint no-underscore-dangle: ["error", { "allow": ["formMap_", "_root"] }] */

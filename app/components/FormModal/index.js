@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import { Button, Modal, Header, Icon, Form } from 'semantic-ui-react';
+import { Button, Modal, Header, Icon, Form, Message } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 
 
@@ -15,13 +15,19 @@ import gql from 'graphql-tag';
 class FormModal extends React.Component { // EsLint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.state = { email: null, password: null, modalOpen: false };
+    this.state = {
+      email: null,
+      password: null,
+      modalOpen: false,
+      accountCreated: null,
+    };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.conditionalaccountCreatedMessage = this.conditionalaccountCreatedMessage.bind(this);
   }
 
   handleEmailChange(e) {
@@ -49,8 +55,6 @@ class FormModal extends React.Component { // EsLint-disable-line react/prefer-st
     if (validated && pass) {
       console.log(`email and pass is validated, submitting email: ${this.state.email}, pass: ${this.state.password}`);
       this.signUpMutation();
-      this.handleClose();
-      return;
     }
   }
 
@@ -86,19 +90,46 @@ class FormModal extends React.Component { // EsLint-disable-line react/prefer-st
     }
     `,
       variables: { email: this.state.email, password: this.state.password },
-    }).then((response) => console.log(response.data.signUp));
+    }).then((response) => {
+      if (!response.data.signUp) {
+        return this.setState({ accountCreated: false });
+      }
+      return this.setState({ accountCreated: true });
+    });
+  }
+
+  conditionalaccountCreatedMessage() {
+    const accountCreated = this.state.accountCreated;
+    if (accountCreated === false) {
+      return (
+        <Message negative>
+          <p>A user account with that email already exists :(</p>
+          <p>Please use another email or log in</p>
+        </Message>
+      );
+    }
+    if (accountCreated === true) {
+      return (
+        <Message positive>
+          <p>Thank you for signing up! We will send you a confirmation email for your $15 off coupon.</p>
+        </Message>
+      );
+    }
+    return null;
   }
 
   render() {
     return (
       <Modal
-        trigger={<Button color="teal" circular size="huge" onClick={this.handleOpen}>Get $15 off</Button>}
+        trigger={<Button color="orange" circular size="huge" onClick={this.handleOpen}>Get $15 off</Button>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
         size="small"
+        closeIcon="close"
       >
         <Header icon="mail outline" content="Sign up to get full access to your free app and get $15 off your next service on motofix! " />
+        {this.conditionalaccountCreatedMessage()}
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
             <Form.Input

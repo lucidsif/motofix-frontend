@@ -14,7 +14,7 @@
   display: none;
 }
 .landing-image {
-  background-image: url('../containers/Landing/motowoman.png') !important;
+  background-image: url('../containers/Landing/male-mechanic-nickel.jpg') !important;
   background-size: cover !important;
 }
 .masthead.segment {
@@ -37,6 +37,10 @@
   font-size: 1.7em;
   font-weight: normal;
 }
+div.ui.vertical.segment.padSegmentTop {
+  padding-top: 2em;
+}
+
 .ui.vertical.stripe {
   padding: 8em 0em;
 }

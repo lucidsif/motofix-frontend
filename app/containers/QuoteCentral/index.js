@@ -180,3 +180,10 @@ export default compose(
   withRepairTimesData,
   withApollo,
 )(QuoteCentral);
+
+  /*
+   <h4 className="ui horizontal header divider">What are you waiting for?</h4>
+   <p>{"We believe you'll love us so much that we're giving you an additional $15 off your next service if you sign up during this beta period."}</p>
+   <FormModal client={this.props.client} />
+   </div>
+   */

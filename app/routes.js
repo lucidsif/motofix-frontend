@@ -2,6 +2,8 @@
 // They are all wrapped in the App component, which should contain the navbar etc
 // See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
 // about the code splitting business
+
+// Create sitemap using React Router Sitemap
 import { getAsyncInjectors } from './utils/asyncInjectors';
 // TODO: inject vehicle reducer to quotecentral
 
@@ -150,6 +152,22 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/how-it-works',
+      name: 'howItWorks',
+      getComponent(location, cb) {
+        System.import('containers/HowItWorks')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/faq',
+      name: 'faq',
+      getComponent(location, cb) {
+        System.import('containers/Faq')
+          .then(loadModule(cb))
+          .catch(errorLoading);
       },
     }, {
       path: '*',
