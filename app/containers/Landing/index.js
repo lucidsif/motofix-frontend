@@ -18,7 +18,7 @@ import likeIdea from './like-idea.png';
 import mechanicIcon from './mechanic.png';
 import piggyBank from './piggy-bank.png';
 import controller from './controller.png';
-import fiveSteps from './5steps2.png';
+import fiveStepsInfographic from 'containers/HowItWorks/5steps.png';
 
 // TODO: Create successful signup mutation message
 export class Landing extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -92,7 +92,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
 
         <div className="ui vertical stripe segment">
           <div className="ui text container">
-            <Image size="huge" src={fiveSteps} centered />
+            <Image size="huge" src={fiveStepsInfographic} centered />
             <h4 className="ui horizontal header divider">
               Well, what are you waiting for?
             </h4>
