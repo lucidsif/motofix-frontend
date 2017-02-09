@@ -2,7 +2,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: 'http://162.243.173.35/graphql',
+    uri: 'http://192.81.216.114/graphql',
     opts: {
       credentials: 'same-origin',
       shouldBatch: false,

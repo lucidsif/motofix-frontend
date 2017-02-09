@@ -192,7 +192,6 @@ function PriceBreakDown(props) {
         {!props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => onSaveBtnClick()}>Save Quote</Button>
         }
-        <FormModal client={props.client} />
       </div>
     </Container>
   );

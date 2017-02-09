@@ -97,3 +97,7 @@ div.ui.vertical.segment.padSegment {
     font-size: 1.5em;
   }
 }
+
+.ui.centered.grid>.column:not(.aligned):not(.justified):not(.row), .ui.centered.grid>.row>.column:not(.aligned):not(.justified), .ui.grid .centered.row>.column:not(.aligned):not(.justified) {
+  text-align: center;
+}

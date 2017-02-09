@@ -210,7 +210,7 @@ class QuoteAddVehicle extends React.Component {
 
     if (!this.state.location) {
       this.setState({ location: false });
-    }
+    }/*
     if (!this.state.manufacturerValue) {
       this.setState({ manufacturerValue: false });
     }
@@ -223,6 +223,7 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
+    */
     console.log('mock vehicle selected and merged to state');
     // TODO: Create actual vehicle object in this format
     const vehicle = {

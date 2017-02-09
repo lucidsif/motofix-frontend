@@ -13,7 +13,7 @@ import gladIdea from './glad-read.png';
 import likeIdea from './like-idea.png';
 import fellowDev from './fellow-dev.png';
 
-
+// TODO: Update to latest version when patch is available for invalid props warning bug
 class RedditCarousel extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const settings = {
