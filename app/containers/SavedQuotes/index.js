@@ -28,6 +28,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   renderItems() {
     const quotes = this.props.allUserQuotes;
     return quotes.map((quote) => {
+      console.log(quote)
       const date = new Date(quote.createdAt);
       const formattedDate = date.toString();
       const motorcycle = JSON.parse(quote.motorcycle_json);
@@ -47,7 +48,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
       });
 
       return (
-        <Segment key={formattedDate}>
+        <Segment key={quote.id}>
           <Item.Content>
             <Item.Header>{motorcycle.year} {motorcycle.manufacturer} {motorcycle.model} ({motorcycle.model_variant})</Item.Header>
             <Item.Meta>{location}</Item.Meta>
