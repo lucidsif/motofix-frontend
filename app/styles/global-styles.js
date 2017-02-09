@@ -62,10 +62,7 @@ svg g.active text {
 svg g.completed text {
   fill: #FFF;
 }
-svg g.completed text, 
-svg g.completed ~ g text {
-    fill: #FFF;
-}
+
 /* Make the active group bigger*/
 
 /* Use 'pointer' cursor*/

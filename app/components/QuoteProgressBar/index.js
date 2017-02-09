@@ -17,6 +17,13 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
     const make = selectedVehicle.manufacturer;
     const model = selectedVehicle.model;
 
+    let renderModelOrDescription;
+    if (year && make && model) {
+      renderModelOrDescription = `${year} ${make} ${model}`;
+    } else {
+      renderModelOrDescription = 'Motorcycle Information';
+    }
+
     let renderProgressStage = null;
     if (currentLocation === '/quote/vehicle') {
       renderProgressStage = (
@@ -28,7 +35,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
               <text x="87%" y="10%">3</text>
               <text className="stage" x="87%" y="30%">Schedule</text>
             </g>
-            <g className>
+            <g>
               <line x1="13%" y1="10%" x2="20%" y2="10%"></line>
               <circle cx="50%" cy="10%" r="1.25em"></circle>
               <text x="50%" y="10%">2</text>
@@ -37,7 +44,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
             <g className="active">
               <circle cx="13%" cy="10%" r="1.25em"></circle>
               <text x="13%" y="10%">1</text>
-              <text className="stage" x="13%" y="30%">Motorcycle Information</text>
+              <text className="stage" x="13%" y="30%">{renderModelOrDescription}</text>
             </g>
           </svg>
         </Segment>
