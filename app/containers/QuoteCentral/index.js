@@ -151,6 +151,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         {!this.props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => this.onSaveBtnClick()}>Save Quote</Button>
         }
+        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule') }>Schedule Appointment</Button>
       </div>
     );
   }
@@ -190,9 +191,12 @@ QuoteCentral.propTypes = {
   authenticated: React.PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   vehicle: React.PropTypes.object,
   cart: React.PropTypes.object,
+  part: React.PropTypes.object,
   allRepairTimes: React.PropTypes.object,
   allRepairTimesLoading: React.PropTypes.bool,
   client: React.PropTypes.object,
+  quoteSaved: React.PropTypes.bool,
+  onSaveQuoteClick: React.PropTypes.func,
 };
 
 const RepairTimesQuery = gql`

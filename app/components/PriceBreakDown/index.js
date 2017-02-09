@@ -191,13 +191,14 @@ function PriceBreakDown(props) {
         {!props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => onSaveBtnClick()}>Save Quote</Button>
         }
+        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule') }>Schedule Appointment</Button>
       </div>
     </Container>
   );
 }
 
 PriceBreakDown.propTypes = {
-  client: React.PropTypes.object,
+  client: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   authenticated: React.PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   quoteSaved: React.PropTypes.bool,
   onSaveQuoteClick: React.PropTypes.func, // eslint-disable-line react/no-unused-prop-types
