@@ -151,7 +151,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         {!this.props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => this.onSaveBtnClick()}>Save Quote</Button>
         }
-        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule') }>Schedule Appointment</Button>
+        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
       </div>
     );
   }
