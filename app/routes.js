@@ -110,6 +110,25 @@ export default function createRoutes(store) {
             importModules.catch(errorLoading);
           },
         },
+        {
+          path: '/quote/schedule',
+          name: 'QuoteAppointmentScheduler',
+          getComponent(nextState, cb) {
+            const importModules = Promise.all([
+              System.import('containers/QuoteAppointmentScheduler/reducer'),
+              System.import('containers/QuoteAppointmentScheduler'),
+            ]);
+
+            const renderRoute = loadModule(cb);
+
+            importModules.then(([reducer, component]) => {
+              injectReducer('quoteAppointmentScheduler', reducer.default);
+              renderRoute(component);
+            });
+
+            importModules.catch(errorLoading);
+          },
+        },
       ],
     }, {
       path: '/privacy-policy',

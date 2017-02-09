@@ -8,7 +8,6 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { Button, Container, List, Image, Label } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
-import FormModal from 'components/FormModal';
 import gql from 'graphql-tag';
 
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle

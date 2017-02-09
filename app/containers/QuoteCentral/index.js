@@ -28,6 +28,44 @@ const VehicleIsSelected = UserAuthWrapper({ // eslint-disable-line new-cap
 });
 
 export class QuoteCentral extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  onSaveBtnClick() {
+    // only allow if authenticated and localToken exists
+    if (this.props.authenticated && localStorage.getItem('authToken')) {
+      this.createQuoteMutation();
+      return this.props.onSaveQuoteClick();
+    }
+    return browserHistory.push('/login');
+  }
+
+  createQuoteMutation() {
+  // noinspection JSUnresolvedFunction
+    if (this.props.authenticated) {
+      return this.props.client.mutate({
+        mutation: gql`
+       mutation createUserQuote($token: String, $motorcycleJSON: JSON, $cartJSON: JSON, $partJSON: JSON){
+        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON){
+          id
+          fk_users_id
+          motorcycle_json
+          cart_json
+          part_json
+          createdAt
+          updatedAt
+         }
+       }
+      `,
+        variables: {
+          token: localStorage.getItem('authToken'),
+          motorcycleJSON: JSON.stringify(this.props.vehicle),
+          cartJSON: JSON.stringify(this.props.cart),
+          partJSON: JSON.stringify(this.props.part),
+        },
+      }).then((response) => console.log(response.data.createUserQuote));
+    }
+    return browserHistory.push('/login');
+  }
+
   render() {
     console.log('quotecentral props:');
     // conditional render that will either render loading or addservices component
@@ -107,7 +145,12 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         <QuoteCart props={this.props} />
         {renderAddServicesUponRepairTimesFetch}
         <Button onClick={() => browserHistory.push('/quote/vehicle')} >Change Motorcycle</Button>
-        <Button>Save Quote</Button>
+        {this.props.quoteSaved &&
+        <Button disabled>Quote Saved</Button>
+        }
+        {!this.props.quoteSaved && // only only to save quote and dispatch action if authenticated
+        <Button onClick={() => this.onSaveBtnClick()}>Save Quote</Button>
+        }
       </div>
     );
   }
