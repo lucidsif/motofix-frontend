@@ -191,7 +191,7 @@ function PriceBreakDown(props) {
         {!props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => onSaveBtnClick()}>Save Quote</Button>
         }
-        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule') }>Schedule Appointment</Button>
+        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
       </div>
     </Container>
   );

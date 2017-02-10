@@ -3,15 +3,14 @@
  * QuoteAppointmentScheduler
  *
  */
-
+// TODO: fork react-big-calendar and use dnd-touch-backend instead of html5
+// TODO: add touch instead of html5 drag and drop
 import React from 'react';
 import { connect } from 'react-redux';
 import selectQuoteAppointmentScheduler from './selectors';
 
 import BigCalendar from 'react-big-calendar';
 import events from './events';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DragDropContext } from 'react-dnd';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
 import moment from 'moment';
@@ -27,10 +26,10 @@ const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 
 export class QuoteAppointmentScheduler extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       events,
-    }
+    };
 
     this.moveEvent = this.moveEvent.bind(this);
     this.changeStyling = this.changeStyling.bind(this);
@@ -38,20 +37,19 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
   moveEvent({ event, start, end }) {
     console.log(event);
-    const { events } = this.state;
-    if(event.category === 'appointment') {
+    const { events } = this.state; // eslint-disable-line no-shadow
+    if (event.category === 'appointment') {
       const idx = events.indexOf(event);
       const updatedEvent = { ...event, start, end };
 
-      const nextEvents = [...events]
+      const nextEvents = [...events];
       nextEvents.splice(idx, 1, updatedEvent);
 
       this.setState({
         events: nextEvents,
       });
       console.log(`${event.title} was dropped onto ${event.start}`);
-    }
-    else {
+    } else {
       console.log(`${event.title} cannot be selected!`);
     }
   }
@@ -62,13 +60,12 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
   }
 
   render() {
-    const todaysDate = moment().format('MMMM Do YYYY');
-    let formats = {
+    const formats = {
       dateFormat: 'MMM Do',
 
       dayFormat: (date, culture, localizer) =>
         localizer.format(date, 'Do', culture),
-    }
+    };
     return (
       <div>
         <h3 className="callout">
@@ -78,20 +75,20 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           formats={formats}
           selectable
           events={this.state.events}
-          onSelectEvent={event => {
-            if(event.category !== 'appointment'){
+          onSelectEvent={(event) => { // eslint-disable-line consistent-return
+            if (event.category !== 'appointment') {
               return false;
             }
           }}
           onEventDrop={this.moveEvent}
           eventPropGetter={
-            event => ({className: 'category-' + event.category.toLowerCase()})
+            (event) => ({ className: `category-${event.category.toLowerCase()}` })
           }
           views={['month', 'week', 'day', 'agenda']}
-          defaultView='week'
+          defaultView="week"
           defaultDate={new Date(2015, 3, 12)}
-          min={new Date(1970, 1, 1, 7) }
-          max={new Date(1970, 1, 1, 19) }
+          min={new Date(1970, 1, 1, 7)}
+          max={new Date(1970, 1, 1, 19)}
           onHover={(e) => console.log(e)}
         />
       </div>

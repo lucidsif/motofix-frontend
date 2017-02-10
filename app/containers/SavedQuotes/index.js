@@ -28,7 +28,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   renderItems() {
     const quotes = this.props.allUserQuotes;
     return quotes.map((quote) => {
-      console.log(quote)
+      console.log(quote);
       const date = new Date(quote.createdAt);
       const formattedDate = date.toString();
       const motorcycle = JSON.parse(quote.motorcycle_json);

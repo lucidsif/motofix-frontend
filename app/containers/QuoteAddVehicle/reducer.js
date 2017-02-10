@@ -32,7 +32,7 @@ const resetVehicleState = {
   start_year: null,
   end_year: null,
   year: null,
-  location: null
+  location: null,
 };
 
 

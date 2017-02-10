@@ -51,11 +51,11 @@ function App(props) {
       <AppWrapper>
         <Helmet
           script={[
-            { src: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAVnEr30TZi8hdLf7UZsYTv8HjekSiGpYA&libraries=places', type: 'text/javascript' },
+            { src: '//maps.googleapis.com/maps/api/js?key=AIzaSyAVnEr30TZi8hdLf7UZsYTv8HjekSiGpYA&libraries=places', type: 'text/javascript' },
           ]}
           link={[
-            { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
-            { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' },
+            { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
+            { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' },
           ]}
           titleTemplate="%s - motofix"
           defaultTitle="motofix"
@@ -76,16 +76,7 @@ function App(props) {
 
 App.propTypes = {
   children: React.PropTypes.node,
+  location: React.PropTypes.object,
 };
 
 export default App;
-/*
- <Input
- onBlur={this.validateAndUpdateZip}
- icon="location arrow"
- placeholder="Zipcode of motorcycle"
- size="large"
- />
-// use this message 4 geosgggest
-
- */
