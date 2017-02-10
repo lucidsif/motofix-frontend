@@ -10,11 +10,13 @@ import selectQuoteAppointmentScheduler from './selectors';
 
 import BigCalendar from 'react-big-calendar';
 import events from './events';
-import HTML5Backend from 'react-dnd-html5-backend';
+//import HTML5Backend from 'react-dnd-html5-backend';
+import { default as TouchBackend } from 'react-dnd-touch-backend';
 import { DragDropContext } from 'react-dnd';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
-
 import moment from 'moment';
+DragDropContext(TouchBackend({ enableMouseEvents: true }));
+
 
 BigCalendar.momentLocalizer(moment);
 // a. disable filled time slots/change stlying
@@ -67,7 +69,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
       dateFormat: 'MMM Do',
 
       dayFormat: (date, culture, localizer) =>
-        localizer.format(date, 'Do', culture),
+        localizer.format(date, 'MMM Do', culture),
     }
     return (
       <div>
@@ -87,7 +89,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           eventPropGetter={
             event => ({className: 'category-' + event.category.toLowerCase()})
           }
-          views={['month', 'week', 'day', 'agenda']}
+          views={['week', 'day']}
           defaultView='week'
           defaultDate={new Date(2015, 3, 12)}
           min={new Date(1970, 1, 1, 7) }
@@ -107,4 +109,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuoteAppointmentScheduler);
+export default DragDropContext(TouchBackend)(QuoteAppointmentScheduler);
+
+//export default connect(mapStateToProps, mapDispatchToProps)(QuoteAppointmentScheduler);

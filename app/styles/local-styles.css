@@ -108,6 +108,11 @@ vertically centering labels of quotecart
 event styles of react-big-calendar
  */
 
+
+.rbc-calendar {
+  height: 600px;
+}
+
 .category-unavailable {
   background-color: lightgray;
 }
