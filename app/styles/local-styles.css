@@ -97,7 +97,33 @@ div.ui.vertical.segment.padSegment {
     font-size: 1.5em;
   }
 }
+/*
+vertically centering labels of quotecart
+ */
 
 .ui.centered.grid>.column:not(.aligned):not(.justified):not(.row), .ui.centered.grid>.row>.column:not(.aligned):not(.justified), .ui.grid .centered.row>.column:not(.aligned):not(.justified) {
   text-align: center;
+}
+/*
+event styles of react-big-calendar
+ */
+
+.category-unavailable {
+  background-color: lightgray;
+}
+
+.category-unavailable.rbc-selected {
+  background-color: lightgray;
+}
+
+.category-appointment {
+  background-color: #00b5ad;
+}
+
+.category-appointment.rbc-selected {
+  background-color: #ffa500;
+}
+
+.rbc-day-slot .rbc-event {
+  border: 0;
 }
