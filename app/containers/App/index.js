@@ -50,9 +50,6 @@ function App(props) {
     <div>
       <AppWrapper>
         <Helmet
-          script={[
-            { src: '//maps.googleapis.com/maps/api/js?key=AIzaSyAVnEr30TZi8hdLf7UZsYTv8HjekSiGpYA&libraries=places', type: 'text/javascript' },
-          ]}
           link={[
             { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
             { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' },
