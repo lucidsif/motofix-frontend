@@ -9,9 +9,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import selectQuoteAppointmentScheduler from './selectors';
 
-import BigCalendar from 'react-big-calendar';
+import 'browsernizr/test/touchevents';
+import Modernizr from 'browsernizr';
+import BigCalendar from 'react-big-calendar-touch';
 import events from './events';
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDropTouch';
+import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
 
 import moment from 'moment';
 
@@ -22,7 +25,10 @@ BigCalendar.momentLocalizer(moment);
 
 // import 'react-big-calendar/lib/addons/dragAndDrop/styles.less';
 
-const DragAndDropCalendar = withDragAndDrop(BigCalendar);
+let DragAndDropCalendar;
+// const DragAndDropCalendar = withDragAndDropTouch(BigCalendar);
+// const DragAndDropCalendar = withDragAndDropMouse(BigCalendar);
+Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
 
 export class QuoteAppointmentScheduler extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -71,6 +77,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         <h3 className="callout">
           Schedule Appointment
         </h3>
+        Drag and drop your time slot to an available slot
         <DragAndDropCalendar
           formats={formats}
           selectable
@@ -84,7 +91,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           eventPropGetter={
             (event) => ({ className: `category-${event.category.toLowerCase()}` })
           }
-          views={['month', 'week', 'day', 'agenda']}
+          views={['week', 'day']}
           defaultView="week"
           defaultDate={new Date(2015, 3, 12)}
           min={new Date(1970, 1, 1, 7)}

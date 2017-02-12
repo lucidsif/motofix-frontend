@@ -31,7 +31,7 @@ import apolloClient from './graphql';
 import 'sanitize.css/sanitize.css';
 import 'styles/global-styles';
 import '!!style-loader!css-loader!../node_modules/semantic-ui-css/semantic.min.css';
-import '!!style-loader!css-loader!../node_modules/react-big-calendar/lib/css/react-big-calendar.css';
+import '!!style-loader!css-loader!../node_modules/react-big-calendar-touch/lib/css/react-big-calendar.css';
 import '!!style-loader!css-loader!./styles/local-styles.css';
 import '!!style-loader!css-loader!./styles/react-select.css';
 import '!!style-loader!css-loader!./styles/geosuggest.css';
