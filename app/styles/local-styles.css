@@ -132,3 +132,7 @@ event styles of react-big-calendar
 .rbc-day-slot .rbc-event {
   border: 0;
 }
+
+span.rbc-btn-group {
+  font-size: 12px;
+}
