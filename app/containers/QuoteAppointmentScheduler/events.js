@@ -35,13 +35,6 @@ export default [
   },
   {
     title: 'N/A',
-    start: new Date(2015, 3, 11),
-    end: new Date(2015, 3, 13),
-    desc: 'Big conference for important people',
-    category: 'unavailable',
-  },
-  {
-    title: 'N/A',
     start: new Date(2017, 1, 10, 10, 30, 0, 0),
     end: new Date(2017, 1, 10, 12, 30, 0, 0),
     desc: 'Pre-meeting meeting, to prepare for the meeting',

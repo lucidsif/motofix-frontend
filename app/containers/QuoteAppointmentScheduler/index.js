@@ -31,23 +31,22 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     this.moveEvent = this.moveEvent.bind(this);
     this.changeStyling = this.changeStyling.bind(this);
   }
-
+// if endtime of updated event (my appointment) is between the start and endtime of any event in events, prevent appointment from being moved
   moveEvent({ event, start, end }) {
-    console.log(event);
     const { events } = this.state; // eslint-disable-line no-shadow
     if (event.category === 'appointment') {
       const idx = events.indexOf(event);
       const updatedEvent = { ...event, start, end };
-
+      const overLappedEvents = events.filter((eventObj) => moment(updatedEvent.end).isBetween(eventObj.start, eventObj.end));
+      if (overLappedEvents.length > 0) {
+        return;
+      }
       const nextEvents = [...events];
       nextEvents.splice(idx, 1, updatedEvent);
 
       this.setState({
         events: nextEvents,
       });
-      console.log(`${event.title} was dropped onto ${event.start}`);
-    } else {
-      console.log(`${event.title} cannot be selected!`);
     }
   }
 
