@@ -48,7 +48,7 @@ export default [
     category: 'unavailable',
   },
   {
-    title: 'Me',
+    title: 'Drag Me',
     start: new Date(2015, 3, 12, 12, 0, 0, 0),
     end: new Date(2015, 3, 12, 13, 0, 0, 0),
     desc: 'Power lunch',

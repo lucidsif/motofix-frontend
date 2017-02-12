@@ -3,8 +3,6 @@
  * QuoteAppointmentScheduler
  *
  */
-// TODO: fork react-big-calendar and use dnd-touch-backend instead of html5
-// TODO: add touch instead of html5 drag and drop
 import React from 'react';
 import { connect } from 'react-redux';
 import selectQuoteAppointmentScheduler from './selectors';
@@ -19,15 +17,8 @@ import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDro
 import moment from 'moment';
 
 BigCalendar.momentLocalizer(moment);
-// a. disable filled time slots/change stlying
-//
-// TODO: disable selecting alldays across
-
-// import 'react-big-calendar/lib/addons/dragAndDrop/styles.less';
 
 let DragAndDropCalendar;
-// const DragAndDropCalendar = withDragAndDropTouch(BigCalendar);
-// const DragAndDropCalendar = withDragAndDropMouse(BigCalendar);
 Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
 
 export class QuoteAppointmentScheduler extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -92,11 +83,10 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
             (event) => ({ className: `category-${event.category.toLowerCase()}` })
           }
           views={['week', 'day']}
-          defaultView="week"
+          defaultView="day"
           defaultDate={new Date(2015, 3, 12)}
           min={new Date(1970, 1, 1, 7)}
           max={new Date(1970, 1, 1, 19)}
-          onHover={(e) => console.log(e)}
         />
       </div>
     );
