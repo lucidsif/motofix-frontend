@@ -23,8 +23,8 @@ BigCalendar.momentLocalizer(moment);
 let DragAndDropCalendar;
 Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
 
+// TODO: fix styling of toolbar for mobile
 // TODO: Convert array of appointments and schedules to an array of events to render to the calendar
-// TODO: Determine how to drag appointment to next week
 export class QuoteAppointmentScheduler extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -93,7 +93,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           eventPropGetter={
             (event) => ({ className: `category-${event.category.toLowerCase()}` })
           }
-          views={['week', 'day']}
+          views={['month', 'week', 'day']}
           defaultView="day"
           defaultDate={new Date(2015, 3, 12)}
           min={new Date(1970, 1, 1, 7)}
