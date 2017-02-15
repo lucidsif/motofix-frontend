@@ -67,7 +67,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
   }
 
   render() {
-    console.log('quotecentral props:');
     // conditional render that will either render loading or addservices component
     const vehicleSearchTerm = `${this.props.vehicle.year} ${this.props.vehicle.manufacturer} ${this.props.vehicle.model_variant}`;
     const loadingMessage = `Loading Services for ${vehicleSearchTerm}`;

@@ -2,7 +2,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: '//hornet.motofix-backend.c66.me/graphql',
+    uri: '//localhost:3010/graphql',
     opts: {
       credentials: 'same-origin',
       shouldBatch: false,

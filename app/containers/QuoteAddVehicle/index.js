@@ -224,10 +224,11 @@ class QuoteAddVehicle extends React.Component {
       return this.setState({ yearValue: false });
     }
     */
+    console.log(this.state.location)
     console.log('mock vehicle selected and merged to state');
     // TODO: Create actual vehicle object in this format
     const vehicle = {
-      location: this.state.location,
+      location: this.state.location.customerLocation,
       mid: 'HDA06327',
       manufacturer: this.state.manufacturerValue,
       model: 'CBR',
