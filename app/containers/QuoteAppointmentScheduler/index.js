@@ -41,7 +41,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     if (event.category === 'appointment') {
       const idx = events.indexOf(event);
       const updatedEvent = { ...event, start, end };
-      const overLappedEvents = events.filter((eventObj) => moment(updatedEvent.end).isBetween(eventObj.start, eventObj.end));
+      const overLappedEvents = events.filter((eventObj) => (moment(updatedEvent.start).isBefore(eventObj.end) && moment(updatedEvent.end).isAfter(eventObj.start)));
       if (overLappedEvents.length > 0) {
         return;
       }
