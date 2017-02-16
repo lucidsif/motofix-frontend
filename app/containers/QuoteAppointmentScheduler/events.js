@@ -37,14 +37,12 @@ export default [
     title: 'N/A',
     start: new Date(2017, 1, 10, 10, 30, 0, 0),
     end: new Date(2017, 1, 10, 12, 30, 0, 0),
-    desc: 'Pre-meeting meeting, to prepare for the meeting',
     category: 'unavailable',
   },
   {
     title: 'Drag Me',
     start: new Date(2015, 3, 12, 12, 0, 0, 0),
     end: new Date(2015, 3, 12, 13, 0, 0, 0),
-    desc: 'Power lunch',
     category: 'appointment',
   },
   {

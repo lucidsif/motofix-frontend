@@ -60,6 +60,19 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
   }
 
   render() {
+    console.log(this.props);
+    const mappedEvents = this.props.allNearAppointmentsAndSchedules.appointments.map((appt) => {
+      // take date and estimated start and end time and make it into a javascript start and endtime
+      const unavailable = {
+        title: 'N/A',
+        start: moment(appt.estimated_start_time).toDate(),
+        end: moment(appt.estimated_end_time).toDate(),
+        category: 'unavailable',
+      };
+      console.log(unavailable);
+      return unavailable;
+    });
+    console.log(mappedEvents);
     let renderCalendar = null;
     const loadingMessage = 'Loading your calendar...';
     const formats = {
@@ -83,7 +96,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         <DragAndDropCalendar
           formats={formats}
           selectable
-          events={this.state.events}
+          events={mappedEvents}
           onSelectEvent={(event) => { // eslint-disable-line consistent-return
             if (event.category !== 'appointment') {
               return false;
@@ -95,7 +108,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           }
           views={['month', 'week', 'day']}
           defaultView="day"
-          defaultDate={new Date(2015, 3, 12)}
           min={new Date(1970, 1, 1, 7)}
           max={new Date(1970, 1, 1, 19)}
         />
@@ -135,7 +147,6 @@ const AppointmentsAndSchedulesQuery = gql`
     allNearAppointmentsAndSchedules(zipOrCoordinates: $zipOrCoordinates){
         appointments {
           id
-          date
           estimated_start_time
           estimated_end_time
         }

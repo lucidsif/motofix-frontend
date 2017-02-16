@@ -208,6 +208,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ subModelValue: 'CBR600' });
     this.setState({ yearValue: 2005 });
 
+
     if (!this.state.location) {
       this.setState({ location: false });
     }/*
