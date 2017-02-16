@@ -63,7 +63,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     let renderCalendar = null;
     const loadingMessage = 'Loading your calendar...';
     const formats = {
-      dateFormat: 'MMM Do',
+      dateFormat: 'MMM Do YYYY',
 
       dayFormat: (date, culture, localizer) =>
         localizer.format(date, 'Do', culture),
