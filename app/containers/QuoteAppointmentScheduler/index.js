@@ -10,6 +10,8 @@ import gql from 'graphql-tag';
 // import selectQuoteAppointmentScheduler from './selectors';
 import { createStructuredSelector } from 'reselect';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
+import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
+
 import 'browsernizr/test/touchevents';
 import Modernizr from 'browsernizr';
 import BigCalendar from 'react-big-calendar-touch';
@@ -18,6 +20,7 @@ import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDro
 import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
 import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
 import moment from 'moment';
+import { services } from 'components/QuoteCart';
 
 BigCalendar.momentLocalizer(moment);
 let DragAndDropCalendar;
@@ -97,8 +100,13 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
     return hasConflict;
   }
-
-  getTimeSlotsForDay(date, startTime, endTime, laborTime) {
+// TODO: ensure that the minutes is also calculated for
+// TODO: Make sure user selects a diagnosis if they want an appointment and have unknown services selected
+  getTimeSlotsForDay(date, startTime, endTime, sumOfLaborTimes) {
+    let estimatedLaborTime = sumOfLaborTimes;
+    if (estimatedLaborTime <= 0) {
+      estimatedLaborTime = 1.0;
+    }
     const timeSlots = [];
     const dayStart = new Date(date);
     const dayEnd = new Date(date);
@@ -108,7 +116,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     do {
       if (!this.checkGoogleCalendarConflict(dayStart)) {
         const endDateTime = new Date(dayStart);
-        endDateTime.setHours(dayStart.getHours(), dayStart.getMinutes() + (laborTime * 60));
+        endDateTime.setHours(dayStart.getHours(), dayStart.getMinutes() + (estimatedLaborTime * 60));
 
         timeSlots.push({
           title: 'Click Me',
@@ -117,7 +125,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           category: 'appointment',
         });
       }
-      dayStart.setHours(dayStart.getHours(), dayStart.getMinutes() + (laborTime * 60));
+      dayStart.setHours(dayStart.getHours(), dayStart.getMinutes() + (estimatedLaborTime * 60));
     } while (dayStart < dayEnd);
 
     return timeSlots;
@@ -147,6 +155,18 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           </Segment>
         );
     } else {
+      const sumOfLaborTimes = services.map((service) => {
+        const regexedService = service.replace(/\s/g, '');
+        return regexedService;
+      })
+        .reduce((acc, curr) => {
+          if (this.props.cart[curr].selected && typeof this.props.cart[curr].laborTime === 'number') {
+            const laborTime = this.props.cart[curr].laborTime;
+            return acc + laborTime;
+          }
+          return acc + 0;
+        }, 0);
+
       const unavailableTimeSlots = this.props.allNearAppointmentsAndSchedules.appointments.map((appt) => {
         // take date and estimated start and end time and make it into a javascript start and endtime
         const unavailable = {
@@ -172,7 +192,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         .map((day) => {
           const startTime = moment(day.schedule.start_time, 'HH:mm:ss');
           const endTime = moment(day.schedule.end_time, 'HH:mm:ss');
-          return this.getTimeSlotsForDay(day.date, moment(startTime).hours(), moment(endTime).hours(), 0.5);
+          return this.getTimeSlotsForDay(day.date, moment(startTime).hours(), moment(endTime).hours(), sumOfLaborTimes);
         })
         .reduce((acc, appointmentArr) =>
        acc.concat(appointmentArr)
@@ -196,7 +216,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
             (event) => ({ className: `category-${event.category.toLowerCase()}` })
           }
           views={['month', 'week', 'day']}
-          defaultView="day"
+          defaultView="week"
           min={new Date(1970, 1, 1, 8)}
           max={new Date(1970, 1, 1, 19)}
         />
@@ -216,6 +236,8 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
 const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
+  cart: selectCart(),
+  part: selectPart(),
 });
 
 function mapDispatchToProps(dispatch) {
