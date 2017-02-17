@@ -87,12 +87,31 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     }
   }
 
-  checkGoogleCalendarConflict(date) {
-    const hasConflict = false;
-    const GoogleCalenderAppointments = null;
-    if (!GoogleCalenderAppointments) {
-    // logic to get scheduled appointments
+  checkAppointmentConflict(date, sumOfLaborTimes) {
+    let hasConflict = false;
+    const pendingAppointments = this.props.allNearAppointmentsAndSchedules.appointments
+
+    // convert date to a new appointment start and new appointment end
+    const newAppointmentStart = date;
+    const newAppointmentEnd = new Date(date);
+    newAppointmentEnd.setHours(newAppointmentStart.getHours(), newAppointmentStart.getMinutes() + (sumOfLaborTimes * 60));
+
+    const conflictedAppointments = pendingAppointments.filter((pendingAppointment) => {
+      //console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
+      //console.log(moment(pendingAppointment.estimated_start_time).format("YYYY-MM-DD HH:mm:ss"))
+
+      //console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
+      //console.log(moment(pendingAppointment.estimated_end_time).format("YYYY-MM-DD HH:mm:ss"))
+
+      return (moment(newAppointmentStart).isSame(pendingAppointment.estimated_start_time) && moment(newAppointmentEnd).isSame(pendingAppointment.estimated_end_time)) || (moment(newAppointmentStart).isBefore(pendingAppointment.end) && moment(newAppointmentEnd).isAfter(pendingAppointment.start));
+    });
+
+    if (conflictedAppointments.length > 0) {
+      hasConflict = true;
+      console.log('overlapped appointment!')
+      console.log(conflictedAppointments);
     }
+
 
   // iterate through relevant scheduled appointments
   // if argument `date` has conflict, return true
@@ -114,7 +133,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     dayStart.setHours(startTime, 0, 0, 0);
     dayEnd.setHours(endTime, 0, 0, 0);
     do {
-      if (!this.checkGoogleCalendarConflict(dayStart)) {
+      if (!this.checkAppointmentConflict(dayStart, estimatedLaborTime)) {
         const endDateTime = new Date(dayStart);
         endDateTime.setHours(dayStart.getHours(), dayStart.getMinutes() + (estimatedLaborTime * 60));
 
@@ -198,7 +217,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
        acc.concat(appointmentArr)
     , []);
 
-      console.log(availableAppointments);
 
       renderCalendar = (
         <DragAndDropCalendar
