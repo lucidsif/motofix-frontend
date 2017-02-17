@@ -71,3 +71,47 @@ export default [
     category: 'unavailable',
   },
 ];
+/////
+
+var today = new Date();
+
+function checkGoogleCalendarConflict(date) {
+  var hasConflict = false;
+  var GoogleCalenderAppointments = null;
+  if (!GoogleCalenderAppointments) {
+    //logic to get scheduled appointments
+  }
+
+  //iterate through relevant scheduled appointments
+  //if argument `date` has conflict, return true
+  //else, return false
+
+  return hasConflict
+}
+
+function getTimeSlotsForDay(date, startTime, endTime, laborTime) {
+  var timeSlots = []
+  var dayStart = new Date(date)
+  var dayEnd = new Date(date)
+
+      dayStart.setHours(startTime, 0, 0, 0)
+      dayEnd.setHours(endTime, 0, 0, 0)
+  do {
+    if (!checkGoogleCalendarConflict(dayStart)) {
+      let endTime = new Date(dayStart);
+      endTime.setHours(dayStart.getHours(), dayStart.getMinutes() + (laborTime * 60))
+
+      timeSlots.push({
+        title: 'Click Me',
+        start: new Date(dayStart),
+        end: endTime,
+        category: 'appointment',
+      })
+    }
+    dayStart.setHours(dayStart.getHours(), dayStart.getMinutes() + (laborTime * 60))
+  } while (dayStart < dayEnd);
+
+  return timeSlots
+}
+
+console.log(getTimeSlotsForDay(today, 12, 17, 0.5))

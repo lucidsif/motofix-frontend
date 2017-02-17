@@ -35,44 +35,99 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     this.moveEvent = this.moveEvent.bind(this);
     this.changeStyling = this.changeStyling.bind(this);
   }
-// if endtime of updated event (my appointment) is between the start and endtime of any event in events, prevent appointment from being moved
-  moveEvent({ event, start, end }) {
-    const { events } = this.state; // eslint-disable-line no-shadow
-    if (event.category === 'appointment') {
-      const idx = events.indexOf(event);
-      const updatedEvent = { ...event, start, end };
-      const overLappedEvents = events.filter((eventObj) => (moment(updatedEvent.start).isBefore(eventObj.end) && moment(updatedEvent.end).isAfter(eventObj.start)));
-      if (overLappedEvents.length > 0) {
-        return;
-      }
-      const nextEvents = [...events];
-      nextEvents.splice(idx, 1, updatedEvent);
-
-      this.setState({
-        events: nextEvents,
-      });
-    }
-  }
 
   changeStyling(e) {
     console.log('in changeStlying');
     console.log(e);
   }
+// get all the dates of the month for the day associated with the schedule and attach the schedule to it
+  // TODO: use switch instead of conditionals
+  getDays(schedule) {
+    const d = new Date();
+    const month = d.getMonth();
+    const days = [];
+    if (schedule.day_of_week === 'Monday') {
+      d.setDate(1);
+
+    // Get the first Monday in the month
+      while (d.getDay() !== 1) {
+        d.setDate(d.getDate() + 1);
+      }
+
+    // Get all the other Mondays in the month
+      while (d.getMonth() === month) {
+        days.push({
+          schedule,
+          date: new Date(d.getTime()),
+        });
+        d.setDate(d.getDate() + 7);
+      }
+
+      return days;
+    } else if (schedule.day_of_week === 'Tuesday') {
+      d.setDate(1);
+
+    // Get the first Tuesday in the month
+      while (d.getDay() !== 2) {
+        d.setDate(d.getDate() + 2);
+      }
+
+    // Get all the other Tuesdays in the month
+      while (d.getMonth() === month) {
+        days.push({
+          schedule,
+          date: new Date(d.getTime()),
+        });
+        d.setDate(d.getDate() + 7);
+      }
+      return days;
+    }
+  }
+
+  checkGoogleCalendarConflict(date) {
+    const hasConflict = false;
+    const GoogleCalenderAppointments = null;
+    if (!GoogleCalenderAppointments) {
+    // logic to get scheduled appointments
+    }
+
+  // iterate through relevant scheduled appointments
+  // if argument `date` has conflict, return true
+  // else, return false
+
+    return hasConflict;
+  }
+
+  getTimeSlotsForDay(date, startTime, endTime, laborTime) {
+    const timeSlots = [];
+    const dayStart = new Date(date);
+    const dayEnd = new Date(date);
+
+    dayStart.setHours(startTime, 0, 0, 0);
+    dayEnd.setHours(endTime, 0, 0, 0);
+    do {
+      if (!this.checkGoogleCalendarConflict(dayStart)) {
+        const endDateTime = new Date(dayStart);
+        endDateTime.setHours(dayStart.getHours(), dayStart.getMinutes() + (laborTime * 60));
+
+        timeSlots.push({
+          title: 'Click Me',
+          start: new Date(dayStart),
+          end: endDateTime,
+          category: 'appointment',
+        });
+      }
+      dayStart.setHours(dayStart.getHours(), dayStart.getMinutes() + (laborTime * 60));
+    } while (dayStart < dayEnd);
+
+    return timeSlots;
+  }
+
+  moveEvent() {
+    return;
+  }
 
   render() {
-    console.log(this.props);
-    const mappedEvents = this.props.allNearAppointmentsAndSchedules.appointments.map((appt) => {
-      // take date and estimated start and end time and make it into a javascript start and endtime
-      const unavailable = {
-        title: 'N/A',
-        start: moment(appt.estimated_start_time).toDate(),
-        end: moment(appt.estimated_end_time).toDate(),
-        category: 'unavailable',
-      };
-      console.log(unavailable);
-      return unavailable;
-    });
-    console.log(mappedEvents);
     let renderCalendar = null;
     const loadingMessage = 'Loading your calendar...';
     const formats = {
@@ -92,15 +147,49 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           </Segment>
         );
     } else {
+      const unavailableTimeSlots = this.props.allNearAppointmentsAndSchedules.appointments.map((appt) => {
+        // take date and estimated start and end time and make it into a javascript start and endtime
+        const unavailable = {
+          title: 'N/A',
+          start: moment(appt.estimated_start_time).toDate(),
+          end: moment(appt.estimated_end_time).toDate(),
+          category: 'unavailable',
+        };
+        return unavailable;
+      });
+
+      const schedules = this.props.allNearAppointmentsAndSchedules.schedules;
+      // console.log(schedules)
+      const availableDays = schedules
+        .map((schedule) =>
+         this.getDays(schedule)
+      )
+        .reduce((acc, scheduleWithDay) =>
+         acc.concat(scheduleWithDay)
+    , []);
+
+      const availableAppointments = availableDays
+        .map((day) => {
+          const startTime = moment(day.schedule.start_time, 'HH:mm:ss');
+          const endTime = moment(day.schedule.end_time, 'HH:mm:ss');
+          return this.getTimeSlotsForDay(day.date, moment(startTime).hours(), moment(endTime).hours(), 0.5);
+        })
+        .reduce((acc, appointmentArr) =>
+       acc.concat(appointmentArr)
+    , []);
+
+      console.log(availableAppointments);
+
       renderCalendar = (
         <DragAndDropCalendar
           formats={formats}
           selectable
-          events={mappedEvents}
+          events={availableAppointments}
           onSelectEvent={(event) => { // eslint-disable-line consistent-return
             if (event.category !== 'appointment') {
               return false;
             }
+            console.log(`${event.category} with ${event.start} and ${event.end} chosen`);
           }}
           onEventDrop={this.moveEvent}
           eventPropGetter={
@@ -108,7 +197,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           }
           views={['month', 'week', 'day']}
           defaultView="day"
-          min={new Date(1970, 1, 1, 7)}
+          min={new Date(1970, 1, 1, 8)}
           max={new Date(1970, 1, 1, 19)}
         />
       );
@@ -118,7 +207,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         <h3 className="callout">
           Schedule Appointment
         </h3>
-        Drag and drop your time slot to an available slot
+        Click on an available time slot
         {renderCalendar}
       </div>
     );
