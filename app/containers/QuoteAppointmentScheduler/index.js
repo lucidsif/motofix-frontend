@@ -17,7 +17,7 @@ import Modernizr from 'browsernizr';
 import BigCalendar from 'react-big-calendar-touch';
 import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDropTouch';
 import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
-import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
+import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
 import moment from 'moment';
 import { services } from 'components/QuoteCart';
 
@@ -31,55 +31,140 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
   constructor(props) {
     super(props);
     this.state = {
-      events,
+      events: [],
     };
 
     this.moveEvent = this.moveEvent.bind(this);
-    this.changeStyling = this.changeStyling.bind(this);
   }
-
-  changeStyling(e) {
-    console.log('in changeStlying');
-    console.log(e);
-  }
-// get all the dates of the month for the day associated with the schedule and attach the schedule to it
-  // TODO: use switch instead of conditionals
+  // get all the dates of the month for the day associated with the schedule and attach the schedule to it
   getDays(schedule) {
     const d = new Date();
     const month = d.getMonth();
     const days = [];
-    if (schedule.day_of_week === 'Monday') {
-      d.setDate(1);
 
-    // Get the first Monday in the month
-      while (d.getDay() !== 1) {
-        d.setDate(d.getDate() + 1);
-      }
+    switch (schedule.day_of_week) {
+      case 'Monday':
+        d.setDate(1);
 
-    // Get all the other Mondays in the month
-      while (d.getMonth() === month) {
-        days.push({
-          schedule,
-          date: new Date(d.getTime()),
-        });
-        d.setDate(d.getDate() + 7);
-      }
-    } else if (schedule.day_of_week === 'Tuesday') {
-      d.setDate(1);
+        // Get the first Monday in the month
+        while (d.getDay() !== 1) {
+          d.setDate(d.getDate() + 1);
+        }
 
-    // Get the first Tuesday in the month
-      while (d.getDay() !== 2) {
-        d.setDate(d.getDate() + 2);
-      }
+        // Get all the other Mondays in the month
+        while (d.getMonth() === month) {
+          days.push({
+            schedule,
+            date: new Date(d.getTime()),
+          });
+          d.setDate(d.getDate() + 7);
+        }
+        break;
+      case 'Tuesday':
+        d.setDate(1);
 
-    // Get all the other Tuesdays in the month
-      while (d.getMonth() === month) {
-        days.push({
-          schedule,
-          date: new Date(d.getTime()),
-        });
-        d.setDate(d.getDate() + 7);
-      }
+        // Get the first Tuesday in the month
+        while (d.getDay() !== 2) {
+          d.setDate(d.getDate() + 2);
+        }
+
+        // Get all the other Tuesdays in the month
+        while (d.getMonth() === month) {
+          days.push({
+            schedule,
+            date: new Date(d.getTime()),
+          });
+          d.setDate(d.getDate() + 7);
+        }
+        break;
+      case 'Wednesday':
+        d.setDate(1);
+
+        // Get the first Wednesday in the month
+        while (d.getDay() !== 3) {
+          d.setDate(d.getDate() + 3);
+        }
+
+        // Get all the other Wednesdays in the month
+        while (d.getMonth() === month) {
+          days.push({
+            schedule,
+            date: new Date(d.getTime()),
+          });
+          d.setDate(d.getDate() + 7);
+        }
+        break;
+      case 'Thursday':
+        d.setDate(1);
+
+        // Get the first Thursday in the month
+        while (d.getDay() !== 4) {
+          d.setDate(d.getDate() + 4);
+        }
+
+        // Get all the other Thursdays in the month
+        while (d.getMonth() === month) {
+          days.push({
+            schedule,
+            date: new Date(d.getTime()),
+          });
+          d.setDate(d.getDate() + 7);
+        }
+        break;
+      case 'Friday':
+        d.setDate(1);
+
+        // Get the first Friday in the month
+        while (d.getDay() !== 5) {
+          d.setDate(d.getDate() + 5);
+        }
+
+        // Get all the other Fridays in the month
+        while (d.getMonth() === month) {
+          days.push({
+            schedule,
+            date: new Date(d.getTime()),
+          });
+          d.setDate(d.getDate() + 7);
+        }
+        break;
+      case 'Saturday':
+        d.setDate(1);
+
+        // Get the first Saturday in the month
+        while (d.getDay() !== 6) {
+          d.setDate(d.getDate() + 6);
+        }
+
+        // Get all the other Saturday in the month
+        while (d.getMonth() === month) {
+          days.push({
+            schedule,
+            date: new Date(d.getTime()),
+          });
+          d.setDate(d.getDate() + 7);
+        }
+        break;
+      case 'Sunday':
+        d.setDate(1);
+
+        // Get the first Wednesday in the month
+        while (d.getDay() !== 0) {
+          d.setDate(d.getDate() + 0);
+        }
+
+        // Get all the other Wednesday in the month
+        while (d.getMonth() === month) {
+          days.push({
+            schedule,
+            date: new Date(d.getTime()),
+          });
+          d.setDate(d.getDate() + 7);
+        }
+        break;
+      default:
+        console.log('error, a valid day has not been sent to getDays()');
+        console.log(schedule.day_of_week);
     }
     // remove all day dates that is before today
     const noPastDays = days.filter((day) =>
@@ -88,43 +173,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     return noPastDays;
   }
 
-  checkAppointmentConflict(date, sumOfLaborTimes) {
-    let hasConflict = false;
-    const pendingAppointments = this.props.allNearAppointmentsAndSchedules.appointments;
-
-    // convert date to a new appointment start and new appointment end
-    const newAppointmentStart = date;
-    const newAppointmentEnd = new Date(date);
-    newAppointmentEnd.setHours(newAppointmentStart.getHours(), newAppointmentStart.getMinutes() + (sumOfLaborTimes * 60));
-
-    const conflictedAppointments = pendingAppointments.filter((pendingAppointment) => {
-      // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
-      // console.log(moment(pendingAppointment.estimated_start_time).format("YYYY-MM-DD HH:mm:ss"))
-
-      // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
-      // console.log(moment(pendingAppointment.estimated_end_time).format("YYYY-MM-DD HH:mm:ss"))
-
-      // TODO: return overlapping appointments
-      if (moment(newAppointmentStart).isSame(pendingAppointment.estimated_start_time) && moment(newAppointmentEnd).isSame(pendingAppointment.estimated_end_time)) {
-        return pendingAppointment;
-      }
-      if (moment(newAppointmentStart).isBefore(pendingAppointment.estimated_end_time) && moment(newAppointmentEnd).isAfter(pendingAppointment.estimated_start_time)) {
-        return pendingAppointment;
-      }
-    });
-
-    if (conflictedAppointments.length > 0) {
-      hasConflict = true;
-      console.log('conflicted appointments');
-    }
-
-
-  // iterate through relevant scheduled appointments
-  // if argument `date` has conflict, return true
-  // else, return false
-
-    return hasConflict;
-  }
 // TODO: ensure that the minutes is also calculated for
 // TODO: Make sure user selects a diagnosis if they want an appointment and have unknown services selected
   getTimeSlotsForDay(date, startTime, endTime, sumOfLaborTimes, mechanic) {
@@ -157,8 +205,46 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     return timeSlots;
   }
 
+  checkAppointmentConflict(date, sumOfLaborTimes) {
+    let hasConflict = false;
+    const pendingAppointments = this.props.allNearAppointmentsAndSchedules.appointments;
+
+    // convert date to a new appointment start and new appointment end
+    const newAppointmentStart = date;
+    const newAppointmentEnd = new Date(date);
+    newAppointmentEnd.setHours(newAppointmentStart.getHours(), newAppointmentStart.getMinutes() + (sumOfLaborTimes * 60));
+
+    const conflictedAppointments = pendingAppointments.filter((pendingAppointment) => { // eslint-disable-line consistent-return
+      // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
+      // console.log(moment(pendingAppointment.estimated_start_time).format("YYYY-MM-DD HH:mm:ss"))
+
+      // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
+      // console.log(moment(pendingAppointment.estimated_end_time).format("YYYY-MM-DD HH:mm:ss"))
+      if (moment(newAppointmentStart).isSame(pendingAppointment.estimated_start_time) && moment(newAppointmentEnd).isSame(pendingAppointment.estimated_end_time)) {
+        console.log('same time slot');
+        return pendingAppointment;
+      }
+      if (moment(newAppointmentStart).isBefore(pendingAppointment.estimated_end_time) && moment(newAppointmentEnd).isAfter(pendingAppointment.estimated_start_time)) {
+        console.log('overlapping time slot');
+        return pendingAppointment;
+      }
+      return null;
+    });
+
+    if (conflictedAppointments.length > 0) {
+      hasConflict = true;
+      console.log('conflicted appointments');
+    }
+
+    // iterate through relevant scheduled appointments
+    // if argument `date` has conflict, return true
+    // else, return false
+
+    return hasConflict;
+  }
+
   moveEvent() {
-    return;
+
   }
 
   render() {
@@ -262,7 +348,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 QuoteAppointmentScheduler.propTypes = {
-  vehicle: React.PropTypes.object,
+  cart: React.PropTypes.object,
   allNearAppointmentsAndSchedules: React.PropTypes.object,
   allNearAppointmentsAndSchedulesLoading: React.PropTypes.bool,
 
