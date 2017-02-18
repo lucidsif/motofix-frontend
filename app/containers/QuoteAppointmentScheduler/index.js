@@ -14,7 +14,8 @@ import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 import { services } from 'components/QuoteCart';
 import Calendar from 'components/Calendar';
 import moment from 'moment';
-import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
+import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';
+import Stripe from 'components/StripeCheckout';
 
 
 // TODO: fix styling of toolbar for mobile
@@ -284,6 +285,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         </h3>
         Click on an available time slot
         {renderCalendar}
+        <Stripe />
       </div>
     );
   }
