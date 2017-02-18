@@ -28,8 +28,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   renderItems() {
     const quotes = this.props.allUserQuotes;
     return quotes.map((quote) => {
-      console.log(quote);
-      const date = new Date(quote.createdAt);
+      const date = new Date(quote.created_at);
       const formattedDate = date.toString();
       const motorcycle = JSON.parse(quote.motorcycle_json);
       let location;
@@ -70,7 +69,6 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
   }
 
   render() {
-    console.log(this.props);
     const loadingMessage = 'Loading your saved quotes...';
     if (this.props.allUserQuotesLoading) {
       return (
@@ -110,8 +108,8 @@ query allUserQuotes($token: String){
     motorcycle_json
     cart_json
     part_json
-    createdAt
-    updatedAt
+    created_at
+    updated_at
   }
 }
 `;

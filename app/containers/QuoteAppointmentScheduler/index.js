@@ -17,7 +17,7 @@ import moment from 'moment';
 import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';
 import Stripe from 'components/StripeCheckout';
 
-
+// TODO: exclude break times from available appointments
 // TODO: fix styling of toolbar for mobile
 export class QuoteAppointmentScheduler extends React.Component { // eslint-disable-line react/prefer-stateless-function
   // get all the dates of the month for the day associated with the schedule and attach the schedule to it
