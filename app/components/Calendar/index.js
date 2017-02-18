@@ -24,6 +24,10 @@ function Calendar(props) {
     dayFormat: (date, culture, localizer) =>
       localizer.format(date, 'Do', culture),
   };
+
+  function moveEvent() {
+
+  }
   return (
     <DragAndDropCalendar
       formats={formats}
@@ -36,7 +40,7 @@ function Calendar(props) {
         console.log(event);
         // console.log(`${event.category} with ${event.start} and ${event.end} chosen`);
       }}
-      onEventDrop={this.moveEvent}
+      onEventDrop={moveEvent}
       eventPropGetter={
         (event) => ({ className: `category-${event.category.toLowerCase()}` })
       }
@@ -47,5 +51,9 @@ function Calendar(props) {
     />
   );
 }
+
+Calendar.propTypes = {
+  availableAppointments: React.PropTypes.array,
+};
 
 export default Calendar;

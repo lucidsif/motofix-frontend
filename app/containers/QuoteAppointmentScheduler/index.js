@@ -11,32 +11,14 @@ import gql from 'graphql-tag';
 import { createStructuredSelector } from 'reselect';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
-
-import 'browsernizr/test/touchevents';
-import Modernizr from 'browsernizr';
-import BigCalendar from 'react-big-calendar-touch';
-import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDropTouch';
-import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
-import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
-import moment from 'moment';
 import { services } from 'components/QuoteCart';
-
 import Calendar from 'components/Calendar';
+import moment from 'moment';
+import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
 
-BigCalendar.momentLocalizer(moment);
-let DragAndDropCalendar;
-Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
 
 // TODO: fix styling of toolbar for mobile
 export class QuoteAppointmentScheduler extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props) {
-    super(props);
-    this.state = {
-      events: [],
-    };
-
-    this.moveEvent = this.moveEvent.bind(this);
-  }
   // get all the dates of the month for the day associated with the schedule and attach the schedule to it
   getDays(schedule) {
     const d = new Date();
@@ -243,19 +225,10 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     return hasConflict;
   }
 
-  moveEvent() {
-
-  }
-
   render() {
     let renderCalendar = null;
-    const loadingMessage = 'Loading your calendar...';
-    const formats = {
-      dateFormat: 'MMM Do YYYY',
+    const loadingMessage = 'Getting available appointments near you...';
 
-      dayFormat: (date, culture, localizer) =>
-        localizer.format(date, 'Do', culture),
-    };
     if (this.props.allNearAppointmentsAndSchedulesLoading) {
       renderCalendar =
         (
@@ -301,26 +274,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
 
       renderCalendar = (
-        <DragAndDropCalendar
-          formats={formats}
-          selectable
-          events={availableAppointments}
-          onSelectEvent={(event) => { // eslint-disable-line consistent-return
-            if (event.category !== 'appointment') {
-              return false;
-            }
-            console.log(event);
-            // console.log(`${event.category} with ${event.start} and ${event.end} chosen`);
-          }}
-          onEventDrop={this.moveEvent}
-          eventPropGetter={
-            (event) => ({ className: `category-${event.category.toLowerCase()}` })
-          }
-          views={['month', 'week', 'day']}
-          defaultView="week"
-          min={new Date(1970, 1, 1, 8)}
-          max={new Date(1970, 1, 1, 19)}
-        />
+        <Calendar availableAppointments={availableAppointments} />
       );
     }
     return (
