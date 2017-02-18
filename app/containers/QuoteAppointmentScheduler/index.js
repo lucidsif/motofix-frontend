@@ -21,12 +21,13 @@ import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
 import moment from 'moment';
 import { services } from 'components/QuoteCart';
 
+import Calendar from 'components/Calendar';
+
 BigCalendar.momentLocalizer(moment);
 let DragAndDropCalendar;
 Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
 
 // TODO: fix styling of toolbar for mobile
-// TODO: Convert array of appointments and schedules to an array of events to render to the calendar
 export class QuoteAppointmentScheduler extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -232,7 +233,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     if (conflictedAppointments.length > 0) {
       hasConflict = true;
       console.log('conflicted appointments');
-      console.log(conflictedAppointments)
+      console.log(conflictedAppointments);
     }
 
     // iterate through relevant scheduled appointments
