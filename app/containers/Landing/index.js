@@ -9,7 +9,7 @@ import { withApollo } from 'react-apollo';
 import RedditCarousel from 'components/RedditCarousel';
 import FormModal from 'components/FormModal';
 import { Image } from 'semantic-ui-react';
-import logo from './logo.png';
+import logo from './logo@3x.png';
 import mechanicIcon from './mechanic.png';
 import piggyBank from './piggy-bank.png';
 import controller from './controller.png';

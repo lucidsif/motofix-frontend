@@ -14,7 +14,7 @@
   display: none;
 }
 .landing-image {
-  background-image: url('../containers/Landing/male-mechanic.jpg') !important;
+  background-image: url('../containers/Landing/male-mechanic-nickel.jpg') !important;
   background-size: cover !important;
 }
 .masthead.segment {

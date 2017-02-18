@@ -164,7 +164,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         break;
       default:
         console.log('error, a valid day has not been sent to getDays()');
-        console.log(schedule.day_of_week);
+        console.log(schedule, schedule.day_of_week);
     }
     // remove all day dates that is before today
     const noPastDays = days.filter((day) =>
@@ -221,11 +221,9 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
       // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
       // console.log(moment(pendingAppointment.estimated_end_time).format("YYYY-MM-DD HH:mm:ss"))
       if (moment(newAppointmentStart).isSame(pendingAppointment.estimated_start_time) && moment(newAppointmentEnd).isSame(pendingAppointment.estimated_end_time)) {
-        console.log('same time slot');
         return pendingAppointment;
       }
       if (moment(newAppointmentStart).isBefore(pendingAppointment.estimated_end_time) && moment(newAppointmentEnd).isAfter(pendingAppointment.estimated_start_time)) {
-        console.log('overlapping time slot');
         return pendingAppointment;
       }
       return null;
@@ -234,6 +232,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     if (conflictedAppointments.length > 0) {
       hasConflict = true;
       console.log('conflicted appointments');
+      console.log(conflictedAppointments)
     }
 
     // iterate through relevant scheduled appointments
