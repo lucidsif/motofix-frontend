@@ -66,7 +66,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         d.setDate(d.getDate() + 7);
       }
 
-      return days;
     } else if (schedule.day_of_week === 'Tuesday') {
       d.setDate(1);
 
@@ -83,8 +82,12 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         });
         d.setDate(d.getDate() + 7);
       }
-      return days;
     }
+    // remove all day dates that is before today
+    const noPastDays = days.filter((day) => {
+      return moment(day.date).isAfter(Date.now())
+    });
+    return noPastDays;
   }
 
   checkAppointmentConflict(date, sumOfLaborTimes) {
@@ -105,16 +108,9 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
       // TODO: return overlapping appointments
       if (moment(newAppointmentStart).isSame(pendingAppointment.estimated_start_time) && moment(newAppointmentEnd).isSame(pendingAppointment.estimated_end_time)) {
-        console.log('same time appointment');
         return pendingAppointment;
       }
       if (moment(newAppointmentStart).isBefore(pendingAppointment.estimated_end_time) && moment(newAppointmentEnd).isAfter(pendingAppointment.estimated_start_time)) {
-        console.log('overlapped');
-        // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
-        // console.log(moment(pendingAppointment.estimated_start_time).format("YYYY-MM-DD HH:mm:ss"))
-
-        // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
-        // console.log(moment(pendingAppointment.estimated_end_time).format("YYYY-MM-DD HH:mm:ss"))
         return pendingAppointment;
       }
     });
@@ -133,7 +129,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
   }
 // TODO: ensure that the minutes is also calculated for
 // TODO: Make sure user selects a diagnosis if they want an appointment and have unknown services selected
-  getTimeSlotsForDay(date, startTime, endTime, sumOfLaborTimes) {
+  getTimeSlotsForDay(date, startTime, endTime, sumOfLaborTimes, mechanic) {
     let estimatedLaborTime = sumOfLaborTimes;
     if (estimatedLaborTime <= 0) {
       estimatedLaborTime = 1.0;
@@ -154,6 +150,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           start: new Date(dayStart),
           end: endDateTime,
           category: 'appointment',
+          mechanic,
         });
       }
       dayStart.setHours(dayStart.getHours(), dayStart.getMinutes() + (estimatedLaborTime * 60));
@@ -198,17 +195,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           return acc + 0;
         }, 0);
 
-      const unavailableTimeSlots = this.props.allNearAppointmentsAndSchedules.appointments.map((appt) => {
-        // take date and estimated start and end time and make it into a javascript start and endtime
-        const unavailable = {
-          title: 'N/A',
-          start: moment(appt.estimated_start_time).toDate(),
-          end: moment(appt.estimated_end_time).toDate(),
-          category: 'unavailable',
-        };
-        return unavailable;
-      });
-
       const schedules = this.props.allNearAppointmentsAndSchedules.schedules;
       // console.log(schedules)
       const availableDays = schedules
@@ -223,7 +209,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         .map((day) => {
           const startTime = moment(day.schedule.start_time, 'HH:mm:ss');
           const endTime = moment(day.schedule.end_time, 'HH:mm:ss');
-          return this.getTimeSlotsForDay(day.date, moment(startTime).hours(), moment(endTime).hours(), sumOfLaborTimes);
+          return this.getTimeSlotsForDay(day.date, moment(startTime).hours(), moment(endTime).hours(), sumOfLaborTimes, day.schedule.fk_mechanic_id);
         })
         .reduce((acc, appointmentArr) =>
        acc.concat(appointmentArr)
@@ -239,7 +225,8 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
             if (event.category !== 'appointment') {
               return false;
             }
-            console.log(`${event.category} with ${event.start} and ${event.end} chosen`);
+            console.log(event)
+            // console.log(`${event.category} with ${event.start} and ${event.end} chosen`);
           }}
           onEventDrop={this.moveEvent}
           eventPropGetter={
