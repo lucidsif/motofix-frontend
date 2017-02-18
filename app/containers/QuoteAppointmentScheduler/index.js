@@ -15,7 +15,6 @@ import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 import 'browsernizr/test/touchevents';
 import Modernizr from 'browsernizr';
 import BigCalendar from 'react-big-calendar-touch';
-import events from './events';
 import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDropTouch';
 import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
 import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
@@ -65,7 +64,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         });
         d.setDate(d.getDate() + 7);
       }
-
     } else if (schedule.day_of_week === 'Tuesday') {
       d.setDate(1);
 
@@ -84,9 +82,9 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
       }
     }
     // remove all day dates that is before today
-    const noPastDays = days.filter((day) => {
-      return moment(day.date).isAfter(Date.now())
-    });
+    const noPastDays = days.filter((day) =>
+       moment(day.date).isAfter(Date.now())
+    );
     return noPastDays;
   }
 
@@ -225,7 +223,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
             if (event.category !== 'appointment') {
               return false;
             }
-            console.log(event)
+            console.log(event);
             // console.log(`${event.category} with ${event.start} and ${event.end} chosen`);
           }}
           onEventDrop={this.moveEvent}
