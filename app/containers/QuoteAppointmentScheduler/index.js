@@ -89,7 +89,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
   checkAppointmentConflict(date, sumOfLaborTimes) {
     let hasConflict = false;
-    const pendingAppointments = this.props.allNearAppointmentsAndSchedules.appointments
+    const pendingAppointments = this.props.allNearAppointmentsAndSchedules.appointments;
 
     // convert date to a new appointment start and new appointment end
     const newAppointmentStart = date;
@@ -97,19 +97,31 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     newAppointmentEnd.setHours(newAppointmentStart.getHours(), newAppointmentStart.getMinutes() + (sumOfLaborTimes * 60));
 
     const conflictedAppointments = pendingAppointments.filter((pendingAppointment) => {
-      //console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
-      //console.log(moment(pendingAppointment.estimated_start_time).format("YYYY-MM-DD HH:mm:ss"))
+      // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
+      // console.log(moment(pendingAppointment.estimated_start_time).format("YYYY-MM-DD HH:mm:ss"))
 
-      //console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
-      //console.log(moment(pendingAppointment.estimated_end_time).format("YYYY-MM-DD HH:mm:ss"))
+      // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
+      // console.log(moment(pendingAppointment.estimated_end_time).format("YYYY-MM-DD HH:mm:ss"))
 
-      return (moment(newAppointmentStart).isSame(pendingAppointment.estimated_start_time) && moment(newAppointmentEnd).isSame(pendingAppointment.estimated_end_time)) || (moment(newAppointmentStart).isBefore(pendingAppointment.end) && moment(newAppointmentEnd).isAfter(pendingAppointment.start));
+      // TODO: return overlapping appointments
+      if (moment(newAppointmentStart).isSame(pendingAppointment.estimated_start_time) && moment(newAppointmentEnd).isSame(pendingAppointment.estimated_end_time)) {
+        console.log('same time appointment');
+        return pendingAppointment;
+      }
+      if (moment(newAppointmentStart).isBefore(pendingAppointment.estimated_end_time) && moment(newAppointmentEnd).isAfter(pendingAppointment.estimated_start_time)) {
+        console.log('overlapped');
+        // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
+        // console.log(moment(pendingAppointment.estimated_start_time).format("YYYY-MM-DD HH:mm:ss"))
+
+        // console.log(moment(newAppointmentStart).format("YYYY-MM-DD HH:mm:ss"))
+        // console.log(moment(pendingAppointment.estimated_end_time).format("YYYY-MM-DD HH:mm:ss"))
+        return pendingAppointment;
+      }
     });
 
     if (conflictedAppointments.length > 0) {
       hasConflict = true;
-      console.log('overlapped appointment!')
-      console.log(conflictedAppointments);
+      console.log('conflicted appointments');
     }
 
 
