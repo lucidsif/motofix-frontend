@@ -100,6 +100,7 @@ const mapStateToProps = createStructuredSelector({
   authenticated: selectAuthenticated(),
 });
 
+// TODO: do i require any of these fields??
 const CurrentUserQuotesQuery = gql`
 query allUserQuotes($token: String){
   allUserQuotes(token: $token){
