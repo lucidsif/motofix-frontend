@@ -160,3 +160,23 @@ span.rbc-btn-group {
   pointer-events: none;
   opacity: .35;
 }
+
+/*
+appointment calendar message styling
+ */
+
+.calendarGeosuggestMargin {
+  margin: 0.5em;
+}
+
+.ui.form input[type=text] {
+  width: 280px;
+}
+
+.phoneNumberMarginBottom {
+  margin-bottom: 0.5em;
+}
+
+.payTextMarginBottom {
+  margin-bottom: 0.5em;
+}

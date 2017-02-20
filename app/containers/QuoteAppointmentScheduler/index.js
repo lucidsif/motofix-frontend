@@ -289,7 +289,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         <h3 className="callout">
           Schedule Appointment
         </h3>
-        Select an available time slot and click on the book button
+        Click on an available time slot
         {renderCalendar}
       </div>
     );
