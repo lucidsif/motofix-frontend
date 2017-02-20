@@ -11,17 +11,17 @@ class StripeCheckout extends React.Component {
   onToken = (token) => {
     console.log(token);
     //console.log(fetch())
-/*
-    // graphql mutation postToken
-    fetch('https://localhost:3010/graphql', {
-      method: 'POST',
-      body: JSON.stringify(token),
-    }).then(response => {
-      response.json().then(data => {
-        alert(`We are in business, ${data.email}`);
-      });
-    });
-    */
+    /*
+     // graphql mutation postToken
+     fetch('https://localhost:3010/graphql', {
+     method: 'POST',
+     body: JSON.stringify(token),
+     }).then(response => {
+     response.json().then(data => {
+     alert(`We are in business, ${data.email}`);
+     });
+     });
+     */
   }
 
   // ...

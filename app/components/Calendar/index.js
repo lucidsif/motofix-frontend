@@ -11,7 +11,7 @@ import Modernizr from 'browsernizr';
 import BigCalendar from 'react-big-calendar-touch';
 import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDropTouch';
 import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
-import { Button, Segment, Dimmer, Loader, Image, Message, Form, Input } from 'semantic-ui-react';
+import { Message, Form, Input } from 'semantic-ui-react';
 import moment from 'moment';
 import Geosuggest from 'react-geosuggest';
 import StripeCheckout from 'components/StripeCheckout';
@@ -22,29 +22,27 @@ BigCalendar.momentLocalizer(moment);
 let DragAndDropCalendar;
 Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
 
-// TODO: add validation for phone number and address fields
-// TODO: require phone and address field before paying with card. render error messages if not filled
-
+// TODO: add validation for geosuggest field
+// TODO: hide or not show button if fields not filled
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedTimeSlot: null,
-      motorcycle_address: null
+      motorcycle_address: null,
+      mobile_number: null,
     };
 
+    this.moveEvent = this.moveEvent.bind(this);
     this.onSelect = this.onSelect.bind(this);
-    this.onSuggestSelect = this.onSuggestSelect(this);
+    this.onSuggestSelect = this.onSuggestSelect.bind(this);
+    this.onSuggestChange = this.onSuggestChange.bind(this);
+    this.onPhoneChange = this.onPhoneChange.bind(this);
   }
 
-  moveEvent() {
-
-  }
   // check if user is authenticated. if authenticated, save event to state. otherwise reroute.
   onSelect(event) {
-    console.log(this.props.authenticated);
-
     if (!this.props.authenticated) {
       browserHistory.push('/login');
     }
@@ -53,11 +51,42 @@ class Calendar extends React.Component {
   }
 
   onSuggestSelect(mapsObj) {
-    this.setState({ motorcycle_address: mapsObj})
+    this.setState({ motorcycle_address: mapsObj.label });
+  }
+
+  onSuggestChange() {
+    this.setState({ motorcycle_address: null });
+  }
+
+  onPhoneChange(e) {
+    console.log(e.target.value);
+    const phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+    if (phoneNumberPattern.test(e.target.value)) {
+      this.setState({ mobile_number: e.target.value });
+    } else {
+      this.setState({ mobile_number: null });
+    }
+  }
+
+  moveEvent() {
+
   }
 
   render() {
-    console.log(this.props.authenticated);
+    let conditionallyRenderStripeButton = null;
+    if (this.state.motorcycle_address && this.state.mobile_number) {
+      conditionallyRenderStripeButton = (
+        <div>
+          <div className="payTextMarginBottom">
+          Pre-authorize your card for the quote total to schedule your appointment.
+          </div>
+          <StripeCheckout />
+        </div>
+      );
+    } else {
+      conditionallyRenderStripeButton = null;
+    }
+
     const formats = {
       dateFormat: 'MMM Do YYYY',
 
@@ -73,31 +102,29 @@ class Calendar extends React.Component {
           </Message.Header>
           <Message.Content>
             <Form>
-                <div className="ui large icon input calendarGeosuggestMargin">
-                  <Geosuggest
-                    placeholder="Where should we meet you?"
-                    country="us"
-                    types={['geocode']}
-                    onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
-                    onBlur={() => this.onBlurError}
-                  />
-                  <i className="location arrow icon"></i>
-                </div>
+              <div className="ui large icon input calendarGeosuggestMargin">
+                <Geosuggest
+                  placeholder="Where should we meet you?"
+                  country="us"
+                  types={['geocode']}
+                  onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
+                  onChange={this.onSuggestChange}
+                />
+                <i className="location arrow icon"></i>
+              </div>
               <div className="phoneNumberMarginBottom">
                 <Input
                   icon="mobile"
                   placeholder="What's your mobile number?"
                   size="large"
+                  onChange={this.onPhoneChange}
                 />
               </div>
             </Form>
-            <div className="payTextMarginBottom">
-            Pre-authorize your card for the quote total to schedule your appointment.
-            </div>
+            {conditionallyRenderStripeButton}
           </Message.Content>
-          <StripeCheckout />
         </Message>
-      )
+      );
     }
 
     return (
@@ -124,6 +151,7 @@ class Calendar extends React.Component {
 
 Calendar.propTypes = {
   availableAppointments: React.PropTypes.array,
+  authenticated: React.PropTypes.boolean,
 };
 
 export default Calendar;
