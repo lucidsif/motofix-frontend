@@ -15,11 +15,16 @@ import { services } from 'components/QuoteCart';
 import Calendar from 'components/Calendar';
 import moment from 'moment';
 import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';
-import Stripe from 'components/StripeCheckout';
+
+// TODO: make default event color orange and selected event color blue
+// TODO:
+
 
 // TODO: exclude break times from available appointments
+// TODO: test for multiple mechanics. How can multiple mechanic time slots be rendered?
 // TODO: fix styling of toolbar for mobile
 export class QuoteAppointmentScheduler extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
   // get all the dates of the month for the day associated with the schedule and attach the schedule to it
   getDays(schedule) {
     const d = new Date();
@@ -283,9 +288,8 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         <h3 className="callout">
           Schedule Appointment
         </h3>
-        Click on an available time slot
+        Select an available time slot and click on the book button
         {renderCalendar}
-        <Stripe />
       </div>
     );
   }

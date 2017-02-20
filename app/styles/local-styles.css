@@ -122,11 +122,12 @@ event styles of react-big-calendar
 }
 
 .category-appointment {
-  background-color: #00b5ad;
+  background-color: #ffa500;
 }
 
 .category-appointment.rbc-selected {
-  background-color: #ffa500;
+  background-color: #00b5ad;
+
 }
 
 .rbc-day-slot .rbc-event {
