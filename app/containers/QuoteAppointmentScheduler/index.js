@@ -9,6 +9,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 // import selectQuoteAppointmentScheduler from './selectors';
 import { createStructuredSelector } from 'reselect';
+import { selectAuthenticated } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 import { services } from 'components/QuoteCart';
@@ -280,7 +281,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
 
       renderCalendar = (
-        <Calendar availableAppointments={availableAppointments} />
+        <Calendar availableAppointments={availableAppointments} authenticated={this.props.authenticated} />
       );
     }
     return (
@@ -296,6 +297,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 }
 
 const mapStateToProps = createStructuredSelector({
+  authenticated: selectAuthenticated(),
   vehicle: selectVehicleDomain(),
   cart: selectCart(),
   part: selectPart(),

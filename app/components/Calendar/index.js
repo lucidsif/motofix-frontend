@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import { browserHistory } from 'react-router';
 import 'browsernizr/test/touchevents';
 import Modernizr from 'browsernizr';
 import BigCalendar from 'react-big-calendar-touch';
@@ -12,6 +13,7 @@ import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDro
 import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
 import { Button, Segment, Dimmer, Loader, Image, Message } from 'semantic-ui-react';
 import moment from 'moment';
+import StripeCheckout from 'components/StripeCheckout';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -25,12 +27,26 @@ class Calendar extends React.Component {
     this.state = {
       selectedTimeSlot: null,
     };
+
+    this.onSelect = this.onSelect.bind(this);
   }
 
   moveEvent() {
 
   }
+  // check if user is authenticated. if authenticated, save event to state. otherwise reroute.
+  onSelect(event) {
+    console.log(this.props.authenticated);
+
+    if (!this.props.authenticated) {
+      browserHistory.push('/login');
+    }
+
+    this.setState({ selectedTimeSlot: event });
+  }
+
   render() {
+    console.log(this.props.authenticated);
     const formats = {
       dateFormat: 'MMM Do YYYY',
 
@@ -47,7 +63,7 @@ class Calendar extends React.Component {
           <Message.Content>
             Pre-authorize your card for the quote total to schedule your appointment.
           </Message.Content>
-          <Button color="teal">Book Appointment</Button>
+          <StripeCheckout />
         </Message>
       )
     }
@@ -59,14 +75,7 @@ class Calendar extends React.Component {
           formats={formats}
           selectable
           events={this.props.availableAppointments}
-          onSelectEvent={(event) => { // eslint-disable-line consistent-return
-            if (event.category !== 'appointment') {
-              return false;
-            }
-            //(moment(event.start).format());
-            this.setState({ selectedTimeSlot: event });
-          // console.log(`${event.category} with ${event.start} and ${event.end} chosen`);
-          }}
+          onSelectEvent={this.onSelect}
           onEventDrop={this.moveEvent}
           eventPropGetter={
           (event) => ({ className: `category-${event.category.toLowerCase()}` })

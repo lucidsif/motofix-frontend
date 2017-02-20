@@ -10,7 +10,7 @@ import StripeCheckoutComp from 'react-stripe-checkout';
 class StripeCheckout extends React.Component {
   onToken = (token) => {
     console.log(token);
-    console.log(fetch())
+    //console.log(fetch())
 /*
     // graphql mutation postToken
     fetch('https://localhost:3010/graphql', {
@@ -32,7 +32,9 @@ class StripeCheckout extends React.Component {
       <StripeCheckoutComp
         token={this.onToken}
         stripeKey="pk_test_Uq1Klar8ByVNEJGycRrPLA3X"
-      />
+      >
+        <button className="ui teal button">Pay with card</button>
+      </StripeCheckoutComp>
     )
   }
 }
