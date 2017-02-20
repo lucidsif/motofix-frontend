@@ -11,7 +11,7 @@ import Modernizr from 'browsernizr';
 import BigCalendar from 'react-big-calendar-touch';
 import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDropTouch';
 import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
-import { Message, Form, Input } from 'semantic-ui-react';
+import { Message, Form, Input, Button } from 'semantic-ui-react';
 import moment from 'moment';
 import Geosuggest from 'react-geosuggest';
 import StripeCheckout from 'components/StripeCheckout';
@@ -97,9 +97,7 @@ class Calendar extends React.Component {
     if (this.state.selectedTimeSlot) {
       timeSlotSelectedMessage = (
         <Message positive>
-          <Message.Header>
-            Appointment was selected for <span>{moment(this.state.selectedTimeSlot.start).format('MMM-DD h A')} to {moment(this.state.selectedTimeSlot.end).format('MMM-DD h A')}</span>
-          </Message.Header>
+            Appointment was selected for <span>{moment(this.state.selectedTimeSlot.start).format('MMM-DD h:hh A')} to {moment(this.state.selectedTimeSlot.end).format('MMM-DD h:hh A')}</span>
           <Message.Content>
             <Form>
               <div className="ui large icon input calendarGeosuggestMargin">
@@ -144,6 +142,7 @@ class Calendar extends React.Component {
           min={new Date(1970, 1, 1, 8)}
           max={new Date(1970, 1, 1, 19)}
         />
+        <Button onClick={browserHistory.goBack}>Back</Button>
       </div>
     );
   }

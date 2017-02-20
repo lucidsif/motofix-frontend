@@ -12,17 +12,7 @@ import { Segment } from 'semantic-ui-react';
 // TODO: incrementally fill progressbar
 class QuoteProgressBar extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { selectedVehicle, currentLocation } = this.props;
-    const year = selectedVehicle.year;
-    const make = selectedVehicle.manufacturer;
-    const model = selectedVehicle.model;
-
-    let renderModelOrDescription;
-    if (year && make && model) {
-      renderModelOrDescription = `${year} ${make} ${model}`;
-    } else {
-      renderModelOrDescription = 'Motorcycle Information';
-    }
+    const { currentLocation } = this.props;
 
     let renderProgressStage = null;
     if (currentLocation === '/quote/vehicle') {
@@ -44,7 +34,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
             <g className="active">
               <circle cx="13%" cy="10%" r="1.25em"></circle>
               <text x="13%" y="10%">1</text>
-              <text className="stage" x="13%" y="30%">{renderModelOrDescription}</text>
+              <text className="stage" x="13%" y="30%">Vehicle Information</text>
             </g>
           </svg>
         </Segment>
@@ -69,7 +59,7 @@ class QuoteProgressBar extends React.PureComponent { // eslint-disable-line reac
             <g>
               <circle cx="10%" cy="10%" r="1.25em"></circle>
               <text x="10%" y="10%">1</text>
-              <text className="stage" x="10%" y="30%">{year} {make} {model}</text>
+              <text className="stage" x="10%" y="30%">Vehicle Information</text>
             </g>
           </svg>
         </Segment>
