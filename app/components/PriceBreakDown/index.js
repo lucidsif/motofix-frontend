@@ -119,8 +119,8 @@ function PriceBreakDown(props) {
           motorcycle_json
           cart_json
           part_json
-          createdAt
-          updatedAt
+          created_at
+          updated_at
          }
        }
       `,

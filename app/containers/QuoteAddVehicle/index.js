@@ -275,7 +275,7 @@ class QuoteAddVehicle extends React.Component {
             <i className="location arrow icon"></i>
           </div>
           {this.state.location === false &&
-          <Label basic color="red" pointing="left">Please type or select a valid location among the suggestions</Label>
+          <Label basic color="red">Please type or select a valid location among the suggestions</Label>
           }
           <Divider section horizontal> Select Model</Divider>
           <div>
