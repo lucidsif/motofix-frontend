@@ -78,7 +78,7 @@ export class AppNavBar extends React.Component {
       }
       return acc + 0;
     }, 0);
-    return sumOfLaborTimes * 67;
+    return sumOfLaborTimes * 67 *2;
   }
 
   totalPrice() {

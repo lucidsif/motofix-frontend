@@ -150,7 +150,7 @@ class Calendar extends React.Component {
 
 Calendar.propTypes = {
   availableAppointments: React.PropTypes.array,
-  authenticated: React.PropTypes.boolean,
+  authenticated: React.PropTypes.bool,
 };
 
 export default Calendar;

@@ -59,7 +59,7 @@ function QuoteCart(props) {
         return acc + 0;
       }, 0);
 
-    return sumOfLaborTimes * 67;
+    return sumOfLaborTimes * 67 * 2;
   };
   function totalPrice() {
     const subTotal = totalServicesPrice() + totalPartsPrice();

@@ -152,7 +152,7 @@ function AddServices(props) {
               <Segment attached="bottom" disabled textAlign="left">
                 Smoke or steam is coming out of motorcycle
                 {!props.props.cart.SmokeOrSteamIsComingOutOfMotorcycle.selected ? (
-                  <Icon name="add to cart" size="large" className="serviceIcon blueIcon" />
+                  <Icon disabled name="add to cart" size="large" className="serviceIcon blueIcon" />
                 ) : (
                   <Icon name="trash outline" size="large" className="serviceIcon redIcon" />
                 )}

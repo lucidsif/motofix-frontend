@@ -17,6 +17,8 @@ let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
+// TODO: store value and label together for makes
+// TODO: add location validation
 
 // TODO: Pass location to app state and to saved quotes
 // TODO 7/10 add error message if no location can be found or autosuggest query async error
@@ -204,14 +206,15 @@ class QuoteAddVehicle extends React.Component {
 // TODO: Fix this shit
   validateMotorcycleForm(e) {
     e.preventDefault();
+/*
     this.setState({ modelValue: 'CBR' });
     this.setState({ subModelValue: 'CBR600' });
     this.setState({ yearValue: 2005 });
-
+    */
 
     if (!this.state.location) {
       this.setState({ location: false });
-    }/*
+    }
     if (!this.state.manufacturerValue) {
       this.setState({ manufacturerValue: false });
     }
@@ -224,21 +227,21 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
-    */
-    console.log(this.state.location)
+    console.log(this.state.location);
     console.log('mock vehicle selected and merged to state');
     // TODO: Create actual vehicle object in this format
     const vehicle = {
       location: this.state.location.customerLocation,
-      mid: 'HDA06327',
+      mid: this.state.subModelValue,
       manufacturer: this.state.manufacturerValue,
-      model: 'CBR',
-      model_variant: 'CBR600',
-      tuning_description: 'SE',
-      start_year: 2008,
-      end_year: 2011,
-      year: 2010,
+      model: this.state.modelValue,
+      model_variant: this.state.subModelValue,
+      year: this.state.yearValue,
+      // tuning_description: 'idk',
+      // start_year: 2008,
+      // end_year: 2011,
     };
+    console.log(vehicle);
     return this.props.onSubmitForm(vehicle);
   }
 
@@ -246,7 +249,7 @@ class QuoteAddVehicle extends React.Component {
   // if distance is within x miles -> allow to pass otherwise fail to pass and render message
 
   render() {
-    let renderVehicleModel = null;
+    /* let renderVehicleModel = null;
     const vehicle = this.props.vehicle;
     if (this.props.vehicle.mid) {
       renderVehicleModel = (
@@ -255,11 +258,9 @@ class QuoteAddVehicle extends React.Component {
         </div>
       );
     }
+    */
     return (
       <div>
-        {renderVehicleModel &&
-        <div>{renderVehicleModel}</div>
-        }
         <form onSubmit={this.validateMotorcycleForm}>
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
@@ -297,7 +298,6 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Model </span>
             <Select
-              autofocus
               options={this.state.modelOptions}
               simpleValue
               clearable
@@ -314,7 +314,6 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Sub-model </span>
             <Select
-              autofocus
               options={this.state.subModelOptions}
               simpleValue
               clearable
@@ -331,7 +330,6 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Year </span>
             <Select
-              autofocus
               options={this.state.yearOptions}
               simpleValue
               clearable
@@ -354,7 +352,6 @@ class QuoteAddVehicle extends React.Component {
 
 QuoteAddVehicle.propTypes = {
   client: React.PropTypes.object,
-  vehicle: React.PropTypes.object,
   onSubmitForm: React.PropTypes.func,
 };
 

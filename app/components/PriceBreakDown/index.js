@@ -36,7 +36,7 @@ function PriceBreakDown(props) {
   }
 
   function multiplyAndFloat(num) {
-    const laborPrice = num * 67;
+    const laborPrice = num * 67 * 2;
     return parseFloat(Math.round(laborPrice * 100) / 100).toFixed(2);
   }
 
@@ -148,7 +148,7 @@ function PriceBreakDown(props) {
       <List>
         {ifNegativeNum(renderServices())}
       </List>
-      <p><a>Have your own parts?</a></p>
+      <p><a>Have your own parts? (currently disabled)</a></p>
       <List divided relaxed>
         <List.Item>
           <List.Content floated="left">
