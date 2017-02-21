@@ -22,8 +22,8 @@ BigCalendar.momentLocalizer(moment);
 let DragAndDropCalendar;
 Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
 
-// TODO: add validation for geosuggest field
-// TODO: hide or not show button if fields not filled
+// TODO: get vehicle, cart, and part from selectors and pass to stripecheckout
+// TODO: pass timeslot, motorcycle address, and mobile numer to stripecheckout
 
 class Calendar extends React.Component {
   constructor(props) {

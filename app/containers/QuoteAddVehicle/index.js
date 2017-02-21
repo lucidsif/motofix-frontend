@@ -206,12 +206,8 @@ class QuoteAddVehicle extends React.Component {
 // TODO: Fix this shit
   validateMotorcycleForm(e) {
     e.preventDefault();
-/*
-    this.setState({ modelValue: 'CBR' });
-    this.setState({ subModelValue: 'CBR600' });
-    this.setState({ yearValue: 2005 });
-    */
 
+/*
     if (!this.state.location) {
       this.setState({ location: false });
     }
@@ -227,9 +223,11 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
-    console.log(this.state.location);
+    */
     console.log('mock vehicle selected and merged to state');
     // TODO: Create actual vehicle object in this format
+
+    //
     const vehicle = {
       location: this.state.location.customerLocation,
       mid: this.state.subModelValue,
@@ -241,8 +239,20 @@ class QuoteAddVehicle extends React.Component {
       // start_year: 2008,
       // end_year: 2011,
     };
-    console.log(vehicle);
-    return this.props.onSubmitForm(vehicle);
+
+    const FAKEvehicle = {
+      location: this.state.location.customerLocation,
+      mid: 'BMM432',
+      manufacturer: 'BMM',
+      model: 2442423,
+      model_variant: 'XMODEL',
+      year: 2005,
+      // tuning_description: 'idk',
+      // start_year: 2008,
+      // end_year: 2011,
+    };
+    console.log(FAKEvehicle);
+    return this.props.onSubmitForm(FAKEvehicle);
   }
 
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->

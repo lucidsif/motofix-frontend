@@ -7,19 +7,18 @@
 import React from 'react';
 import StripeCheckoutComp from 'react-stripe-checkout';
 
-// TODO: replace fetch with graphql query
+// TODO: following:
+// create stripe charge(graphql mutation =>
+// save quote (graphql mutation, get cart, vehicle, and part from props) =>
+// save appointment(graphql mutation, get address from props) =>
+// save mobile (graphql mutation, get mobile number from props)
+
 class StripeCheckout extends React.Component {
   onToken = (token) => {
-    console.log(token);
-    fetch('http://localhost:3010/stripes', {
-      method: 'POST',
-      body: JSON.stringify(token),
-    }).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        alert(`We are in business, ${data.email}`);
-      });
-    });
+    const extractedToken = token;
+    extractedToken.amount = 1800; // dynamic
+    const stringifiedToken = JSON.stringify(extractedToken);
+    console.log(stringifiedToken);
   }
 
   // ...
@@ -34,10 +33,10 @@ class StripeCheckout extends React.Component {
         token={this.onToken}
         stripeKey="pk_test_Uq1Klar8ByVNEJGycRrPLA3X"
         panelLabel="Pay"
-        amount={1950}
         currency="USD"
-        email="test44@email.com"
+        email="test44@email.com" // make dynamic
         allowRememberMe
+        zipcode
       >
         <button className="ui teal button">Pay with card</button>
       </StripeCheckoutComp>
@@ -46,3 +45,4 @@ class StripeCheckout extends React.Component {
 }
 
 export default StripeCheckout;
+
