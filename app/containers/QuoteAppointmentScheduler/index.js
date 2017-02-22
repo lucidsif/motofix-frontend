@@ -15,11 +15,9 @@ import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 import { services } from 'components/QuoteCart';
 import Calendar from 'components/Calendar';
 import moment from 'moment';
-import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';
+import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
 
 // TODO: make default event color orange and selected event color blue
-// TODO:
-
 
 // TODO: exclude break times from available appointments
 // TODO: test for multiple mechanics. How can multiple mechanic time slots be rendered?
@@ -257,7 +255,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
             return acc + laborTime;
           }
           return acc + 0;
-        }, 0);
+        }, 0) * 2;
 
       const schedules = this.props.allNearAppointmentsAndSchedules.schedules;
       // console.log(schedules)
@@ -310,6 +308,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 QuoteAppointmentScheduler.propTypes = {
+  authenticated: React.PropTypes.bool,
   cart: React.PropTypes.object,
   allNearAppointmentsAndSchedules: React.PropTypes.object,
   allNearAppointmentsAndSchedulesLoading: React.PropTypes.bool,
@@ -317,7 +316,7 @@ QuoteAppointmentScheduler.propTypes = {
 };
 
 const AppointmentsAndSchedulesQuery = gql`
-  query allNearAppointmentsAndSchedules($zipOrCoordinates: String) {
+  query allNearAppointmentsAndSchedules($zipOrCoordinates: String!) {
     allNearAppointmentsAndSchedules(zipOrCoordinates: $zipOrCoordinates){
         appointments {
           id

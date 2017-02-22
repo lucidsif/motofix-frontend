@@ -112,7 +112,7 @@ function PriceBreakDown(props) {
     if (props.authenticated) {
       return props.client.mutate({
         mutation: gql`
-       mutation createUserQuote($token: String, $motorcycleJSON: JSON, $cartJSON: JSON, $partJSON: JSON){
+       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!){
         createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON){
           id
           fk_users_id
@@ -191,7 +191,7 @@ function PriceBreakDown(props) {
         {!props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => onSaveBtnClick()}>Save Quote</Button>
         }
-        <Button disabled color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
+        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
       </div>
     </Container>
   );

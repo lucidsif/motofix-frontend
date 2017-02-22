@@ -61,7 +61,7 @@ class QuoteAddVehicle extends React.Component {
     console.time('allModels');
     this.props.client.query({
       query: gql`
-      query allModels($manufacturer: String){
+      query allModels($manufacturer: String!){
         allModels(manufacturer: $manufacturer){
           model
           model_id
@@ -80,7 +80,6 @@ class QuoteAddVehicle extends React.Component {
         this.setState({ asyncError: true });
       });
   }
-  // add logic here somehow to generate a years array or maybe anothe func
   updateModelValueAndGetSubModels(newValue) {
     this.setState({ modelValue: newValue });
     this.setState({ subModelValue: null });
@@ -88,7 +87,7 @@ class QuoteAddVehicle extends React.Component {
     console.time('allSubModels');
     this.props.client.query({
       query: gql`
-      query allSubModels($modelID: Int){
+      query allSubModels($modelID: Int!){
         allSubModels(modelID: $modelID){        
           mid
           manufacturer
@@ -104,6 +103,7 @@ class QuoteAddVehicle extends React.Component {
     }).then((result) => {
       console.timeEnd('allSubModels');
       subModelData = result.data.allSubModels;
+      console.log(subModelData);
       subModelFactory = subModelData.map((bike) => {
         const bikeLabel = `${bike.model_variant} ${bike.tuning_description || ''} - [${bike.start_year} - ${bike.end_year}]`;
         return { value: bike.mid, label: bikeLabel };
@@ -174,7 +174,7 @@ class QuoteAddVehicle extends React.Component {
 
     this.props.client.query({
       query: gql`
-      query checkDistance($zipOrCoordinates: String){
+      query checkDistance($zipOrCoordinates: String!){
         checkDistance(zipOrCoordinates: $zipOrCoordinates){
           destination_addresses
           origin_addresses
@@ -207,7 +207,6 @@ class QuoteAddVehicle extends React.Component {
   validateMotorcycleForm(e) {
     e.preventDefault();
 
-/*
     if (!this.state.location) {
       this.setState({ location: false });
     }
@@ -223,23 +222,23 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
-    */
-    console.log('mock vehicle selected and merged to state');
-    // TODO: Create actual vehicle object in this format
+    // console.log('mock vehicle selected and merged to state');
 
-    //
+    const selectedVehicle = subModelData.filter((submodel) => submodel.mid === this.state.subModelValue);
+
     const vehicle = {
       location: this.state.location.customerLocation,
       mid: this.state.subModelValue,
-      manufacturer: this.state.manufacturerValue,
-      model: this.state.modelValue,
-      model_variant: this.state.subModelValue,
+      manufacturer: selectedVehicle[0].manufacturer,
+      model: selectedVehicle[0].model,
+      model_variant: selectedVehicle[0].model_variant,
+      tuning_description: selectedVehicle[0].tuning_description,
       year: this.state.yearValue,
-      // tuning_description: 'idk',
-      // start_year: 2008,
-      // end_year: 2011,
+      start_year: selectedVehicle[0].start_year,
+      end_year: selectedVehicle[0].end_year,
     };
-
+    console.log(vehicle);
+/*
     const FAKEvehicle = {
       location: this.state.location.customerLocation,
       mid: 'BMM432',
@@ -247,19 +246,20 @@ class QuoteAddVehicle extends React.Component {
       model: 2442423,
       model_variant: 'XMODEL',
       year: 2005,
-      // tuning_description: 'idk',
-      // start_year: 2008,
-      // end_year: 2011,
+      tuning_description: 'idk',
+      start_year: 2008,
+      end_year: 2011,
     };
-    console.log(FAKEvehicle);
-    return this.props.onSubmitForm(FAKEvehicle);
+*/
+    // console.log(FAKEvehicle);
+    return this.props.onSubmitForm(vehicle);
   }
 
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
   // if distance is within x miles -> allow to pass otherwise fail to pass and render message
 
   render() {
-    /* let renderVehicleModel = null;
+    let renderVehicleModel = null;
     const vehicle = this.props.vehicle;
     if (this.props.vehicle.mid) {
       renderVehicleModel = (
@@ -268,9 +268,11 @@ class QuoteAddVehicle extends React.Component {
         </div>
       );
     }
-    */
     return (
       <div>
+        {renderVehicleModel &&
+        <div>{renderVehicleModel}</div>
+        }
         <form onSubmit={this.validateMotorcycleForm}>
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
@@ -363,6 +365,7 @@ class QuoteAddVehicle extends React.Component {
 QuoteAddVehicle.propTypes = {
   client: React.PropTypes.object,
   onSubmitForm: React.PropTypes.func,
+  vehicle: React.PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

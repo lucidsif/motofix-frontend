@@ -127,7 +127,7 @@ function SavedQuoteBreakDown(props) {
   function renderServices() {
     const filtered = services.filter((service) => props.cart[service.replace(/\s/g, '')].selected);
     return filtered.map((filteredService) => {
-      let laborTime = multiplyAndFloat(props.cart[filteredService.replace(/\s/g, '')].laborTime);
+      let laborTime = multiplyAndFloat(props.cart[filteredService.replace(/\s/g, '')].laborTime * 2);
       const unAvailableLaborTime = props.cart[filteredService.replace(/\s/g, '')].unavailable;
       if (unAvailableLaborTime) {
         laborTime = -9;

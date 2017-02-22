@@ -102,7 +102,7 @@ const mapStateToProps = createStructuredSelector({
 
 // TODO: do i require any of these fields??
 const CurrentUserQuotesQuery = gql`
-query allUserQuotes($token: String){
+query allUserQuotes($token: String!){
   allUserQuotes(token: $token){
     id
     fk_users_id

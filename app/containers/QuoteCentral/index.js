@@ -43,7 +43,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     if (this.props.authenticated) {
       return this.props.client.mutate({
         mutation: gql`
-       mutation createUserQuote($token: String, $motorcycleJSON: JSON, $cartJSON: JSON, $partJSON: JSON){
+       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!){
         createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON){
           id
           fk_users_id
@@ -197,11 +197,10 @@ QuoteCentral.propTypes = {
   quoteSaved: React.PropTypes.bool,
   onSaveQuoteClick: React.PropTypes.func,
 };
-//BROKE THIS QUERY FOR TESTING WITHOUT KILLIN API LIMIT
 const RepairTimesQuery = gql`
-  query allRepairTimes($midIDX: String) {
-    allRepairTimes(midIDX: $midID){
-      responseX
+  query allRepairTimes($midID: String!) {
+    allRepairTimes(midID: $midID){
+      response
     }
   }
 `;

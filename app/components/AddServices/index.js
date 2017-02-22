@@ -53,7 +53,7 @@ function AddServices(props) {
     function runSearchPartsQuery() {
       props.props.client.query({
         query: gql`
-          query searchParts($vehicle: String, $service: String, $midID: String) {
+          query searchParts($vehicle: String!, $service: String!, $midID: String!) {
             searchParts(vehicle: $vehicle, service: $service, midID: $midID) {
             response
           }
