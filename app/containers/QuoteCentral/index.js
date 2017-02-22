@@ -37,19 +37,20 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     }
     return browserHistory.push('/login');
   }
-
+// TODO: only dispatch saved button after quote mutation success
   createQuoteMutation() {
   // noinspection JSUnresolvedFunction
     if (this.props.authenticated) {
       return this.props.client.mutate({
         mutation: gql`
-       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!){
-        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON){
+       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!){
+        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts){
           id
           fk_users_id
           motorcycle_json
           cart_json
           part_json
+          use_own_parts
           created_at
           updated_at
          }
@@ -60,6 +61,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           motorcycleJSON: JSON.stringify(this.props.vehicle),
           cartJSON: JSON.stringify(this.props.cart),
           partJSON: JSON.stringify(this.props.part),
+          useOwnParts: this.props.useOwnParts,
         },
       }).then((response) => console.log(response.data.createUserQuote));
     }
@@ -206,8 +208,8 @@ QuoteCentral.propTypes = {
 };
 //broken query
 const RepairTimesQuery = gql`
-  query allRepairTimes($midIDxx: String!) {
-    allRepairTimes(midIDxx: $midID){
+  query allRepairTimes($midID: String!) {
+    allRepairTimes(midID: $midID){
       response
     }
   }

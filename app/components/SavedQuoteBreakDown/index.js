@@ -8,6 +8,7 @@ import React from 'react';
 import { Container, List, Image, Label } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
 
+// Only render parts and calculate parts if !useOwnParts
 // TODO: Order from most recent
 function SavedQuoteBreakDown(props) {
   const totalPartsPrice = () => {
@@ -183,12 +184,12 @@ function SavedQuoteBreakDown(props) {
       );
     });
   }
+  // TODO: render that use own parts was desired
   return (
     <Container>
       <List>
         {renderServices()}
       </List>
-      <p><a>Have your own parts?</a></p>
       <List divided relaxed>
         <List.Item>
           <List.Content floated="left">

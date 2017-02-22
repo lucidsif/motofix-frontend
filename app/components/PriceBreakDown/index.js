@@ -65,7 +65,7 @@ function PriceBreakDown(props) {
           </List.Content>
           <List.Content>
             <List>
-              {renderParts(filteredService.replace(/\s/g, ''))}
+              {!props.useOwnParts && renderParts(filteredService.replace(/\s/g, ''))}
             </List>
           </List.Content>
         </List.Item>
@@ -106,19 +106,20 @@ function PriceBreakDown(props) {
       );
     });
   }
-
+// TODO: only dispatch saved button after quote mutation success
   function createQuoteMutation() {
     // noinspection JSUnresolvedFunction
     if (props.authenticated) {
       return props.client.mutate({
         mutation: gql`
-       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!){
-        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON){
+       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!){
+        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts){
           id
           fk_users_id
           motorcycle_json
           cart_json
           part_json
+          use_own_parts
           created_at
           updated_at
          }
@@ -129,6 +130,7 @@ function PriceBreakDown(props) {
           motorcycleJSON: JSON.stringify(props.vehicle),
           cartJSON: JSON.stringify(props.cart),
           partJSON: JSON.stringify(props.part),
+          useOwnParts: props.useOwnParts,
         },
       }).then((response) => console.log(response.data.createUserQuote));
     }

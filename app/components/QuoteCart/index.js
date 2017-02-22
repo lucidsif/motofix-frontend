@@ -12,6 +12,7 @@ export const services = ['Accessory Installation', 'Air Filter Replacement', 'Br
 // TODO: 9/10 fix label positioning
 
 function QuoteCart(props) {
+  console.log(props.props.useOwnParts)
   const totalPartsPrice = () => {
     let sum = 0;
     services.map((service) => {
@@ -35,7 +36,11 @@ function QuoteCart(props) {
         }
         return acc + 0;
       }, 0);
-    return sum;
+    // if using own parts, return 0 for parts cost
+    if (!props.props.useOwnParts) {
+      return sum;
+    }
+    return 0;
   };
 
   // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
@@ -97,8 +102,6 @@ function QuoteCart(props) {
     }
     return num;
   }
-  console.log('quotecart');
-  console.log(props.props);
   return (
     <Grid.Row>
       <Segment padded="very">

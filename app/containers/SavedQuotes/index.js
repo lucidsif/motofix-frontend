@@ -109,6 +109,7 @@ query allUserQuotes($token: String!){
     motorcycle_json
     cart_json
     part_json
+    use_own_parts
     created_at
     updated_at
   }

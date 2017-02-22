@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
 import { deAuthenticateUser } from 'containers/App/actions';
 import { selectMid } from 'containers/QuoteAddVehicle/selectors';
-import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
+import { selectCart, selectPart, selectUseOwnParts } from 'containers/QuoteCentral/selectors';
 import { resetCart, resetPart, resetSavedQuote } from 'containers/QuoteCentral/actions';
 import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import { browserHistory } from 'react-router';
@@ -35,6 +35,7 @@ export class AppNavBar extends React.Component {
     };
   }
   totalPartsPrice() {
+    console.log(this.props)
     let sum = 0;
     services.map((service) => {
       const regexedService = service.replace(/\s/g, '');
@@ -57,7 +58,11 @@ export class AppNavBar extends React.Component {
       }
       return acc + 0;
     }, 0);
-    return sum;
+    // if using own parts, return 0 for parts cost
+    if (!this.props.useOwnParts) {
+      return sum;
+    }
+    return 0;
   }
   totalServicesPrice() {
     const selectedUnavailableServices = Object.keys(this.props.cart).filter((key) =>
@@ -152,6 +157,7 @@ const mapStateToProps = createStructuredSelector({
   vehicleMid: selectMid(),
   cart: selectCart(),
   part: selectPart(),
+  useOwnParts: selectUseOwnParts(),
 });
 
 function mapDispatchToProps(dispatch) {
