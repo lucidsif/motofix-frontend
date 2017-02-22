@@ -97,6 +97,8 @@ function QuoteCart(props) {
     }
     return num;
   }
+  console.log('quotecart');
+  console.log(props.props);
   return (
     <Grid.Row>
       <Segment padded="very">
@@ -128,11 +130,14 @@ function QuoteCart(props) {
               <PriceBreakDown
                 authenticated={props.props.authenticated}
                 quoteSaved={props.props.quoteSaved}
+                useOwnParts={props.props.useOwnParts}
                 vehicle={props.props.vehicle}
                 cart={props.props.cart}
                 part={props.props.part}
                 client={props.props.client}
                 onSaveQuoteClick={props.props.onSaveQuoteClick}
+                onUseOwnParts={props.props.onUseOwnParts}
+                onDeUseOwnParts={props.props.onDeUseOwnParts}
                 totalServicesPrice={totalServicesPrice}
                 totalPartsPrice={totalPartsPrice}
               />

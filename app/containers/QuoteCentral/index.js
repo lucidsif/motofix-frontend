@@ -16,7 +16,7 @@ import { withApollo, graphql, compose } from 'react-apollo';
 import { addToCart, removeFromCart, setLaborTime, setPartsData, setSavedQuoteTrue, setOwnPartsTrue, setOwnPartsFalse } from './actions';
 import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
-import { selectCart, selectPart, selectSavedQuote } from './selectors';
+import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 
@@ -162,6 +162,7 @@ const mapStateToProps = createStructuredSelector({
   cart: selectCart(),
   part: selectPart(),
   quoteSaved: selectSavedQuote(),
+  useOwnParts: selectUseOwnParts(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -185,7 +186,7 @@ function mapDispatchToProps(dispatch) {
     onUseOwnParts: () => {
       dispatch(setOwnPartsTrue());
     },
-    onDeuseOwnParts: () => {
+    onDeUseOwnParts: () => {
       dispatch(setOwnPartsFalse());
     },
 
@@ -230,3 +231,7 @@ export default compose(
   withRepairTimesData,
   withApollo,
 )(QuoteCentral);
+
+  /*
+
+   */
