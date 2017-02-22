@@ -13,7 +13,7 @@ import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 import gql from 'graphql-tag';
 import { withApollo, graphql, compose } from 'react-apollo';
-import { addToCart, removeFromCart, setLaborTime, setPartsData, setSavedQuoteTrue } from './actions';
+import { addToCart, removeFromCart, setLaborTime, setPartsData, setSavedQuoteTrue, setOwnPartsTrue, setOwnPartsFalse } from './actions';
 import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
 import { selectCart, selectPart, selectSavedQuote } from './selectors';
@@ -172,7 +172,6 @@ function mapDispatchToProps(dispatch) {
     onTrashClick: (service) => {
       dispatch(removeFromCart(service));
     },
-    // TODO: change name to something more fitting
     getAndSetLaborTime: (service, laborTime, unavailable) => {
       dispatch(setLaborTime(service, laborTime, unavailable));
     },
@@ -183,6 +182,13 @@ function mapDispatchToProps(dispatch) {
     onSaveQuoteClick: () => {
       dispatch(setSavedQuoteTrue());
     },
+    onUseOwnParts: () => {
+      dispatch(setOwnPartsTrue());
+    },
+    onDeuseOwnParts: () => {
+      dispatch(setOwnPartsFalse());
+    },
+
   };
 }
 
@@ -197,9 +203,10 @@ QuoteCentral.propTypes = {
   quoteSaved: React.PropTypes.bool,
   onSaveQuoteClick: React.PropTypes.func,
 };
+//broken query
 const RepairTimesQuery = gql`
-  query allRepairTimes($midID: String!) {
-    allRepairTimes(midID: $midID){
+  query allRepairTimes($midIDxx: String!) {
+    allRepairTimes(midIDxx: $midID){
       response
     }
   }

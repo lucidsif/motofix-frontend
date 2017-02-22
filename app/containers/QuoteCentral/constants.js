@@ -12,3 +12,5 @@ export const SET_PARTS_DATA = 'app/Quote/Central/SET_PARTS_DATA';
 export const RESET_PART = 'app/Quote/Central/RESET_PART';
 export const SAVE_QUOTE = 'app/Quote/Central/SAVE_QUOTE';
 export const RESET_SAVED_QUOTE = 'app/QuoteCentral/RESET_SAVED_QUOTE';
+export const USE_OWN_PARTS = 'app/QuoteCentral/USE_OWN_PARTS';
+export const UNUSE_OWN_PARTS = 'app/QuoteCentral/UNUSE_OWN_PARTS';

@@ -206,7 +206,7 @@ class QuoteAddVehicle extends React.Component {
 // TODO: Fix this shit
   validateMotorcycleForm(e) {
     e.preventDefault();
-
+/*
     if (!this.state.location) {
       this.setState({ location: false });
     }
@@ -222,10 +222,9 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
-    // console.log('mock vehicle selected and merged to state');
-
+    */
     const selectedVehicle = subModelData.filter((submodel) => submodel.mid === this.state.subModelValue);
-
+/*
     const vehicle = {
       location: this.state.location.customerLocation,
       mid: this.state.subModelValue,
@@ -238,21 +237,22 @@ class QuoteAddVehicle extends React.Component {
       end_year: selectedVehicle[0].end_year,
     };
     console.log(vehicle);
-/*
+    */
+
     const FAKEvehicle = {
       location: this.state.location.customerLocation,
-      mid: 'BMM432',
-      manufacturer: 'BMM',
-      model: 2442423,
-      model_variant: 'XMODEL',
-      year: 2005,
+      mid: 'BMM07333',
+      manufacturer: 'BMW',
+      model: 'F800',
+      model_variant: '800 GS',
+      year: 2014,
       tuning_description: 'idk',
-      start_year: 2008,
-      end_year: 2011,
+      start_year: 2013,
+      end_year: 2017,
     };
-*/
-    // console.log(FAKEvehicle);
-    return this.props.onSubmitForm(vehicle);
+    console.log('mock vehicle selected and merged to state');
+    console.log(FAKEvehicle);
+    return this.props.onSubmitForm(FAKEvehicle);
   }
 
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
@@ -377,15 +377,6 @@ function mapDispatchToProps(dispatch) {
     onSubmitForm: (vehicleObj) => {
       dispatch(addVehicle(vehicleObj));
       browserHistory.push('/quote/services');
-      /* this code will not exist here
-      if (motorcycle) {
-        console.log('all fields submitted');
-        dispatch(addVehicle(motorcycle));
-        browserHistory.push('/quote/services');
-      } else {
-        console.log('please fill out all fields');
-      }
-      */
     },
   };
 }

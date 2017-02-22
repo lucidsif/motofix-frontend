@@ -13,6 +13,8 @@ import {
   RESET_PART,
   SAVE_QUOTE,
   RESET_SAVED_QUOTE,
+  USE_OWN_PARTS,
+  UNUSE_OWN_PARTS,
 } from './constants';
 
 export function addToCart(payload) {
@@ -69,5 +71,17 @@ export function setSavedQuoteTrue() {
 export function resetSavedQuote() {
   return {
     type: RESET_SAVED_QUOTE,
+  };
+}
+
+export function setOwnPartsTrue() {
+  return {
+    type: USE_OWN_PARTS,
+  };
+}
+
+export function setOwnPartsFalse() {
+  return {
+    type: UNUSE_OWN_PARTS,
   };
 }

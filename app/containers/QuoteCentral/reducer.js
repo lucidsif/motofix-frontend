@@ -14,6 +14,8 @@ import {
   RESET_PART,
   SAVE_QUOTE,
   RESET_SAVED_QUOTE,
+  USE_OWN_PARTS,
+  UNUSE_OWN_PARTS,
 } from './constants';
 import services from './reducerServices';
 
@@ -31,8 +33,9 @@ const part = services.reduce((acc, cur) => {
 }, {});
 
 const quoteSaved = false;
+const useOwnParts = false;
 
-const initialState = fromJS({ cart, part, quoteSaved });
+const initialState = fromJS({ cart, part, quoteSaved, useOwnParts });
 
 function quoteCentralReducer(state = initialState, action) {
   switch (action.type) {
@@ -52,6 +55,10 @@ function quoteCentralReducer(state = initialState, action) {
       return state.set('quoteSaved', true);
     case RESET_SAVED_QUOTE:
       return state.set('quoteSaved', false);
+    case USE_OWN_PARTS:
+      return state.set('useOwnParts', true);
+    case UNUSE_OWN_PARTS:
+      return state.set('useOwnParts', false);
     default:
       return state;
   }
