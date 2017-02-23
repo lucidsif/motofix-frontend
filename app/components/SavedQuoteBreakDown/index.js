@@ -24,7 +24,7 @@ function SavedQuoteBreakDown(props) {
           return servicePartKeys.reduce((accu, currKey) => {
             if (props.part[curr][currKey].valid) {
               /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
-              const price = parseFloat(props.part[curr][currKey].price.__value__);
+              const price = props.part[curr][currKey] === props.part[curr].EngineOil ? parseFloat(props.part[curr][currKey].price.__value__ / 2) : parseFloat(props.part[curr][currKey].price.__value__);
               const quantity = parseFloat(props.part[curr][currKey].quantity);
               sum += price * quantity;
               return sum;

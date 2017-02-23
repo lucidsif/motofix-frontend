@@ -126,7 +126,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
             {selectedUnavailableServices}
           </Message.List>
           <Message.Content>
-           You can still request a fair quote and we will send you one you when it is available (feature is currently disabled).
+           Custom quote is coming soon, but you can live chat with us by clicking on the bubble or window in the lower right corner!
           </Message.Content>
           <Button disabled>Request Custom Quote</Button>
         </Message>
@@ -152,7 +152,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         {!this.props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => this.onSaveBtnClick()}>Save Quote</Button>
         }
-        <Button disabled color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
+        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
       </div>
     );
   }

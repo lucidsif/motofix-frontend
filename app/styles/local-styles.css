@@ -180,3 +180,7 @@ appointment calendar message styling
 .payTextMarginBottom {
   margin-bottom: 0.5em;
 }
+
+.ui.large.button.calendarButtonMarginTop {
+  margin-top: 1em;
+}

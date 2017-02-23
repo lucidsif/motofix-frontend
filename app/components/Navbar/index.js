@@ -35,7 +35,6 @@ export class AppNavBar extends React.Component {
     };
   }
   totalPartsPrice() {
-    console.log(this.props)
     let sum = 0;
     services.map((service) => {
       const regexedService = service.replace(/\s/g, '');
@@ -48,7 +47,7 @@ export class AppNavBar extends React.Component {
         return servicePartKeys.reduce((accu, currKey) => {
           if (this.props.part[curr][currKey].valid) {
             /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
-            const price = parseFloat(this.props.part[curr][currKey].price.__value__);
+            const price = this.props.part[curr][currKey] === this.props.part[curr].EngineOil ? parseFloat(this.props.part[curr][currKey].price.__value__ / 2) : parseFloat(this.props.part[curr][currKey].price.__value__);
             const quantity = parseFloat(this.props.part[curr][currKey].quantity);
             sum += price * quantity;
             return sum;
@@ -83,7 +82,7 @@ export class AppNavBar extends React.Component {
       }
       return acc + 0;
     }, 0);
-    return sumOfLaborTimes * 67 *2;
+    return sumOfLaborTimes * 67 * 2;
   }
 
   totalPrice() {
@@ -150,6 +149,7 @@ AppNavBar.propTypes = {
   onNewQuoteClick: React.PropTypes.func,
   cart: React.PropTypes.object,
   part: React.PropTypes.object,
+  useOwnParts: React.PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

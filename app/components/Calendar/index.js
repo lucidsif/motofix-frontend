@@ -11,7 +11,7 @@ import Modernizr from 'browsernizr';
 import BigCalendar from 'react-big-calendar-touch';
 import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDropTouch';
 import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
-import { Message, Form, Input, Button } from 'semantic-ui-react';
+import { Message, Form, Input } from 'semantic-ui-react';
 import moment from 'moment';
 import Geosuggest from 'react-geosuggest';
 import StripeCheckout from 'components/StripeCheckout';
@@ -142,7 +142,6 @@ class Calendar extends React.Component {
           min={new Date(1970, 1, 1, 8)}
           max={new Date(1970, 1, 1, 19)}
         />
-        <Button onClick={browserHistory.goBack}>Back</Button>
       </div>
     );
   }

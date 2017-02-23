@@ -4,6 +4,7 @@
  *
  */
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -15,7 +16,7 @@ import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
 import { services } from 'components/QuoteCart';
 import Calendar from 'components/Calendar';
 import moment from 'moment';
-import { Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
+import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';
 
 // TODO: make default event color orange and selected event color blue
 
@@ -287,8 +288,14 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         <h3 className="callout">
           Schedule Appointment
         </h3>
-        Click on an available time slot
+        Coming Soon..
         {renderCalendar}
+        {/* this btn should be floated left in the future? */}
+        <Button
+          onClick={browserHistory.goBack}
+          size="large"
+          className="calendarButtonMarginTop"
+        >Back</Button>
       </div>
     );
   }

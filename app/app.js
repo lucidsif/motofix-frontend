@@ -5,6 +5,9 @@
  * code.
  */
 
+// raven initialization
+Raven.config('https://592b52dd6c9d49fbad8dda909d579955@sentry.io/141955').install();
+
 // Needed for redux-saga es6 generator support
 import 'babel-polyfill';
 
@@ -122,6 +125,4 @@ if (!window.Intl) {
 if (process.env.NODE_ENV === 'production') {
   require('offline-plugin/runtime').install(); // eslint-disable-line global-require
 }
-// raven config
-Raven.config('https://592b52dd6c9d49fbad8dda909d579955@sentry.io/141955').install();
 

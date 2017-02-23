@@ -24,8 +24,9 @@ function QuoteCart(props) {
           const servicePartKeys = Object.keys(props.props.part[curr]);
           return servicePartKeys.reduce((accu, currKey) => {
             if (props.props.part[curr][currKey].valid) {
+              /* if engine oil part, cut price in half*/
               /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */
-              const price = parseFloat(props.props.part[curr][currKey].price.__value__);
+              const price = props.props.part[curr][currKey] === props.props.part[curr].EngineOil ? parseFloat(props.props.part[curr][currKey].price.__value__ / 2) : parseFloat(props.props.part[curr][currKey].price.__value__);
               const quantity = parseFloat(props.props.part[curr][currKey].quantity);
               sum += price * quantity;
               return sum;

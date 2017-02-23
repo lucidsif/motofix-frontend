@@ -85,7 +85,7 @@ function PriceBreakDown(props) {
               </List.Content>
               <List.Content floated="right" verticalAlign="middle">
                 { /* eslint no-underscore-dangle: ["error", { "allow": ["price_", "__value__"] }] */ }
-                <span className="part-span">{props.part[serviceName][key].price.__value__}</span>
+                <span className="part-span">{props.part[serviceName][key] === props.part[serviceName].EngineOil ? parseInt(props.part[serviceName][key].price.__value__, 10) / 2 : props.part[serviceName][key].price.__value__}</span>
               </List.Content>
             </List.Item>
           </List.Item>
