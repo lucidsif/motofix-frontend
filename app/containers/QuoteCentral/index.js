@@ -63,7 +63,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           partJSON: JSON.stringify(this.props.part),
           useOwnParts: this.props.useOwnParts,
         },
-      }).then((response) => console.log(response.data.createUserQuote));
+      });
     }
     return browserHistory.push('/login');
   }

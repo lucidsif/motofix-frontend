@@ -103,7 +103,6 @@ class QuoteAddVehicle extends React.Component {
     }).then((result) => {
       console.timeEnd('allSubModels');
       subModelData = result.data.allSubModels;
-      console.log(subModelData);
       subModelFactory = subModelData.map((bike) => {
         const bikeLabel = `${bike.model_variant} ${bike.tuning_description || ''} - [${bike.start_year} - ${bike.end_year}]`;
         return { value: bike.mid, label: bikeLabel };
@@ -235,7 +234,6 @@ class QuoteAddVehicle extends React.Component {
       start_year: selectedVehicle[0].start_year,
       end_year: selectedVehicle[0].end_year,
     };
-    console.log(vehicle);
 /*
     const FAKEvehicle = {
       location: this.state.location.customerLocation,
