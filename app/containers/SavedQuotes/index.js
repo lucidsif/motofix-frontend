@@ -14,6 +14,7 @@ import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { Header, Item, Segment, Accordion, Icon, Dimmer, Loader, Image } from 'semantic-ui-react';
 import SavedQuoteBreakDown from 'components/SavedQuoteBreakDown';
+import moment from 'moment';
 
 // TODO: Add total, dealer, and savings to each segment
 // TODO: Create better styling
@@ -29,7 +30,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
     const quotes = this.props.allUserQuotes;
     return quotes.map((quote) => {
       const date = new Date(quote.created_at);
-      const formattedDate = date.toString();
+      const formattedDate = moment(date).format('MMMM M YYYY');
       const motorcycle = JSON.parse(quote.motorcycle_json);
       let location;
       if (motorcycle.location) {
@@ -38,8 +39,10 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
         location = 'unavailable';
       }
       // cart and part will both be sent to savedquotebreakdown component
+      console.log(quote)
       const cart = JSON.parse(quote.cart_json);
       const part = JSON.parse(quote.part_json);
+      const useOwnParts = quote.use_own_parts;
 
       const selectedServices = Object.keys(cart).filter((key) => cart[key].selected).map((item) => {
         const str = item.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -59,7 +62,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
                 See Quote Breakdown
               </Accordion.Title>
               <Accordion.Content>
-                <SavedQuoteBreakDown cart={cart} part={part} />
+                <SavedQuoteBreakDown cart={cart} part={part} useOwnParts={useOwnParts} />
               </Accordion.Content>
             </Accordion>
           </Item.Content>

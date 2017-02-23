@@ -34,7 +34,10 @@ function SavedQuoteBreakDown(props) {
         }
         return acc + 0;
       }, 0);
-    return sum;
+    if (!props.useOwnParts) {
+      return sum;
+    }
+    return 0;
   };
 
   // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
@@ -143,7 +146,7 @@ function SavedQuoteBreakDown(props) {
           </List.Content>
           <List.Content>
             <List>
-              {renderParts(filteredService.replace(/\s/g, ''))}
+              {!props.useOwnParts && renderParts(filteredService.replace(/\s/g, ''))}
             </List>
           </List.Content>
         </List.Item>
@@ -184,7 +187,6 @@ function SavedQuoteBreakDown(props) {
       );
     });
   }
-  // TODO: render that use own parts was desired
   return (
     <Container>
       <List>

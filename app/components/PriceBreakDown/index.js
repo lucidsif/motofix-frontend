@@ -146,7 +146,6 @@ function PriceBreakDown(props) {
   }
   function onOwnPartsToggle() {
     if (!props.useOwnParts) {
-      console.log(props.useOwnParts);
       return props.onUseOwnParts();
     }
     return props.onDeUseOwnParts();

@@ -12,7 +12,6 @@ export const services = ['Accessory Installation', 'Air Filter Replacement', 'Br
 // TODO: 9/10 fix label positioning
 
 function QuoteCart(props) {
-  console.log(props.props.useOwnParts)
   const totalPartsPrice = () => {
     let sum = 0;
     services.map((service) => {
