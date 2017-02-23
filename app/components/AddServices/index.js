@@ -73,8 +73,17 @@ function AddServices(props) {
           if (err.statusCode === 403) {
             console.log(' query error, pop fail parts query message');
           }
+          logException(err);
         });
     }
+  }
+
+  function logException(ex, context) {
+    Raven.captureException(ex, { // eslint-disable-line no-undef
+      extra: context,
+    });
+    /* eslint no-console:0*/
+    window.console && console.error && console.error(ex); // eslint-disable-line no-unused-expressions
   }
 
   // TODO: refactor ServiceSegments so it first renders active segments and then renders disabled segments

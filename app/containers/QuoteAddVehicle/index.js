@@ -78,6 +78,7 @@ class QuoteAddVehicle extends React.Component {
       .catch((err) => {
         console.log(err);
         this.setState({ asyncError: true });
+        this.logException(err);
       });
   }
   updateModelValueAndGetSubModels(newValue) {
@@ -112,6 +113,7 @@ class QuoteAddVehicle extends React.Component {
       .catch((err) => {
         console.log(err);
         this.setState({ asyncError: true });
+        this.logException(err);
       });
   }
 
@@ -200,7 +202,8 @@ class QuoteAddVehicle extends React.Component {
         duration: data.rows[0].elements[0].duration.value,
       };
       this.setState({ location: locationObj });
-    });
+    })
+      .catch((e) => this.logException(e));
   }
 // TODO: Fix this shit
   validateMotorcycleForm(e) {
@@ -254,6 +257,14 @@ class QuoteAddVehicle extends React.Component {
 
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
   // if distance is within x miles -> allow to pass otherwise fail to pass and render message
+
+  logException(ex, context) {
+    Raven.captureException(ex, { // eslint-disable-line no-undef
+      extra: context,
+    });
+  /* eslint no-console:0*/
+    window.console && console.error && console.error(ex); // eslint-disable-line no-unused-expressions
+  }
 
   render() {
     let renderVehicleModel = null;

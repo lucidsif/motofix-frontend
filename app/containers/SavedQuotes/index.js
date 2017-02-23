@@ -24,7 +24,7 @@ const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
   redirectAction: routerActions.push,
   wrapperDisplayName: 'UserIsAuthenticated',
 });
-// TODO: order quotes by created at
+
 export class SavedQuotes extends React.Component { // eslint-disable-line react/prefer-stateless-function
   renderItems() {
     const quotes = this.props.allUserQuotes;
