@@ -205,8 +205,9 @@ QuoteCentral.propTypes = {
   client: React.PropTypes.object,
   quoteSaved: React.PropTypes.bool,
   onSaveQuoteClick: React.PropTypes.func,
+  useOwnParts: React.PropTypes.bool,
 };
-//broken query
+// broken query
 const RepairTimesQuery = gql`
   query allRepairTimes($midID: String!) {
     allRepairTimes(midID: $midID){
@@ -233,7 +234,3 @@ export default compose(
   withRepairTimesData,
   withApollo,
 )(QuoteCentral);
-
-  /*
-
-   */
