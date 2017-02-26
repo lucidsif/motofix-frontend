@@ -40,7 +40,7 @@ import '!!style-loader!css-loader!./styles/react-select.css';
 import '!!style-loader!css-loader!./styles/geosuggest.css';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
-// the index.html file and this observer)
+// the index.html file and this observer)ls
 const openSansObserver = new FontFaceObserver('Open Sans', {});
 
 // When Open Sans is loaded, add a font-family using Open Sans to the body
