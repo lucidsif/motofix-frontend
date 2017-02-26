@@ -19,10 +19,7 @@ function Footer() {
             <div className="ui link list">
               <Link className="item" to="/faq">FAQ</Link>
               <Link className="item" to="/how-it-works">How It Works</Link>
-              <a
-                className="item"
-                href={'https://docs.google.com/a/motofixes.com/forms/d/e/1FAIpQLSeSqfqmAfxGJDTeXzaaaeZHgCSO-Qxz1ecQqTr2-kQmAlrByg/viewform'}
-              >Mechanic Careers</a>
+              <Link className="item" to="/motorcycle-mechanic-jobs">Mechanic Careers</Link>
             </div>
           </div>
           <div className="seven wide column">

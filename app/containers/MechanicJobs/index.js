@@ -31,7 +31,7 @@ export class MechanicJobs extends React.PureComponent { // eslint-disable-line r
                 <h2 className="whyMechanicHeader">Why work as a mobile motorcycle mechanic?</h2>
               </div>
             </div>
-            <div className="center aligned row">
+            <div className="center aligned row mechanicPadTop">
               <div className="column">
                 <h3>The Pay You Deserve</h3>
                 <p>Make up to $45/hr.</p>

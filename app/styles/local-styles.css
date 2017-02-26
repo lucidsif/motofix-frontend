@@ -43,9 +43,6 @@ div.ui.vertical.segment.padSegment {
   padding-bottom: 5em;
 }
 
-.ui.vertical.stripe {
-  padding: 8em 0em;
-}
 .ui.vertical.stripe h3 {
   font-size: 2em;
 }
@@ -109,13 +106,12 @@ a.ui.orange.huge.circular.button.mechanicMarginUp {
   font-size: 1.9em;
 }
 
-.ui.vertical.stripe {
-  padding-top: 3em;
-  padding-bottom: 0em;
-}
-
 h2.whyMechanicHeader {
   font-size: 2.5em;
+}
+
+div.center.aligned.row.mechanicPadTop {
+  padding-top: 2.5em;
 }
 
 
