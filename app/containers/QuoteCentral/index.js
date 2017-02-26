@@ -196,7 +196,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 QuoteCentral.propTypes = {
-  authenticated: React.PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+  authenticated: React.PropTypes.bool,
   vehicle: React.PropTypes.object,
   cart: React.PropTypes.object,
   part: React.PropTypes.object,
