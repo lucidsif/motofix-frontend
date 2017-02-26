@@ -17,8 +17,12 @@ function Footer() {
           <div className="three wide column">
             <h4 className="ui header">Other</h4>
             <div className="ui link list">
-              <Link className="item" to="/how-it-works">How It Works</Link>
               <Link className="item" to="/faq">FAQ</Link>
+              <Link className="item" to="/how-it-works">How It Works</Link>
+              <a
+                className="item"
+                href={'https://docs.google.com/a/motofixes.com/forms/d/e/1FAIpQLSeSqfqmAfxGJDTeXzaaaeZHgCSO-Qxz1ecQqTr2-kQmAlrByg/viewform'}
+              >Mechanic Careers</a>
             </div>
           </div>
           <div className="seven wide column">
