@@ -115,7 +115,7 @@ function PriceBreakDown(props) {
        mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!){
         createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts){
           id
-          fk_users_id
+          fk_user_id
           motorcycle_json
           cart_json
           part_json

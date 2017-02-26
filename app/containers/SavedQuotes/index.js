@@ -30,7 +30,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
     const quotes = this.props.allUserQuotes;
     return quotes.map((quote) => {
       const date = new Date(quote.created_at);
-      const formattedDate = moment(date).format('MMMM M YYYY');
+      const formattedDate = moment(date).format('MMMM DD YYYY');
       const motorcycle = JSON.parse(quote.motorcycle_json);
       let location;
       if (motorcycle.location) {
@@ -108,7 +108,7 @@ const CurrentUserQuotesQuery = gql`
 query allUserQuotes($token: String!){
   allUserQuotes(token: $token){
     id
-    fk_users_id
+    fk_user_id
     motorcycle_json
     cart_json
     part_json

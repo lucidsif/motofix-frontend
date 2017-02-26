@@ -6,9 +6,13 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { withApollo, graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
+import { withApollo, compose } from 'react-apollo';
 import { createStructuredSelector } from 'reselect';
-import { selectCart, selectPart, selectUseOwnParts } from 'containers/QuoteCentral/selectors';
+import { selectAuthenticated } from 'containers/App/selectors';
+import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
+import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts } from 'containers/QuoteCentral/selectors';
+import { setSavedQuoteTrue } from 'containers/QuoteCentral/actions';
 import StripeCheckoutComp from 'react-stripe-checkout';
 import { services } from 'components/QuoteCart';
 
@@ -76,6 +80,7 @@ class StripeCheckout extends React.Component {
   }
 
   // TODO: following:
+  // fix go back button?
 // get total from quotecart
 // create stripe charge(graphql mutation =>
 // save quote (graphql mutation, get cart, vehicle, and part from props) =>
@@ -86,6 +91,68 @@ class StripeCheckout extends React.Component {
     extractedToken.amount = this.totalPrice() * 100; // dynamic
     const stringifiedToken = JSON.stringify(extractedToken);
     console.log(stringifiedToken);
+    if (this.props.authenticated) {
+      return this.props.client.mutate({
+        mutation: gql`
+       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!){
+        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts){
+          id
+          fk_user_id
+          motorcycle_json
+          cart_json
+          part_json
+          use_own_parts
+          created_at
+          updated_at
+         }
+       }
+      `,
+        variables: {
+          token: localStorage.getItem('authToken'),
+          motorcycleJSON: JSON.stringify(this.props.vehicle),
+          cartJSON: JSON.stringify(this.props.cart),
+          partJSON: JSON.stringify(this.props.part),
+          useOwnParts: this.props.useOwnParts,
+        },
+      }).then((response) => {
+        this.props.onSaveQuoteClick();
+        return response.data.createUserQuote.id;
+      })
+        .then((quoteID) => {
+          return this.props.client.mutate({
+            mutation: gql`
+           mutation createUserAppointment($token: String!, $motorcycle_address: String!, $contact_name: String!, $contact_number: String!, $estimated_start_time: String!, $estimated_end_time: String!, $status: String!, $fk_quote_id: Int!, $fk_mechanic_id: Int! ){
+             createUserAppointment(token: $token, motorcycle_address: $motorcycle_address, contact_name: $contact_name, contact_number: $contact_number, estimated_start_time: $estimated_start_time, estimated_end_time: $estimated_end_time, status: $status, fk_quote_id: $fk_quote_id, fk_mechanic_id: $fk_mechanic_id){
+               id
+               motorcycle_address
+               contact_name
+               contact_number
+               estimated_start_time
+               estimated_end_time
+               status
+               fk_quote_id
+               fk_mechanic_id
+               fk_user_id
+             }
+           }
+            `,
+            variables: {
+              token: localStorage.getItem('authToken'),
+              motorcycle_address: this.props.calendarAppointmentState.motorcycle_address,
+              contact_name: this.props.calendarAppointmentState.contact_name,
+              contact_number: this.props.calendarAppointmentState.contact_number,
+              estimated_start_time: this.props.calendarAppointmentState.selectedTimeSlot.start,
+              estimated_end_time: this.props.calendarAppointmentState.selectedTimeSlot.end,
+              status: 'pending',
+              fk_quote_id: quoteID,
+              fk_mechanic_id: this.props.calendarAppointmentState.selectedTimeSlot.mechanic,
+            },
+          });
+        })
+        .then((appointmentResult) => {
+        console.log(appointmentResult.data.createUserAppointment);
+        });
+    }
   }
 
   render() {
@@ -116,14 +183,23 @@ StripeCheckout.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  // authenticated: selectAuthenticated(),
+  authenticated: selectAuthenticated(),
+  vehicle: selectVehicleDomain(),
   cart: selectCart(),
   part: selectPart(),
+  quoteSaved: selectSavedQuote(),
   useOwnParts: selectUseOwnParts(),
 });
 
-const StripeCheckoutRedux = connect(mapStateToProps, null);
+function mapDispatchToProps(dispatch) {
+  return {
+    onSaveQuoteClick: () => {
+      dispatch(setSavedQuoteTrue());
+    },
+  };
+}
 
+const StripeCheckoutRedux = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(
   StripeCheckoutRedux,

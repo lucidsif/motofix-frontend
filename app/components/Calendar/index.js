@@ -31,13 +31,15 @@ class Calendar extends React.Component {
     this.state = {
       selectedTimeSlot: null,
       motorcycle_address: null,
-      mobile_number: null,
+      contact_name: null,
+      contact_number: null,
     };
 
     this.moveEvent = this.moveEvent.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
     this.onSuggestChange = this.onSuggestChange.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
     this.onPhoneChange = this.onPhoneChange.bind(this);
   }
 
@@ -58,13 +60,16 @@ class Calendar extends React.Component {
     this.setState({ motorcycle_address: null });
   }
 
+  onNameChange(e) {
+    this.setState({ contact_name: e.target.value });
+  }
+
   onPhoneChange(e) {
-    console.log(e.target.value);
     const phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
     if (phoneNumberPattern.test(e.target.value)) {
-      this.setState({ mobile_number: e.target.value });
+      this.setState({ contact_number: e.target.value });
     } else {
-      this.setState({ mobile_number: null });
+      this.setState({ contact_number: null });
     }
   }
 
@@ -74,13 +79,13 @@ class Calendar extends React.Component {
 
   render() {
     let conditionallyRenderStripeButton = null;
-    if (this.state.motorcycle_address && this.state.mobile_number) {
+    if (this.state.motorcycle_address && this.state.contact_name && this.state.contact_number) {
       conditionallyRenderStripeButton = (
         <div>
           <div className="payTextMarginBottom">
           Pre-authorize your card for the quote total to schedule your appointment.
           </div>
-          <StripeCheckout />
+          <StripeCheckout calendarAppointmentState={this.state} />
         </div>
       );
     } else {
@@ -112,6 +117,14 @@ class Calendar extends React.Component {
               </div>
               <div className="phoneNumberMarginBottom">
                 <Input
+                  icon="user"
+                  placeholder="What's your name?"
+                  size="large"
+                  onChange={this.onNameChange}
+                />
+              </div>
+              <div className="phoneNumberMarginBottom">
+                <Input
                   icon="mobile"
                   placeholder="What's your mobile number?"
                   size="large"
@@ -124,7 +137,6 @@ class Calendar extends React.Component {
         </Message>
       );
     }
-
     return (
       <div>
         {timeSlotSelectedMessage}
