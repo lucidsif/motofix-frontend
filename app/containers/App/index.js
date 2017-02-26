@@ -20,7 +20,7 @@ import Footer from 'components/Footer';
 function App(props) {
   let AppWrapper;
   let FooterWrapper;
-  if (props.location.pathname === '/') {
+  if (props.location.pathname === '/' || props.location.pathname === '/motorcycle-mechanic-jobs') {
     AppWrapper = styled.div`
 `;
     FooterWrapper = styled.div`

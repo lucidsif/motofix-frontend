@@ -17,6 +17,19 @@
   background-image: url('../containers/Landing/male-mechanic-nickel.jpg') !important;
   background-size: cover !important;
 }
+.mechanic-job-image {
+  background-image: url('../containers/MechanicJobs/welding-mechanic.jpg') !important;
+  background-size: cover !important;
+}
+a.ui.orange.huge.circular.button.mechanicMarginUp {
+  margin-top: 1em;
+  width: 260px;
+  font-size: 1.9em;
+}
+.h1.ui.header {
+  font-size: 3em;
+}
+
 .masthead.segment {
   min-height: 700px;
   padding: 1em 0em;

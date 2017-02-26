@@ -189,6 +189,14 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     }, {
+      path: '/motorcycle-mechanic-jobs',
+      name: 'mechanicJobs',
+      getComponent(location, cb) {
+        System.import('containers/MechanicJobs')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
