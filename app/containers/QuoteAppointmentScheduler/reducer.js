@@ -6,15 +6,21 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  PAYMENT_SUCCESS,
+  PAYMENT_FAIL,
 } from './constants';
 
-const initialState = fromJS({});
+const paid = null;
+const initialState = fromJS({
+  paid,
+});
 
 function quoteAppointmentSchedulerReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case PAYMENT_SUCCESS:
+      return state.set('paid', true);
+    case PAYMENT_FAIL:
+      return state.set('paid', false);
     default:
       return state;
   }

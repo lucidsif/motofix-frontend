@@ -22,9 +22,6 @@ BigCalendar.momentLocalizer(moment);
 let DragAndDropCalendar;
 Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
 
-// TODO: get vehicle, cart, and part from selectors and pass to stripecheckout
-// TODO: pass timeslot, motorcycle address, and mobile numer to stripecheckout
-
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +30,6 @@ class Calendar extends React.Component {
       motorcycle_address: null,
       contact_name: null,
       contact_number: null,
-      paid: null,
     };
 
     this.moveEvent = this.moveEvent.bind(this);
@@ -49,7 +45,6 @@ class Calendar extends React.Component {
     if (!this.props.authenticated) {
       browserHistory.push('/login');
     }
-    console.log(event);
     this.setState({ selectedTimeSlot: event });
   }
 
@@ -100,10 +95,30 @@ class Calendar extends React.Component {
         localizer.format(date, 'Do', culture),
     };
     let timeSlotSelectedMessage = null;
+    let paymentResponseMessage = null;
+    if (this.props.paid) {
+      paymentResponseMessage = (
+        <Message positive>
+          <Message.Content>
+            Thank you for your payment! Routing you in just a sec...
+          </Message.Content>
+        </Message>
+      );
+    } else if (this.props.paid === false) {
+      paymentResponseMessage = (
+        <Message negative>
+          <Message.Content>
+            Oh no :( Something went wrong with the payment. Please check your card details and try again.
+          </Message.Content>
+        </Message>
+      );
+    }
     if (this.state.selectedTimeSlot) {
       timeSlotSelectedMessage = (
+        <div>
+        {paymentResponseMessage}
         <Message positive>
-          <span>{moment(this.state.selectedTimeSlot.start).format('MMM D YYYY h: mm')} to {moment(this.state.selectedTimeSlot.end).format('MMM D YYYY h: mm')}</span>
+          <span>{moment(this.state.selectedTimeSlot.start).format('MMM D @ h:mm A')} to {moment(this.state.selectedTimeSlot.end).format('MMM D @ h:mm A')}</span>
           <Message.Content>
             <Form>
               <div className="ui large icon input calendarGeosuggestMargin">
@@ -136,6 +151,7 @@ class Calendar extends React.Component {
             {conditionallyRenderStripeButton}
           </Message.Content>
         </Message>
+        </div>
       );
     }
     return (

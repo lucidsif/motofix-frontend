@@ -5,11 +5,18 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  PAYMENT_SUCCESS,
+  PAYMENT_FAIL,
 } from './constants';
 
-export function defaultAction() {
+export function setPaymentSuccess() {
   return {
-    type: DEFAULT_ACTION,
+    type: PAYMENT_SUCCESS,
+  };
+}
+
+export function setPaymentFail() {
+  return {
+    type: PAYMENT_FAIL,
   };
 }

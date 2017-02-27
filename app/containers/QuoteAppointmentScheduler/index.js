@@ -13,6 +13,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
+import { selectPaid } from './selectors';
 import { services } from 'components/QuoteCart';
 import Calendar from 'components/Calendar';
 import moment from 'moment';
@@ -261,7 +262,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         }, 0) * 2;
 
       const schedules = this.props.allNearAppointmentsAndSchedules.schedules;
-      // console.log(schedules)
       const availableDays = schedules
         .map((schedule) =>
          this.getDays(schedule)
@@ -282,10 +282,9 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
 
       renderCalendar = (
-        <Calendar availableAppointments={availableAppointments} authenticated={this.props.authenticated} />
+        <Calendar availableAppointments={availableAppointments} authenticated={this.props.authenticated} paid={this.props.paid} />
       );
     }
-    console.log(this.props);
     return (
       <div>
         <h3 className="callout">
@@ -305,6 +304,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 }
 
 const mapStateToProps = createStructuredSelector({
+  paid: selectPaid(),
   authenticated: selectAuthenticated(),
   vehicle: selectVehicleDomain(),
   cart: selectCart(),
@@ -318,6 +318,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 QuoteAppointmentScheduler.propTypes = {
+  paid: React.PropTypes.bool,
   authenticated: React.PropTypes.bool,
   cart: React.PropTypes.object,
   allNearAppointmentsAndSchedules: React.PropTypes.object,

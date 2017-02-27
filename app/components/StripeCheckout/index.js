@@ -13,6 +13,8 @@ import { selectAuthenticated } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts } from 'containers/QuoteCentral/selectors';
 import { setSavedQuoteTrue } from 'containers/QuoteCentral/actions';
+import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentScheduler/actions';
+
 import StripeCheckoutComp from 'react-stripe-checkout';
 import { services } from 'components/QuoteCart';
 
@@ -80,8 +82,6 @@ class StripeCheckout extends React.Component {
   }
 
   // TODO: following:
-// make sure only successful stripe payments result in the following
-  // create an error message for failed payments
   // redirect to appointments dashboard after successful payment
   // send a text message and email after successful payment
 
@@ -106,6 +106,7 @@ class StripeCheckout extends React.Component {
       })
         .then((stripeChargeResponse) => { // eslint-disable-line consistent-return
           if (stripeChargeResponse.data.createStripeCharge.response.paid) {
+            this.props.onSuccessfulPayment();
             console.log(stripeChargeResponse.data.createStripeCharge.response);
             return this.props.client.mutate({
               mutation: gql`
@@ -166,19 +167,19 @@ class StripeCheckout extends React.Component {
                 .then((appointmentResult) => {
                   console.log(appointmentResult.data.createUserAppointment);
                 })
-                .catch((err) => {
-                  console.log(err);
-                  return err;
-                });
             });
           }
+          this.props.onFailedPayment();
+        })
+        .catch((err) => {
+        console.log(err);
+        this.props.onFailedPayment();
         });
     }
   }
 
   render() {
     return (
-      // ...
       <StripeCheckoutComp
         name="motofix"
         description="Your personal mechanic anywhere"
@@ -221,6 +222,12 @@ function mapDispatchToProps(dispatch) {
   return {
     onSaveQuoteClick: () => {
       dispatch(setSavedQuoteTrue());
+    },
+    onSuccessfulPayment: () => {
+      dispatch(setPaymentSuccess());
+    },
+    onFailedPayment: () => {
+      dispatch(setPaymentFail());
     },
   };
 }

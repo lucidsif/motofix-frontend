@@ -14,12 +14,13 @@ const selectQuoteAppointmentSchedulerDomain = () => (state) => state.get('quoteA
  * Default selector used by QuoteAppointmentScheduler
  */
 
-const selectQuoteAppointmentScheduler = () => createSelector(
+const selectPaid = () => createSelector(
   selectQuoteAppointmentSchedulerDomain(),
-  (substate) => substate.toJS()
+  (substate) => substate.get('paid')
 );
 
-export default selectQuoteAppointmentScheduler;
+export default selectQuoteAppointmentSchedulerDomain;
 export {
   selectQuoteAppointmentSchedulerDomain,
+  selectPaid,
 };
