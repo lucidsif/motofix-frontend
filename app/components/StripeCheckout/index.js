@@ -81,9 +81,9 @@ class StripeCheckout extends React.Component {
     return parseFloat(Math.round(total * 1) / 1);
   }
 
-  // TODO: following:
-  // redirect to appointments dashboard after successful payment
-  // send a text message and email after successful payment
+  // TODO:redirect to appointments dashboard after successful payment
+  // TODO:add error handling for appointments and quotes mutations
+  // TODO: send a text message and email after successful payment
 
   // get token from stripe client => inject amount in to token => send to server to create charge
   // if stripe charged successfully, create a quote and then create an appointment referencing the quote id of the created quote
@@ -166,14 +166,14 @@ class StripeCheckout extends React.Component {
               })
                 .then((appointmentResult) => {
                   console.log(appointmentResult.data.createUserAppointment);
-                })
+                });
             });
           }
           this.props.onFailedPayment();
         })
         .catch((err) => {
-        console.log(err);
-        this.props.onFailedPayment();
+          console.log(err);
+          this.props.onFailedPayment();
         });
     }
   }
@@ -207,6 +207,8 @@ StripeCheckout.propTypes = {
   useOwnParts: React.PropTypes.bool,
   calendarAppointmentState: React.PropTypes.object,
   onSaveQuoteClick: React.PropTypes.func,
+  onFailedPayment: React.PropTypes.func,
+  onSuccessfulPayment: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

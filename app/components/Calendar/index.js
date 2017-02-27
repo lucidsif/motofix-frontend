@@ -21,7 +21,7 @@ BigCalendar.momentLocalizer(moment);
 BigCalendar.momentLocalizer(moment);
 let DragAndDropCalendar;
 Modernizr.touchevents ? DragAndDropCalendar = withDragAndDropTouch(BigCalendar) : DragAndDropCalendar = withDragAndDropMouse(BigCalendar); // eslint-disable-line no-unused-expressions
-
+// TODO: Remove appointments that are in the past
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
@@ -116,41 +116,41 @@ class Calendar extends React.Component {
     if (this.state.selectedTimeSlot) {
       timeSlotSelectedMessage = (
         <div>
-        {paymentResponseMessage}
-        <Message positive>
-          <span>{moment(this.state.selectedTimeSlot.start).format('MMM D @ h:mm A')} to {moment(this.state.selectedTimeSlot.end).format('MMM D @ h:mm A')}</span>
-          <Message.Content>
-            <Form>
-              <div className="ui large icon input calendarGeosuggestMargin">
-                <Geosuggest
-                  placeholder="Where should we meet you?"
-                  country="us"
-                  types={['geocode']}
-                  onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
-                  onChange={this.onSuggestChange}
-                />
-                <i className="location arrow icon"></i>
-              </div>
-              <div className="phoneNumberMarginBottom">
-                <Input
-                  icon="user"
-                  placeholder="What's your name?"
-                  size="large"
-                  onChange={this.onNameChange}
-                />
-              </div>
-              <div className="phoneNumberMarginBottom">
-                <Input
-                  icon="mobile"
-                  placeholder="What's your mobile number?"
-                  size="large"
-                  onChange={this.onPhoneChange}
-                />
-              </div>
-            </Form>
-            {conditionallyRenderStripeButton}
-          </Message.Content>
-        </Message>
+          {paymentResponseMessage}
+          <Message info>
+            <span>{moment(this.state.selectedTimeSlot.start).format('MMM D @ h:mm A')} to {moment(this.state.selectedTimeSlot.end).format('MMM D @ h:mm A')}</span>
+            <Message.Content>
+              <Form>
+                <div className="ui large icon input calendarGeosuggestMargin">
+                  <Geosuggest
+                    placeholder="Where should we meet you?"
+                    country="us"
+                    types={['geocode']}
+                    onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
+                    onChange={this.onSuggestChange}
+                  />
+                  <i className="location arrow icon"></i>
+                </div>
+                <div className="phoneNumberMarginBottom">
+                  <Input
+                    icon="user"
+                    placeholder="What's your name?"
+                    size="large"
+                    onChange={this.onNameChange}
+                  />
+                </div>
+                <div className="phoneNumberMarginBottom">
+                  <Input
+                    icon="mobile"
+                    placeholder="What's your mobile number?"
+                    size="large"
+                    onChange={this.onPhoneChange}
+                  />
+                </div>
+              </Form>
+              {conditionallyRenderStripeButton}
+            </Message.Content>
+          </Message>
         </div>
       );
     }
@@ -179,6 +179,7 @@ class Calendar extends React.Component {
 Calendar.propTypes = {
   availableAppointments: React.PropTypes.array,
   authenticated: React.PropTypes.bool,
+  paid: React.PropTypes.bool,
 };
 
 export default Calendar;

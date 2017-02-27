@@ -19,8 +19,8 @@ import Calendar from 'components/Calendar';
 import moment from 'moment';
 import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';
 
-// TODO: make default event color orange and selected event color blue
-
+// TODO: 7/10 force fetch appointments on each load
+// TODO: 6.5/10 allow to only schedule appointment once - create appointmentSchedule state, action creator, and reducer
 // TODO: exclude break times from available appointments
 // TODO: test for multiple mechanics. How can multiple mechanic time slots be rendered?
 // TODO: fix styling of toolbar for mobile
@@ -223,8 +223,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
     if (conflictedAppointments.length > 0) {
       hasConflict = true;
-      console.log('conflicted appointments');
-      console.log(conflictedAppointments);
     }
 
     // iterate through relevant scheduled appointments

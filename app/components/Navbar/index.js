@@ -18,11 +18,7 @@ import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
 import logo from './home-logo.png';
 import { services } from 'components/QuoteCart';
 
-// TODO: resetSavedQuote should reset cart and part as well!
-
-
-// TODO: 7/10 when cart is clicked, it should route to quotecart
-// TODO: handle edge cases like if props is null
+// TODO: 7/10 new quote should reset paid to null - create a new action creator and handle it in reducer
 // TODO: 5/10 export all calculating functions into a utility functions file
 export class AppNavBar extends React.Component {
   constructor(props) {
