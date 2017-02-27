@@ -33,6 +33,7 @@ class Calendar extends React.Component {
       motorcycle_address: null,
       contact_name: null,
       contact_number: null,
+      paid: null,
     };
 
     this.moveEvent = this.moveEvent.bind(this);
@@ -48,7 +49,7 @@ class Calendar extends React.Component {
     if (!this.props.authenticated) {
       browserHistory.push('/login');
     }
-
+    console.log(event);
     this.setState({ selectedTimeSlot: event });
   }
 
@@ -102,7 +103,7 @@ class Calendar extends React.Component {
     if (this.state.selectedTimeSlot) {
       timeSlotSelectedMessage = (
         <Message positive>
-          <span>{moment(this.state.selectedTimeSlot.start).format('MMM-DD h:hh A')} to {moment(this.state.selectedTimeSlot.end).format('MMM-DD h:hh A')}</span>
+          <span>{moment(this.state.selectedTimeSlot.start).format('MMM D YYYY h: mm')} to {moment(this.state.selectedTimeSlot.end).format('MMM D YYYY h: mm')}</span>
           <Message.Content>
             <Form>
               <div className="ui large icon input calendarGeosuggestMargin">
