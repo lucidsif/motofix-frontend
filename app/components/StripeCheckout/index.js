@@ -84,14 +84,31 @@ class StripeCheckout extends React.Component {
   // create an error message for failed payments
   // redirect to appointments dashboard after successful payment
   // send a text message and email after successful payment
+
+  // get token from stripe client => inject amount in to token => send to server to create charge
+  // if stripe charged successfully, create a quote and then create an appointment referencing the quote id of the created quote
   onToken = (token) => {
     const extractedToken = token;
     extractedToken.amount = this.totalPrice() * 100; // dynamic
     const stringifiedToken = JSON.stringify(extractedToken);
-    console.log(stringifiedToken);
     if (this.props.authenticated) {
       return this.props.client.mutate({
         mutation: gql`
+       mutation createStripeCharge($token: JSON!){
+        createStripeCharge(token: $token){
+          response
+         }
+       }
+      `,
+        variables: {
+          token: stringifiedToken,
+        },
+      })
+        .then((stripeChargeResponse) => {
+          if (stripeChargeResponse.data.createStripeCharge.response.paid) {
+            console.log(stripeChargeResponse.data.createStripeCharge.response);
+            return this.props.client.mutate({
+              mutation: gql`
        mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!){
         createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts){
           id
@@ -105,20 +122,20 @@ class StripeCheckout extends React.Component {
          }
        }
       `,
-        variables: {
-          token: localStorage.getItem('authToken'),
-          motorcycleJSON: JSON.stringify(this.props.vehicle),
-          cartJSON: JSON.stringify(this.props.cart),
-          partJSON: JSON.stringify(this.props.part),
-          useOwnParts: this.props.useOwnParts,
-        },
-      }).then((response) => {
-        this.props.onSaveQuoteClick();
-        return response.data.createUserQuote.id;
-      })
-        .then((quoteID) =>
-           this.props.client.mutate({
-             mutation: gql`
+              variables: {
+                token: localStorage.getItem('authToken'),
+                motorcycleJSON: JSON.stringify(this.props.vehicle),
+                cartJSON: JSON.stringify(this.props.cart),
+                partJSON: JSON.stringify(this.props.part),
+                useOwnParts: this.props.useOwnParts,
+              },
+            }).then((response) => {
+              this.props.onSaveQuoteClick();
+              return response.data.createUserQuote.id;
+            })
+            .then((quoteID) => {
+              this.props.client.mutate({
+                mutation: gql`
            mutation createUserAppointment($token: String!, $motorcycle_address: String!, $contact_name: String!, $contact_number: String!, $estimated_start_time: String!, $estimated_end_time: String!, $status: String!, $fk_quote_id: Int!, $fk_mechanic_id: Int! ){
              createUserAppointment(token: $token, motorcycle_address: $motorcycle_address, contact_name: $contact_name, contact_number: $contact_number, estimated_start_time: $estimated_start_time, estimated_end_time: $estimated_end_time, status: $status, fk_quote_id: $fk_quote_id, fk_mechanic_id: $fk_mechanic_id){
                id
@@ -134,21 +151,27 @@ class StripeCheckout extends React.Component {
              }
            }
             `,
-             variables: {
-               token: localStorage.getItem('authToken'),
-               motorcycle_address: this.props.calendarAppointmentState.motorcycle_address,
-               contact_name: this.props.calendarAppointmentState.contact_name,
-               contact_number: this.props.calendarAppointmentState.contact_number,
-               estimated_start_time: this.props.calendarAppointmentState.selectedTimeSlot.start,
-               estimated_end_time: this.props.calendarAppointmentState.selectedTimeSlot.end,
-               status: 'pending',
-               fk_quote_id: quoteID,
-               fk_mechanic_id: this.props.calendarAppointmentState.selectedTimeSlot.mechanic,
-             },
-           })
-        )
-        .then((appointmentResult) => {
-          console.log(appointmentResult.data.createUserAppointment);
+                variables: {
+                  token: localStorage.getItem('authToken'),
+                  motorcycle_address: this.props.calendarAppointmentState.motorcycle_address,
+                  contact_name: this.props.calendarAppointmentState.contact_name,
+                  contact_number: this.props.calendarAppointmentState.contact_number,
+                  estimated_start_time: this.props.calendarAppointmentState.selectedTimeSlot.start,
+                  estimated_end_time: this.props.calendarAppointmentState.selectedTimeSlot.end,
+                  status: 'pending',
+                  fk_quote_id: quoteID,
+                  fk_mechanic_id: this.props.calendarAppointmentState.selectedTimeSlot.mechanic,
+                },
+              })
+                .then((appointmentResult) => {
+                  console.log(appointmentResult.data.createUserAppointment);
+                })
+                .catch((err) => {
+                  console.log(err);
+                  return err;
+                });
+            });
+          }
         });
     }
   }

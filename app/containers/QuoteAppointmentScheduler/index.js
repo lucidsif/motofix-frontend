@@ -155,9 +155,11 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         console.log('error, a valid day has not been sent to getDays()');
         console.log(schedule, schedule.day_of_week);
     }
-    // remove all day dates that is before today
+    // filter for all dates that are after the start of today
+    const startOfToday = new Date();
+    startOfToday.setHours(0,0,0,0);
     const noPastDays = days.filter((day) =>
-       moment(day.date).isAfter(Date.now())
+       moment(day.date).isAfter(startOfToday)
     );
     return noPastDays;
   }
@@ -283,6 +285,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         <Calendar availableAppointments={availableAppointments} authenticated={this.props.authenticated} />
       );
     }
+    console.log(this.props);
     return (
       <div>
         <h3 className="callout">
