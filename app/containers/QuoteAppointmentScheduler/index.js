@@ -157,7 +157,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     }
     // filter for all dates that are after the start of today
     const startOfToday = new Date();
-    startOfToday.setHours(0,0,0,0);
+    startOfToday.setHours(0, 0, 0, 0);
     const noPastDays = days.filter((day) =>
        moment(day.date).isAfter(startOfToday)
     );

@@ -87,7 +87,7 @@ class StripeCheckout extends React.Component {
 
   // get token from stripe client => inject amount in to token => send to server to create charge
   // if stripe charged successfully, create a quote and then create an appointment referencing the quote id of the created quote
-  onToken = (token) => {
+  onToken = (token) => { // eslint-disable-line consistent-return
     const extractedToken = token;
     extractedToken.amount = this.totalPrice() * 100; // dynamic
     const stringifiedToken = JSON.stringify(extractedToken);
@@ -104,7 +104,7 @@ class StripeCheckout extends React.Component {
           token: stringifiedToken,
         },
       })
-        .then((stripeChargeResponse) => {
+        .then((stripeChargeResponse) => { // eslint-disable-line consistent-return
           if (stripeChargeResponse.data.createStripeCharge.response.paid) {
             console.log(stripeChargeResponse.data.createStripeCharge.response);
             return this.props.client.mutate({
@@ -133,8 +133,8 @@ class StripeCheckout extends React.Component {
               this.props.onSaveQuoteClick();
               return response.data.createUserQuote.id;
             })
-            .then((quoteID) => {
-              this.props.client.mutate({
+            .then((quoteID) => { // eslint-disable-line arrow-body-style
+              return this.props.client.mutate({
                 mutation: gql`
            mutation createUserAppointment($token: String!, $motorcycle_address: String!, $contact_name: String!, $contact_number: String!, $estimated_start_time: String!, $estimated_end_time: String!, $status: String!, $fk_quote_id: Int!, $fk_mechanic_id: Int! ){
              createUserAppointment(token: $token, motorcycle_address: $motorcycle_address, contact_name: $contact_name, contact_number: $contact_number, estimated_start_time: $estimated_start_time, estimated_end_time: $estimated_end_time, status: $status, fk_quote_id: $fk_quote_id, fk_mechanic_id: $fk_mechanic_id){
@@ -198,9 +198,14 @@ class StripeCheckout extends React.Component {
 }
 
 StripeCheckout.propTypes = {
+  authenticated: React.PropTypes.bool,
+  client: React.PropTypes.object,
+  vehicle: React.PropTypes.object,
   cart: React.PropTypes.object,
   part: React.PropTypes.object,
   useOwnParts: React.PropTypes.bool,
+  calendarAppointmentState: React.PropTypes.object,
+  onSaveQuoteClick: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
