@@ -349,7 +349,10 @@ const AppointmentsAndSchedulesQuery = gql`
 const QuoteAppointmentSchedulerRedux = connect(mapStateToProps, mapDispatchToProps);
 
 const withAppointmentsAndSchedulesData = graphql(AppointmentsAndSchedulesQuery, {
-  options: (ownProps) => ({ variables: { zipOrCoordinates: ownProps.vehicle.location } }),
+  options: (ownProps) => ({
+    variables: { zipOrCoordinates: ownProps.vehicle.location },
+    forceFetch: true,
+  }),
   props: ({ ownProps, data: { loading, allNearAppointmentsAndSchedules } }) => ({
     allNearAppointmentsAndSchedulesLoading: loading,
     allNearAppointmentsAndSchedules,

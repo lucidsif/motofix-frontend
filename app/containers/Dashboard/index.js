@@ -6,17 +6,27 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import selectDashboard from './selectors';
+import { createStructuredSelector } from 'reselect';
+import { selectAuthenticated } from 'containers/App/selectors';
 import { Grid, Segment, Header, Image, Message } from 'semantic-ui-react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import gql from 'graphql-tag';
 import { graphql, compose } from 'react-apollo';
 import Appointments from 'components/Appointments';
+import { routerActions } from 'react-router-redux';
+import { UserAuthWrapper } from 'redux-auth-wrapper';
 
 
-// TODO: load page only if logged in/authenticated otherwise redirect
+const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
+  authSelector: (state) => state.get('global').toJS(),
+  predicate: (state) => state.authenticated,
+  redirectAction: routerActions.push,
+  wrapperDisplayName: 'UserIsAuthenticated',
+});
+
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    console.log(this.props.allUserAppointments);
     return (
       <Grid centered>
 
@@ -98,7 +108,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
              */}
 
             <TabPanel>
-              <Appointments />
+              <Appointments allUserAppointments={this.props.allUserAppointments} />
             </TabPanel>
             <TabPanel>
               <h2>Coming Soon</h2>
@@ -111,7 +121,9 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
   }
 }
 
-const mapStateToProps = selectDashboard();
+const mapStateToProps = createStructuredSelector({
+  authenticated: selectAuthenticated(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -138,7 +150,10 @@ const DashboardRedux = connect(mapStateToProps, mapDispatchToProps);
 
 // how do I get user id from the props?
 const withAppointmentsData = graphql(appointmentsQuery, {
-  options: { variables: { fk_user_id: parseInt(localStorage.getItem('userID'), 10) } },
+  options: {
+    variables: { fk_user_id: parseInt(localStorage.getItem('userID'), 10) },
+    forceFetch: true,
+  },
   props: ({ ownProps, data: { loading, allUserAppointments } }) => ({
     allUserAppointmentsLoading: loading,
     allUserAppointments,
@@ -148,5 +163,6 @@ const withAppointmentsData = graphql(appointmentsQuery, {
 
 export default compose(
   DashboardRedux,
+  UserIsAuthenticated,
   withAppointmentsData
 )(Dashboard);
