@@ -123,6 +123,7 @@ export class AppNavBar extends React.Component {
         </Menu.Menu>
         <Dropdown className="link item" icon="bars">
           <Dropdown.Menu>
+            <Dropdown.Item onClick={() => browserHistory.push('/dashboard')}>Dashboard</Dropdown.Item>
             <Dropdown.Item onClick={() => this.props.onNewQuoteClick()}>New Quote</Dropdown.Item>
             <Dropdown.Item onClick={() => browserHistory.push('/dashboard/quotes')}>Saved Quotes</Dropdown.Item>
             {this.props.authenticated &&
