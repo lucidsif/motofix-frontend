@@ -207,7 +207,7 @@ QuoteCentral.propTypes = {
   onSaveQuoteClick: React.PropTypes.func,
   useOwnParts: React.PropTypes.bool,
 };
-// broken query
+
 const RepairTimesQuery = gql`
   query allRepairTimes($midID: String!) {
     allRepairTimes(midID: $midID){

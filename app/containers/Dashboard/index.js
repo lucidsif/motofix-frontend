@@ -7,15 +7,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import selectDashboard from './selectors';
-import { Grid, Segment, Header, Card, Button, Image, Message, Label } from 'semantic-ui-react';
+import { Grid, Segment, Header, Image, Message } from 'semantic-ui-react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import gql from 'graphql-tag';
+import { graphql, compose } from 'react-apollo';
+import Appointments from 'components/Appointments';
 
+
+// TODO: load page only if logged in/authenticated otherwise redirect
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <Grid centered>
 
         <Segment attached="top" textAlign="center" className="dashboard">
-          <Grid stackable centered >
+          <Grid stackable>
             <Grid.Row>
               <Grid.Column>
                 <Header as="h2">
@@ -24,7 +30,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
                 </Header>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
+            <Grid.Row centered>
               <Grid.Column>
                 <Message
                   color="teal"
@@ -52,7 +58,52 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
         </Segment>
 
         <Segment attached="bottom" textAlign="center">
+          <Tabs
+            onSelect={this.handleSelect}
+            selectedIndex={2}
+          >
 
+            {/*
+             <TabList/> is a composite component and is the container for the <Tab/>s.
+             */}
+
+            <TabList>
+
+              {/*
+               <Tab/> is the actual tab component that users will interact with.
+
+               Selecting a tab can be done by either clicking with the mouse,
+               or by using the keyboard tab to give focus then navigating with
+               the arrow keys (right/down to select tab to the right of selected,
+               left/up to select tab to the left of selected).
+
+               The content of the <Tab/> (this.props.children) will be shown as the label.
+               */}
+
+              <Tab>Appointments</Tab>
+              <Tab>My Motorcycles</Tab>
+            </TabList>
+
+            {/*
+             <TabPanel/> is the content for the tab.
+
+             There should be an equal number of <Tab/> and <TabPanel/> components.
+             <Tab/> and <TabPanel/> components are tied together by the order in
+             which they appear. The first (index 0) <Tab/> will be associated with
+             the <TabPanel/> of the same index. When you run this example with
+             `selectedIndex` equal to 0, the tab with the label "Foo" will be selected
+             and the content shown will be "Hello from Foo".
+
+             As with <Tab/> the content of <TabPanel/> will be shown as the content.
+             */}
+
+            <TabPanel>
+              <Appointments />
+            </TabPanel>
+            <TabPanel>
+              <h2>Coming Soon</h2>
+            </TabPanel>
+          </Tabs>
         </Segment>
 
       </Grid>
@@ -68,4 +119,34 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+const appointmentsQuery = gql`
+  query allUserAppointments($fk_user_id: Int!) {
+    allUserAppointments(fk_user_id: $fk_user_id){
+      id
+      motorcycle_address
+      estimated_start_time
+      estimated_end_time
+      status
+      fk_quote_id
+      fk_mechanic_id
+      fk_user_id
+    }
+  }
+`;
+
+const DashboardRedux = connect(mapStateToProps, mapDispatchToProps);
+
+// how do I get user id from the props?
+const withAppointmentsData = graphql(appointmentsQuery, {
+  options: { variables: { fk_user_id: parseInt(localStorage.getItem('userID'), 10) } },
+  props: ({ ownProps, data: { loading, allUserAppointments } }) => ({
+    allUserAppointmentsLoading: loading,
+    allUserAppointments,
+    ownProps,
+  }),
+});
+
+export default compose(
+  DashboardRedux,
+  withAppointmentsData
+)(Dashboard);

@@ -7,7 +7,7 @@ import Helmet from 'react-helmet';
 import LoginForm from './LoginForm';
 import { Segment, Message } from 'semantic-ui-react';
 import { authenticateUser } from '../App/actions';
-// TODO: add non null git apassword validation
+// set and get userid with localstorage
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props) {
@@ -45,6 +45,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
       }
       console.log('authenticated');
       localStorage.setItem('authToken', response.data.logIn.token);
+      localStorage.setItem('userID', response.data.logIn.data.id);
       this.setState({ inAuthenticated: false });
       this.props.onAuthentication();
       return browserHistory.goBack();

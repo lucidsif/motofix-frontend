@@ -126,7 +126,7 @@ export class AppNavBar extends React.Component {
             <Dropdown.Item onClick={() => this.props.onNewQuoteClick()}>New Quote</Dropdown.Item>
             <Dropdown.Item onClick={() => browserHistory.push('/dashboard/quotes')}>Saved Quotes</Dropdown.Item>
             {this.props.authenticated &&
-            <Dropdown.Item onClick={() => { localStorage.removeItem('authToken'); this.props.onDeAuthentication(); }}> Sign Out</Dropdown.Item>
+            <Dropdown.Item onClick={() => { localStorage.removeItem('authToken'); localStorage.removeItem('userID'); this.props.onDeAuthentication(); }}> Log Out</Dropdown.Item>
             }
             {!this.props.authenticated &&
             <Dropdown.Item onClick={() => browserHistory.push('/login')}>Log In</Dropdown.Item>
