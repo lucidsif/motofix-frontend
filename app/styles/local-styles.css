@@ -202,3 +202,11 @@ appointment calendar message styling
 .ui.large.button.calendarButtonMarginTop {
   margin-top: 1em;
 }
+
+/*
+dashboard
+ */
+
+.ui.segment[class*="top attached"]:first-child {
+  margin-top: 2em;
+}

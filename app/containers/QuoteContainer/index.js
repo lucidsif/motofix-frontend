@@ -36,3 +36,17 @@ QuoteContainer.propTypes = {
 };
 
 export default connect(mapStateToProps, null)(QuoteContainer);
+
+/*
+ <Card centered>
+ <Card.Content>
+ <Image floated='right' size='mini' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
+ <Card.Meta>
+ Get $10, Give $10
+ </Card.Meta>
+ <Card.Description>
+ For every rider you refer who orders a service, both of you will get $10.
+ </Card.Description>
+ </Card.Content>
+ </Card>
+ */

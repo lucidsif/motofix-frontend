@@ -39,7 +39,6 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
         location = 'unavailable';
       }
       // cart and part will both be sent to savedquotebreakdown component
-      console.log(quote);
       const cart = JSON.parse(quote.cart_json);
       const part = JSON.parse(quote.part_json);
       const useOwnParts = quote.use_own_parts;
