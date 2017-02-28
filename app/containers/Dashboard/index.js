@@ -17,6 +17,8 @@ import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 
 
+// store userid to redux state using reducers and pickit up with selectors in Dashboard
+// create action creators to save and unsaveuserid in Login and Logout in navbar
 const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
   authSelector: (state) => state.get('global').toJS(),
   predicate: (state) => state.authenticated,
@@ -26,7 +28,7 @@ const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
 
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    console.log(this.props.allUserAppointments);
+    console.log(localStorage.getItem('userID'));
     return (
       <Grid centered>
 
@@ -70,7 +72,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
         <Segment attached="bottom" textAlign="center">
           <Tabs
             onSelect={this.handleSelect}
-            selectedIndex={2}
+            selectedIndex={0}
           >
 
             {/*
@@ -108,7 +110,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
              */}
 
             <TabPanel>
-              <Appointments allUserAppointments={this.props.allUserAppointments} />
+              <Appointments allUserAppointments={this.props.allUserAppointments} loading={this.props.allUserAppointments} />
             </TabPanel>
             <TabPanel>
               <h2>Coming Soon</h2>

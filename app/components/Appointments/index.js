@@ -8,6 +8,7 @@ import React from 'react';
 import { Segment } from 'semantic-ui-react';
 import moment from 'moment';
 
+// render if not loading
 // restyle appointments
 class Appointments extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -18,13 +19,13 @@ class Appointments extends React.PureComponent { // eslint-disable-line react/pr
        (
          <Segment key={appointment.id}>
            <div>
-            Appointment Time:        {moment(appointment.estimated_start_time).format('MMM D @ h:mm A')} - {moment(appointment.estimated_end_time).format('MMM D @ h:mm A')}
+            Appointment Time:{ moment(appointment.estimated_start_time).format('MMM D @ h:mm A')} - {moment(appointment.estimated_end_time).format('MMM D @ h:mm A') }
            </div>
            <div>
-            Mechanic:        {appointment.fk_mechanic_id}
+             Mechanic:{ appointment.fk_mechanic_id }
            </div>
            <div>
-            Status:        {appointment.status}
+             Status:{ appointment.status }
            </div>
          </Segment>
       )
@@ -35,7 +36,7 @@ class Appointments extends React.PureComponent { // eslint-disable-line react/pr
     return (
       <div>
         <ul>
-          {this.renderAppointments()}
+          {!!this.props.loading && this.renderAppointments()}
         </ul>
       </div>
     );
