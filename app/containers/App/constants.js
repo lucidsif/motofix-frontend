@@ -11,6 +11,8 @@
 
 export const AUTHENTICATE = 'boilerplate/App/AUTHENTICATE';
 export const DE_AUTHENTICATE = 'boilerplate/App/DE_AUTHENTICATE';
+export const ADD_USER_ID = 'boilerplate/App/ADD_USER_ID';
+export const REMOVE_USER_ID = 'boilerplate/App/REMOVE_USER_ID';
 export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
 export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';

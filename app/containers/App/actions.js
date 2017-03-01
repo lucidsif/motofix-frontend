@@ -21,6 +21,8 @@ import {
   LOAD_REPOS_ERROR,
   AUTHENTICATE,
   DE_AUTHENTICATE,
+  ADD_USER_ID,
+  REMOVE_USER_ID,
 } from './constants';
 
 export function authenticateUser() {
@@ -32,6 +34,19 @@ export function authenticateUser() {
 export function deAuthenticateUser() {
   return {
     type: DE_AUTHENTICATE,
+  };
+}
+
+export function setUserId(id) {
+  return {
+    type: ADD_USER_ID,
+    id,
+  };
+}
+
+export function resetUserId() {
+  return {
+    type: REMOVE_USER_ID,
   };
 }
 

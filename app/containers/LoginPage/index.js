@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import Helmet from 'react-helmet';
 import LoginForm from './LoginForm';
 import { Segment, Message } from 'semantic-ui-react';
-import { authenticateUser } from '../App/actions';
+import { authenticateUser, setUserId } from '../App/actions';
 // set and get userid with localstorage
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -45,9 +45,8 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
       }
       console.log('authenticated');
       localStorage.setItem('authToken', response.data.logIn.token);
-      localStorage.setItem('userID', response.data.logIn.data.id);
       this.setState({ inAuthenticated: false });
-      this.props.onAuthentication();
+      this.props.onAuthentication(parseInt(response.data.logIn.data.id, 10));
       return browserHistory.goBack();
     });
   }
@@ -104,7 +103,8 @@ LoginPage.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAuthentication: () => {
+    onAuthentication: (userId) => {
+      dispatch(setUserId(userId));
       dispatch(authenticateUser());
     },
   };

@@ -16,11 +16,14 @@ import {
   LOAD_REPOS_ERROR,
   AUTHENTICATE,
   DE_AUTHENTICATE,
+  ADD_USER_ID,
+  REMOVE_USER_ID,
 } from './constants';
 import { fromJS } from 'immutable';
 
 // The initial state of the App
 const initialState = fromJS({
+  userId: null,
   authenticated: false,
   loading: false,
   error: false,
@@ -32,6 +35,10 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case ADD_USER_ID:
+      return state.set('userId', action.id);
+    case REMOVE_USER_ID:
+      return state.set('userId', null);
     case AUTHENTICATE:
       return state.set('authenticated', true);
     case DE_AUTHENTICATE:

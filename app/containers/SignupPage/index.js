@@ -12,7 +12,7 @@ import gql from 'graphql-tag';
 import Helmet from 'react-helmet';
 import SignupForm from './signupForm';
 import { Segment, Message } from 'semantic-ui-react';
-import { authenticateUser } from '../App/actions';
+import { authenticateUser, setUserId } from '../App/actions';
 
 export class SignupPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -65,7 +65,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
           return this.setState({ inAuthenticated: true });
         }
         localStorage.setItem('authToken', loginResponse.data.logIn.token);
-        return this.props.onAccountCreation();
+        return this.props.onAccountCreation(parseInt(loginResponse.data.logIn.data.id, 10));
       });
     });
   }
@@ -122,8 +122,9 @@ SignupPage.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAccountCreation: () => {
+    onAccountCreation: (userId) => {
       console.log('Account created!');
+      dispatch(setUserId(userId));
       dispatch(authenticateUser());
       return browserHistory.go(-2);
     },

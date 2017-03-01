@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
-import { deAuthenticateUser } from 'containers/App/actions';
+import { deAuthenticateUser, resetUserId } from 'containers/App/actions';
 import { selectMid } from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectUseOwnParts } from 'containers/QuoteCentral/selectors';
 import { resetCart, resetPart, resetSavedQuote } from 'containers/QuoteCentral/actions';
@@ -127,7 +127,7 @@ export class AppNavBar extends React.Component {
             <Dropdown.Item onClick={() => this.props.onNewQuoteClick()}>New Quote</Dropdown.Item>
             <Dropdown.Item onClick={() => browserHistory.push('/dashboard/quotes')}>Saved Quotes</Dropdown.Item>
             {this.props.authenticated &&
-            <Dropdown.Item onClick={() => { localStorage.removeItem('authToken'); localStorage.removeItem('userID'); this.props.onDeAuthentication(); }}> Log Out</Dropdown.Item>
+            <Dropdown.Item onClick={() => { localStorage.removeItem('authToken'); this.props.onDeAuthentication(); }}> Log Out</Dropdown.Item>
             }
             {!this.props.authenticated &&
             <Dropdown.Item onClick={() => browserHistory.push('/login')}>Log In</Dropdown.Item>
@@ -161,6 +161,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onDeAuthentication: () => {
       dispatch(deAuthenticateUser());
+      dispatch(resetUserId());
     },
     onNewQuoteClick: () => {
       browserHistory.push('/quote/vehicle');

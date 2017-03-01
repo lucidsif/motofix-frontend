@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectAuthenticated } from 'containers/App/selectors';
+import { selectAuthenticated, selectUserId } from 'containers/App/selectors';
 import { Grid, Segment, Header, Image, Message } from 'semantic-ui-react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import gql from 'graphql-tag';
@@ -28,7 +28,6 @@ const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
 
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    console.log(localStorage.getItem('userID'));
     return (
       <Grid centered>
 
@@ -125,6 +124,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
 
 const mapStateToProps = createStructuredSelector({
   authenticated: selectAuthenticated(),
+  userId: selectUserId(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -150,12 +150,8 @@ const appointmentsQuery = gql`
 
 const DashboardRedux = connect(mapStateToProps, mapDispatchToProps);
 
-// how do I get user id from the props?
 const withAppointmentsData = graphql(appointmentsQuery, {
-  options: {
-    variables: { fk_user_id: parseInt(localStorage.getItem('userID'), 10) },
-    forceFetch: true,
-  },
+  options: (ownProps) => ({ variables: { fk_user_id: ownProps.userId } }),
   props: ({ ownProps, data: { loading, allUserAppointments } }) => ({
     allUserAppointmentsLoading: loading,
     allUserAppointments,
