@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { withApollo, compose } from 'react-apollo';
@@ -166,6 +167,7 @@ class StripeCheckout extends React.Component {
               })
                 .then((appointmentResult) => {
                   console.log(appointmentResult.data.createUserAppointment);
+                  browserHistory.push('/dashboard');
                 });
             });
           }

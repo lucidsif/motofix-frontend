@@ -8,7 +8,6 @@ import React from 'react';
 import { Segment } from 'semantic-ui-react';
 import moment from 'moment';
 
-// render if not loading
 // restyle appointments
 class Appointments extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -36,7 +35,7 @@ class Appointments extends React.PureComponent { // eslint-disable-line react/pr
     return (
       <div>
         <ul>
-          {!!this.props.loading && this.renderAppointments()}
+          {!this.props.loading && this.renderAppointments()}
         </ul>
       </div>
     );

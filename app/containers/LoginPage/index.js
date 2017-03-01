@@ -7,7 +7,7 @@ import Helmet from 'react-helmet';
 import LoginForm from './LoginForm';
 import { Segment, Message } from 'semantic-ui-react';
 import { authenticateUser, setUserId } from '../App/actions';
-// set and get userid with localstorage
+
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props) {
