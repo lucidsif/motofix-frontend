@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router';
 
 // TODO: Style in a semantic ui way by adding icons, removing labels, adding placeholders and adding wide buttons
 const renderField = ({ input, type, meta: { touched, error } }) => (
-  <div>
+  <div className="signUpFields">
     <input {...input} type={type} />
     {touched && error && <span>{error}</span>}
   </div>
@@ -29,6 +29,11 @@ const SignupForm = (props) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Header as="h2" textAlign="center"> Sign Up </Header>
+      <Form.Field>
+        Name
+        <Field name="name" type="text" component={renderField} />
+      </Form.Field>
+
       <Form.Field>
         Email
         <Field name="email" type="email" component={renderField} />

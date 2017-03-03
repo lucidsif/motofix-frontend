@@ -28,15 +28,15 @@ class Calendar extends React.Component {
     this.state = {
       selectedTimeSlot: null,
       motorcycle_address: null,
-      contact_name: null,
       contact_number: null,
+      note: null,
     };
 
     this.moveEvent = this.moveEvent.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
     this.onSuggestChange = this.onSuggestChange.bind(this);
-    this.onNameChange = this.onNameChange.bind(this);
+    this.onNoteChange = this.onNoteChange.bind(this);
     this.onPhoneChange = this.onPhoneChange.bind(this);
   }
 
@@ -56,8 +56,8 @@ class Calendar extends React.Component {
     this.setState({ motorcycle_address: null });
   }
 
-  onNameChange(e) {
-    this.setState({ contact_name: e.target.value });
+  onNoteChange(e) {
+    this.setState({ note: e.target.value });
   }
 
   onPhoneChange(e) {
@@ -75,7 +75,7 @@ class Calendar extends React.Component {
 
   render() {
     let conditionallyRenderStripeButton = null;
-    if (this.state.motorcycle_address && this.state.contact_name && this.state.contact_number) {
+    if (this.state.motorcycle_address && this.state.note && this.state.contact_number) {
       conditionallyRenderStripeButton = (
         <div>
           <div className="payTextMarginBottom">
@@ -123,7 +123,7 @@ class Calendar extends React.Component {
               <Form>
                 <div className="ui large icon input calendarGeosuggestMargin">
                   <Geosuggest
-                    placeholder="Where should we meet you?"
+                    placeholder="Appointment Address"
                     country="us"
                     types={['geocode']}
                     onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
@@ -133,18 +133,18 @@ class Calendar extends React.Component {
                 </div>
                 <div className="phoneNumberMarginBottom">
                   <Input
-                    icon="user"
-                    placeholder="What's your name?"
+                    icon="mobile"
+                    placeholder="Mobile number"
                     size="large"
-                    onChange={this.onNameChange}
+                    onChange={this.onPhoneChange}
                   />
                 </div>
                 <div className="phoneNumberMarginBottom">
                   <Input
-                    icon="mobile"
-                    placeholder="What's your mobile number?"
+                    icon="sticky note"
+                    placeholder="Add any notes here"
                     size="large"
-                    onChange={this.onPhoneChange}
+                    onChange={this.onNoteChange}
                   />
                 </div>
               </Form>

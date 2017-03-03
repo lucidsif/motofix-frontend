@@ -16,9 +16,11 @@ import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts } from 'con
 import { setSavedQuoteTrue } from 'containers/QuoteCentral/actions';
 import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentScheduler/actions';
 
+
+// TODO: Reset cart and quote saved after successful payment
 import StripeCheckoutComp from 'react-stripe-checkout';
 import { services } from 'components/QuoteCart';
-
+// todo: payment response is entangled with appointment mutation
 class StripeCheckout extends React.Component {
   totalPartsPrice() { // eslint-disable-line react/sort-comp
     let sum = 0;
@@ -138,12 +140,12 @@ class StripeCheckout extends React.Component {
             .then((quoteID) => { // eslint-disable-line arrow-body-style
               return this.props.client.mutate({
                 mutation: gql`
-           mutation createUserAppointment($token: String!, $motorcycle_address: String!, $contact_name: String!, $contact_number: String!, $estimated_start_time: String!, $estimated_end_time: String!, $status: String!, $fk_quote_id: Int!, $fk_mechanic_id: Int! ){
-             createUserAppointment(token: $token, motorcycle_address: $motorcycle_address, contact_name: $contact_name, contact_number: $contact_number, estimated_start_time: $estimated_start_time, estimated_end_time: $estimated_end_time, status: $status, fk_quote_id: $fk_quote_id, fk_mechanic_id: $fk_mechanic_id){
+           mutation createUserAppointment($token: String!, $motorcycle_address: String!, $contact_number: String!, $note: String!, $estimated_start_time: String!, $estimated_end_time: String!, $status: String!, $fk_quote_id: Int!, $fk_mechanic_id: Int! ){
+             createUserAppointment(token: $token, motorcycle_address: $motorcycle_address, contact_number: $contact_number, note: $note, estimated_start_time: $estimated_start_time, estimated_end_time: $estimated_end_time, status: $status, fk_quote_id: $fk_quote_id, fk_mechanic_id: $fk_mechanic_id){
                id
                motorcycle_address
-               contact_name
                contact_number
+               note
                estimated_start_time
                estimated_end_time
                status
@@ -156,8 +158,8 @@ class StripeCheckout extends React.Component {
                 variables: {
                   token: localStorage.getItem('authToken'),
                   motorcycle_address: this.props.calendarAppointmentState.motorcycle_address,
-                  contact_name: this.props.calendarAppointmentState.contact_name,
                   contact_number: this.props.calendarAppointmentState.contact_number,
+                  note: this.props.calendarAppointmentState.note,
                   estimated_start_time: this.props.calendarAppointmentState.selectedTimeSlot.start,
                   estimated_end_time: this.props.calendarAppointmentState.selectedTimeSlot.end,
                   status: 'pending',

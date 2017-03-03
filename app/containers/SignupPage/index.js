@@ -25,26 +25,26 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
 
   signUpMutation(formMap) {
     /* eslint no-underscore-dangle: ["error", { "allow": ["formMap_", "_root"] }] */
-    const email = formMap._root.entries[0][1];
-    const password = formMap._root.entries[1][1];
+    const name = formMap._root.entries[0][1];
+    const email = formMap._root.entries[1][1];
+    const password = formMap._root.entries[2][1];
     // noinspection JSUnresolvedFunction
     return this.props.client.mutate({
       mutation: gql`
-      mutation signUp($email: String!, $password: String!){
-        signUp(email: $email, password: $password){
+      mutation signUp($email: String!, $password: String!, $name: String!){
+        signUp(email: $email, password: $password, name: $name){
           id
           email
+          name
       }
     }
     `,
-      variables: { email, password },
+      variables: { email, password, name },
     }).then((response) => {
-      console.log(response.data.signUp);
       if (!response.data.signUp) {
         console.log('Account creation failed');
         return this.setState({ accountCreated: false });
       }
-      console.log(response);
       this.setState({ accountCreated: true });
       return this.props.client.mutate({
         mutation: gql`
@@ -53,6 +53,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
           data {
             id
             email
+            name
           }
           token
       }

@@ -32,6 +32,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
           data {
             id
             email
+            name
           }
           token
       }
@@ -44,6 +45,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
         return this.setState({ inAuthenticated: true });
       }
       console.log('authenticated');
+      localStorage.setItem('userName', response.data.logIn.data.name);
       localStorage.setItem('authToken', response.data.logIn.token);
       this.setState({ inAuthenticated: false });
       this.props.onAuthentication(parseInt(response.data.logIn.data.id, 10));

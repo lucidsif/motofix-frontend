@@ -187,10 +187,6 @@ appointment calendar message styling
   margin: 0.5em;
 }
 
-.ui.form input[type=text] {
-  width: 280px;
-}
-
 .phoneNumberMarginBottom {
   margin-bottom: 0.5em;
 }
@@ -210,3 +206,8 @@ dashboard
 .ui.segment[class*="top attached"]:first-child {
   margin-top: 2em;
 }
+
+/*
+signup form
+ */
+
