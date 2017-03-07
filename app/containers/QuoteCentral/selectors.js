@@ -28,6 +28,11 @@ const selectUseOwnParts = () => createSelector(
   (quoteCentralState) => quoteCentralState.get('useOwnParts')
 );
 
+const selectVoucherCodeStatus = () => createSelector(
+  selectQuoteCentralDomain(),
+  (quoteCentralState) => quoteCentralState.get('voucherCodeStatus')
+)
+
 /*
  * Default selector used by QuoteCentralService
  */
@@ -42,4 +47,5 @@ export {
   selectPart,
   selectSavedQuote,
   selectUseOwnParts,
+  selectVoucherCodeStatus,
 };

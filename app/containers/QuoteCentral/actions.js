@@ -15,6 +15,9 @@ import {
   RESET_SAVED_QUOTE,
   USE_OWN_PARTS,
   UNUSE_OWN_PARTS,
+  VALIDATE_VOUCHER_CODE,
+  INVALIDATE_VOUCHER_CODE,
+  RESET_VOUCHER_CODE,
 } from './constants';
 
 export function addToCart(payload) {
@@ -84,4 +87,22 @@ export function setOwnPartsFalse() {
   return {
     type: UNUSE_OWN_PARTS,
   };
+}
+
+export function setVoucherTrue() {
+  return {
+    type: VALIDATE_VOUCHER_CODE,
+  };
+}
+
+export function setVoucherFalse() {
+  return {
+    type: INVALIDATE_VOUCHER_CODE,
+  };
+}
+
+export function setVoucherNull() {
+  return {
+    type: RESET_VOUCHER_CODE,
+  }
 }

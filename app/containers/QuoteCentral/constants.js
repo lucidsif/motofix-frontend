@@ -14,3 +14,6 @@ export const SAVE_QUOTE = 'app/Quote/Central/SAVE_QUOTE';
 export const RESET_SAVED_QUOTE = 'app/QuoteCentral/RESET_SAVED_QUOTE';
 export const USE_OWN_PARTS = 'app/QuoteCentral/USE_OWN_PARTS';
 export const UNUSE_OWN_PARTS = 'app/QuoteCentral/UNUSE_OWN_PARTS';
+export const VALIDATE_VOUCHER_CODE = 'app/QuoteCentral/VALIDATE_VOUCHER_CODE';
+export const INVALIDATE_VOUCHER_CODE = 'app/QuoteCentral/INVALIDATE_VOUCHER_CODE';
+export const RESET_VOUCHER_CODE = 'app/QuoteCentral/RESET_VOUCHER_CODE';

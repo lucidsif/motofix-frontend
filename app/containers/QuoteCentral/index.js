@@ -13,10 +13,10 @@ import QuoteCart from 'components/QuoteCart';
 import AddServices from 'components/AddServices';
 import gql from 'graphql-tag';
 import { withApollo, graphql, compose } from 'react-apollo';
-import { addToCart, removeFromCart, setLaborTime, setPartsData, setSavedQuoteTrue, setOwnPartsTrue, setOwnPartsFalse } from './actions';
+import { addToCart, removeFromCart, setLaborTime, setPartsData, setSavedQuoteTrue, setOwnPartsTrue, setOwnPartsFalse, setVoucherTrue, setVoucherFalse } from './actions';
 import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
-import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts } from './selectors';
+import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts, selectVoucherCodeStatus } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
 
@@ -165,6 +165,7 @@ const mapStateToProps = createStructuredSelector({
   part: selectPart(),
   quoteSaved: selectSavedQuote(),
   useOwnParts: selectUseOwnParts(),
+  voucherCodeStatus: selectVoucherCodeStatus(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -191,7 +192,12 @@ function mapDispatchToProps(dispatch) {
     onDeUseOwnParts: () => {
       dispatch(setOwnPartsFalse());
     },
-
+    onVoucherValidation: () => {
+      dispatch(setVoucherTrue());
+    },
+    onVoucherInvalidation: () => {
+      dispatch(setVoucherFalse());
+    },
   };
 }
 

@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { Button, Container, List, Image, Label, Checkbox } from 'semantic-ui-react';
+import { Button, Container, List, Image, Label, Checkbox, Input } from 'semantic-ui-react';
 import { services } from 'components/QuoteCart';
 import gql from 'graphql-tag';
 
@@ -26,12 +26,15 @@ function PriceBreakDown(props) {
     return parseFloat(Math.round(tax * 100) / 100).toFixed(2);
   }
   function floatTotalPrice() {
+    // TODO: fix total price bug when labor time is unknown
     const subTotal = props.totalServicesPrice() + props.totalPartsPrice();
-
     const taxRate = 0.0875;
     const tax = subTotal * taxRate;
 
-    const total = subTotal + tax;
+    let total = subTotal + tax;
+    if (props.voucherCodeStatus) {
+      total -= 15;
+    }
     return parseFloat(Math.round(total * 100) / 100).toFixed(2);
   }
 
@@ -136,6 +139,42 @@ function PriceBreakDown(props) {
     }
     return browserHistory.push('/login');
   }
+  function renderVoucherValidationMessage() { // eslint-disable-line consistent-return
+    if (props.voucherCodeStatus) {
+      return (
+        <Label basic color="green">Your discount of $15 has been applied :)</Label>
+      );
+    } else if (props.voucherCodeStatus === false) {
+      return (
+        <Label basic color="red">Your promo code is not valid :(</Label>
+      );
+    }
+  }
+  function validateVoucher(voucherCode) {
+    return props.client.query({
+      query: gql`
+      query validateVoucher($voucherCode: String!){
+        validateVoucher(voucherCode: $voucherCode){
+          response
+        }
+      }
+      `,
+      variables: {
+        voucherCode,
+      },
+    }).then((queryResult) => { // eslint-disable-line consistent-return
+      console.log(queryResult.data.validateVoucher);
+      if (queryResult.data.validateVoucher.response.validation_status.status === 1000) {
+        return props.onVoucherValidation();
+        // apply discount to price
+      }
+    })
+      .catch((err) => {
+        console.log(err);
+        return props.onVoucherInvalidation();
+      });
+  }
+
   function onSaveBtnClick() {
     // only allow if authenticated and localToken exists
     if (props.authenticated && localStorage.getItem('authToken')) {
@@ -188,14 +227,30 @@ function PriceBreakDown(props) {
         </List.Item>
         <List.Item>
           <List.Content floated="left">
+            <p>Discounts</p>
+          </List.Content>
+          <List.Content floated="right">
+            <p>{props.voucherCodeStatus ? '15.00' : '0.00'}</p>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Content floated="left">
             <p>Total Price</p>
           </List.Content>
           <List.Content floated="right">
             <p>{ifNegativeNum(floatTotalPrice())}</p>
           </List.Content>
         </List.Item>
+        <List.Item>
+          <Input
+            icon="money"
+            iconPosition="right"
+            placeholder="Enter promo code"
+            onBlur={(e) => validateVoucher(e.target.value)}
+          />
+          {renderVoucherValidationMessage()}
+        </List.Item>
       </List>
-
       <div>
         {props.quoteSaved &&
         <Button disabled>Quote Saved</Button>
@@ -217,6 +272,7 @@ PriceBreakDown.propTypes = {
   vehicle: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   cart: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   part: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+  voucherCodeStatus: React.PropTypes.bool,
 };
 
 export default PriceBreakDown;

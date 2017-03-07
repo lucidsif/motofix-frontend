@@ -70,7 +70,10 @@ function QuoteCart(props) {
     const subTotal = totalServicesPrice() + totalPartsPrice();
     const taxRate = 0.0875;
     const tax = subTotal * taxRate;
-    const total = subTotal + tax;
+    let total = subTotal + tax;
+    if (props.props.voucherCodeStatus) {
+      total -= 15;
+    }
     return parseFloat(Math.round(total * 1) / 1);
   }
   function totalDealerFloated() {
@@ -141,6 +144,9 @@ function QuoteCart(props) {
                 onSaveQuoteClick={props.props.onSaveQuoteClick}
                 onUseOwnParts={props.props.onUseOwnParts}
                 onDeUseOwnParts={props.props.onDeUseOwnParts}
+                voucherCodeStatus={props.props.voucherCodeStatus}
+                onVoucherValidation={props.props.onVoucherValidation}
+                onVoucherInvalidation={props.props.onVoucherInvalidation}
                 totalServicesPrice={totalServicesPrice}
                 totalPartsPrice={totalPartsPrice}
               />

@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
 import { deAuthenticateUser, resetUserId } from 'containers/App/actions';
 import { selectMid } from 'containers/QuoteAddVehicle/selectors';
-import { selectCart, selectPart, selectUseOwnParts } from 'containers/QuoteCentral/selectors';
+import { selectCart, selectPart, selectUseOwnParts, selectVoucherCodeStatus } from 'containers/QuoteCentral/selectors';
 import { resetCart, resetPart, resetSavedQuote } from 'containers/QuoteCentral/actions';
 import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import { browserHistory } from 'react-router';
@@ -87,7 +87,11 @@ export class AppNavBar extends React.Component {
     const taxRate = 0.0875;
     const tax = subTotal * taxRate;
 
-    const total = subTotal + tax;
+    let total = subTotal + tax;
+    console.log(this.props.voucherCodeStatus);
+    if (this.props.voucherCodeStatus) {
+      total -= 15;
+    }
     return parseFloat(Math.round(total * 1) / 1);
   }
 
@@ -147,6 +151,7 @@ AppNavBar.propTypes = {
   cart: React.PropTypes.object,
   part: React.PropTypes.object,
   useOwnParts: React.PropTypes.bool,
+  voucherCodeStatus: React.PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -155,6 +160,7 @@ const mapStateToProps = createStructuredSelector({
   cart: selectCart(),
   part: selectPart(),
   useOwnParts: selectUseOwnParts(),
+  voucherCodeStatus: selectVoucherCodeStatus(),
 });
 
 function mapDispatchToProps(dispatch) {
