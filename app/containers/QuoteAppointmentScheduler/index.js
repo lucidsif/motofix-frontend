@@ -8,11 +8,10 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-// import selectQuoteAppointmentScheduler from './selectors';
 import { createStructuredSelector } from 'reselect';
 import { selectAuthenticated } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
-import { selectCart, selectPart } from 'containers/QuoteCentral/selectors';
+import { selectCart, selectPart, selectVoucherCodeStatus } from 'containers/QuoteCentral/selectors';
 import { selectPaid } from './selectors';
 import { services } from 'components/QuoteCart';
 import Calendar from 'components/Calendar';
@@ -280,7 +279,12 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
 
       renderCalendar = (
-        <Calendar availableAppointments={availableAppointments} authenticated={this.props.authenticated} paid={this.props.paid} />
+        <Calendar
+          availableAppointments={availableAppointments}
+          authenticated={this.props.authenticated}
+          paid={this.props.paid}
+          voucherCodeStatus={this.props.voucherCodeStatus}
+        />
       );
     }
     return (
@@ -307,6 +311,7 @@ const mapStateToProps = createStructuredSelector({
   vehicle: selectVehicleDomain(),
   cart: selectCart(),
   part: selectPart(),
+  voucherCodeStatus: selectVoucherCodeStatus(),
 });
 
 function mapDispatchToProps(dispatch) {

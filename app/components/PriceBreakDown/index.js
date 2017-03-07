@@ -111,18 +111,25 @@ function PriceBreakDown(props) {
   }
 // TODO: only dispatch saved button after quote mutation success
   function createQuoteMutation() {
+    let voucherCodeStatusBool;
+    if (!props.voucherCodeStatus) {
+      voucherCodeStatusBool = false;
+    } else {
+      voucherCodeStatusBool = props.voucherCodeStatus;
+    }
     // noinspection JSUnresolvedFunction
     if (props.authenticated) {
       return props.client.mutate({
         mutation: gql`
-       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!){
-        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts){
+       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!, $voucherCodeStatus: Boolean!){
+        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts, voucherCodeStatus: $voucherCodeStatus){
           id
           fk_user_id
           motorcycle_json
           cart_json
           part_json
           use_own_parts
+          voucher_code_status
           created_at
           updated_at
          }
@@ -134,6 +141,7 @@ function PriceBreakDown(props) {
           cartJSON: JSON.stringify(props.cart),
           partJSON: JSON.stringify(props.part),
           useOwnParts: props.useOwnParts,
+          voucherCodeStatus: voucherCodeStatusBool,
         },
       }).then((response) => console.log(response.data.createUserQuote));
     }
@@ -163,7 +171,6 @@ function PriceBreakDown(props) {
         voucherCode,
       },
     }).then((queryResult) => { // eslint-disable-line consistent-return
-      console.log(queryResult.data.validateVoucher);
       if (queryResult.data.validateVoucher.response.validation_status.status === 1000) {
         return props.onVoucherValidation();
         // apply discount to price
@@ -230,7 +237,7 @@ function PriceBreakDown(props) {
             <p>Discounts</p>
           </List.Content>
           <List.Content floated="right">
-            <p>{props.voucherCodeStatus ? '15.00' : '0.00'}</p>
+            <p>{props.voucherCodeStatus ? '-15.00' : '0.00'}</p>
           </List.Content>
         </List.Item>
         <List.Item>

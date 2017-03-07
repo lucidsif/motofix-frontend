@@ -40,17 +40,24 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
 // TODO: only dispatch saved button after quote mutation success
   createQuoteMutation() {
   // noinspection JSUnresolvedFunction
+    let voucherCodeStatusBool;
+    if (!this.props.voucherCodeStatus) {
+      voucherCodeStatusBool = false;
+    } else {
+      voucherCodeStatusBool = this.props.voucherCodeStatus;
+    }
     if (this.props.authenticated) {
       return this.props.client.mutate({
         mutation: gql`
-       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!){
-        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts){
+       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!, $voucherCodeStatus: Boolean!){
+        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts, voucherCodeStatus: $voucherCodeStatus){
           id
           fk_user_id
           motorcycle_json
           cart_json
           part_json
           use_own_parts
+          voucher_code_status
           created_at
           updated_at
          }
@@ -62,6 +69,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           cartJSON: JSON.stringify(this.props.cart),
           partJSON: JSON.stringify(this.props.part),
           useOwnParts: this.props.useOwnParts,
+          voucherCodeStatus: voucherCodeStatusBool,
         },
       });
     }
@@ -212,6 +220,7 @@ QuoteCentral.propTypes = {
   quoteSaved: React.PropTypes.bool,
   onSaveQuoteClick: React.PropTypes.func,
   useOwnParts: React.PropTypes.bool,
+  voucherCodeStatus: React.PropTypes.bool,
 };
 
 const RepairTimesQuery = gql`

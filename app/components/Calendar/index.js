@@ -81,7 +81,10 @@ class Calendar extends React.Component {
           <div className="payTextMarginBottom">
           Pre-authorize your card for the quote total to schedule your appointment.
           </div>
-          <StripeCheckout calendarAppointmentState={this.state} />
+          <StripeCheckout
+            calendarAppointmentState={this.state}
+            voucherCodeStatus={this.props.voucherCodeStatus}
+          />
         </div>
       );
     } else {
@@ -180,6 +183,7 @@ Calendar.propTypes = {
   availableAppointments: React.PropTypes.array,
   authenticated: React.PropTypes.bool,
   paid: React.PropTypes.bool,
+  voucherCodeStatus: React.PropTypes.bool,
 };
 
 export default Calendar;

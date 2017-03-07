@@ -16,7 +16,7 @@ import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts } from 'con
 import { setSavedQuoteTrue } from 'containers/QuoteCentral/actions';
 import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentScheduler/actions';
 
-
+// TODO: make it receive all the props it needs from the most parent container
 // TODO: Reset cart and quote saved after successful payment
 import StripeCheckoutComp from 'react-stripe-checkout';
 import { services } from 'components/QuoteCart';
@@ -80,7 +80,10 @@ class StripeCheckout extends React.Component {
     const subTotal = this.totalServicesPrice() + this.totalPartsPrice();
     const taxRate = 0.0875;
     const tax = subTotal * taxRate;
-    const total = subTotal + tax;
+    let total = subTotal + tax;
+    if (this.props.voucherCodeStatus) {
+      total -= 15;
+    }
     return parseFloat(Math.round(total * 1) / 1);
   }
 
@@ -108,19 +111,26 @@ class StripeCheckout extends React.Component {
         },
       })
         .then((stripeChargeResponse) => { // eslint-disable-line consistent-return
+          let voucherCodeStatusBool;
+          if (!this.props.voucherCodeStatus) {
+            voucherCodeStatusBool = false;
+          } else {
+            voucherCodeStatusBool = this.props.voucherCodeStatus
+          }
           if (stripeChargeResponse.data.createStripeCharge.response.paid) {
             this.props.onSuccessfulPayment();
             console.log(stripeChargeResponse.data.createStripeCharge.response);
             return this.props.client.mutate({
               mutation: gql`
-       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!){
-        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts){
+       mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!, $voucherCodeStatus: Boolean!){
+        createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts, voucherCodeStatus: $voucherCodeStatus){
           id
           fk_user_id
           motorcycle_json
           cart_json
           part_json
           use_own_parts
+          voucher_code_status
           created_at
           updated_at
          }
@@ -132,6 +142,7 @@ class StripeCheckout extends React.Component {
                 cartJSON: JSON.stringify(this.props.cart),
                 partJSON: JSON.stringify(this.props.part),
                 useOwnParts: this.props.useOwnParts,
+                voucherCodeStatus: voucherCodeStatusBool,
               },
             }).then((response) => {
               this.props.onSaveQuoteClick();

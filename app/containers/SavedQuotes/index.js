@@ -42,6 +42,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
       const cart = JSON.parse(quote.cart_json);
       const part = JSON.parse(quote.part_json);
       const useOwnParts = quote.use_own_parts;
+      const voucherCodeStatus = quote.voucher_code_status;
 
       const selectedServices = Object.keys(cart).filter((key) => cart[key].selected).map((item) => {
         const str = item.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -61,7 +62,7 @@ export class SavedQuotes extends React.Component { // eslint-disable-line react/
                 See Quote Breakdown
               </Accordion.Title>
               <Accordion.Content>
-                <SavedQuoteBreakDown cart={cart} part={part} useOwnParts={useOwnParts} />
+                <SavedQuoteBreakDown cart={cart} part={part} useOwnParts={useOwnParts} voucherCodeStatus={voucherCodeStatus} />
               </Accordion.Content>
             </Accordion>
           </Item.Content>
@@ -112,6 +113,7 @@ query allUserQuotes($token: String!){
     cart_json
     part_json
     use_own_parts
+    voucher_code_status
     created_at
     updated_at
   }

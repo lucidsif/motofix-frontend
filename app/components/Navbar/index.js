@@ -11,13 +11,14 @@ import { selectAuthenticated } from 'containers/App/selectors';
 import { deAuthenticateUser, resetUserId } from 'containers/App/actions';
 import { selectMid } from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectUseOwnParts, selectVoucherCodeStatus } from 'containers/QuoteCentral/selectors';
-import { resetCart, resetPart, resetSavedQuote } from 'containers/QuoteCentral/actions';
+import { resetCart, resetPart, resetSavedQuote, setVoucherNull } from 'containers/QuoteCentral/actions';
 import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
 import logo from './home-logo.png';
 import { services } from 'components/QuoteCart';
 
+// TODO: make sure new quote sets voucher to null
 // TODO: 7/10 new quote should reset paid to null - create a new action creator and handle it in reducer
 // TODO: 5/10 export all calculating functions into a utility functions file
 export class AppNavBar extends React.Component {
@@ -88,7 +89,6 @@ export class AppNavBar extends React.Component {
     const tax = subTotal * taxRate;
 
     let total = subTotal + tax;
-    console.log(this.props.voucherCodeStatus);
     if (this.props.voucherCodeStatus) {
       total -= 15;
     }
@@ -175,6 +175,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(resetCart());
       dispatch(resetPart());
       dispatch(resetSavedQuote());
+      dispatch(setVoucherNull());
     },
   };
 }

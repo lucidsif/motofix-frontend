@@ -150,6 +150,7 @@ const DashboardRedux = connect(mapStateToProps, mapDispatchToProps);
 
 const withAppointmentsData = graphql(appointmentsQuery, {
   options: (ownProps) => ({ variables: { fk_user_id: ownProps.userId } }),
+  forceFetch: true,
   props: ({ ownProps, data: { loading, allUserAppointments } }) => ({
     allUserAppointmentsLoading: loading,
     allUserAppointments,

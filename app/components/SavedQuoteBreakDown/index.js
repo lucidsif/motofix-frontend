@@ -112,7 +112,10 @@ function SavedQuoteBreakDown(props) {
     const taxRate = 0.0875;
     const tax = subTotal * taxRate;
 
-    const total = subTotal + tax;
+    let total = subTotal + tax;
+    if (props.voucherCodeStatus) {
+      total -= 15;
+    }
     return parseFloat(Math.round(total * 100) / 100).toFixed(2);
   }
 
@@ -215,6 +218,14 @@ function SavedQuoteBreakDown(props) {
           </List.Content>
           <List.Content floated="right">
             <p>{ifNegativeNum(floatTax())}</p>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Content floated="left">
+            <p>Discounts</p>
+          </List.Content>
+          <List.Content floated="right">
+            <p>{props.voucherCodeStatus ? '-15.00' : '0.00'}</p>
           </List.Content>
         </List.Item>
         <List.Item>
