@@ -12,6 +12,7 @@ function Footer() {
             <div className="ui  link list">
               <Link className="item" to="/terms-and-conditions">Terms And Conditions</Link>
               <Link className="item" to="/privacy-policy">Privacy Policy</Link>
+              <a href="javascript:void(Tawk_API.toggle())"> Click to Chat </a>
             </div>
           </div>
           <div className="three wide column">
