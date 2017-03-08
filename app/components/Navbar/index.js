@@ -14,7 +14,7 @@ import { selectCart, selectPart, selectUseOwnParts, selectVoucherCodeStatus } fr
 import { resetCart, resetPart, resetSavedQuote, setVoucherNull } from 'containers/QuoteCentral/actions';
 import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import { browserHistory } from 'react-router';
-import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
+import { Dropdown, Menu, Image, Icon, Label, Button } from 'semantic-ui-react';
 import logo from './home-logo.png';
 import services from 'containers/QuoteCentral/reducerServices';
 
@@ -110,6 +110,17 @@ export class AppNavBar extends React.Component {
         <Menu.Item>
           <Image src={logo} as="a" size="tiny" href="#" onClick={() => browserHistory.push('/')} />
           <Label color="orange" horizontal className="betaLabel">beta</Label>
+        </Menu.Item>
+        <Menu.Item position="left">
+          <form action="tel:9293564313">
+            <Button
+              type="submit"
+              icon="call"
+              content="Need Help? Call Support"
+              color="blue"
+              circular
+            />
+          </form>
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>

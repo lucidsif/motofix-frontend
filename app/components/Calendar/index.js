@@ -146,7 +146,7 @@ class Calendar extends React.Component {
                 <div className="phoneNumberMarginBottom">
                   <Input
                     icon="sticky note"
-                    placeholder="Add any notes here"
+                    placeholder="Add any notes her"
                     size="large"
                     onChange={this.onNoteChange}
                   />
@@ -185,7 +185,7 @@ Calendar.propTypes = {
   authenticated: React.PropTypes.bool,
   paid: React.PropTypes.bool,
   voucherCodeStatus: React.PropTypes.bool,
-  userId: React.Proptypes.number,
+  userId: React.PropTypes.number,
 };
 
 export default Calendar;
