@@ -19,7 +19,7 @@ import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentSc
 // TODO: make it receive all the props it needs from the most parent container
 // TODO: Reset cart and quote saved after successful payment
 import StripeCheckoutComp from 'react-stripe-checkout';
-import { services } from 'components/QuoteCart';
+import services from 'containers/QuoteCentral/reducerServices';
 // todo: payment response is entangled with appointment mutation
 class StripeCheckout extends React.Component {
   totalPartsPrice() { // eslint-disable-line react/sort-comp

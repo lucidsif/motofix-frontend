@@ -11,8 +11,8 @@ import toolIcon from './toolIcon.png';
 // noinspection JSUnresolvedVariable
 import diagnoseIcon from './diagnoseIcon.png';
 import gql from 'graphql-tag';
-const activeServices = [];
-const disabledServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Chain And Sprocket Replacement', 'Clean And Lube Chain', 'Prepurchase Inspection', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Winterization', 'Accessory Installation', 'Brakes Are Squeaking', 'Check Engine Or FI Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Valve Adjustment', 'Warning Light Is On'];
+const activeServices = ['Pre-purchase Inspection'];
+const disabledServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Chain And Sprocket Replacement', 'Clean And Lube Chain', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Winterization', 'Accessory Installation', 'Brakes Are Squeaking', 'Check Engine Or FI Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Valve Adjustment', 'Warning Light Is On'];
 
 // TODO: 6/10 Replace segments with animated list
 // TODO: 5/10 Make text in segments responsive
@@ -30,6 +30,11 @@ function AddServices(props) {
       props.props.getAndSetLaborTime(service, 0, true);
       props.props.onCartClick(service);
       return runSearchPartsQuery();
+    }
+    if (service === 'Pre-purchaseInspection') {
+      console.log('prepurchase selected');
+      props.props.onCartClick(service);
+      return props.props.getAndSetLaborTime(service, 0.55);
     }
     if (service === 'OilChange') {
       // dispatch error message if false

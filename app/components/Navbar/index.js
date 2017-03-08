@@ -16,7 +16,7 @@ import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
 import logo from './home-logo.png';
-import { services } from 'components/QuoteCart';
+import services from 'containers/QuoteCentral/reducerServices';
 
 // TODO: make sure new quote sets voucher to null
 // TODO: 7/10 new quote should reset paid to null - create a new action creator and handle it in reducer

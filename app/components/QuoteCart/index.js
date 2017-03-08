@@ -7,7 +7,7 @@
 import React from 'react';
 import { Grid, Segment, Accordion, Icon, Label } from 'semantic-ui-react';
 import PriceBreakDown from 'components/PriceBreakDown';
-export const services = ['Accessory Installation', 'Air Filter Replacement', 'Brake Pad Replacement', 'Brakes Are Squeaking', 'Chain And Sprocket Replacement', 'Check Engine Or FI Light Is On', 'Clean And Lube Chain', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Prepurchase Inspection', 'Smoke Or Steam Is Coming Out Of Motorcycle', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Valve Adjustment', 'Warning Light Is On', 'Winterization', 'Oil Change'];
+import services from 'containers/QuoteCentral/reducerServices';
 
 // TODO: 9/10 fix label positioning
 

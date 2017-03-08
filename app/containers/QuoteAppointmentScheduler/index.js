@@ -13,7 +13,7 @@ import { selectAuthenticated } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectVoucherCodeStatus } from 'containers/QuoteCentral/selectors';
 import { selectPaid } from './selectors';
-import { services } from 'components/QuoteCart';
+import services from 'containers/QuoteCentral/reducerServices';
 import Calendar from 'components/Calendar';
 import moment from 'moment';
 import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';

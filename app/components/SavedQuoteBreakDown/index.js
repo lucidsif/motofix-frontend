@@ -1,12 +1,6 @@
-/**
-*
-* SavedQuoteBreakDown
-*
-*/
-
 import React from 'react';
 import { Container, List, Image, Label } from 'semantic-ui-react';
-import { services } from 'components/QuoteCart';
+import services from 'containers/QuoteCentral/reducerServices';
 
 // Only render parts and calculate parts if !useOwnParts
 // TODO: Order from most recent
@@ -64,36 +58,36 @@ function SavedQuoteBreakDown(props) {
     return sumOfLaborTimes * 67 * 2;
   };
   /*
-  function totalPrice() {
-    const subTotal = totalServicesPrice() + totalPartsPrice();
-    const taxRate = 0.0875;
-    const tax = subTotal * taxRate;
-    const total = subTotal + tax;
-    return parseFloat(Math.round(total * 1) / 1);
-  }
-  function totalDealerFloated() {
-    const dealerServicePrice = (totalServicesPrice() / 67) * 95;
-    const dealerPartsPrice = (totalPartsPrice() + (totalPartsPrice() * 0.10));
-    const dealerSubTotal = dealerPartsPrice + dealerServicePrice;
-    const taxRate = 0.0875;
-    const tax = dealerSubTotal * taxRate;
-    const total = dealerSubTotal + tax;
-    return parseFloat(Math.round(total * 1) / 1);
-  }
-  function totalSavings() {
-    const taxRate = 0.0875;
-    const dealerServicePrice = (totalServicesPrice() / 67) * 95;
-    const dealerPartsPrice = (totalPartsPrice() + (totalPartsPrice() * 0.10));
-    const dealerSubTotal = dealerPartsPrice + dealerServicePrice;
-    const dealerTax = dealerSubTotal * taxRate;
-    const dealerTotal = dealerSubTotal + dealerTax;
-    const motofixSubTotal = totalServicesPrice() + totalPartsPrice();
-    const motoFixTax = motofixSubTotal * taxRate;
-    const motofixTotal = motofixSubTotal + motoFixTax;
-    const savings = dealerTotal - motofixTotal;
-    return parseFloat(Math.round(savings * 1) / 1);
-  }
-*/
+   function totalPrice() {
+   const subTotal = totalServicesPrice() + totalPartsPrice();
+   const taxRate = 0.0875;
+   const tax = subTotal * taxRate;
+   const total = subTotal + tax;
+   return parseFloat(Math.round(total * 1) / 1);
+   }
+   function totalDealerFloated() {
+   const dealerServicePrice = (totalServicesPrice() / 67) * 95;
+   const dealerPartsPrice = (totalPartsPrice() + (totalPartsPrice() * 0.10));
+   const dealerSubTotal = dealerPartsPrice + dealerServicePrice;
+   const taxRate = 0.0875;
+   const tax = dealerSubTotal * taxRate;
+   const total = dealerSubTotal + tax;
+   return parseFloat(Math.round(total * 1) / 1);
+   }
+   function totalSavings() {
+   const taxRate = 0.0875;
+   const dealerServicePrice = (totalServicesPrice() / 67) * 95;
+   const dealerPartsPrice = (totalPartsPrice() + (totalPartsPrice() * 0.10));
+   const dealerSubTotal = dealerPartsPrice + dealerServicePrice;
+   const dealerTax = dealerSubTotal * taxRate;
+   const dealerTotal = dealerSubTotal + dealerTax;
+   const motofixSubTotal = totalServicesPrice() + totalPartsPrice();
+   const motoFixTax = motofixSubTotal * taxRate;
+   const motofixTotal = motofixSubTotal + motoFixTax;
+   const savings = dealerTotal - motofixTotal;
+   return parseFloat(Math.round(savings * 1) / 1);
+   }
+   */
   function floatServicePrice() {
     return parseFloat(Math.round(totalServicesPrice() * 100) / 100).toFixed(2);
   }
@@ -244,6 +238,7 @@ function SavedQuoteBreakDown(props) {
 SavedQuoteBreakDown.propTypes = {
   cart: React.PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   part: React.PropTypes.object,
+  voucherCodeStatus: React.PropTypes.bool,
 };
 
 export default SavedQuoteBreakDown;

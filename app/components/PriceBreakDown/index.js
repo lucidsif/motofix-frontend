@@ -7,7 +7,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { Button, Container, List, Image, Label, Checkbox, Input } from 'semantic-ui-react';
-import { services } from 'components/QuoteCart';
+import services from 'containers/QuoteCentral/reducerServices';
 import gql from 'graphql-tag';
 
 // TODO: 5/10 Fix css styling so item title is in the vertically aligned in the middle
