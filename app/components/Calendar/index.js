@@ -84,6 +84,7 @@ class Calendar extends React.Component {
           <StripeCheckout
             calendarAppointmentState={this.state}
             voucherCodeStatus={this.props.voucherCodeStatus}
+            userId={this.props.userId}
           />
         </div>
       );
@@ -184,6 +185,7 @@ Calendar.propTypes = {
   authenticated: React.PropTypes.bool,
   paid: React.PropTypes.bool,
   voucherCodeStatus: React.PropTypes.bool,
+  userId: React.Proptypes.number,
 };
 
 export default Calendar;

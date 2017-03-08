@@ -92,7 +92,7 @@ class StripeCheckout extends React.Component {
   // TODO: send a text message and email after successful payment
 
   // get token from stripe client => inject amount in to token => send to server to create charge
-  // if stripe charged successfully, create a quote and then create an appointment referencing the quote id of the created quote
+  // if stripe charged successfully, create a quote and then create an appointment referencing the quote id of the created quote and then redeem voucher
   onToken = (token) => { // eslint-disable-line consistent-return
     const extractedToken = token;
     extractedToken.amount = this.totalPrice() * 100; // dynamic
@@ -109,19 +109,19 @@ class StripeCheckout extends React.Component {
         variables: {
           token: stringifiedToken,
         },
-      })
-        .then((stripeChargeResponse) => { // eslint-disable-line consistent-return
-          let voucherCodeStatusBool;
-          if (!this.props.voucherCodeStatus) {
-            voucherCodeStatusBool = false;
-          } else {
-            voucherCodeStatusBool = this.props.voucherCodeStatus
-          }
-          if (stripeChargeResponse.data.createStripeCharge.response.paid) {
-            this.props.onSuccessfulPayment();
-            console.log(stripeChargeResponse.data.createStripeCharge.response);
-            return this.props.client.mutate({
-              mutation: gql`
+      }).then((stripeChargeResponse) => { // eslint-disable-line consistent-return
+        let voucherCodeStatusBool;
+        if (!this.props.voucherCodeStatus) {
+          voucherCodeStatusBool = false;
+        } else {
+          voucherCodeStatusBool = this.props.voucherCodeStatus;
+        }
+        if (stripeChargeResponse.data.createStripeCharge.response.paid && voucherCodeStatusBool) {
+          this.props.onSuccessfulPayment();
+          console.log(stripeChargeResponse.data.createStripeCharge.response);
+
+          return this.props.client.mutate({
+            mutation: gql`
        mutation createUserQuote($token: String!, $motorcycleJSON: JSON!, $cartJSON: JSON!, $partJSON: JSON!, $useOwnParts: Boolean!, $voucherCodeStatus: Boolean!){
         createUserQuote(token: $token, motorcycleJSON: $motorcycleJSON, cartJSON: $cartJSON, partJSON: $partJSON, useOwnParts: $useOwnParts, voucherCodeStatus: $voucherCodeStatus){
           id
@@ -136,21 +136,20 @@ class StripeCheckout extends React.Component {
          }
        }
       `,
-              variables: {
-                token: localStorage.getItem('authToken'),
-                motorcycleJSON: JSON.stringify(this.props.vehicle),
-                cartJSON: JSON.stringify(this.props.cart),
-                partJSON: JSON.stringify(this.props.part),
-                useOwnParts: this.props.useOwnParts,
-                voucherCodeStatus: voucherCodeStatusBool,
-              },
-            }).then((response) => {
-              this.props.onSaveQuoteClick();
-              return response.data.createUserQuote.id;
-            })
-            .then((quoteID) => { // eslint-disable-line arrow-body-style
-              return this.props.client.mutate({
-                mutation: gql`
+            variables: {
+              token: localStorage.getItem('authToken'),
+              motorcycleJSON: JSON.stringify(this.props.vehicle),
+              cartJSON: JSON.stringify(this.props.cart),
+              partJSON: JSON.stringify(this.props.part),
+              useOwnParts: this.props.useOwnParts,
+              voucherCodeStatus: voucherCodeStatusBool,
+            },
+          }).then((response) => {
+            this.props.onSaveQuoteClick();
+            return response.data.createUserQuote.id;
+          }).then((quoteID) => { // eslint-disable-line arrow-body-style
+            return this.props.client.mutate({
+              mutation: gql`
            mutation createUserAppointment($token: String!, $motorcycle_address: String!, $contact_number: String!, $note: String!, $estimated_start_time: String!, $estimated_end_time: String!, $status: String!, $fk_quote_id: Int!, $fk_mechanic_id: Int! ){
              createUserAppointment(token: $token, motorcycle_address: $motorcycle_address, contact_number: $contact_number, note: $note, estimated_start_time: $estimated_start_time, estimated_end_time: $estimated_end_time, status: $status, fk_quote_id: $fk_quote_id, fk_mechanic_id: $fk_mechanic_id){
                id
@@ -166,26 +165,43 @@ class StripeCheckout extends React.Component {
              }
            }
             `,
-                variables: {
-                  token: localStorage.getItem('authToken'),
-                  motorcycle_address: this.props.calendarAppointmentState.motorcycle_address,
-                  contact_number: this.props.calendarAppointmentState.contact_number,
-                  note: this.props.calendarAppointmentState.note,
-                  estimated_start_time: this.props.calendarAppointmentState.selectedTimeSlot.start,
-                  estimated_end_time: this.props.calendarAppointmentState.selectedTimeSlot.end,
-                  status: 'pending',
-                  fk_quote_id: quoteID,
-                  fk_mechanic_id: this.props.calendarAppointmentState.selectedTimeSlot.mechanic,
-                },
-              })
+              variables: {
+                token: localStorage.getItem('authToken'),
+                motorcycle_address: this.props.calendarAppointmentState.motorcycle_address,
+                contact_number: this.props.calendarAppointmentState.contact_number,
+                note: this.props.calendarAppointmentState.note,
+                estimated_start_time: this.props.calendarAppointmentState.selectedTimeSlot.start,
+                estimated_end_time: this.props.calendarAppointmentState.selectedTimeSlot.end,
+                status: 'pending',
+                fk_quote_id: quoteID,
+                fk_mechanic_id: this.props.calendarAppointmentState.selectedTimeSlot.mechanic,
+              },
+            })
                 .then((appointmentResult) => {
                   console.log(appointmentResult.data.createUserAppointment);
-                  browserHistory.push('/dashboard');
+                  return this.props.client.mutate({
+                    mutation: gql`
+                    mutation redeemVoucher($voucherCode: String!, $user_id: Int!)   {
+                      redeemVoucher(voucherCode: $voucherCode, user_id: $user_id) {
+                        response
+                        }
+                      }
+                  `,
+                    variables: {
+                      user_id: this.props.userId,
+                      voucherCode: localStorage.getItem('voucherCode'),
+                    },
+                  })
+                     .then((voucherResult) => {
+                       console.log(voucherResult);
+                       return browserHistory.push('/dashboard');
+                       // TODO: reset quote state
+                     });
                 });
-            });
-          }
-          this.props.onFailedPayment();
-        })
+          });
+        }
+        this.props.onFailedPayment();
+      })
         .catch((err) => {
           console.log(err);
           this.props.onFailedPayment();
@@ -207,7 +223,7 @@ class StripeCheckout extends React.Component {
         allowRememberMe
         zipcode
       >
-        <button className="ui teal button">Pay with card</button>
+        <button className="ui teal button">Pay ${this.totalPrice()} with card</button>
       </StripeCheckoutComp>
     );
   }
@@ -215,6 +231,7 @@ class StripeCheckout extends React.Component {
 
 StripeCheckout.propTypes = {
   authenticated: React.PropTypes.bool,
+  userId: React.PropTypes.number,
   client: React.PropTypes.object,
   vehicle: React.PropTypes.object,
   cart: React.PropTypes.object,
@@ -224,6 +241,7 @@ StripeCheckout.propTypes = {
   onSaveQuoteClick: React.PropTypes.func,
   onFailedPayment: React.PropTypes.func,
   onSuccessfulPayment: React.PropTypes.func,
+  voucherCodeStatus: React.PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

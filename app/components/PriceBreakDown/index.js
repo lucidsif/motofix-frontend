@@ -170,14 +170,17 @@ function PriceBreakDown(props) {
       variables: {
         voucherCode,
       },
+      forceFetch: true,
     }).then((queryResult) => { // eslint-disable-line consistent-return
       if (queryResult.data.validateVoucher.response.validation_status.status === 1000) {
+        localStorage.setItem('voucherCode', voucherCode);
         return props.onVoucherValidation();
         // apply discount to price
       }
     })
       .catch((err) => {
         console.log(err);
+        localStorage.removeItem('voucherCode');
         return props.onVoucherInvalidation();
       });
   }

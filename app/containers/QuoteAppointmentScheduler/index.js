@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { createStructuredSelector } from 'reselect';
-import { selectAuthenticated } from 'containers/App/selectors';
+import { selectAuthenticated, selectUserId } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectVoucherCodeStatus } from 'containers/QuoteCentral/selectors';
 import { selectPaid } from './selectors';
@@ -284,6 +284,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           authenticated={this.props.authenticated}
           paid={this.props.paid}
           voucherCodeStatus={this.props.voucherCodeStatus}
+          userId={this.props.userId}
         />
       );
     }
@@ -312,6 +313,7 @@ const mapStateToProps = createStructuredSelector({
   cart: selectCart(),
   part: selectPart(),
   voucherCodeStatus: selectVoucherCodeStatus(),
+  userId: selectUserId(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -326,7 +328,8 @@ QuoteAppointmentScheduler.propTypes = {
   cart: React.PropTypes.object,
   allNearAppointmentsAndSchedules: React.PropTypes.object,
   allNearAppointmentsAndSchedulesLoading: React.PropTypes.bool,
-
+  userId: React.PropTypes.number,
+  voucherCodeStatus: React.PropTypes.bool,
 };
 
 const AppointmentsAndSchedulesQuery = gql`
