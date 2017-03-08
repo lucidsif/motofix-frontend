@@ -175,33 +175,33 @@ class QuoteAddVehicle extends React.Component {
 
     this.props.client.query({
       query: gql`
-      query checkDistance($zipOrCoordinates: String!){
-        checkDistance(zipOrCoordinates: $zipOrCoordinates){
-          destination_addresses
-          origin_addresses
-          status
-          rows
+  query allNearAppointmentsAndSchedules($zipOrCoordinates: String!) {
+    allNearAppointmentsAndSchedules(zipOrCoordinates: $zipOrCoordinates){
+        schedules {
+          id
+          day_of_week
+          start_time
+          end_time
+          break_start
+          break_end
+          available
+          fk_mechanic_id
         }
       }
+    }
       `,
       variables: { zipOrCoordinates: `${lat}, ${lng}` },
     }).then((response) => {
-      const data = response.data.checkDistance;
-      const distance = data.rows[0].elements[0].distance.value;
-      console.log(distance);
-      // if distance is greater than or equal to 40mi, render error message
-      if (distance >= 211200) {
-        this.setState({ overDistance: true });
-      } else {
-        this.setState({ overDistance: false });
-      }
+      const nearMechanics = response.data.allNearAppointmentsAndSchedules.schedules;
       const locationObj = {
-        mechanicLocations: data.origin_addresses,
-        customerLocation: data.destination_addresses[0],
-        distance,
-        duration: data.rows[0].elements[0].duration.value,
+        customerLocation: `${lat}, ${lng}`,
       };
+      if (nearMechanics.length > 0) {
+        this.setState({ overDistance: false });
+        return this.setState({ location: locationObj });
+      }
       this.setState({ location: locationObj });
+      return this.setState({ overDistance: true });
     })
       .catch((e) => this.logException(e));
   }
