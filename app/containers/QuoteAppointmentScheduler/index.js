@@ -13,6 +13,8 @@ import { selectAuthenticated, selectUserId } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectVoucherCodeStatus } from 'containers/QuoteCentral/selectors';
 import { selectPaid } from './selectors';
+import { resetCart, resetPart, resetSavedQuote, setVoucherNull } from 'containers/QuoteCentral/actions';
+import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import services from 'containers/QuoteCentral/reducerServices';
 import Calendar from 'components/Calendar';
 import moment from 'moment';
@@ -286,6 +288,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           paid={this.props.paid}
           voucherCodeStatus={this.props.voucherCodeStatus}
           userId={this.props.userId}
+          onSuccessfulOrder={this.props.onSuccessfulOrder}
         />
       );
     }
@@ -318,7 +321,14 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onSuccessfulOrder: () => {
+      browserHistory.push('/dashboard');
+      dispatch(resetVehicle());
+      dispatch(resetCart());
+      dispatch(resetPart());
+      dispatch(resetSavedQuote());
+      dispatch(setVoucherNull());
+    },
   };
 }
 

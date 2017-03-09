@@ -85,6 +85,7 @@ class Calendar extends React.Component {
             calendarAppointmentState={this.state}
             voucherCodeStatus={this.props.voucherCodeStatus}
             userId={this.props.userId}
+            onSuccessfulOrder={this.props.onSuccessfulOrder}
           />
         </div>
       );
@@ -186,6 +187,7 @@ Calendar.propTypes = {
   paid: React.PropTypes.bool,
   voucherCodeStatus: React.PropTypes.bool,
   userId: React.PropTypes.number,
+  onSuccessfulOrder: React.PropTypes.func,
 };
 
 export default Calendar;

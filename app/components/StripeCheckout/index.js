@@ -5,7 +5,6 @@
 */
 
 import React from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { withApollo, compose } from 'react-apollo';
@@ -195,8 +194,7 @@ class StripeCheckout extends React.Component {
                   })
                      .then((voucherResult) => {
                        console.log(voucherResult);
-                       return browserHistory.push('/dashboard');
-                       // TODO: reset quote state
+                       return this.props.onSuccessfulOrder();
                      });
                 });
           });
@@ -243,6 +241,7 @@ StripeCheckout.propTypes = {
   onFailedPayment: React.PropTypes.func,
   onSuccessfulPayment: React.PropTypes.func,
   voucherCodeStatus: React.PropTypes.bool,
+  onSuccessfulOrder: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -44,7 +44,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
                 <Message
                   color="teal"
                   icon="money"
-                  header="Get $10, Give $10"
+                  header="Get $10, Give $10 (coming soon)"
                   content="For every rider you refer who orders a service, both of you will get $10."
                 />
               </Grid.Column>
@@ -119,6 +119,11 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
     );
   }
 }
+
+Dashboard.propTypes = {
+  allUserAppointments: React.PropTypes.array,
+  allUserAppointmentsLoading: React.PropTypes.bool,
+};
 
 const mapStateToProps = createStructuredSelector({
   authenticated: selectAuthenticated(),
