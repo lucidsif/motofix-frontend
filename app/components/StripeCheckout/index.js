@@ -94,6 +94,7 @@ class StripeCheckout extends React.Component {
   // get token from stripe client => inject amount in to token => send to server to create charge
   // if stripe charged successfully, create a quote and then create an appointment referencing the quote id of the created quote and then redeem voucher
   onToken = (token) => { // eslint-disable-line consistent-return
+    // console.log(token);
     const extractedToken = token;
     extractedToken.amount = this.totalPrice() * 100; // dynamic
     const stringifiedToken = JSON.stringify(extractedToken);
@@ -110,6 +111,7 @@ class StripeCheckout extends React.Component {
           token: stringifiedToken,
         },
       }).then((stripeChargeResponse) => { // eslint-disable-line consistent-return
+        // console.log(stripeChargeResponse);
         let voucherCodeStatusBool;
         if (!this.props.voucherCodeStatus) {
           voucherCodeStatusBool = false;
@@ -118,7 +120,6 @@ class StripeCheckout extends React.Component {
         }
         if (stripeChargeResponse.data.createStripeCharge.response.paid && voucherCodeStatusBool) {
           this.props.onSuccessfulPayment();
-          console.log(stripeChargeResponse.data.createStripeCharge.response);
 
           return this.props.client.mutate({
             mutation: gql`
@@ -177,8 +178,8 @@ class StripeCheckout extends React.Component {
                 fk_mechanic_id: this.props.calendarAppointmentState.selectedTimeSlot.mechanic,
               },
             })
-                .then((appointmentResult) => {
-                  console.log(appointmentResult.data.createUserAppointment);
+                .then(() => { // eslint-disable-line arrow-body-style
+                  // console.log(appointmentResult.data.createUserAppointment);
                   return this.props.client.mutate({
                     mutation: gql`
                     mutation redeemVoucher($voucherCode: String!, $user_id: Int!)   {
@@ -216,7 +217,7 @@ class StripeCheckout extends React.Component {
         description="Your personal mechanic anywhere"
         image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png"
         token={this.onToken}
-        stripeKey="pk_test_Uq1Klar8ByVNEJGycRrPLA3X"
+        stripeKey="pk_live_gKkGpkO162dwNfnXUEgRF0pi"
         panelLabel="Pay"
         currency="USD"
         email="test44@email.com" // make dynamic

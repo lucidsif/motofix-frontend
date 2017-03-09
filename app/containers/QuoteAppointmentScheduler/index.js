@@ -18,8 +18,7 @@ import Calendar from 'components/Calendar';
 import moment from 'moment';
 import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';
 
-// TODO: fix bug that prevents from rendering time slots on friday
-// TODO: fix bug that prevents rendering time slots on weekends
+// TODO: allow rendering dates on the same day, but not in the past
 // TODO: 6.5/10 allow to only schedule appointment once - create appointmentSchedule state, action creator, and reducer
 // TODO: exclude break times from available appointments
 // TODO: test for multiple mechanics. How can multiple mechanic time slots be rendered?
@@ -155,10 +154,10 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         console.log('error, a valid day has not been sent to getDays()');
         console.log(schedule, schedule.day_of_week);
     }
-    // filter for all dates that are after right now
-    const startOfToday = new Date();
+    // filter for all dates that is the same day as today or later
+    const now = new Date();
     const noPastDays = days.filter((day) =>
-       moment(day.date).isAfter(startOfToday)
+       moment(day.date).isSameOrAfter(now)
     );
     return noPastDays;
   }
@@ -191,7 +190,11 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
       }
       dayStart.setHours(dayStart.getHours(), dayStart.getMinutes() + (estimatedLaborTime * 60));
     } while (dayStart < dayEnd);
-    return timeSlots;
+
+    const now = new Date();
+    const noPastTimeSlots = timeSlots.filter((timeSlot) => moment(timeSlot.start).isAfter(now));
+
+    return noPastTimeSlots;
   }
 
   checkAppointmentConflict(date, sumOfLaborTimes) {
@@ -291,7 +294,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         <h3 className="callout">
           Schedule Appointment
         </h3>
-        Coming Soon..
         {renderCalendar}
         {/* this btn should be floated left in the future? */}
         <Button
