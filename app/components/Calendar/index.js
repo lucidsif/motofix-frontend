@@ -146,7 +146,7 @@ class Calendar extends React.Component {
                 <div className="phoneNumberMarginBottom">
                   <Input
                     icon="sticky note"
-                    placeholder="Add any notes her"
+                    placeholder="Add any notes here"
                     size="large"
                     onChange={this.onNoteChange}
                   />

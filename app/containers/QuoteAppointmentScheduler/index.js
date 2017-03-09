@@ -18,7 +18,8 @@ import Calendar from 'components/Calendar';
 import moment from 'moment';
 import { Segment, Dimmer, Loader, Image, Button } from 'semantic-ui-react';
 
-// TODO: 7/10 force fetch appointments on each load
+// TODO: fix bug that prevents from rendering time slots on friday
+// TODO: fix bug that prevents rendering time slots on weekends
 // TODO: 6.5/10 allow to only schedule appointment once - create appointmentSchedule state, action creator, and reducer
 // TODO: exclude break times from available appointments
 // TODO: test for multiple mechanics. How can multiple mechanic time slots be rendered?
@@ -54,7 +55,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
         // Get the first Tuesday in the month
         while (d.getDay() !== 2) {
-          d.setDate(d.getDate() + 2);
+          d.setDate(d.getDate() + 1);
         }
 
         // Get all the other Tuesdays in the month
@@ -71,7 +72,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
         // Get the first Wednesday in the month
         while (d.getDay() !== 3) {
-          d.setDate(d.getDate() + 3);
+          d.setDate(d.getDate() + 1);
         }
 
         // Get all the other Wednesdays in the month
@@ -88,9 +89,8 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
         // Get the first Thursday in the month
         while (d.getDay() !== 4) {
-          d.setDate(d.getDate() + 4);
+          d.setDate(d.getDate() + 1);
         }
-
         // Get all the other Thursdays in the month
         while (d.getMonth() === month) {
           days.push({
@@ -105,7 +105,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
         // Get the first Friday in the month
         while (d.getDay() !== 5) {
-          d.setDate(d.getDate() + 5);
+          d.setDate(d.getDate() + 1);
         }
 
         // Get all the other Fridays in the month
@@ -122,10 +122,10 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
 
         // Get the first Saturday in the month
         while (d.getDay() !== 6) {
-          d.setDate(d.getDate() + 6);
+          d.setDate(d.getDate() + 1);
         }
 
-        // Get all the other Saturday in the month
+        // Get all the other Saturdays in the month
         while (d.getMonth() === month) {
           days.push({
             schedule,
@@ -137,12 +137,12 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
       case 'Sunday':
         d.setDate(1);
 
-        // Get the first Wednesday in the month
+        // Get the first Sunday in the month
         while (d.getDay() !== 0) {
-          d.setDate(d.getDate() + 0);
+          d.setDate(d.getDate() + 1);
         }
 
-        // Get all the other Wednesday in the month
+        // Get all the other Sunday in the month
         while (d.getMonth() === month) {
           days.push({
             schedule,
@@ -155,9 +155,8 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         console.log('error, a valid day has not been sent to getDays()');
         console.log(schedule, schedule.day_of_week);
     }
-    // filter for all dates that are after the start of today
+    // filter for all dates that are after right now
     const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
     const noPastDays = days.filter((day) =>
        moment(day.date).isAfter(startOfToday)
     );
@@ -192,7 +191,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
       }
       dayStart.setHours(dayStart.getHours(), dayStart.getMinutes() + (estimatedLaborTime * 60));
     } while (dayStart < dayEnd);
-
     return timeSlots;
   }
 
@@ -221,6 +219,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
     });
 
     if (conflictedAppointments.length > 0) {
+      console.log('conflict');
       hasConflict = true;
     }
 
@@ -234,7 +233,6 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
   render() {
     let renderCalendar = null;
     const loadingMessage = 'Getting available appointments near you...';
-
     if (this.props.allNearAppointmentsAndSchedulesLoading) {
       renderCalendar =
         (
