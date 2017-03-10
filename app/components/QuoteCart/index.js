@@ -31,6 +31,7 @@ function QuoteCart(props) {
               sum += price * quantity;
               return sum;
             }
+            // if part is invalid
             return sum;
           }, 0);
         }
@@ -45,7 +46,8 @@ function QuoteCart(props) {
 
   // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
   const totalServicesPrice = () => {
-    // return N/A if any selected service has an unavailable labortime
+    // return negative number if any selected service has an unavailable labortime
+    // TODO: remove the negative number logic. If service is unavailable/limited and selected, create a expected labortime for each service.
     const selectedUnavailableServices = Object.keys(props.props.cart).filter((key) => props.props.cart[key].selected && props.props.cart[key].unavailable);
 
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {

@@ -199,11 +199,11 @@ class StripeCheckout extends React.Component {
                 });
           });
         }
-        this.props.onFailedPayment();
+        return this.props.onFailedPayment();
       })
         .catch((err) => {
           console.log(err);
-          this.props.onFailedPayment();
+          return this.props.onFailedPayment();
         });
     }
   }

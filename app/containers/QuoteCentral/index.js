@@ -114,7 +114,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
               Please refresh or try again in a few minutes :(
             </Message.Content>
           </Message>
-        );
+        ); // make sure to write that prices may not be identical to what we have in the db, but it's a price we think is fair
     } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited') {
       conditionalServicesMessage = (
         <Message negative>

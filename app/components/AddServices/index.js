@@ -19,32 +19,41 @@ const disabledServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Ch
 // TODO: 3/10 make search input full width of the screen and responsive
 
 function AddServices(props) {
-  // change name of func
+  // TODO: change name of func
   function runPartsQueryAndUpdateLaborTimes(service) {
     const vehicleSearchTerm = `${props.props.vehicle.year} ${props.props.vehicle.manufacturer} ${props.props.vehicle.model_variant}`;
     const midID = props.props.vehicle.mid;
     const parsedRepairTimes = JSON.parse(props.props.allRepairTimes.response);
-
+    // TODO: refactor to switch statements. if unavailable, run a switch, else run a different switch
+    // TODO: if repairtimes are unavailable, run switch statements for each service case and update the labortime to an expected price
+    // with an expected labortime
     if (parsedRepairTimes.unavailable) {
       console.log(`LaborTime is unavailable for ${service}`);
-      props.props.getAndSetLaborTime(service, 0, true);
-      props.props.onCartClick(service);
-      return runSearchPartsQuery();
+      switch (service) {
+        case 'OilChange':
+          props.props.getAndSetLaborTime(service, 0.3, true);
+          props.props.onCartClick(service);
+          return runSearchPartsQuery();
+        default:
+          console.log('unknown unavailable(unavailable!) service in runpartsqueryandupdatelabortimes');
+      }
     }
-    if (service === 'Pre-purchaseInspection') {
-      console.log('prepurchase selected');
-      props.props.onCartClick(service);
-      return props.props.getAndSetLaborTime(service, 0.55);
+
+    switch (service) {
+      case 'Pre-purchaseInspection':
+        console.log('prepurchase selected');
+        props.props.onCartClick(service);
+        return props.props.getAndSetLaborTime(service, 0.55);
+      case 'OilChange': // eslint-disable-line no-case-declarations
+        const lubrication = parsedRepairTimes[0].sub_groups.filter((subGroup) => subGroup.sub_group_description === 'Lubrication');
+        // noinspection JSUnresolvedVariable
+        const oilChangeLaborTime = lubrication[0].components[0].time_hrs;
+        props.props.getAndSetLaborTime(service, oilChangeLaborTime);
+        break;
+      default:
+        console.log('unknown available service in runpartsqueryandupdatelabortimes');
     }
-    if (service === 'OilChange') {
-      // dispatch error message if false
-      // console.log(parsedRepairTimes);
-      // noinspection JSUnresolvedVariable
-      const lubrication = parsedRepairTimes[0].sub_groups.filter((subGroup) => subGroup.sub_group_description === 'Lubrication');
-      // noinspection JSUnresolvedVariable
-      const oilChangeLaborTime = lubrication[0].components[0].time_hrs;
-      props.props.getAndSetLaborTime(service, oilChangeLaborTime);
-    }
+
       // noinspection JSUnresolvedVariable
     const t0 = performance.now();
     runSearchPartsQuery();
