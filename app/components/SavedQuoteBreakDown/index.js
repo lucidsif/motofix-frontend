@@ -37,11 +37,13 @@ function SavedQuoteBreakDown(props) {
   // TODO: 9/10 when you get autodata api, you must extract the right key-value  here
   const totalServicesPrice = () => {
     // return N/A if any selected service has an unavailable labortime
+    /*
     const selectedUnavailableServices = Object.keys(props.cart).filter((key) => props.cart[key].selected && props.cart[key].unavailable);
 
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
       return -9;
     }
+    */
 
     const sumOfLaborTimes = services.map((service) => {
       const regexedService = service.replace(/\s/g, '');

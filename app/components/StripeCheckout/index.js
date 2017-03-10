@@ -217,7 +217,7 @@ class StripeCheckout extends React.Component {
         description="Your personal mechanic anywhere"
         image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png"
         token={this.onToken}
-        stripeKey="pk_live_gKkGpkO162dwNfnXUEgRF0pi"
+        stripeKey="pk_test_Uq1Klar8ByVNEJGycRrPLA3X"
         panelLabel="Pay"
         currency="USD"
         email="test44@email.com" // make dynamic

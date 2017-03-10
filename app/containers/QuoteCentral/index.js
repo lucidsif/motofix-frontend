@@ -19,7 +19,6 @@ import { selectAuthenticated } from 'containers/App/selectors';
 import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts, selectVoucherCodeStatus } from './selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 
-
 const VehicleIsSelected = UserAuthWrapper({ // eslint-disable-line new-cap
   authSelector: (state) => state.get('quoteAddVehicle').toJS(),
   predicate: (state) => state.mid,
@@ -117,22 +116,28 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         ); // make sure to write that prices may not be identical to what we have in the db, but it's a price we think is fair
     } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited') {
       conditionalServicesMessage = (
-        <Message negative>
-          <Message.Header> Uh oh! We reached max API calls reached for the day :( </Message.Header>
+        <Message warning>
+          <Message.Header> We've reached our max requests for instants quotes today :( </Message.Header>
           <Message.Content>
-            Please try again after 8PM next day.
+            You may still get an instant quote and schedule an appointment, but our prices might be slightly lower or higher than our data.
+          </Message.Content>
+          <Message.Content>
+            If you prefer our exact price, please try again after 8PM.
           </Message.Content>
         </Message>
       );
     } else if (selectedUnavailableServices.length > 0) {
       conditionalServicesMessage = (
-        <Message info>
+        <Message warning>
           <Message.Header>
-            Due to server issues on our end, an instant quote for the <span>{vehicleSearchTerm}</span> may not be an exact match for:
+            We don't have an accurate quote for <span>{vehicleSearchTerm}</span> for the following service(s):
           </Message.Header>
           <Message.List>
             {selectedUnavailableServices}
           </Message.List>
+          <Message.Content>
+            You may still book this service, but prices may be slightly lower or higher than it should be.
+          </Message.Content>
         </Message>
       );
     } else {

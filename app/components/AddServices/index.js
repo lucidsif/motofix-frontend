@@ -28,7 +28,7 @@ function AddServices(props) {
     // TODO: if repairtimes are unavailable, run switch statements for each service case and update the labortime to an expected price
     // with an expected labortime
     if (parsedRepairTimes.unavailable) {
-      console.log(`LaborTime is unavailable for ${service}`);
+      console.log('LaborTimes is unavailable');
       switch (service) {
         case 'Pre-purchaseInspection':
           props.props.onCartClick(service);
@@ -72,6 +72,7 @@ function AddServices(props) {
       `,
         variables: { vehicle: vehicleSearchTerm, service, midID },
       }).then((result) => {
+        console.log(result);
         // console.log(result);
         // noinspection JSUnresolvedVariable
         props.props.onPartsQuery(service, JSON.parse(result.data.searchParts[0].response));
