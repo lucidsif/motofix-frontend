@@ -128,15 +128,11 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
       conditionalServicesMessage = (
         <Message info>
           <Message.Header>
-            An instant quote for the <span>{vehicleSearchTerm}</span> is unavailable for the currently selected service(s):
+            Due to server issues on our end, an instant quote for the <span>{vehicleSearchTerm}</span> may not be an exact match for:
           </Message.Header>
           <Message.List>
             {selectedUnavailableServices}
           </Message.List>
-          <Message.Content>
-           Custom quote is coming soon, but you can live chat with us by clicking on the bubble or window in the lower right corner!
-          </Message.Content>
-          <Button disabled>Request Custom Quote</Button>
         </Message>
       );
     } else {

@@ -48,11 +48,14 @@ function QuoteCart(props) {
   const totalServicesPrice = () => {
     // return negative number if any selected service has an unavailable labortime
     // TODO: remove the negative number logic. If service is unavailable/limited and selected, create a expected labortime for each service.
+
+    /*
     const selectedUnavailableServices = Object.keys(props.props.cart).filter((key) => props.props.cart[key].selected && props.props.cart[key].unavailable);
 
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
       return -9;
     }
+    */
 
     const sumOfLaborTimes = services.map((service) => {
       const regexedService = service.replace(/\s/g, '');

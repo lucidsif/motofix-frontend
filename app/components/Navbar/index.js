@@ -61,13 +61,15 @@ export class AppNavBar extends React.Component {
     return 0;
   }
   totalServicesPrice() {
+    /*
     const selectedUnavailableServices = Object.keys(this.props.cart).filter((key) =>
        this.props.cart[key].selected && this.props.cart[key].unavailable
     );
+
     if (selectedUnavailableServices && selectedUnavailableServices.length > 0) {
       return -9;
     }
-
+    */
     const sumOfLaborTimes = services.map((service) => {
       const regexedService = service.replace(/\s/g, '');
       return regexedService;

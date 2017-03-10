@@ -53,11 +53,13 @@ function PriceBreakDown(props) {
   function renderServices() {
     const filtered = services.filter((service) => props.cart[service.replace(/\s/g, '')].selected);
     return filtered.map((filteredService) => {
-      let laborTime = multiplyAndFloat(props.cart[filteredService.replace(/\s/g, '')].laborTime);
+      const laborTime = multiplyAndFloat(props.cart[filteredService.replace(/\s/g, '')].laborTime);
+      /*
       const unAvailableLaborTime = props.cart[filteredService.replace(/\s/g, '')].unavailable;
       if (unAvailableLaborTime) {
         laborTime = -9;
       }
+      */
       return (
         <List.Item key={filteredService}>
           <List.Content floated="left"><List.Icon name="linkify" /></List.Content>
@@ -216,7 +218,7 @@ function PriceBreakDown(props) {
             <p>Labor Total</p>
           </List.Content>
           <List.Content floated="right">
-            <p>{ifNegativeNum(floatServicePrice())}</p>
+            <p>{floatServicePrice()}</p>
           </List.Content>
         </List.Item>
         <List.Item>

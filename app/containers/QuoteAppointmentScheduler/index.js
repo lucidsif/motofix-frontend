@@ -300,7 +300,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         {renderCalendar}
         {/* this btn should be floated left in the future? */}
         <Button
-          onClick={browserHistory.goBack}
+          onClick={browserHistory.push('/quote/services')}
           size="large"
           className="calendarButtonMarginTop"
         >Back</Button>

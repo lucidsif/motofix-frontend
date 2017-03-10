@@ -30,18 +30,20 @@ function AddServices(props) {
     if (parsedRepairTimes.unavailable) {
       console.log(`LaborTime is unavailable for ${service}`);
       switch (service) {
+        case 'Pre-purchaseInspection':
+          props.props.onCartClick(service);
+          return props.props.getAndSetLaborTime(service, 0.55);
         case 'OilChange':
-          props.props.getAndSetLaborTime(service, 0.3, true);
+          props.props.getAndSetLaborTime(service, 0.35, true);
           props.props.onCartClick(service);
           return runSearchPartsQuery();
         default:
           console.log('unknown unavailable(unavailable!) service in runpartsqueryandupdatelabortimes');
       }
     }
-
+// if labortimes is available
     switch (service) {
       case 'Pre-purchaseInspection':
-        console.log('prepurchase selected');
         props.props.onCartClick(service);
         return props.props.getAndSetLaborTime(service, 0.55);
       case 'OilChange': // eslint-disable-line no-case-declarations
