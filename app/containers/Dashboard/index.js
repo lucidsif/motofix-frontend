@@ -45,7 +45,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
                   color="teal"
                   icon="money"
                   header="Get $10, Give $10 (coming soon)"
-                  content="For every rider you refer who orders a service, both of you will get $10."
+                  content="For every rider you refer who schedules a service, both of you will get $10."
                 />
               </Grid.Column>
             </Grid.Row>

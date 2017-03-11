@@ -7,6 +7,7 @@
 import {
   PAYMENT_SUCCESS,
   PAYMENT_FAIL,
+  PAYMENT_RESET,
 } from './constants';
 
 export function setPaymentSuccess() {
@@ -19,4 +20,10 @@ export function setPaymentFail() {
   return {
     type: PAYMENT_FAIL,
   };
+}
+
+export function setPaymentNull() {
+  return {
+    type: PAYMENT_RESET,
+  }
 }

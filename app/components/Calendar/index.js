@@ -11,7 +11,7 @@ import Modernizr from 'browsernizr';
 import BigCalendar from 'react-big-calendar-touch';
 import withDragAndDropTouch from 'react-big-calendar-touch/lib/addons/dragAndDropTouch';
 import withDragAndDropMouse from 'react-big-calendar-touch/lib/addons/dragAndDropMouse';
-import { Message, Form, Input } from 'semantic-ui-react';
+import { Message, Form, Input, Label } from 'semantic-ui-react';
 import moment from 'moment';
 import Geosuggest from 'react-geosuggest';
 import StripeCheckout from 'components/StripeCheckout';
@@ -30,6 +30,7 @@ class Calendar extends React.Component {
       motorcycle_address: null,
       contact_number: null,
       note: null,
+      touchedNote: false,
     };
 
     this.moveEvent = this.moveEvent.bind(this);
@@ -37,6 +38,7 @@ class Calendar extends React.Component {
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
     this.onSuggestChange = this.onSuggestChange.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
+    this.onNoteBlur = this.onNoteBlur.bind(this);
     this.onPhoneChange = this.onPhoneChange.bind(this);
   }
 
@@ -46,6 +48,7 @@ class Calendar extends React.Component {
       browserHistory.push('/login');
     }
     this.setState({ selectedTimeSlot: event });
+    window.scrollTo(0, 0);
   }
 
   onSuggestSelect(mapsObj) {
@@ -53,11 +56,16 @@ class Calendar extends React.Component {
   }
 
   onSuggestChange() {
-    this.setState({ motorcycle_address: null });
+    this.setState({ motorcycle_address: false });
   }
 
   onNoteChange(e) {
+    this.setState({ touchedNote: true });
     this.setState({ note: e.target.value });
+  }
+
+  onNoteBlur() {
+    this.setState({ touchedNote: true });
   }
 
   onPhoneChange(e) {
@@ -65,7 +73,7 @@ class Calendar extends React.Component {
     if (phoneNumberPattern.test(e.target.value)) {
       this.setState({ contact_number: e.target.value });
     } else {
-      this.setState({ contact_number: null });
+      this.setState({ contact_number: false });
     }
   }
 
@@ -126,6 +134,7 @@ class Calendar extends React.Component {
             <span>{moment(this.state.selectedTimeSlot.start).format('MMM D @ h:mm A')} to {moment(this.state.selectedTimeSlot.end).format('MMM D @ h:mm A')}</span>
             <Message.Content>
               <Form>
+
                 <div className="ui large icon input calendarGeosuggestMargin">
                   <Geosuggest
                     placeholder="Appointment Address"
@@ -136,6 +145,10 @@ class Calendar extends React.Component {
                   />
                   <i className="location arrow icon"></i>
                 </div>
+                {
+                  this.state.motorcycle_address === false &&
+                  <Label basic color="yellow">Please select an address from the suggestions list</Label>
+                }
                 <div className="phoneNumberMarginBottom">
                   <Input
                     icon="mobile"
@@ -143,6 +156,9 @@ class Calendar extends React.Component {
                     size="large"
                     onChange={this.onPhoneChange}
                   />
+                  {this.state.contact_number === false &&
+                  <Label basic color="yellow">Please enter a valid number</Label>
+                  }
                 </div>
                 <div className="phoneNumberMarginBottom">
                   <Input
@@ -150,7 +166,11 @@ class Calendar extends React.Component {
                     placeholder="Add any notes here"
                     size="large"
                     onChange={this.onNoteChange}
+                    onBlur={this.onNoteBlur}
                   />
+                  {this.state.touchedNote && !this.state.note &&
+                  <Label basic color="yellow">Please enter a note for your mechanic or write 'none'</Label>
+                  }
                 </div>
               </Form>
               {conditionallyRenderStripeButton}

@@ -170,6 +170,9 @@ function mapDispatchToProps(dispatch) {
     onDeAuthentication: () => {
       dispatch(deAuthenticateUser());
       dispatch(resetUserId());
+      localStorage.removeItem('userName');
+      localStorage.removeItem('email');
+      localStorage.removeItem('authToken');
     },
     onNewQuoteClick: () => {
       browserHistory.push('/quote/vehicle');

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Button } from 'semantic-ui-react';
+import { Label } from 'semantic-ui-react';
 
 function Footer() {
   return (
@@ -26,13 +26,11 @@ function Footer() {
           <div className="seven wide column">
             <h4 className="ui  header">motofix</h4>
             <p>All rights reserved 2017.</p>
-            <form action="tel:9293564313">
-              <Button
-                type="submit"
+            <form>
+              <Label
                 icon="call"
                 content="Need Help? Call Support @ (929)356-4313"
                 color="blue"
-                circular
               />
             </form>
           </div>

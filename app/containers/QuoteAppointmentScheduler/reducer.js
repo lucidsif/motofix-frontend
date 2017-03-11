@@ -8,6 +8,7 @@ import { fromJS } from 'immutable';
 import {
   PAYMENT_SUCCESS,
   PAYMENT_FAIL,
+  PAYMENT_RESET,
 } from './constants';
 
 const paid = null;
@@ -21,6 +22,8 @@ function quoteAppointmentSchedulerReducer(state = initialState, action) {
       return state.set('paid', true);
     case PAYMENT_FAIL:
       return state.set('paid', false);
+    case PAYMENT_RESET:
+      return state.set('paid', null);
     default:
       return state;
   }

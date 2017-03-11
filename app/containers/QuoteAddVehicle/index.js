@@ -210,7 +210,7 @@ class QuoteAddVehicle extends React.Component {
     e.preventDefault();
     if (!this.state.location) {
       this.setState({ location: false });
-    } /*TODO: remove this for production
+    } /* TODO: remove this for production
     if (!this.state.manufacturerValue) {
       this.setState({ manufacturerValue: false });
     }

@@ -13,8 +13,8 @@ import { selectAuthenticated, selectUserId } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectVoucherCodeStatus } from 'containers/QuoteCentral/selectors';
 import { selectPaid } from './selectors';
+import { setPaymentNull } from './actions';
 import { resetCart, resetPart, resetSavedQuote, setVoucherNull } from 'containers/QuoteCentral/actions';
-import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import services from 'containers/QuoteCentral/reducerServices';
 import Calendar from 'components/Calendar';
 import moment from 'moment';
@@ -300,7 +300,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
         {renderCalendar}
         {/* this btn should be floated left in the future? */}
         <Button
-          onClick={browserHistory.push('/quote/services')}
+          onClick={() => browserHistory.push('/quote/services')}
           size="large"
           className="calendarButtonMarginTop"
         >Back</Button>
@@ -323,11 +323,11 @@ function mapDispatchToProps(dispatch) {
   return {
     onSuccessfulOrder: () => {
       browserHistory.push('/dashboard');
-      dispatch(resetVehicle());
       dispatch(resetCart());
       dispatch(resetPart());
       dispatch(resetSavedQuote());
       dispatch(setVoucherNull());
+      dispatch(setPaymentNull());
     },
   };
 }

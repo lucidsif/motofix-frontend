@@ -14,12 +14,14 @@ import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectSavedQuote, selectUseOwnParts } from 'containers/QuoteCentral/selectors';
 import { setSavedQuoteTrue } from 'containers/QuoteCentral/actions';
 import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentScheduler/actions';
-
-// TODO: make it receive all the props it needs from the most parent container
-// TODO: Reset cart and quote saved after successful payment
 import StripeCheckoutComp from 'react-stripe-checkout';
 import services from 'containers/QuoteCentral/reducerServices';
-// todo: payment response is entangled with appointment mutation
+import mcIcon from './f6s-logo.png';
+import textLogo from './blumotofix72.png';
+
+// TODO: make it receive all the props it needs from the most parent container
+
+// todo: payment response is tightly coupled with quote and appointment mutation
 class StripeCheckout extends React.Component {
   totalPartsPrice() { // eslint-disable-line react/sort-comp
     let sum = 0;
@@ -95,7 +97,7 @@ class StripeCheckout extends React.Component {
   // get token from stripe client => inject amount in to token => send to server to create charge
   // if stripe charged successfully, create a quote and then create an appointment referencing the quote id of the created quote and then redeem voucher
   onToken = (token) => { // eslint-disable-line consistent-return
-    // console.log(token);
+    console.log(token);
     const extractedToken = token;
     extractedToken.amount = this.totalPrice() * 100; // dynamic
     const stringifiedToken = JSON.stringify(extractedToken);
@@ -112,14 +114,16 @@ class StripeCheckout extends React.Component {
           token: stringifiedToken,
         },
       }).then((stripeChargeResponse) => { // eslint-disable-line consistent-return
-        // console.log(stripeChargeResponse);
+        console.log(stripeChargeResponse);
         let voucherCodeStatusBool;
         if (!this.props.voucherCodeStatus) {
           voucherCodeStatusBool = false;
+          console.log(`false or null, ${voucherCodeStatusBool}`)
         } else {
           voucherCodeStatusBool = this.props.voucherCodeStatus;
+          console.log(`true, ${voucherCodeStatusBool}`)
         }
-        if (stripeChargeResponse.data.createStripeCharge.response.paid && voucherCodeStatusBool) {
+        if (stripeChargeResponse.data.createStripeCharge.response.paid) {
           this.props.onSuccessfulPayment();
 
           return this.props.client.mutate({
@@ -147,6 +151,7 @@ class StripeCheckout extends React.Component {
               voucherCodeStatus: voucherCodeStatusBool,
             },
           }).then((response) => {
+            console.log(response.data.createUserQuote);
             this.props.onSaveQuoteClick();
             return response.data.createUserQuote.id;
           }).then((quoteID) => { // eslint-disable-line arrow-body-style
@@ -179,25 +184,28 @@ class StripeCheckout extends React.Component {
                 fk_mechanic_id: this.props.calendarAppointmentState.selectedTimeSlot.mechanic,
               },
             })
-                .then(() => { // eslint-disable-line arrow-body-style
-                  // console.log(appointmentResult.data.createUserAppointment);
-                  return this.props.client.mutate({
-                    mutation: gql`
+                .then((appointmentResult) => { // eslint-disable-line arrow-body-style
+                  console.log(appointmentResult.data.createUserAppointment);
+                  if (voucherCodeStatusBool) {
+                    return this.props.client.mutate({
+                      mutation: gql`
                     mutation redeemVoucher($voucherCode: String!, $user_id: Int!)   {
                       redeemVoucher(voucherCode: $voucherCode, user_id: $user_id) {
                         response
                         }
                       }
                   `,
-                    variables: {
-                      user_id: this.props.userId,
-                      voucherCode: localStorage.getItem('voucherCode'),
-                    },
-                  })
-                     .then((voucherResult) => {
-                       console.log(voucherResult);
-                       return this.props.onSuccessfulOrder();
-                     });
+                      variables: {
+                        user_id: this.props.userId,
+                        voucherCode: localStorage.getItem('voucherCode'),
+                      },
+                    })
+                      .then((voucherResult) => {
+                        console.log(voucherResult);
+                        return this.props.onSuccessfulOrder();
+                      });
+                  }
+                  return this.props.onSuccessfulOrder();
                 });
           });
         }
@@ -215,12 +223,12 @@ class StripeCheckout extends React.Component {
       <StripeCheckoutComp
         name="motofix"
         description="Your personal mechanic anywhere"
-        image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png"
+        image={mcIcon}
         token={this.onToken}
         stripeKey="pk_test_Uq1Klar8ByVNEJGycRrPLA3X"
         panelLabel="Pay"
         currency="USD"
-        email="test44@email.com" // make dynamic
+        email={localStorage.getItem('email')}
         allowRememberMe
         zipcode
       >
