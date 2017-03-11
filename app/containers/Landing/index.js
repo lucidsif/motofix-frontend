@@ -28,7 +28,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             className="ui orange huge circular button"
             to="/quote/vehicle"
           >
-            Get a free quote
+            Get a free, instant quote
           </Link>
         </div>
 
