@@ -73,7 +73,6 @@ function AddServices(props) {
         variables: { vehicle: vehicleSearchTerm, service, midID },
       }).then((result) => {
         console.log(result);
-        // console.log(result);
         // noinspection JSUnresolvedVariable
         props.props.onPartsQuery(service, JSON.parse(result.data.searchParts[0].response));
         // noinspection JSUnresolvedVariable

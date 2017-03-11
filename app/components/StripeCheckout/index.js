@@ -17,7 +17,6 @@ import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentSc
 import StripeCheckoutComp from 'react-stripe-checkout';
 import services from 'containers/QuoteCentral/reducerServices';
 import mcIcon from './f6s-logo.png';
-import textLogo from './blumotofix72.png';
 
 // TODO: make it receive all the props it needs from the most parent container
 
@@ -118,10 +117,8 @@ class StripeCheckout extends React.Component {
         let voucherCodeStatusBool;
         if (!this.props.voucherCodeStatus) {
           voucherCodeStatusBool = false;
-          console.log(`false or null, ${voucherCodeStatusBool}`)
         } else {
           voucherCodeStatusBool = this.props.voucherCodeStatus;
-          console.log(`true, ${voucherCodeStatusBool}`)
         }
         if (stripeChargeResponse.data.createStripeCharge.response.paid) {
           this.props.onSuccessfulPayment();
@@ -225,7 +222,7 @@ class StripeCheckout extends React.Component {
         description="Your personal mechanic anywhere"
         image={mcIcon}
         token={this.onToken}
-        stripeKey="pk_test_Uq1Klar8ByVNEJGycRrPLA3X"
+        stripeKey="pk_live_gKkGpkO162dwNfnXUEgRF0pi"
         panelLabel="Pay"
         currency="USD"
         email={localStorage.getItem('email')}

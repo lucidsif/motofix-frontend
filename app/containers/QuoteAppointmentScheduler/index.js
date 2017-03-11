@@ -340,6 +340,7 @@ QuoteAppointmentScheduler.propTypes = {
   allNearAppointmentsAndSchedulesLoading: React.PropTypes.bool,
   userId: React.PropTypes.number,
   voucherCodeStatus: React.PropTypes.bool,
+  onSuccessfulOrder: React.PropTypes.func,
 };
 
 const AppointmentsAndSchedulesQuery = gql`

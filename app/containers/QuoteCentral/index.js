@@ -148,7 +148,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           </Message>
         );
     }
-
     return (
       <div>
         {conditionalServicesMessage}
