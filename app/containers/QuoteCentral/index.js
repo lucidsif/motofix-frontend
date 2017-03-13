@@ -87,7 +87,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
             <Dimmer active inverted>
               <Loader inverted content={loadingMessage} />
             </Dimmer>
-            <Image src="http://semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://semantic-ui.com/images/wireframe/short-paragraph.png" />
           </Segment>
         );
     } else {

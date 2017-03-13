@@ -245,7 +245,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
             <Dimmer active inverted>
               <Loader inverted content={loadingMessage} />
             </Dimmer>
-            <Image src="http://semantic-ui.com/images/wireframe/short-paragraph.png" />
+            <Image src="https://semantic-ui.com/images/wireframe/short-paragraph.png" />
           </Segment>
         );
     } else {
