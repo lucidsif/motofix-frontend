@@ -223,7 +223,7 @@ class StripeCheckout extends React.Component {
       <StripeCheckoutComp
         name="motofix"
         description="Your personal mechanic anywhere"
-        image={mcIcon}
+        image={'https://res.cloudinary.com/motocloud/image/upload/v1489386170/f6s-logo_p0r60z.png'}
         token={this.onToken}
         stripeKey="pk_test_Uq1Klar8ByVNEJGycRrPLA3X"
         panelLabel="Pay"
