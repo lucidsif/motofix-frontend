@@ -16,7 +16,6 @@ import { setSavedQuoteTrue } from 'containers/QuoteCentral/actions';
 import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentScheduler/actions';
 import StripeCheckoutComp from 'react-stripe-checkout';
 import services from 'containers/QuoteCentral/reducerServices';
-import mcIcon from './f6s-logo.png';
 
 // TODO: make it receive all the props it needs from the most parent container
 
@@ -223,7 +222,7 @@ class StripeCheckout extends React.Component {
       <StripeCheckoutComp
         name="motofix"
         description="Your personal mechanic anywhere"
-        image={mcIcon}
+        image={'https://res.cloudinary.com/motocloud/image/upload/v1489386170/f6s-logo_p0r60z.png'}
         token={this.onToken}
         stripeKey="pk_live_gKkGpkO162dwNfnXUEgRF0pi"
         panelLabel="Pay"
