@@ -148,9 +148,12 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           </Message>
         );
     }
-// if length is < 0, disable schedule appointment
-    const selectedServices = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected)
-    console.log(selectedServices)
+
+    // if length is < 0, disable schedule appointment
+    const addedServicesArr = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected);
+    const enabledScheduleButton = <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>;
+    const disabledScheduleButton = <Button disabled color="teal">Schedule Appointment</Button>;
+
     return (
       <div>
         {conditionalServicesMessage}
@@ -163,9 +166,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         {!this.props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => this.onSaveBtnClick()}>Save Quote</Button>
         }
-        {
-        }
-        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
+        { addedServicesArr.length > 0 ? enabledScheduleButton : disabledScheduleButton }
       </div>
     );
   }

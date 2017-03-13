@@ -202,6 +202,10 @@ function PriceBreakDown(props) {
     return props.onDeUseOwnParts();
   }
 
+  const addedServicesArr = Object.keys(props.cart).filter((key) => props.cart[key].selected);
+  const enabledScheduleButton = <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>;
+  const disabledScheduleButton = <Button disabled color="teal">Schedule Appointment</Button>;
+
   return (
     <Container>
       <List>
@@ -270,7 +274,7 @@ function PriceBreakDown(props) {
         {!props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => onSaveBtnClick()}>Save Quote</Button>
         }
-        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
+        { addedServicesArr.length > 0 ? enabledScheduleButton : disabledScheduleButton }
       </div>
     </Container>
   );
