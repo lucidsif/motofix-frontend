@@ -17,7 +17,6 @@ import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentSc
 import StripeCheckoutComp from 'react-stripe-checkout';
 import services from 'containers/QuoteCentral/reducerServices';
 import mcIcon from './f6s-logo.png';
-import textLogo from './blumotofix72.png';
 
 // TODO: make it receive all the props it needs from the most parent container
 
@@ -114,14 +113,14 @@ class StripeCheckout extends React.Component {
           token: stringifiedToken,
         },
       }).then((stripeChargeResponse) => { // eslint-disable-line consistent-return
-        console.log(stripeChargeResponse);
+        console.log(stripeChargeResponse.data.createStripeCharge);
         let voucherCodeStatusBool;
         if (!this.props.voucherCodeStatus) {
           voucherCodeStatusBool = false;
-          console.log(`false or null, ${voucherCodeStatusBool}`)
+          console.log(`false or null, ${voucherCodeStatusBool}`);
         } else {
           voucherCodeStatusBool = this.props.voucherCodeStatus;
-          console.log(`true, ${voucherCodeStatusBool}`)
+          console.log(`true, ${voucherCodeStatusBool}`);
         }
         if (stripeChargeResponse.data.createStripeCharge.response.paid) {
           this.props.onSuccessfulPayment();
@@ -209,11 +208,12 @@ class StripeCheckout extends React.Component {
                 });
           });
         }
+        console.log('else statement reached');
         return this.props.onFailedPayment();
       })
         .catch((err) => {
           console.log(err);
-          return this.props.onFailedPayment();
+          return this.props.onPaymentAppointmentError();
         });
     }
   }

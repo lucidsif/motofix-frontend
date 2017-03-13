@@ -13,7 +13,7 @@ import { selectAuthenticated, selectUserId } from 'containers/App/selectors';
 import selectVehicleDomain from 'containers/QuoteAddVehicle/selectors';
 import { selectCart, selectPart, selectVoucherCodeStatus } from 'containers/QuoteCentral/selectors';
 import { selectPaid } from './selectors';
-import { setPaymentNull } from './actions';
+import { setPaymentNull, setPaymentError } from './actions';
 import { resetCart, resetPart, resetSavedQuote, setVoucherNull } from 'containers/QuoteCentral/actions';
 import services from 'containers/QuoteCentral/reducerServices';
 import Calendar from 'components/Calendar';
@@ -289,6 +289,7 @@ export class QuoteAppointmentScheduler extends React.Component { // eslint-disab
           voucherCodeStatus={this.props.voucherCodeStatus}
           userId={this.props.userId}
           onSuccessfulOrder={this.props.onSuccessfulOrder}
+          onPaymentAppointmentError={this.props.onPaymentAppointmentError}
         />
       );
     }
@@ -329,6 +330,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(setVoucherNull());
       dispatch(setPaymentNull());
     },
+    onPaymentAppointmentError: () => {
+      dispatch(setPaymentError());
+    },
   };
 }
 
@@ -340,6 +344,8 @@ QuoteAppointmentScheduler.propTypes = {
   allNearAppointmentsAndSchedulesLoading: React.PropTypes.bool,
   userId: React.PropTypes.number,
   voucherCodeStatus: React.PropTypes.bool,
+  onSuccessfulOrder: React.PropTypes.func,
+  onPaymentAppointmentError: React.PropTypes.func,
 };
 
 const AppointmentsAndSchedulesQuery = gql`

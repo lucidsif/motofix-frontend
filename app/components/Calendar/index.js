@@ -82,7 +82,7 @@ class Calendar extends React.Component {
   }
 
   render() {
-    let conditionallyRenderStripeButton = null;
+    let conditionallyRenderStripeButton = null; // "insert the following below" && this.props.paid !== 'error'
     if (this.state.motorcycle_address && this.state.note && this.state.contact_number) {
       conditionallyRenderStripeButton = (
         <div>
@@ -94,6 +94,7 @@ class Calendar extends React.Component {
             voucherCodeStatus={this.props.voucherCodeStatus}
             userId={this.props.userId}
             onSuccessfulOrder={this.props.onSuccessfulOrder}
+            onPaymentAppointmentError={this.props.onPaymentAppointmentError}
           />
         </div>
       );
@@ -109,7 +110,7 @@ class Calendar extends React.Component {
     };
     let timeSlotSelectedMessage = null;
     let paymentResponseMessage = null;
-    if (this.props.paid) {
+    if (this.props.paid === true) {
       paymentResponseMessage = (
         <Message positive>
           <Message.Content>
@@ -122,6 +123,19 @@ class Calendar extends React.Component {
         <Message negative>
           <Message.Content>
             Oh no :( Something went wrong with the payment. Please check your card details and try again.
+          </Message.Content>
+        </Message>
+      );
+    } else if (this.props.paid === 'error') {
+      paymentResponseMessage = (
+        <Message negative>
+          <Message.Header>
+              Appointment Scheduling Error
+          </Message.Header>
+          <Message.Content>
+              Your payment has been successful, but something went wrong when scheduling the appointment. Do not try to pay again.
+            <br />
+            <a href="javascript:void(Tawk_API.toggle())"> Click here </a> to live chat or call us @ (929)356-4313 at your soonest convenience and let us know.
           </Message.Content>
         </Message>
       );
@@ -204,10 +218,11 @@ class Calendar extends React.Component {
 Calendar.propTypes = {
   availableAppointments: React.PropTypes.array,
   authenticated: React.PropTypes.bool,
-  paid: React.PropTypes.bool,
   voucherCodeStatus: React.PropTypes.bool,
   userId: React.PropTypes.number,
   onSuccessfulOrder: React.PropTypes.func,
+  onPaymentAppointmentError: React.PropTypes.func,
+  paid: React.PropTypes.string,
 };
 
 export default Calendar;

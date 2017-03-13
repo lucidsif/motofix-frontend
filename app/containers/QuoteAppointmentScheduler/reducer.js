@@ -9,6 +9,7 @@ import {
   PAYMENT_SUCCESS,
   PAYMENT_FAIL,
   PAYMENT_RESET,
+  PAYMENT_APPOINTMENT_ERROR,
 } from './constants';
 
 const paid = null;
@@ -24,6 +25,8 @@ function quoteAppointmentSchedulerReducer(state = initialState, action) {
       return state.set('paid', false);
     case PAYMENT_RESET:
       return state.set('paid', null);
+    case PAYMENT_APPOINTMENT_ERROR:
+      return state.set('paid', 'error');
     default:
       return state;
   }
