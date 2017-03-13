@@ -8,6 +8,7 @@ import {
   PAYMENT_SUCCESS,
   PAYMENT_FAIL,
   PAYMENT_RESET,
+  PAYMENT_APPOINTMENT_ERROR,
 } from './constants';
 
 export function setPaymentSuccess() {
@@ -25,5 +26,11 @@ export function setPaymentFail() {
 export function setPaymentNull() {
   return {
     type: PAYMENT_RESET,
-  }
+  };
+}
+
+export function setPaymentError() {
+  return {
+    type: PAYMENT_APPOINTMENT_ERROR,
+  };
 }

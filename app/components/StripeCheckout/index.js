@@ -113,12 +113,14 @@ class StripeCheckout extends React.Component {
           token: stringifiedToken,
         },
       }).then((stripeChargeResponse) => { // eslint-disable-line consistent-return
-        console.log(stripeChargeResponse);
+        console.log(stripeChargeResponse.data.createStripeCharge);
         let voucherCodeStatusBool;
         if (!this.props.voucherCodeStatus) {
           voucherCodeStatusBool = false;
+          console.log(`false or null, ${voucherCodeStatusBool}`);
         } else {
           voucherCodeStatusBool = this.props.voucherCodeStatus;
+          console.log(`true, ${voucherCodeStatusBool}`);
         }
         if (stripeChargeResponse.data.createStripeCharge.response.paid) {
           this.props.onSuccessfulPayment();
@@ -206,11 +208,12 @@ class StripeCheckout extends React.Component {
                 });
           });
         }
+        console.log('else statement reached');
         return this.props.onFailedPayment();
       })
         .catch((err) => {
           console.log(err);
-          return this.props.onFailedPayment();
+          return this.props.onPaymentAppointmentError();
         });
     }
   }
@@ -249,6 +252,7 @@ StripeCheckout.propTypes = {
   onSuccessfulPayment: React.PropTypes.func,
   voucherCodeStatus: React.PropTypes.bool,
   onSuccessfulOrder: React.PropTypes.func,
+  onPaymentAppointmentError: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
