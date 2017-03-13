@@ -117,7 +117,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited') {
       conditionalServicesMessage = (
         <Message warning>
-          <Message.Header> We've reached our max requests for instants quotes today :( </Message.Header>
+          <Message.Header> {"We've"} reached our max requests for instants quotes today :( </Message.Header>
           <Message.Content>
             You may still get an instant quote and schedule an appointment, but our prices might be slightly lower or higher than our data.
           </Message.Content>
@@ -130,7 +130,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
       conditionalServicesMessage = (
         <Message warning>
           <Message.Header>
-            We don't have an accurate quote for <span>{vehicleSearchTerm}</span> for the following service(s):
+            We {"don't"} have an accurate quote for <span>{vehicleSearchTerm}</span> for the following service(s):
           </Message.Header>
           <Message.List>
             {selectedUnavailableServices}
@@ -148,6 +148,9 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           </Message>
         );
     }
+    const addedServicesArr = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected);
+    const enabledScheduleButton = <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>;
+    const disabledScheduleButton = <Button disabled color="teal">Schedule Appointment</Button>;
 
     return (
       <div>
@@ -161,7 +164,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         {!this.props.quoteSaved && // only only to save quote and dispatch action if authenticated
         <Button onClick={() => this.onSaveBtnClick()}>Save Quote</Button>
         }
-        <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>
+        { addedServicesArr.length > 0 ? enabledScheduleButton : disabledScheduleButton }
       </div>
     );
   }
