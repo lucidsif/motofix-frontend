@@ -10,20 +10,17 @@ import { createStructuredSelector } from 'reselect';
 import selectVehicleDomain from './selectors';
 import Geosuggest from 'react-geosuggest';
 
-import manufacturerData from './manufacturers';
+import manufacturerData, { manufacturerCodes } from './manufacturers';
 
 let modelData = [];
 let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
-// TODO: store value and label together for makes
-// TODO: add location validation
 
-// TODO: Pass location to app state and to saved quotes
-// TODO 7/10 add error message if no location can be found or autosuggest query async error
-// TODO: 6.6/10 half the size of the select menus
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
+// TODO: use proper loading render
+// TODO: 6.6/10 half the size of the select menus
 // TODO: 6/10 replace spans with labels
 // TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
 class QuoteAddVehicle extends React.Component {
@@ -59,6 +56,9 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ subModelValue: null });
     this.setState({ yearValue: null });
     console.time('allModels');
+    // pseudo loading
+    this.setState({ modelOptions: [{ label: 'Loading... (may be slow at this time)', value: '' }] });
+
     this.props.client.query({
       query: gql`
       query allModels($manufacturer: String!){
@@ -77,13 +77,44 @@ class QuoteAddVehicle extends React.Component {
     })
       .catch((err) => {
         console.log(err);
+        console.timeEnd('allModels');
+        console.time('allVehicles models');
         this.setState({ asyncError: true });
         this.logException(err);
         // :backup api - get all models of selected make.
         // i. find the object key name (make) associated with the selected make code
+        const selectedManufacturerArr = manufacturerCodes.filter((manf) => {
+          const objValues = Object.values(manf);
+          return objValues[0] === newValue;
+        });
+        const manufacturerArr = Object.keys(selectedManufacturerArr[0]);
+        const manufacturerName = manufacturerArr[0];
+        console.log(manufacturerName);
+        // ib. turn on backup api switch
+
         // ii. run a graphql query and get all models that have that make
-        // iii. create modelsFactory from that
-        // iv. make models options = to modelsFactory
+        this.props.client.query({
+          query: gql`
+      query allVehicles($filterByMake: String){
+        allVehicles(filterByMake: $filterByMake){
+          model
+        }
+      }
+      `,
+          variables: { filterByMake: manufacturerName },
+        }).then((result) => {
+          console.timeEnd('allVehicles models');
+          // iii. create modelsFactory from that
+          // iv. make models options = to modelsFactory
+          modelData = result.data.allVehicles;
+          modelsFactory = modelData.map((bike) => ({ value: bike.model, label: bike.model }));
+          this.setState({ modelOptions: modelsFactory });
+        })
+          .catch((error) => {
+            console.log(error);
+            this.setState({ asyncError: true });
+            this.logException(err);
+          });
       });
   }
   updateModelValueAndGetSubModels(newValue) {
@@ -243,7 +274,7 @@ class QuoteAddVehicle extends React.Component {
       end_year: selectedVehicle[0].end_year,
     };
     */
-//TODO: remove this for production
+// TODO: remove this for production
     const FAKEvehicle = {
       location: this.state.location.customerLocation,
       mid: 'BMM07333',
