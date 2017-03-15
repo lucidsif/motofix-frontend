@@ -79,6 +79,11 @@ class QuoteAddVehicle extends React.Component {
         console.log(err);
         this.setState({ asyncError: true });
         this.logException(err);
+        // :backup api - get all models of selected make.
+        // i. find the object key name (make) associated with the selected make code
+        // ii. run a graphql query and get all models that have that make
+        // iii. create modelsFactory from that
+        // iv. make models options = to modelsFactory
       });
   }
   updateModelValueAndGetSubModels(newValue) {

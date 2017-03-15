@@ -28,7 +28,6 @@ function AddServices(props) {
     // TODO: if repairtimes are unavailable, run switch statements for each service case and update the labortime to an expected price
     // with an expected labortime
     if (parsedRepairTimes.unavailable) {
-      console.log('LaborTimes is unavailable');
       switch (service) {
         case 'Pre-purchaseInspection':
           props.props.onCartClick(service);

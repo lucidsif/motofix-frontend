@@ -205,7 +205,6 @@ function PriceBreakDown(props) {
   const addedServicesArr = Object.keys(props.cart).filter((key) => props.cart[key].selected);
   const enabledScheduleButton = <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>;
   const disabledScheduleButton = <Button disabled color="teal">Schedule Appointment</Button>;
-
   return (
     <Container>
       <List>

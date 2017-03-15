@@ -119,7 +119,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
         <Message warning>
           <Message.Header> {"We've"} reached our max requests for instants quotes today :( </Message.Header>
           <Message.Content>
-            You may still get an instant quote and schedule an appointment, but our prices might be slightly lower or higher than our data.
+            You may still get an instant quote and schedule an appointment, but prices for some services may be slightly lower or higher.
           </Message.Content>
           <Message.Content>
             If you prefer our exact price, please try again after 8PM.
@@ -151,7 +151,6 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     const addedServicesArr = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected);
     const enabledScheduleButton = <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>;
     const disabledScheduleButton = <Button disabled color="teal">Schedule Appointment</Button>;
-
     return (
       <div>
         {conditionalServicesMessage}
