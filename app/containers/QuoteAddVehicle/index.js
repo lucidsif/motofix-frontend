@@ -18,9 +18,10 @@ let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
 
-// TODO: add logic if backup api needs to be used in the middle of selecting a motorcycle
+// TODO: force refresh if backup api needs to be used in the middle of selecting a motorcycle
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: use proper loading render
+// TODO: add logic if backup api needs to be used in the middle of selecting a motorcycle
 // TODO: 6.6/10 half the size of the select menus
 // TODO: 6/10 replace spans with labels
 // TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
@@ -45,7 +46,7 @@ class QuoteAddVehicle extends React.Component {
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
     this.updateModelValueAndGetSubModels = this.updateModelValueAndGetSubModels.bind(this);
-    this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this);
+    this.updateSubModelValueAndGetYears = this.updateSubModelValueAndGetYears.bind(this);
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
@@ -138,7 +139,6 @@ class QuoteAddVehicle extends React.Component {
       `,
         variables: { filterByModel: newValue },
       }).then((result) => {
-        console.log(result);
         console.timeEnd('allVehicles submodels');
         // ii. create modelsFactory from that
         // iii. make models options = to modelsFactory
@@ -153,7 +153,7 @@ class QuoteAddVehicle extends React.Component {
     }
 
     console.time('allSubModels');
-    this.props.client.query({
+    return this.props.client.query({
       query: gql`
       query allSubModels($modelID: Int!){
         allSubModels(modelID: $modelID){        
@@ -176,7 +176,6 @@ class QuoteAddVehicle extends React.Component {
         return { value: bike.mid, label: bikeLabel };
       });
       this.setState({ subModelOptions: subModelFactory });
-
     })
       .catch((err) => {
         console.log(err);
@@ -185,15 +184,43 @@ class QuoteAddVehicle extends React.Component {
       });
   }
 
-  updateSubModelValueAndRenderYears(newValue) {
-    console.time('years');
+  updateSubModelValueAndGetYears(newValue) {
     this.setState({ subModelValue: newValue });
     this.setState({ yearValue: null });
+
+    if (this.state.backupApi) {
+      console.time('allVehicles years');
+      // i. run a graphql query and get all models that have that make
+      return this.props.client.query({
+        query: gql`
+      query allVehicles($filterBySubmodel: String){
+        allVehicles(filterBySubmodel: $filterBySubmodel){
+          year
+        }
+      }
+      `,
+        variables: { filterBySubmodel: newValue },
+      }).then((result) => {
+        console.timeEnd('allVehicles years');
+        // ii. create yearsFactory from that
+        // iii. make years options = to yearsFactory
+        const yearsData = result.data.allVehicles;
+        const yearsFactory = yearsData.map((bike) => ({ value: bike.year, label: bike.year }));
+        return this.setState({ yearOptions: yearsFactory });
+      })
+        .catch((error) => {
+          console.log(error);
+          this.logException(error);
+        });
+    }
+
+    console.time('years');
+
     const selectedSubModel = subModelData.filter((bike) => bike.mid === newValue);
     motorcycle = selectedSubModel[0];
     const yearsArr = [];
     createYearsArr(selectedSubModel[0].start_year, selectedSubModel[0].end_year);
-    this.setState({ yearOptions: yearsArr });
+    return this.setState({ yearOptions: yearsArr });
 
     function createYearsArr(startYear, endYear) {
       let currYear = startYear;
@@ -207,8 +234,11 @@ class QuoteAddVehicle extends React.Component {
   }
 
   updateYear(newValue) {
+    if (this.state.backupApi) {
+      return this.setState({ yearValue: newValue });
+    }
     motorcycle.year = newValue;
-    this.setState({ yearValue: newValue });
+    return this.setState({ yearValue: newValue });
   }
 
   conditionalAsyncErrorMessage() {
@@ -408,7 +438,7 @@ class QuoteAddVehicle extends React.Component {
               clearable
               name="selected-submodel"
               value={this.state.subModelValue}
-              onChange={this.updateSubModelValueAndRenderYears}
+              onChange={this.updateSubModelValueAndGetYears}
               searchable={this.state.searchable}
               placeholder="Search or select a sub-model"
             />
