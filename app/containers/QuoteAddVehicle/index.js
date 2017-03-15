@@ -322,20 +322,36 @@ class QuoteAddVehicle extends React.Component {
       return this.setState({ yearValue: false });
     }
 */
-    // const selectedVehicle = subModelData.filter((submodel) => submodel.mid === this.state.subModelValue);
-/*
-    const vehicle = {
-      location: this.state.location.customerLocation,
-      mid: this.state.subModelValue,
-      manufacturer: selectedVehicle[0].manufacturer,
-      model: selectedVehicle[0].model,
-      model_variant: selectedVehicle[0].model_variant,
-      tuning_description: selectedVehicle[0].tuning_description,
-      year: this.state.yearValue,
-      start_year: selectedVehicle[0].start_year,
-      end_year: selectedVehicle[0].end_year,
-    };
-    */
+    let selectedVehicle;
+    let vehicle;
+    if (this.state.backupApi) {
+      console.log('back api being used');
+      vehicle = {
+        location: this.state.location.customerLocation,
+        mid: this.state.subModelValue,
+        manufacturer: this.state.manufacturerValue,
+        model: this.state.modelValue,
+        model_variant: this.state.subModelValue,
+        tuning_description: 'mock',
+        year: this.state.yearValue,
+        start_year: this.state.yearValue,
+        end_year: this.state.yearValue,
+      };
+    } else {
+      selectedVehicle = subModelData.filter((submodel) => submodel.mid === this.state.subModelValue);
+      vehicle = {
+        location: this.state.location.customerLocation,
+        mid: this.state.subModelValue,
+        manufacturer: selectedVehicle[0].manufacturer,
+        model: selectedVehicle[0].model,
+        model_variant: selectedVehicle[0].model_variant,
+        tuning_description: selectedVehicle[0].tuning_description,
+        year: this.state.yearValue,
+        start_year: selectedVehicle[0].start_year,
+        end_year: selectedVehicle[0].end_year,
+      };
+    }
+
 // TODO: remove this for production
     const FAKEvehicle = {
       location: this.state.location.customerLocation,
@@ -348,10 +364,9 @@ class QuoteAddVehicle extends React.Component {
       start_year: 2013,
       end_year: 2017,
     };
-    console.log('mock vehicle selected and merged to state');
-    console.log(FAKEvehicle);
+    console.log(vehicle);
 
-    return this.props.onSubmitForm(FAKEvehicle);
+    return this.props.onSubmitForm(vehicle);
   }
 
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
