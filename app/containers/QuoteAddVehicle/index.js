@@ -18,6 +18,7 @@ let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
 
+// TODO: add logic if backup api needs to be used in the middle of selecting a motorcycle
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
 // TODO: use proper loading render
 // TODO: 6.6/10 half the size of the select menus
@@ -39,6 +40,7 @@ class QuoteAddVehicle extends React.Component {
       asyncError: false,
       overDistance: null,
       motorcycleSelected: null,
+      backupApi: false,
     };
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
@@ -57,7 +59,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: null });
     console.time('allModels');
     // pseudo loading
-    this.setState({ modelOptions: [{ label: 'Loading... (may be slow at this time)', value: '' }] });
+    this.setState({ modelOptions: [{ label: 'Loading... (may be initially slow)', value: 'Loading' }] });
 
     this.props.client.query({
       query: gql`
@@ -79,8 +81,8 @@ class QuoteAddVehicle extends React.Component {
         console.log(err);
         console.timeEnd('allModels');
         console.time('allVehicles models');
-        this.setState({ asyncError: true });
         this.logException(err);
+
         // :backup api - get all models of selected make.
         // i. find the object key name (make) associated with the selected make code
         const selectedManufacturerArr = manufacturerCodes.filter((manf) => {
@@ -90,8 +92,9 @@ class QuoteAddVehicle extends React.Component {
         const manufacturerArr = Object.keys(selectedManufacturerArr[0]);
         const manufacturerName = manufacturerArr[0];
         console.log(manufacturerName);
-        // ib. turn on backup api switch
 
+        // ib. turn on backup api switch
+        this.setState({ backupApi: true });
         // ii. run a graphql query and get all models that have that make
         this.props.client.query({
           query: gql`
@@ -121,6 +124,34 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ modelValue: newValue });
     this.setState({ subModelValue: null });
     this.setState({ yearValue: null });
+
+    if (this.state.backupApi) {
+      console.time('allVehicles submodels');
+      // i. run a graphql query and get all models that have that make
+      return this.props.client.query({
+        query: gql`
+      query allVehicles($filterByModel: String){
+        allVehicles(filterByModel: $filterByModel){
+          submodel
+        }
+      }
+      `,
+        variables: { filterByModel: newValue },
+      }).then((result) => {
+        console.log(result);
+        console.timeEnd('allVehicles submodels');
+        // ii. create modelsFactory from that
+        // iii. make models options = to modelsFactory
+        subModelData = result.data.allVehicles;
+        subModelFactory = subModelData.map((bike) => ({ value: bike.submodel, label: bike.submodel }));
+        return this.setState({ subModelOptions: subModelFactory });
+      })
+        .catch((error) => {
+          console.log(error);
+          this.logException(error);
+        });
+    }
+
     console.time('allSubModels');
     this.props.client.query({
       query: gql`
@@ -145,6 +176,7 @@ class QuoteAddVehicle extends React.Component {
         return { value: bike.mid, label: bikeLabel };
       });
       this.setState({ subModelOptions: subModelFactory });
+
     })
       .catch((err) => {
         console.log(err);
