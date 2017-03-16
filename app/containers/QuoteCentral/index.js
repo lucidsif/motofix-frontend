@@ -1,9 +1,3 @@
-/*
- *
- * QuoteCentral
- *
- */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
@@ -38,7 +32,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
   }
 // TODO: only dispatch saved button after quote mutation success
   createQuoteMutation() {
-  // noinspection JSUnresolvedFunction
+    // noinspection JSUnresolvedFunction
     let voucherCodeStatusBool;
     if (!this.props.voucherCodeStatus) {
       voucherCodeStatusBool = false;
@@ -93,15 +87,16 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     } else {
       renderAddServicesUponRepairTimesFetch = <AddServices props={this.props} />;
     }
-    const selectedUnavailableServices = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected && this.props.cart[key].unavailable)
-      .map((serviceName) => {
-        const spacedServiceName = serviceName.replace(/([a-z])([A-Z])/g, '$1 $2');
-        return (
-          <Message.Item key={serviceName}>
-            {spacedServiceName}
-          </Message.Item>
-        );
-      });
+    // exclude inspections and diagnostics
+    const selectedUnavailableServicesArr = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected && this.props.cart[key].unavailable);
+    const selectedUnavailableServices = selectedUnavailableServicesArr.map((serviceName) => {
+      const spacedServiceName = serviceName.replace(/([a-z])([A-Z])/g, '$1 $2');
+      return (
+        <Message.Item key={serviceName}>
+          {spacedServiceName}
+        </Message.Item>
+      );
+    });
 
     let conditionalServicesMessage = null;
     if (!this.props.allRepairTimes && !this.props.allRepairTimesLoading) {
@@ -114,15 +109,18 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
             </Message.Content>
           </Message>
         ); // make sure to write that prices may not be identical to what we have in the db, but it's a price we think is fair
-    } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited') {
+    } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited' && selectedUnavailableServicesArr.length > 0) {
       conditionalServicesMessage = (
         <Message warning>
-          <Message.Header> We've reached our max requests for instants quotes today :( </Message.Header>
+          <Message.Header> {"We've"} reached our max requests for instants quotes today :( </Message.Header>
           <Message.Content>
-            You may still get an instant quote and schedule an appointment, but our prices might be slightly lower or higher than our data.
+            You may still get our quote based on our approximations and schedule an appointment, but prices for the following service(s) may not be accurate.
           </Message.Content>
+          <Message.List>
+            {selectedUnavailableServices}
+          </Message.List>
           <Message.Content>
-            If you prefer our exact price, please try again after 8PM.
+            If you prefer an accurate price, please try again after 8PM.
           </Message.Content>
         </Message>
       );
@@ -130,7 +128,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
       conditionalServicesMessage = (
         <Message warning>
           <Message.Header>
-            We don't have an accurate quote for <span>{vehicleSearchTerm}</span> for the following service(s):
+            We {"don't"} have an accurate quote for <span>{vehicleSearchTerm}</span> for the following service(s):
           </Message.Header>
           <Message.List>
             {selectedUnavailableServices}
@@ -148,12 +146,9 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
           </Message>
         );
     }
-
-    // if length is < 0, disable schedule appointment
     const addedServicesArr = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected);
     const enabledScheduleButton = <Button color="teal" onClick={() => browserHistory.push('/quote/schedule')}>Schedule Appointment</Button>;
     const disabledScheduleButton = <Button disabled color="teal">Schedule Appointment</Button>;
-
     return (
       <div>
         {conditionalServicesMessage}

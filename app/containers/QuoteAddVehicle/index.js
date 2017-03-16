@@ -10,20 +10,19 @@ import { createStructuredSelector } from 'reselect';
 import selectVehicleDomain from './selectors';
 import Geosuggest from 'react-geosuggest';
 
-import manufacturerData from './manufacturers';
+import manufacturerData, { manufacturerCodes } from './manufacturers';
 
 let modelData = [];
 let modelsFactory = [];
 let subModelData = [];
 let subModelFactory = [];
 let motorcycle;
-// TODO: store value and label together for makes
-// TODO: add location validation
 
-// TODO: Pass location to app state and to saved quotes
-// TODO 7/10 add error message if no location can be found or autosuggest query async error
-// TODO: 6.6/10 half the size of the select menus
+// TODO: force refresh if backup api needs to be used in the middle of selecting a motorcycle
 // TODO: 6.5/10 refactor to use official api for select menus when available or write in more declarative way
+// TODO: use proper loading render
+// TODO: add logic if backup api needs to be used in the middle of selecting a motorcycle
+// TODO: 6.6/10 half the size of the select menus
 // TODO: 6/10 replace spans with labels
 // TODO: 4/10 Find a way to query and dispatch actions without the use of file scoped variables
 class QuoteAddVehicle extends React.Component {
@@ -42,11 +41,12 @@ class QuoteAddVehicle extends React.Component {
       asyncError: false,
       overDistance: null,
       motorcycleSelected: null,
+      backupApi: false,
     };
 
     this.updateManufacturerValueAndGetModels = this.updateManufacturerValueAndGetModels.bind(this);
     this.updateModelValueAndGetSubModels = this.updateModelValueAndGetSubModels.bind(this);
-    this.updateSubModelValueAndRenderYears = this.updateSubModelValueAndRenderYears.bind(this);
+    this.updateSubModelValueAndGetYears = this.updateSubModelValueAndGetYears.bind(this);
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
@@ -59,6 +59,9 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ subModelValue: null });
     this.setState({ yearValue: null });
     console.time('allModels');
+    // pseudo loading
+    this.setState({ modelOptions: [{ label: 'Loading... (if slow, we are switching servers)', value: 'Loading' }] });
+
     this.props.client.query({
       query: gql`
       query allModels($manufacturer: String!){
@@ -77,16 +80,79 @@ class QuoteAddVehicle extends React.Component {
     })
       .catch((err) => {
         console.log(err);
-        this.setState({ asyncError: true });
+        console.timeEnd('allModels');
+        console.time('allVehicles models');
         this.logException(err);
+
+        // :backup api - get all models of selected make.
+        // i. find the object key name (make) associated with the selected make code
+        const selectedManufacturerArr = manufacturerCodes.filter((manf) => {
+          const objValues = Object.values(manf);
+          return objValues[0] === newValue;
+        });
+        const manufacturerArr = Object.keys(selectedManufacturerArr[0]);
+        const manufacturerName = manufacturerArr[0];
+        console.log(manufacturerName);
+
+        // ib. turn on backup api switch
+        this.setState({ backupApi: true });
+        // ii. run a graphql query and get all models that have that make
+        this.props.client.query({
+          query: gql`
+      query allVehicles($filterByMake: String){
+        allVehicles(filterByMake: $filterByMake){
+          model
+        }
+      }
+      `,
+          variables: { filterByMake: manufacturerName },
+        }).then((result) => {
+          console.timeEnd('allVehicles models');
+          // iii. create modelsFactory from that
+          // iv. make models options = to modelsFactory
+          modelData = result.data.allVehicles;
+          modelsFactory = modelData.map((bike) => ({ value: bike.model, label: bike.model }));
+          this.setState({ modelOptions: modelsFactory });
+        })
+          .catch((error) => {
+            console.log(error);
+            this.logException(err);
+          });
       });
   }
   updateModelValueAndGetSubModels(newValue) {
     this.setState({ modelValue: newValue });
     this.setState({ subModelValue: null });
     this.setState({ yearValue: null });
+
+    if (this.state.backupApi) {
+      console.time('allVehicles submodels');
+      // i. run a graphql query and get all models that have that make
+      return this.props.client.query({
+        query: gql`
+      query allVehicles($filterByModel: String){
+        allVehicles(filterByModel: $filterByModel){
+          submodel
+        }
+      }
+      `,
+        variables: { filterByModel: newValue },
+      }).then((result) => {
+        console.timeEnd('allVehicles submodels');
+        // ii. create modelsFactory from that
+        // iii. make models options = to modelsFactory
+        subModelData = result.data.allVehicles;
+        subModelFactory = subModelData.map((bike) => ({ value: bike.submodel, label: bike.submodel }));
+        return this.setState({ subModelOptions: subModelFactory });
+      })
+        .catch((error) => {
+          console.log(error);
+          this.logException(error);
+        });
+    }
+
     console.time('allSubModels');
-    this.props.client.query({
+    return this.props.client.query({
       query: gql`
       query allSubModels($modelID: Int!){
         allSubModels(modelID: $modelID){        
@@ -117,15 +183,43 @@ class QuoteAddVehicle extends React.Component {
       });
   }
 
-  updateSubModelValueAndRenderYears(newValue) {
-    console.time('years');
+  updateSubModelValueAndGetYears(newValue) {
     this.setState({ subModelValue: newValue });
     this.setState({ yearValue: null });
+
+    if (this.state.backupApi) {
+      console.time('allVehicles years');
+      // i. run a graphql query and get all models that have that make
+      return this.props.client.query({
+        query: gql`
+      query allVehicles($filterBySubmodel: String){
+        allVehicles(filterBySubmodel: $filterBySubmodel){
+          year
+        }
+      }
+      `,
+        variables: { filterBySubmodel: newValue },
+      }).then((result) => {
+        console.timeEnd('allVehicles years');
+        // ii. create yearsFactory from that
+        // iii. make years options = to yearsFactory
+        const yearsData = result.data.allVehicles;
+        const yearsFactory = yearsData.map((bike) => ({ value: bike.year, label: bike.year }));
+        return this.setState({ yearOptions: yearsFactory });
+      })
+        .catch((error) => {
+          console.log(error);
+          this.logException(error);
+        });
+    }
+
+    console.time('years');
+
     const selectedSubModel = subModelData.filter((bike) => bike.mid === newValue);
     motorcycle = selectedSubModel[0];
     const yearsArr = [];
     createYearsArr(selectedSubModel[0].start_year, selectedSubModel[0].end_year);
-    this.setState({ yearOptions: yearsArr });
+    return this.setState({ yearOptions: yearsArr });
 
     function createYearsArr(startYear, endYear) {
       let currYear = startYear;
@@ -139,21 +233,16 @@ class QuoteAddVehicle extends React.Component {
   }
 
   updateYear(newValue) {
+    if (this.state.backupApi) {
+      return this.setState({ yearValue: newValue });
+    }
     motorcycle.year = newValue;
-    this.setState({ yearValue: newValue });
+    return this.setState({ yearValue: newValue });
   }
 
   conditionalAsyncErrorMessage() {
-    const asyncError = this.state.asyncError;
     const overDistance = this.state.overDistance;
-    if (asyncError) {
-      return (
-        <Message negative>
-          <p>Warning: Max API calls reached for the day :(</p>
-          <p>We have a limited # of API calls to our data provider until they upgrade us. Please try again after 8PM EST next day.</p>
-        </Message>
-      );
-    } else if (overDistance) {
+    if (overDistance) {
       return (
         <Message warning>
           <p>Warning: Your motorcycle is currently out of our service area :(</p>
@@ -205,7 +294,6 @@ class QuoteAddVehicle extends React.Component {
     })
       .catch((e) => this.logException(e));
   }
-// TODO: Fix this shit
   validateMotorcycleForm(e) {
     e.preventDefault();
     if (!this.state.location) {
@@ -223,19 +311,38 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
-    const selectedVehicle = subModelData.filter((submodel) => submodel.mid === this.state.subModelValue);
 
-    const vehicle = {
-      location: this.state.location.customerLocation,
-      mid: this.state.subModelValue,
-      manufacturer: selectedVehicle[0].manufacturer,
-      model: selectedVehicle[0].model,
-      model_variant: selectedVehicle[0].model_variant,
-      tuning_description: selectedVehicle[0].tuning_description,
-      year: this.state.yearValue,
-      start_year: selectedVehicle[0].start_year,
-      end_year: selectedVehicle[0].end_year,
-    };
+    let selectedVehicle;
+    let vehicle;
+    if (this.state.backupApi) {
+      console.log('back api being used');
+      vehicle = {
+        location: this.state.location.customerLocation,
+        mid: this.state.subModelValue,
+        manufacturer: this.state.manufacturerValue,
+        model: this.state.modelValue,
+        model_variant: this.state.subModelValue,
+        tuning_description: 'mock',
+        year: this.state.yearValue,
+        start_year: this.state.yearValue,
+        end_year: this.state.yearValue,
+      };
+    } else {
+      selectedVehicle = subModelData.filter((submodel) => submodel.mid === this.state.subModelValue);
+      vehicle = {
+        location: this.state.location.customerLocation,
+        mid: this.state.subModelValue,
+        manufacturer: selectedVehicle[0].manufacturer,
+        model: selectedVehicle[0].model,
+        model_variant: selectedVehicle[0].model_variant,
+        tuning_description: selectedVehicle[0].tuning_description,
+        year: this.state.yearValue,
+        start_year: selectedVehicle[0].start_year,
+        end_year: selectedVehicle[0].end_year,
+      };
+    }
+    console.log(vehicle);
+
     return this.props.onSubmitForm(vehicle);
   }
 
@@ -246,7 +353,7 @@ class QuoteAddVehicle extends React.Component {
     Raven.captureException(ex, { // eslint-disable-line no-undef
       extra: context,
     });
-  /* eslint no-console:0*/
+    /* eslint no-console:0*/
     window.console && console.error && console.error(ex); // eslint-disable-line no-unused-expressions
   }
 
@@ -323,7 +430,7 @@ class QuoteAddVehicle extends React.Component {
               clearable
               name="selected-submodel"
               value={this.state.subModelValue}
-              onChange={this.updateSubModelValueAndRenderYears}
+              onChange={this.updateSubModelValueAndGetYears}
               searchable={this.state.searchable}
               placeholder="Search or select a sub-model"
             />
