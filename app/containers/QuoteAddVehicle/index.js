@@ -116,7 +116,6 @@ class QuoteAddVehicle extends React.Component {
         })
           .catch((error) => {
             console.log(error);
-            this.setState({ asyncError: true });
             this.logException(err);
           });
       });
@@ -244,14 +243,7 @@ class QuoteAddVehicle extends React.Component {
   conditionalAsyncErrorMessage() {
     const asyncError = this.state.asyncError;
     const overDistance = this.state.overDistance;
-    if (asyncError) {
-      return (
-        <Message negative>
-          <p>Warning: Max API calls reached for the day :(</p>
-          <p>We have a limited # of API calls to our data provider until they upgrade us. Please try again after 8PM EST next day.</p>
-        </Message>
-      );
-    } else if (overDistance) {
+    if (overDistance) {
       return (
         <Message warning>
           <p>Warning: Your motorcycle is currently out of our service area :(</p>

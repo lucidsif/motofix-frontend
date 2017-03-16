@@ -93,15 +93,16 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
     } else {
       renderAddServicesUponRepairTimesFetch = <AddServices props={this.props} />;
     }
-    const selectedUnavailableServices = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected && this.props.cart[key].unavailable)
-      .map((serviceName) => {
-        const spacedServiceName = serviceName.replace(/([a-z])([A-Z])/g, '$1 $2');
-        return (
-          <Message.Item key={serviceName}>
-            {spacedServiceName}
-          </Message.Item>
-        );
-      });
+    // exclude inspections and diagnostics
+    const selectedUnavailableServicesArr = Object.keys(this.props.cart).filter((key) => this.props.cart[key].selected && this.props.cart[key].unavailable);
+    const selectedUnavailableServices = selectedUnavailableServicesArr.map((serviceName) => {
+      const spacedServiceName = serviceName.replace(/([a-z])([A-Z])/g, '$1 $2');
+      return (
+        <Message.Item key={serviceName}>
+          {spacedServiceName}
+        </Message.Item>
+      );
+    });
 
     let conditionalServicesMessage = null;
     if (!this.props.allRepairTimes && !this.props.allRepairTimesLoading) {
@@ -114,15 +115,18 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
             </Message.Content>
           </Message>
         ); // make sure to write that prices may not be identical to what we have in the db, but it's a price we think is fair
-    } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited') {
+    } else if (this.props.allRepairTimes && JSON.parse(this.props.allRepairTimes.response).unavailable === 'limited' && selectedUnavailableServicesArr.length > 0) {
       conditionalServicesMessage = (
         <Message warning>
           <Message.Header> {"We've"} reached our max requests for instants quotes today :( </Message.Header>
           <Message.Content>
-            You may still get an instant quote and schedule an appointment, but prices for some services may be slightly lower or higher.
+            You may still get our quote based on our approximations and schedule an appointment, but prices for the following service(s) may not be accurate.
           </Message.Content>
+          <Message.List>
+            {selectedUnavailableServices}
+          </Message.List>
           <Message.Content>
-            If you prefer our exact price, please try again after 8PM.
+            If you prefer an accurate price, please try again after 8PM.
           </Message.Content>
         </Message>
       );
