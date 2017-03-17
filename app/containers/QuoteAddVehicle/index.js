@@ -358,7 +358,7 @@ class QuoteAddVehicle extends React.Component {
     };
     console.log(vehicle);
 
-    return this.props.onSubmitForm(vehicle);
+    return this.props.onSubmitForm(FAKEvehicle);
   }
 
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
