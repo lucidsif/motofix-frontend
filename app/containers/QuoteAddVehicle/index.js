@@ -30,14 +30,20 @@ class QuoteAddVehicle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: null,
       manufacturerValue: null,
       modelValue: null,
       subModelValue: null,
       yearValue: null,
+
+      modelLoading: false,
+      subModelLoading: false,
+      yearLoading: false,
+
       modelOptions: null,
       subModelOptions: null,
       yearOptions: null,
+
+      location: null,
       asyncError: false,
       overDistance: null,
       motorcycleSelected: null,
@@ -60,6 +66,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: null });
     console.time('allModels');
     // pseudo loading
+    this.setState({ modelLoading: true });
     this.setState({ modelOptions: [{ label: 'Loading... (may be initially slow)', value: 'Loading' }] });
 
     this.props.client.query({
@@ -77,6 +84,7 @@ class QuoteAddVehicle extends React.Component {
       modelData = result.data.allModels;
       modelsFactory = modelData.map((bike) => ({ value: bike.model_id, label: bike.model }));
       this.setState({ modelOptions: modelsFactory });
+      return this.setState({ modelLoading: false });
     })
       .catch((err) => {
         console.log(err);
@@ -113,6 +121,7 @@ class QuoteAddVehicle extends React.Component {
           modelData = result.data.allVehicles;
           modelsFactory = modelData.map((bike) => ({ value: bike.model, label: bike.model }));
           this.setState({ modelOptions: modelsFactory });
+          return this.setState({ modelLoading: false });
         })
           .catch((error) => {
             console.log(error);
@@ -124,6 +133,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ modelValue: newValue });
     this.setState({ subModelValue: null });
     this.setState({ yearValue: null });
+    this.setState({ subModelLoading: true });
 
     if (this.state.backupApi) {
       console.time('allVehicles submodels');
@@ -143,7 +153,8 @@ class QuoteAddVehicle extends React.Component {
         // iii. make models options = to modelsFactory
         subModelData = result.data.allVehicles;
         subModelFactory = subModelData.map((bike) => ({ value: bike.submodel, label: bike.submodel }));
-        return this.setState({ subModelOptions: subModelFactory });
+        this.setState({ subModelOptions: subModelFactory });
+        return this.setState({ subModelLoading: false });
       })
         .catch((error) => {
           console.log(error);
@@ -175,6 +186,7 @@ class QuoteAddVehicle extends React.Component {
         return { value: bike.mid, label: bikeLabel };
       });
       this.setState({ subModelOptions: subModelFactory });
+      return this.setState({ subModelLoading: false });
     })
       .catch((err) => {
         console.log(err);
@@ -188,6 +200,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: null });
 
     if (this.state.backupApi) {
+      this.setState({ yearLoading: true });
       console.time('allVehicles years');
       // i. run a graphql query and get all models that have that make
       return this.props.client.query({
@@ -205,7 +218,8 @@ class QuoteAddVehicle extends React.Component {
         // iii. make years options = to yearsFactory
         const yearsData = result.data.allVehicles;
         const yearsFactory = yearsData.map((bike) => ({ value: bike.year, label: bike.year }));
-        return this.setState({ yearOptions: yearsFactory });
+        this.setState({ yearOptions: yearsFactory });
+        return this.setState({ yearLoading: false });
       })
         .catch((error) => {
           console.log(error);
@@ -409,6 +423,7 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Model </span>
             <Select
+              isLoading={this.state.modelLoading}
               options={this.state.modelOptions}
               simpleValue
               clearable
@@ -425,6 +440,7 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Sub-model </span>
             <Select
+              isLoading={this.state.subModelLoading}
               options={this.state.subModelOptions}
               simpleValue
               clearable
@@ -441,6 +457,7 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Year </span>
             <Select
+              isLoading={this.state.yearLoading}
               options={this.state.yearOptions}
               simpleValue
               clearable
