@@ -14,13 +14,15 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
     super(props);
     this.state = {
       email: null,
-      password: null,
+      services: null,
+      notes: null,
       modalOpen: false,
       accountCreated: null,
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleServicesChange = this.handleServicesChange.bind(this);
+    this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -32,26 +34,31 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
     this.setState({ email: e.target.value });
   }
 
-  handlePasswordChange(e) {
+  handleServicesChange(e) {
     // noinspection JSUnresolvedFunction
-    this.setState({ password: e.target.value });
+    this.setState({ services: e.target.value });
+  }
+
+  handleNotesChange(e) {
+    // noinspection JSUnresolvedFunction
+    this.setState({ notes: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const validated = this.validateEmail(this.state.email);
-    const pass = this.state.password;
+    const services = this.state.services;
     if (!validated) {
       console.log(`email: ${this.state.email}, is not valid`);
       return;
     }
-    if (!pass) {
-      console.log(`password: ${this.state.password}, is not valid`);
+    if (!services) {
+      console.log(`services: ${this.state.services}, is not valid`);
       return;
     }
-    if (validated && pass) {
-      console.log(`email and pass is validated, submitting email: ${this.state.email}, pass: ${this.state.password}`);
-      this.signUpMutation();
+    if (validated && services) {
+      console.log(`email and services is validated, submitting email: ${this.state.email}, services: ${this.state.services}`);
+      this.createQuoteMutation();
     }
   }
 
@@ -74,24 +81,32 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
     return sanitizePattern.test(email);
   }
 
-  signUpMutation() {
-    console.log(this.props.client);
+  createQuoteMutation() {
     // noinspection JSUnresolvedFunction
     return this.props.client.mutate({
       mutation: gql`
-      mutation signUp($email: String!, $password: String!){
-        signUp(email: $email, password: $password){
-          id
-          email
-      }
-    }
+      mutation createCustomQuote($motorcycle: String!, $location: String!, $services: String!, $notes: String, $email: String!, $completed: Boolean!){
+    createCustomQuote(motorcycle: $motorcycle, location: $location, services: $services, notes: $notes, email: $email, completed: $completed) {
+      id
+      email
+      motorcycle
+      location
+      services
+      notes
+      completed
+     }
+  }
     `,
-      variables: { email: this.state.email, password: this.state.password },
+      variables: {
+        motorcycle: `${this.props.vehicle.year} ${this.props.vehicle.manufacturer} ${this.props.vehicle.model} ${this.props.vehicle.model_variant}`, // redux state
+        location: this.props.vehicle.location, // redux state
+        services: this.state.services, //
+        notes: this.state.notes,
+        email: this.state.email,
+        completed: false,
+      },
     }).then((response) => {
-      if (!response.data.signUp) {
-        return this.setState({ accountCreated: false });
-      }
-      return this.setState({ accountCreated: true });
+      console.log(response);
     });
   }
 
@@ -119,36 +134,50 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
   render() {
     return (
       <Modal
-        trigger={<Button onClick={this.handleOpen}>Can't get the service you need?</Button>}
+        trigger={
+          <Button
+            onClick={this.handleOpen}
+
+          >
+            {"Can't"} find the service you need?
+          </Button>
+        }
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
         size="small"
         closeIcon="close"
       >
-        <Header icon="mail outline" content="Get a free custom quote by email " />
+        <Header icon="mail outline" content="Get a free custom quote to your email " />
         {this.conditionalaccountCreatedMessage()}
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
             <Form.Input
-              onChange={this.handleEmailChange}
-              type="email"
-              placeholder="email address"
-              icon="mail outline"
+              onChange={this.handleServicesChange}
+              type="text"
+              placeholder="What services do you need?"
+              icon="wrench"
               iconPosition="left"
             />
             <Form.Input
-              onChange={this.handlePasswordChange}
-              type="password"
-              placeholder="password"
-              icon="lock"
+              onChange={this.handleNotesChange}
+              type="text"
+              placeholder="Add any optional notes here."
+              icon="sticky note"
+              iconPosition="left"
+            />
+            <Form.Input
+              onChange={this.handleEmailChange}
+              type="email"
+              placeholder="What email should we send your quote to? We promise no spam."
+              icon="mail outline"
               iconPosition="left"
             />
           </Form>
         </Modal.Content>
         <Modal.Actions>
           <Button type="submit" color="green" inverted floated="right" onClick={this.handleSubmit}>
-            <Icon name="checkmark" /> Get $15 off
+            <Icon name="checkmark" /> Get Custom Quote
           </Button>
           <Button basic color="red" inverted floated="right" onClick={this.handleClose}>
             <Icon name="remove" /> Cancel
@@ -161,6 +190,7 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
 
 CustomQuoteFormModal.propTypes = {
   client: React.PropTypes.object,
+  vehicle: React.PropTypes.object,
 };
 
 export default CustomQuoteFormModal;

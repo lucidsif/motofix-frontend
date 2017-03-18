@@ -138,7 +138,7 @@ function AddServices(props) {
 
 
         <Grid.Row>
-          <CustomQuoteFormModal />
+          <CustomQuoteFormModal vehicle={props.props.vehicle} client={props.props.client} />
         </Grid.Row>
 
         <Grid.Row columns={2}>
