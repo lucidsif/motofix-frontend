@@ -60,7 +60,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: null });
     console.time('allModels');
     // pseudo loading
-    this.setState({ modelOptions: [{ label: 'Loading... (if slow, we are switching servers)', value: 'Loading' }] });
+    this.setState({ modelOptions: [{ label: 'Loading... (may be initially slow)', value: 'Loading' }] });
 
     this.props.client.query({
       query: gql`

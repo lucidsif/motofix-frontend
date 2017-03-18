@@ -11,6 +11,7 @@ import toolIcon from './toolIcon.png';
 // noinspection JSUnresolvedVariable
 import diagnoseIcon from './diagnoseIcon.png';
 import gql from 'graphql-tag';
+import CustomQuoteFormModal from 'components/CustomQuoteFormModal';
 const activeServices = ['Pre-purchase Inspection'];
 const disabledServices = ['Air Filter Replacement', 'Brake Pad Replacement', 'Chain And Sprocket Replacement', 'Clean And Lube Chain', 'Spongy Braking', 'Suspension Tuning', 'Tire Replacement', 'Winterization', 'Accessory Installation', 'Brakes Are Squeaking', 'Check Engine Or FI Light Is On', 'Fluids Are Leaking', 'Motorcycle Is Not Starting', 'Motorcycle Is Overheating', 'NY State Inspection', 'Valve Adjustment', 'Warning Light Is On'];
 
@@ -28,7 +29,6 @@ function AddServices(props) {
     // TODO: if repairtimes are unavailable, run switch statements for each service case and update the labortime to an expected price
     // with an expected labortime
     if (parsedRepairTimes.unavailable) {
-      console.log('LaborTimes is unavailable');
       switch (service) {
         case 'Pre-purchaseInspection':
           props.props.onCartClick(service);
@@ -133,6 +133,11 @@ function AddServices(props) {
       <Grid centered>
         <Grid.Row>
           <Input disabled className="serviceSearchWidth" icon="search" placeholder="Search services" />
+        </Grid.Row>
+
+
+        <Grid.Row>
+          <CustomQuoteFormModal vehicle={props.props.vehicle} client={props.props.client} />
         </Grid.Row>
 
         <Grid.Row columns={2}>
