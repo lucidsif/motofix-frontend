@@ -17,7 +17,7 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
       services: null,
       notes: null,
       modalOpen: false,
-      accountCreated: null,
+      quoteCreated: null,
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -26,7 +26,7 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.conditionalaccountCreatedMessage = this.conditionalaccountCreatedMessage.bind(this);
+    this.conditionalquoteCreatedMessage = this.conditionalquoteCreatedMessage.bind(this);
   }
 
   handleEmailChange(e) {
@@ -107,24 +107,29 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
       },
     }).then((response) => {
       console.log(response);
-    });
+      this.setState({ quoteCreated: true });
+    })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ quoteCreated: false });
+      });
   }
 
-  conditionalaccountCreatedMessage() {
-    const accountCreated = this.state.accountCreated;
-    if (accountCreated === false) {
+  conditionalquoteCreatedMessage() {
+    const quoteCreated = this.state.quoteCreated;
+    if (quoteCreated === false) {
       return (
         <Message negative>
-          <p>A user account with that email already exists :(</p>
-          <p>Please use another email or log in</p>
+          <p>Due to network errors, a custom quote was unable to be created :(</p>
+          <p>Please try again in a few minutes.</p>
         </Message>
       );
     }
-    if (accountCreated === true) {
+    if (quoteCreated === true) {
       return (
         <Message positive>
-          <p>Thank you for signing up! We will send you a confirmation email for your $15 off coupon.</p>
-          <p>Feel free to explore the rest of our app. It is designed to achieve maximal rider happiness in the context of motorcycle maintenance and it only gets better here on!</p>
+          <p>Your custom quote request has been sent!</p>
+          <p>We will send you an email detailing your quote as soon as possible!</p>
         </Message>
       );
     }
@@ -149,7 +154,7 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
         closeIcon="close"
       >
         <Header icon="mail outline" content="Get a free custom quote to your email " />
-        {this.conditionalaccountCreatedMessage()}
+        {this.conditionalquoteCreatedMessage()}
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
             <Form.Input
