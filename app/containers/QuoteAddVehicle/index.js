@@ -57,6 +57,7 @@ class QuoteAddVehicle extends React.Component {
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
     this.onBlurError = this.onBlurError.bind(this);
+    this.onGeoChange = this.onGeoChange.bind(this);
     this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
   }
   updateManufacturerValueAndGetModels(newValue) { // eslint-disable-line react/sort-comp
@@ -266,9 +267,47 @@ class QuoteAddVehicle extends React.Component {
     }
     return null;
   }
+
   onBlurError() {
-    console.log('valid location from suggestselect was not clicked');
-    return this.setState({ location: false });
+    return this.props.client.query({
+      query: gql`
+  query allNearAppointmentsAndSchedules($zipOrCoordinates: String!) {
+    allNearAppointmentsAndSchedules(zipOrCoordinates: $zipOrCoordinates){
+        schedules {
+          id
+          day_of_week
+          start_time
+          end_time
+          break_start
+          break_end
+          available
+          fk_mechanic_id
+        }
+      }
+    }
+      `,
+      variables: { zipOrCoordinates: this.state.location },
+    }).then((response) => {
+      const nearMechanics = response.data.allNearAppointmentsAndSchedules.schedules;
+      const locationObj = {
+        customerLocation: this.state.location,
+      };
+      if (nearMechanics.length > 0) {
+        this.setState({ overDistance: false });
+        return this.setState({ location: locationObj });
+      }
+      this.setState({ location: locationObj });
+      return this.setState({ overDistance: true });
+    })
+      .catch((e) => {
+        console.log(e);
+        return this.setState({ location: false });
+      });
+  }
+
+  onGeoChange(e) {
+    console.log(e);
+    return this.setState({ location: e });
   }
 
   onSuggestSelect(mapsObj) {
@@ -395,7 +434,8 @@ class QuoteAddVehicle extends React.Component {
               country="us"
               types={['(regions)']}
               onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
-              onBlur={() => this.onBlurError}
+              onBlur={this.onBlurError}
+              onChange={(e) => this.onGeoChange(e)}
             />
             <i className="location arrow icon"></i>
           </div>
