@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Message, Label, Divider } from 'semantic-ui-react';
+import { Button, Message, Label, Divider, Input } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
@@ -30,14 +30,20 @@ class QuoteAddVehicle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: null,
       manufacturerValue: null,
       modelValue: null,
       subModelValue: null,
       yearValue: null,
+
+      modelLoading: false,
+      subModelLoading: false,
+      yearLoading: false,
+
       modelOptions: null,
       subModelOptions: null,
       yearOptions: null,
+
+      location: null,
       asyncError: false,
       overDistance: null,
       motorcycleSelected: null,
@@ -50,6 +56,7 @@ class QuoteAddVehicle extends React.Component {
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
+    this.onLocationChange = this.onLocationChange.bind(this);
     this.onBlurError = this.onBlurError.bind(this);
     this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
   }
@@ -60,6 +67,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: null });
     console.time('allModels');
     // pseudo loading
+    this.setState({ modelLoading: true });
     this.setState({ modelOptions: [{ label: 'Loading... (may be initially slow)', value: 'Loading' }] });
 
     this.props.client.query({
@@ -77,6 +85,7 @@ class QuoteAddVehicle extends React.Component {
       modelData = result.data.allModels;
       modelsFactory = modelData.map((bike) => ({ value: bike.model_id, label: bike.model }));
       this.setState({ modelOptions: modelsFactory });
+      return this.setState({ modelLoading: false });
     })
       .catch((err) => {
         console.log(err);
@@ -113,6 +122,7 @@ class QuoteAddVehicle extends React.Component {
           modelData = result.data.allVehicles;
           modelsFactory = modelData.map((bike) => ({ value: bike.model, label: bike.model }));
           this.setState({ modelOptions: modelsFactory });
+          return this.setState({ modelLoading: false });
         })
           .catch((error) => {
             console.log(error);
@@ -124,6 +134,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ modelValue: newValue });
     this.setState({ subModelValue: null });
     this.setState({ yearValue: null });
+    this.setState({ subModelLoading: true });
 
     if (this.state.backupApi) {
       console.time('allVehicles submodels');
@@ -143,7 +154,8 @@ class QuoteAddVehicle extends React.Component {
         // iii. make models options = to modelsFactory
         subModelData = result.data.allVehicles;
         subModelFactory = subModelData.map((bike) => ({ value: bike.submodel, label: bike.submodel }));
-        return this.setState({ subModelOptions: subModelFactory });
+        this.setState({ subModelOptions: subModelFactory });
+        return this.setState({ subModelLoading: false });
       })
         .catch((error) => {
           console.log(error);
@@ -175,6 +187,7 @@ class QuoteAddVehicle extends React.Component {
         return { value: bike.mid, label: bikeLabel };
       });
       this.setState({ subModelOptions: subModelFactory });
+      return this.setState({ subModelLoading: false });
     })
       .catch((err) => {
         console.log(err);
@@ -188,6 +201,7 @@ class QuoteAddVehicle extends React.Component {
     this.setState({ yearValue: null });
 
     if (this.state.backupApi) {
+      this.setState({ yearLoading: true });
       console.time('allVehicles years');
       // i. run a graphql query and get all models that have that make
       return this.props.client.query({
@@ -205,7 +219,8 @@ class QuoteAddVehicle extends React.Component {
         // iii. make years options = to yearsFactory
         const yearsData = result.data.allVehicles;
         const yearsFactory = yearsData.map((bike) => ({ value: bike.year, label: bike.year }));
-        return this.setState({ yearOptions: yearsFactory });
+        this.setState({ yearOptions: yearsFactory });
+        return this.setState({ yearLoading: false });
       })
         .catch((error) => {
           console.log(error);
@@ -241,7 +256,6 @@ class QuoteAddVehicle extends React.Component {
   }
 
   conditionalAsyncErrorMessage() {
-    const asyncError = this.state.asyncError;
     const overDistance = this.state.overDistance;
     if (overDistance) {
       return (
@@ -295,12 +309,11 @@ class QuoteAddVehicle extends React.Component {
     })
       .catch((e) => this.logException(e));
   }
-// TODO: Fix this shit
   validateMotorcycleForm(e) {
     e.preventDefault();
     if (!this.state.location) {
       this.setState({ location: false });
-    } /* TODO: remove this for production
+    }
     if (!this.state.manufacturerValue) {
       this.setState({ manufacturerValue: false });
     }
@@ -313,7 +326,7 @@ class QuoteAddVehicle extends React.Component {
     if (!this.state.yearValue) {
       return this.setState({ yearValue: false });
     }
-*/
+
     let selectedVehicle;
     let vehicle;
     if (this.state.backupApi) {
@@ -343,22 +356,18 @@ class QuoteAddVehicle extends React.Component {
         end_year: selectedVehicle[0].end_year,
       };
     }
-
-// TODO: remove this for production
-    const FAKEvehicle = {
-      location: this.state.location.customerLocation,
-      mid: 'BMM07333',
-      manufacturer: 'BMW',
-      model: 'F800',
-      model_variant: '800 GS',
-      year: 2014,
-      tuning_description: 'idk',
-      start_year: 2013,
-      end_year: 2017,
-    };
     console.log(vehicle);
 
-    return this.props.onSubmitForm(FAKEvehicle);
+    return this.props.onSubmitForm(vehicle);
+  }
+
+  onLocationChange(e) {
+    var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
+    if (isValidZip) {
+      return this.setState({ location: e.target.value });
+    } else {
+      return this.setState({ location: false })
+    }
   }
 
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
@@ -368,7 +377,7 @@ class QuoteAddVehicle extends React.Component {
     Raven.captureException(ex, { // eslint-disable-line no-undef
       extra: context,
     });
-  /* eslint no-console:0*/
+    /* eslint no-console:0*/
     window.console && console.error && console.error(ex); // eslint-disable-line no-unused-expressions
   }
 
@@ -390,18 +399,14 @@ class QuoteAddVehicle extends React.Component {
         <form onSubmit={this.validateMotorcycleForm}>
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
-          <div className="ui large icon input">
-            <Geosuggest
-              placeholder="Enter zipcode or city"
-              country="us"
-              types={['(regions)']}
-              onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
-              onBlur={() => this.onBlurError}
-            />
-            <i className="location arrow icon"></i>
-          </div>
+          <Input
+            onChange={this.onLocationChange}
+            size="large"
+            placeholder="Enter your zipcode"
+            icon="location arrow"
+          />
           {this.state.location === false &&
-          <Label basic color="red">Please type or select a valid location among the suggestions</Label>
+          <Label basic color="yellow">Please enter a valid zipcode</Label>
           }
           <Divider section horizontal> Select Model</Divider>
           <div>
@@ -424,6 +429,7 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Model </span>
             <Select
+              isLoading={this.state.modelLoading}
               options={this.state.modelOptions}
               simpleValue
               clearable
@@ -440,6 +446,7 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Sub-model </span>
             <Select
+              isLoading={this.state.subModelLoading}
               options={this.state.subModelOptions}
               simpleValue
               clearable
@@ -456,6 +463,7 @@ class QuoteAddVehicle extends React.Component {
           <div>
             <span>Year </span>
             <Select
+              isLoading={this.state.yearLoading}
               options={this.state.yearOptions}
               simpleValue
               clearable
