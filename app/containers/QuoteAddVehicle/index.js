@@ -306,7 +306,6 @@ class QuoteAddVehicle extends React.Component {
   }
 
   onGeoChange(e) {
-    console.log(e);
     return this.setState({ location: e });
   }
 
