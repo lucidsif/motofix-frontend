@@ -56,7 +56,7 @@ class QuoteAddVehicle extends React.Component {
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
-    this.onBlurError = this.onBlurError.bind(this);
+    this.onBlurCheck = this.onBlurCheck.bind(this);
     this.onGeoChange = this.onGeoChange.bind(this);
     this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
   }
@@ -268,7 +268,7 @@ class QuoteAddVehicle extends React.Component {
     return null;
   }
 
-  onBlurError() {
+  onBlurCheck() {
     return this.props.client.query({
       query: gql`
   query allNearAppointmentsAndSchedules($zipOrCoordinates: String!) {
@@ -433,7 +433,7 @@ class QuoteAddVehicle extends React.Component {
               country="us"
               types={['(regions)']}
               onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
-              onBlur={this.onBlurError}
+              onBlur={this.onBlurCheck}
               onChange={(e) => this.onGeoChange(e)}
             />
             <i className="location arrow icon"></i>
