@@ -98,12 +98,19 @@ function AddServices(props) {
     window.console && console.error && console.error(ex); // eslint-disable-line no-unused-expressions
   }
 
+  function handleSegmentClick(serviceName) {
+    if (!props.props.cart[serviceName].selected) {
+      return runPartsQueryAndUpdateLaborTimes(serviceName);
+    }
+    return props.props.onTrashClick(serviceName);
+  }
+
   // TODO: refactor ServiceSegments so it first renders active segments and then renders disabled segments
   const activeServiceSegments = () => activeServices.map((service) => {
       /* in case despacing all the services  is required, this is the function needed*/
     const deSpacedService = service.replace(/\s/g, '');
     return (
-      <Segment attached textAlign="left" key={service}>
+      <Segment attached textAlign="left" key={service} onClick={() => handleSegmentClick(deSpacedService)}>
         {service}
         {!props.props.cart[deSpacedService].selected ? (
           <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runPartsQueryAndUpdateLaborTimes(deSpacedService)} link />
@@ -164,7 +171,7 @@ function AddServices(props) {
           <div className="ui main text container verticalScroll">
             <Label attached="top">Add Services</Label>
             <Segment.Group>
-              <Segment attached="top" textAlign="left">
+              <Segment attached="top" textAlign="left" onClick={() => handleSegmentClick('OilChange')}>
                 <p>Oil Change
                   {!props.props.cart.OilChange.selected ? (
                     <Icon name="add to cart" size="large" className="serviceIcon blueIcon" onClick={() => runPartsQueryAndUpdateLaborTimes('OilChange')} link />
