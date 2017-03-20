@@ -16,7 +16,6 @@ import { setSavedQuoteTrue } from 'containers/QuoteCentral/actions';
 import { setPaymentSuccess, setPaymentFail } from 'containers/QuoteAppointmentScheduler/actions';
 import StripeCheckoutComp from 'react-stripe-checkout';
 import services from 'containers/QuoteCentral/reducerServices';
-import mcIcon from './f6s-logo.png';
 
 // TODO: make it receive all the props it needs from the most parent container
 

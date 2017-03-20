@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Message, Label, Divider, Input } from 'semantic-ui-react';
+import { Button, Message, Label, Divider } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import { addVehicle } from './actions';
 import Select from 'react-select';
@@ -56,8 +56,8 @@ class QuoteAddVehicle extends React.Component {
     this.updateYear = this.updateYear.bind(this);
     this.conditionalAsyncErrorMessage = this.conditionalAsyncErrorMessage.bind(this);
     this.onSuggestSelect = this.onSuggestSelect.bind(this);
-    this.onLocationChange = this.onLocationChange.bind(this);
-    this.onBlurError = this.onBlurError.bind(this);
+    this.onBlurCheck = this.onBlurCheck.bind(this);
+    this.onGeoChange = this.onGeoChange.bind(this);
     this.validateMotorcycleForm = this.validateMotorcycleForm.bind(this);
   }
   updateManufacturerValueAndGetModels(newValue) { // eslint-disable-line react/sort-comp
@@ -267,9 +267,46 @@ class QuoteAddVehicle extends React.Component {
     }
     return null;
   }
-  onBlurError() {
-    console.log('valid location from suggestselect was not clicked');
-    return this.setState({ location: false });
+
+  onBlurCheck() {
+    return this.props.client.query({
+      query: gql`
+  query allNearAppointmentsAndSchedules($zipOrCoordinates: String!) {
+    allNearAppointmentsAndSchedules(zipOrCoordinates: $zipOrCoordinates){
+        schedules {
+          id
+          day_of_week
+          start_time
+          end_time
+          break_start
+          break_end
+          available
+          fk_mechanic_id
+        }
+      }
+    }
+      `,
+      variables: { zipOrCoordinates: this.state.location },
+    }).then((response) => {
+      const nearMechanics = response.data.allNearAppointmentsAndSchedules.schedules;
+      const locationObj = {
+        customerLocation: this.state.location,
+      };
+      if (nearMechanics.length > 0) {
+        this.setState({ overDistance: false });
+        return this.setState({ location: locationObj });
+      }
+      this.setState({ location: locationObj });
+      return this.setState({ overDistance: true });
+    })
+      .catch((e) => {
+        console.log(e);
+        return this.setState({ location: false });
+      });
+  }
+
+  onGeoChange(e) {
+    return this.setState({ location: e });
   }
 
   onSuggestSelect(mapsObj) {
@@ -361,15 +398,6 @@ class QuoteAddVehicle extends React.Component {
     return this.props.onSubmitForm(vehicle);
   }
 
-  onLocationChange(e) {
-    var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(e.target.value);
-    if (isValidZip) {
-      return this.setState({ location: e.target.value });
-    } else {
-      return this.setState({ location: false })
-    }
-  }
-
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
   // if distance is within x miles -> allow to pass otherwise fail to pass and render message
 
@@ -399,14 +427,19 @@ class QuoteAddVehicle extends React.Component {
         <form onSubmit={this.validateMotorcycleForm}>
           {this.conditionalAsyncErrorMessage()}
           <h3 className="section-heading">Motorcycle Information</h3>
-          <Input
-            onChange={this.onLocationChange}
-            size="large"
-            placeholder="Enter your zipcode"
-            icon="location arrow"
-          />
+          <div className="ui large icon input">
+            <Geosuggest
+              placeholder="Enter zipcode or city"
+              country="us"
+              types={['(regions)']}
+              onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
+              onBlur={this.onBlurCheck}
+              onChange={(e) => this.onGeoChange(e)}
+            />
+            <i className="location arrow icon"></i>
+          </div>
           {this.state.location === false &&
-          <Label basic color="yellow">Please enter a valid zipcode</Label>
+          <Label basic color="red">Please type or select a valid location among the suggestions</Label>
           }
           <Divider section horizontal> Select Model</Divider>
           <div>
