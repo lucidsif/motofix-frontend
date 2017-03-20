@@ -429,7 +429,7 @@ class QuoteAddVehicle extends React.Component {
           <h3 className="section-heading">Motorcycle Information</h3>
           <div className="ui large icon input">
             <Geosuggest
-              placeholder="Enter zipcode or city"
+              placeholder="Enter your zipcode"
               country="us"
               types={['(regions)']}
               onSuggestSelect={(mapObj) => this.onSuggestSelect(mapObj)}
