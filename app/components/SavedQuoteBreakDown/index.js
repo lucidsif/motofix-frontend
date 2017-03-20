@@ -45,7 +45,7 @@ function SavedQuoteBreakDown(props) {
     }
     */
 
-    const sumOfLaborTimes = services.map((service) => {
+    let sumOfLaborTimes = services.map((service) => {
       const regexedService = service.replace(/\s/g, '');
       return regexedService;
     })
@@ -56,6 +56,10 @@ function SavedQuoteBreakDown(props) {
         }
         return acc + 0;
       }, 0);
+
+    if (sumOfLaborTimes < 0.25) {
+      sumOfLaborTimes = 0.25;
+    }
 
     return sumOfLaborTimes * 67 * 2;
   };

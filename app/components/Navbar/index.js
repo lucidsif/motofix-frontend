@@ -70,7 +70,7 @@ export class AppNavBar extends React.Component {
       return -9;
     }
     */
-    const sumOfLaborTimes = services.map((service) => {
+    let sumOfLaborTimes = services.map((service) => {
       const regexedService = service.replace(/\s/g, '');
       return regexedService;
     })
@@ -81,6 +81,11 @@ export class AppNavBar extends React.Component {
       }
       return acc + 0;
     }, 0);
+
+    if (sumOfLaborTimes < 0.25) {
+      sumOfLaborTimes = 0.25;
+    }
+
     return sumOfLaborTimes * 67 * 2;
   }
 
