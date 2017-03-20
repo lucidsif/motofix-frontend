@@ -12,7 +12,6 @@ import services from 'containers/QuoteCentral/reducerServices';
 // TODO: 9/10 fix label positioning
 
 function QuoteCart(props) {
-
   const totalPartsPrice = () => {
     let sum = 0;
     services.map((service) => {
@@ -58,21 +57,20 @@ function QuoteCart(props) {
     }
     */
 
-    let sumOfLaborTimes = services.map((service) => {
+    const sumOfLaborTimes = services.map((service) => {
       const regexedService = service.replace(/\s/g, '');
       return regexedService;
     })
       .reduce((acc, curr) => {
         if (props.props.cart[curr].selected && typeof props.props.cart[curr].laborTime === 'number') {
-          const laborTime = props.props.cart[curr].laborTime;
+          let laborTime = props.props.cart[curr].laborTime;
+          if (laborTime < 0.25) {
+            laborTime = 0.25;
+          }
           return acc + laborTime;
         }
         return acc + 0;
       }, 0);
-
-    if (sumOfLaborTimes < 0.25) {
-      sumOfLaborTimes = 0.25;
-    }
 
     return sumOfLaborTimes * 67 * 2;
   };

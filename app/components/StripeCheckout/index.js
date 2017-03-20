@@ -63,21 +63,20 @@ class StripeCheckout extends React.Component {
     }
     */
 
-    let sumOfLaborTimes = services.map((service) => {
+    const sumOfLaborTimes = services.map((service) => {
       const regexedService = service.replace(/\s/g, '');
       return regexedService;
     })
     .reduce((acc, curr) => {
       if (this.props.cart[curr].selected && typeof this.props.cart[curr].laborTime === 'number') {
-        const laborTime = this.props.cart[curr].laborTime;
+        let laborTime = this.props.cart[curr].laborTime;
+        if (laborTime < 0.25) {
+          laborTime = 0.25;
+        }
         return acc + laborTime;
       }
       return acc + 0;
     }, 0);
-
-    if (sumOfLaborTimes < 0.25) {
-      sumOfLaborTimes = 0.25;
-    }
 
     return sumOfLaborTimes * 67 * 2;
   }
