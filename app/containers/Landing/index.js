@@ -9,7 +9,6 @@ import { withApollo } from 'react-apollo';
 import RedditCarousel from 'components/RedditCarousel';
 import FormModal from 'components/FormModal';
 import { Image } from 'semantic-ui-react';
-import logo from './logo@3x.png';
 import mechanicIcon from './mechanic.png';
 import piggyBank from './piggy-bank.png';
 import controller from './controller.png';
@@ -23,7 +22,15 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
     return (
       <div className="pusher">
         <div className="ui inverted vertical masthead center aligned segment landing-image">
-          <Image size="large" src={logo} centered className="padUp" />
+          <h2>
+            Convenient Motorcycle Repair
+          </h2>
+          <h1>
+            Our Motorcycle Mechanics Come To You
+          </h1>
+          <h3>
+            Fair Pricing Backed With A 5,000 mi/6 Month Warranty
+          </h3>
           <Link
             className="ui orange huge circular button"
             to="/quote/vehicle"

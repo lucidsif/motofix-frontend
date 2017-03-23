@@ -28,6 +28,13 @@
   }
 }
 
+.masthead h2:first-child {
+  margin-top: 7em;
+}
+
+a.ui.orange.huge.circular.button {
+  margin-top: 1.5em;
+}
 
 .masthead.segment {
   min-height: 700px;
