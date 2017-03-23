@@ -56,7 +56,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             <div className="center aligned row">
               <div className="column">
                 <h3>Honest, Professional Mechanics</h3>
-                <p>You only get the best and all work is backed by our 5,000 mile warranty.</p>
+                <p>Work is done by the most qualified mechanics we handpicked and backed by our 5,000 mile warranty.</p>
                 <Image size="tiny" src={mechanicIcon} centered />
               </div>
               <div className="column">
