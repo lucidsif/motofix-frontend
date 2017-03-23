@@ -23,7 +23,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
       <div className="pusher">
         <div className="ui inverted vertical masthead center aligned segment landing-image">
           <h2>
-            Convenient Motorcycle Repair
+            Tired Motorcycle Repair Shops?
           </h2>
           <h1>
             OUR MOTORCYCLE MECHANICS COME TO YOU
