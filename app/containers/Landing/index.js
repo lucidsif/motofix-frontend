@@ -41,7 +41,13 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
 
         <div className="ui vertical stripe segment padSegment">
           <div className="ui middle aligned stackable grid container">
-            <div className="center aligned row"></div>
+            <div className="center aligned row">
+              <div className="column">
+                <h2>
+                  What Are Riders Saying About Us?
+                </h2>
+              </div>
+            </div>
             <div className="center aligned row">
               <div className="column">
                 <RedditCarousel />
