@@ -26,7 +26,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             Convenient Motorcycle Repair
           </h2>
           <h1>
-            Our Motorcycle Mechanics Come To You
+            OUR MOTORCYCLE MECHANICS COME TO YOU
           </h1>
           <h3>
             Fair Pricing Backed With A 5,000 mi/6 Month Warranty
@@ -35,7 +35,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             className="ui orange huge circular button"
             to="/quote/vehicle"
           >
-            Get an instant quote
+            Get Instant Quote
           </Link>
         </div>
 
