@@ -58,7 +58,7 @@ function App(props) {
           defaultTitle="Motorcycle Repair by Mobile Motorcycle Mechanics | motofix"
           meta={[
             {
-              name: 'description', content: 'Our mobile motorcycle mechanics perform motorcycle repair Services at your home or office. Highly rated, discounted, transparent Pricing. Get a quote online and book now.',
+              name: 'description', content: 'Our mobile motorcycle mechanics perform motorcycle repair services at your home or office. Highly rated, discounted, transparent pricing. Get a quote online now.',
             },
             {
               name: 'keywords', content: 'Motorcycle Repair, Mobile Motorcycle Mechanic, Find Motorcycle Mechanics, mobile motorcycle repair, motorcycle repair, find motorcycle mechanic, motorcycle repair shop, motorcycle shop',
