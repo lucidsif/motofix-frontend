@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { Label } from 'semantic-ui-react';
 
 function Footer() {
@@ -9,17 +10,17 @@ function Footer() {
           <div className="three wide column">
             <h4 className="ui  header">About</h4>
             <div className="ui  link list">
-              <a className="item" href="/terms-and-conditions">Terms And Conditions</a>
-              <a className="item" href="/privacy-policy">Privacy Policy</a>
-              <a href="javascript:void(Tawk_API.toggle())"> Click To Chat </a>
+              <Link className="item" to="/terms-and-conditions">Terms And Conditions</Link>
+              <Link className="item" to="/privacy-policy">Privacy Policy</Link>
+              <a href="javascript:void(Tawk_API.toggle())"> Click to Chat </a>
             </div>
           </div>
           <div className="three wide column">
             <h4 className="ui header">Other</h4>
             <div className="ui link list">
-              <a className="item" href="/faq">FAQ</a>
-              <a className="item" href="/how-it-works">How It Works</a>
-              <a className="item" href="/motorcycle-mechanic-jobs">Mechanic Careers</a>
+              <Link className="item" to="/faq">FAQ</Link>
+              <Link className="item" to="/how-it-works">How It Works</Link>
+              <Link className="item" to="/motorcycle-mechanic-jobs">Mechanic Careers</Link>
             </div>
           </div>
           <div className="seven wide column">
