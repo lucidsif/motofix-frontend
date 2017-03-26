@@ -55,7 +55,9 @@
   "pre-commit": "lint:staged",
   "babel": {
     "presets": [
-      "latest",
+      [
+        "latest"
+      ],
       "react",
       "stage-0"
     ],
