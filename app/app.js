@@ -83,10 +83,10 @@ const render = () => {
         history={history}
         routes={rootRoute}
         render={
-            // Scroll to top when going to a new page, imitating default browser
-            // behaviour
-            applyRouterMiddleware(useScroll())
-          }
+          // Scroll to top when going to a new page, imitating default browser
+          // behaviour
+          applyRouterMiddleware(useScroll())
+        }
       />
     </ApolloProvider>,
     document.getElementById('app')
@@ -125,4 +125,3 @@ if (!window.Intl) {
 if (process.env.NODE_ENV === 'production') {
   require('offline-plugin/runtime').install(); // eslint-disable-line global-require
 }
-

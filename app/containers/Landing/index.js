@@ -13,6 +13,7 @@ import mechanicIcon from './mechanic.png';
 import piggyBank from './piggy-bank.png';
 import controller from './controller.png';
 import fiveStepsInfographic from 'containers/HowItWorks/5steps.png';
+//import sitemap from './sitemap.xml';
 
 
 // TODO: Create successful signup mutation message
