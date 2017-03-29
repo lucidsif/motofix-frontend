@@ -51,15 +51,14 @@ function SavedQuoteBreakDown(props) {
     })
       .reduce((acc, curr) => {
         if (props.cart[curr].selected && typeof props.cart[curr].laborTime === 'number') {
-          const laborTime = props.cart[curr].laborTime;
+          let laborTime = props.cart[curr].laborTime;
+          if (laborTime < 0.25) {
+            laborTime = 0.25;
+          }
           return acc + laborTime;
         }
         return acc + 0;
       }, 0);
-
-    if (sumOfLaborTimes < 0.25) {
-      sumOfLaborTimes = 0.25;
-    }
 
     return sumOfLaborTimes * 67 * 2;
   };
