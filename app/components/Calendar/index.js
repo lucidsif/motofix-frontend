@@ -183,7 +183,7 @@ class Calendar extends React.Component {
                     onBlur={this.onNoteBlur}
                   />
                   {this.state.touchedNote && !this.state.note &&
-                  <Label basic color="yellow">Please enter a note for your mechanic or write 'none'</Label>
+                  <Label basic color="yellow">Please enter a note for your mechanic or write {'none'}</Label>
                   }
                 </div>
               </Form>

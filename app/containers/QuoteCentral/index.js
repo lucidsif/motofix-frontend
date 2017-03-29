@@ -1,9 +1,3 @@
-/*
- *
- * QuoteCentral
- *
- */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
@@ -38,7 +32,7 @@ export class QuoteCentral extends React.Component { // eslint-disable-line react
   }
 // TODO: only dispatch saved button after quote mutation success
   createQuoteMutation() {
-  // noinspection JSUnresolvedFunction
+    // noinspection JSUnresolvedFunction
     let voucherCodeStatusBool;
     if (!this.props.voucherCodeStatus) {
       voucherCodeStatusBool = false;

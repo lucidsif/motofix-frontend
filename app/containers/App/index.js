@@ -54,10 +54,15 @@ function App(props) {
             { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
             { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' },
           ]}
-          titleTemplate="%s - motofix"
-          defaultTitle="motofix"
+          titleTemplate="Motorcycle Repair by Mobile Motorcycle Mechanics | motofix - %s"
+          defaultTitle="Motorcycle Repair by Mobile Motorcycle Mechanics | motofix"
           meta={[
-            { name: 'description', content: 'motofix' },
+            {
+              name: 'description', content: 'Our mobile motorcycle mechanics perform motorcycle repair services at your home or office. Highly rated, discounted, transparent pricing. Get a quote online now.',
+            },
+            {
+              name: 'keywords', content: 'Motorcycle Repair, Mobile Motorcycle Mechanic, Find Motorcycle Mechanics, mobile motorcycle repair, motorcycle repair, find motorcycle mechanic, motorcycle repair shop, motorcycle shop',
+            }
           ]}
         />
         <Header />

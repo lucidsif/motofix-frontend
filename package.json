@@ -46,7 +46,8 @@
     "test:firefox": "npm run test -- --browsers Firefox",
     "test:safari": "npm run test -- --browsers Safari",
     "test:ie": "npm run test -- --browsers IE",
-    "coveralls": "cat ./coverage/lcov/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov/lcov.info | coveralls",
+    "sitemap": "node ./internals/scripts/sitemap-builder.js"
   },
   "lint-staged": {
     "*.js": "lint:eslint"
@@ -249,6 +250,7 @@
     "chai": "3.5.0",
     "chai-enzyme": "0.5.2",
     "cheerio": "0.22.0",
+    "copy-webpack-plugin": "^4.0.1",
     "coveralls": "2.11.14",
     "css-loader": "0.25.0",
     "enzyme": "2.5.1",

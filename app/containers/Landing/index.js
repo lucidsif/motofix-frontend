@@ -13,6 +13,7 @@ import mechanicIcon from './mechanic.png';
 import piggyBank from './piggy-bank.png';
 import controller from './controller.png';
 import fiveStepsInfographic from 'containers/HowItWorks/5steps.png';
+//import sitemap from './sitemap.xml';
 
 
 // TODO: Create successful signup mutation message
@@ -23,10 +24,10 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
       <div className="pusher">
         <div className="ui inverted vertical masthead center aligned segment landing-image">
           <h2>
-            Convenient Motorcycle Repair
+            Tired Of Motorcycle Repair Shops?
           </h2>
           <h1>
-            Our Motorcycle Mechanics Come To You
+            OUR MOTORCYCLE MECHANICS COME TO YOU
           </h1>
           <h3>
             Fair Pricing Backed With A 5,000 mi/6 Month Warranty
@@ -35,7 +36,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             className="ui orange huge circular button"
             to="/quote/vehicle"
           >
-            Get a free, instant quote
+            Get Instant Quote
           </Link>
         </div>
 
@@ -43,7 +44,9 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           <div className="ui middle aligned stackable grid container">
             <div className="center aligned row">
               <div className="column">
-                <h3>What do riders on the internet have to say about us?</h3>
+                <h2>
+                  What Are Riders Saying About Us?
+                </h2>
               </div>
             </div>
             <div className="center aligned row">
@@ -60,20 +63,25 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             <div className="center aligned row">
               <div className="column">
                 <h3>Honest, Professional Mechanics</h3>
-                <p>You only get the best and all work is backed by our 5,000 mile warranty.</p>
+                <p>Services are perfomed by the most qualified mechanics we handpicked for the job.
+                  <br />
+                  <br />
+                  By booking with motofix, you'll even get our exclusive 5,000 mile/6 month warranty that you'll almost never get from a mobile motorcycle mechanic .</p>
                 <Image size="tiny" src={mechanicIcon} centered />
               </div>
               <div className="column">
                 <h3>Save Money</h3>
-                <p>Up-front pricing that is up to 30% lower than your local dealership. </p>
+                <p>We aim for fair, transparent pricing. Our pricing may be up to 30% lower than your local dealership. </p>
                 <Image size="tiny" src={piggyBank} centered />
               </div>
             </div>
             <div className="center aligned row">
               <div className="column">
                 <h3>Convenience & Ease</h3>
-                <p>Get instant, free quotes on your phone or on your computer, anytime. <br />
-                  No more quote shopping, taxis, buses, begging rides from friends, rushing after work, or driving back and forth between maintenance. <br />
+                <p>Skip the motorcycle repair shop and get instant, free quotes on your phone or on your computer, anytime. <br />
+                  <br />
+                  No more quote shopping, taxis, rushing after work, or any of the typical hassles associated with trying to schedule a service for your motorcycle. <br />
+                  <br />
                   Now you can use the extra time and cognitive resources to do more important things, like videogames. <br />
                 </p>
                 <Image size="tiny" src={controller} centered />

@@ -112,6 +112,7 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
       .catch((err) => {
         console.log(err);
         this.setState({ quoteCreated: false });
+        this.logException(err);
       });
   }
 
@@ -134,6 +135,14 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
       );
     }
     return null;
+  }
+
+  logException(ex, context) {
+    Raven.captureException(ex, { // eslint-disable-line no-undef
+      extra: context,
+    });
+    /* eslint no-console:0*/
+    window.console && console.error && console.error(ex); // eslint-disable-line no-unused-expressions
   }
 
   render() {
