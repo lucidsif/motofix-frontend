@@ -23,7 +23,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem } = this.state;
     return (
       <div className="pusher">
         <div className="ui inverted vertical masthead center aligned segment landing-image">
@@ -70,7 +70,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
                 <p>Services are perfomed by the most qualified mechanics we handpicked for the job.
                   <br />
                   <br />
-                  By booking with motofix, you'll even get our exclusive 5,000 mile/6 month warranty that you'll almost never get from a mobile m</p>
+                  By booking with motofix, you'll even get our exclusive 5,000 mile/6 month warranty that you'll almost never</p>
                 <Image size="tiny" src={mechanicIcon} centered />
               </div>
               <div className="column">
@@ -214,8 +214,8 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
                 <Grid>
                   <Grid.Column width={4}>
                     <Menu fluid vertical tabular>
-                      <Menu.Item name='NY' active={activeItem === 'NY'} onClick={this.handleItemClick} />
-                      <Menu.Item name='CA' active={activeItem === 'CA'} onClick={this.handleItemClick} />
+                      <Menu.Item name="NY" active={activeItem === 'NY'} onClick={this.handleItemClick} />
+                      <Menu.Item name="CA" active={activeItem === 'CA'} onClick={this.handleItemClick} />
                     </Menu>
                   </Grid.Column>
 
