@@ -181,7 +181,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
                     <Image size="tiny" src="https://www.irononsticker.com/images/Honda3.jpg" />
                   </Grid.Column>
                   <Grid.Column mobile={8} tablet={4} computer={3}>
-                    <Image size="tiny" src="http://eshop-stickers.com/sites/default/files/imagecache/node_image/kawasaki_logo.png" />
+                    <Image size="tiny" src="https://ae01.alicdn.com/kf/HTB1HMRzNVXXXXc2aXXXq6xXFXXXO/Car-Styling-font-b-Kawasaki-b-font-font-b-Logo-b-font-Ninja-ZX-R-font.jpg" />
                   </Grid.Column>
                   <Grid.Column mobile={8} tablet={4} computer={3}>
                     <Image size="tiny" src="https://c2.staticflickr.com/6/5552/14671839137_9890286517_b.jpg" />
