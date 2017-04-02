@@ -70,7 +70,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
                 <p>Services are perfomed by the most qualified mechanics we handpicked for the job.
                   <br />
                   <br />
-                  By booking with motofix, you'll even get our exclusive 5,000 mile/6 month warranty that you'll almost never</p>
+                  By booking with motofix, you'll even get our exclusive 5,000 mile/6</p>
                 <Image size="tiny" src={mechanicIcon} centered />
               </div>
               <div className="column">
@@ -157,47 +157,45 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             <div className="center aligned row">
               <div className="column">
                 <h2>
-                   We Can Service Your Motorcycle
+                  We Can Service Your Motorcycle
                 </h2>
-                <Grid relaxed centered columns={8}>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Image src="https://upload.wikimedia.org/wikipedia/commons/6/66/Ducati_red_logo.PNG" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Harley_Davidson_logo.gif" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Logo_Indian_no_oficial.svg" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="https://i.ebayimg.com/images/i/321943265030-0-1/s-l1000.jpg" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="https://upload.wikimedia.org/wikipedia/commons/9/99/Aprilia-logo.svg" />
-                    </Grid.Column>
-                  </Grid.Row>
+                <Grid relaxed centered>
 
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Image src="https://www.irononsticker.com/images/Honda3.jpg" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="http://eshop-stickers.com/sites/default/files/imagecache/node_image/kawasaki_logo.png" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="https://c2.staticflickr.com/6/5552/14671839137_9890286517_b.jpg" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="https://img.clipartfox.com/39f929d0c6563f2817fe9b7da43992eb_ktm-racing-motorcycle-logo-ktm-logo-hd-clipart_700-700.jpeg" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="https://www.seeklogo.net/wp-content/uploads/2013/05/suzuki-eps-vector-logo-400x400.png" />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Image src="https://upload.wikimedia.org/wikipedia/en/0/08/The_company_logo_for_Victory_Motorcycles.png" />
-                    </Grid.Column>
-                  </Grid.Row>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://upload.wikimedia.org/wikipedia/commons/6/66/Ducati_red_logo.PNG" />
+                  </Grid.Column>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Harley_Davidson_logo.gif" />
+                  </Grid.Column >
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Logo_Indian_no_oficial.svg" />
+                  </Grid.Column>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://i.ebayimg.com/images/i/321943265030-0-1/s-l1000.jpg" />
+                  </Grid.Column>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://upload.wikimedia.org/wikipedia/commons/9/99/Aprilia-logo.svg" />
+                  </Grid.Column>
+
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://www.irononsticker.com/images/Honda3.jpg" />
+                  </Grid.Column>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://ae01.alicdn.com/kf/HTB1HMRzNVXXXXc2aXXXq6xXFXXXO/Car-Styling-font-b-Kawasaki-b-font-font-b-Logo-b-font-Ninja-ZX-R-font.jpg" />
+                  </Grid.Column>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://c2.staticflickr.com/6/5552/14671839137_9890286517_b.jpg" />
+                  </Grid.Column>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://img.clipartfox.com/39f929d0c6563f2817fe9b7da43992eb_ktm-racing-motorcycle-logo-ktm-logo-hd-clipart_700-700.jpeg" />
+                  </Grid.Column>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://www.seeklogo.net/wp-content/uploads/2013/05/suzuki-eps-vector-logo-400x400.png" />
+                  </Grid.Column>
+                  <Grid.Column mobile={8} tablet={4} computer={3}>
+                    <Image size="tiny" src="https://upload.wikimedia.org/wikipedia/en/0/08/The_company_logo_for_Victory_Motorcycles.png" />
+                  </Grid.Column>
+
                 </Grid>
               </div>
             </div>
@@ -219,7 +217,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
                     </Menu>
                   </Grid.Column>
 
-                  <Grid.Column stretched width={12}>
+                  <Grid.Column stretched width={12} stackable>
                     {
                       activeItem === 'NY' &&
                       <Segment>

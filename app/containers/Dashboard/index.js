@@ -34,7 +34,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
             <Grid.Row>
               <Grid.Column>
                 <Header as="h2">
-                  <Image shape="circular" src="http://semantic-ui.com/images/avatar2/large/patrick.png" />
+                  <Image shape="circular" src="https://semantic-ui.com/images/avatar2/large/patrick.png" />
                   {' '}Hello {name.substr(0,name.indexOf(' '))}
                 </Header>
               </Grid.Column>
