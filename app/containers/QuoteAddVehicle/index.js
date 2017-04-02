@@ -88,6 +88,7 @@ class QuoteAddVehicle extends React.Component {
       return this.setState({ modelLoading: false });
     })
       .catch((err) => {
+        console.log('main api fail');
         console.log(err);
         console.timeEnd('allModels');
         console.time('allVehicles models');
@@ -125,6 +126,7 @@ class QuoteAddVehicle extends React.Component {
           return this.setState({ modelLoading: false });
         })
           .catch((error) => {
+          console.log('backup api fail');
             console.log(error);
             this.logException(err);
           });

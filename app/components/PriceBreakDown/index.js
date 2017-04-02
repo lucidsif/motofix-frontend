@@ -99,7 +99,7 @@ function PriceBreakDown(props) {
       return (
         <List.Item key={serviceName + key}>
           <List.Item>
-            <Image verticalAlign="middle" floated="left" src={'http://authoritywebsiteincome.com/wp-content/uploads/2013/11/mystery-landing-page.png'} size="tiny" />
+            <Image verticalAlign="middle" floated="left" src={'https://authoritywebsiteincome.com/wp-content/uploads/2013/11/mystery-landing-page.png'} size="tiny" />
             <List.Content floated="left" verticalAlign="middle">
               <span className="part-span">{key} could not be found for this model at this time</span>
             </List.Content>
