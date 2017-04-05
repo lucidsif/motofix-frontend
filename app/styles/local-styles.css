@@ -16,14 +16,18 @@
 
 @media (max-width: 800px) and (min-width: 200px) {
   .landing-image {
+    /*
     background-image: url('../containers/Landing/mobile2.jpg') !important;
+    */
     background-size: cover !important;
   }
 }
 
 @media (max-width: 1800px) and (min-width: 800px) {
   .landing-image {
+    /*
     background-image: url('../containers/Landing/male-mechanic.jpg') !important;
+    */
     background-size: cover !important;
   }
 }
@@ -113,6 +117,12 @@ div.ui.vertical.segment.padSegment {
     font-size: 1.5em;
   }
 }
+
+.soft-gray-h2 {
+  color: #4A5155;
+  font-weight: 500;
+}
+
 /* mechanic jobs page*/
 .mechanic-job-image {
   background-image: url('../containers/MechanicJobs/welding-mechanic.jpg') !important;
