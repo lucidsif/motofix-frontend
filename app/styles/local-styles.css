@@ -16,18 +16,14 @@
 
 @media (max-width: 800px) and (min-width: 200px) {
   .landing-image {
-    /*
     background-image: url('../containers/Landing/mobile2.jpg') !important;
-    */
     background-size: cover !important;
   }
 }
 
 @media (max-width: 1800px) and (min-width: 800px) {
   .landing-image {
-    /*
     background-image: url('../containers/Landing/male-mechanic.jpg') !important;
-    */
     background-size: cover !important;
   }
 }
