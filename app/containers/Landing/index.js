@@ -48,7 +48,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           <div className="ui middle aligned stackable grid container">
             <div className="center aligned row">
               <div className="column">
-                <h2>
+                <h2 className="soft-gray-h2">
                   What Are Riders Saying About Us?
                 </h2>
               </div>
@@ -66,22 +66,29 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
 
             <div className="center aligned row">
               <div className="column">
-                <h3>Honest, Professional Mechanics</h3>
-                <p>Services are perfomed by the most qualified mechanics we handpicked for the job.
+                <h2 className="soft-gray-h2">
+                  Honest, Professional Mechanics
+                </h2>
+                <p>Services are perfomed by the most qualified motorcycle mechanics we handpicked for the job.
                   <br />
                   <br />
-                  By booking with motofix, you'll even get our exclusive 5,000 mile/6</p>
+                  By booking with motofix, you'll even get our exclusive 5,000 mile/6 month warranty
+                </p>
                 <Image size="tiny" src={mechanicIcon} centered />
               </div>
               <div className="column">
-                <h3>Save Money</h3>
+                <h2 className="soft-gray-h2">
+                  Save Money
+                </h2>
                 <p>We aim for fair, transparent pricing. Our pricing may be up to 30% lower than your local dealership. </p>
                 <Image size="tiny" src={piggyBank} centered />
               </div>
             </div>
             <div className="center aligned row">
               <div className="column">
-                <h3>Convenience & Ease</h3>
+                <h2 className="soft-gray-h2">
+                  Convenience & Ease
+                </h2>
                 <p>Skip the motorcycle repair shop and get instant, free quotes on your phone or on your computer, anytime. <br />
                   <br />
                   No more quote shopping, taxis, rushing after work, or any of the typical hassles associated with trying to schedule a service for your motorcycle. <br />
@@ -98,7 +105,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           <div className="ui middle aligned stackable grid container">
             <div className="center aligned row">
               <div className="column">
-                <h2>
+                <h2 className="soft-gray-h2">
                   Motorcycle Repair Services We Offer
                 </h2>
 
@@ -156,7 +163,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           <div className="ui middle aligned stackable grid container">
             <div className="center aligned row">
               <div className="column">
-                <h2>
+                <h2 className="soft-gray-h2">
                   We Can Service Your Motorcycle
                 </h2>
                 <Grid relaxed centered>
@@ -206,7 +213,7 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           <div className="ui middle aligned stackable grid container">
             <div className="center aligned row">
               <div className="column">
-                <h2>
+                <h2 className="soft-gray-h2">
                   Our Mobile Motorcyle Mechanic Coverage
                 </h2>
                 <Grid>
@@ -278,3 +285,4 @@ Landing.propTypes = {
 const LandingWithApollo = withApollo(Landing);
 
 export default LandingWithApollo;
+
