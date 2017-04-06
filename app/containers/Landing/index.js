@@ -8,11 +8,10 @@ import { Link } from 'react-router';
 import { withApollo } from 'react-apollo';
 import RedditCarousel from 'components/RedditCarousel';
 import FormModal from 'components/FormModal';
-import { Image, Table, Grid, Menu, Segment, Label } from 'semantic-ui-react';
+import { Image, Table, Grid, Menu, Segment, Label, Step } from 'semantic-ui-react';
 import mechanicIcon from './mechanic.png';
 import piggyBank from './piggy-bank.png';
 import controller from './controller.png';
-import fiveStepsInfographic from 'containers/HowItWorks/5steps.png';
 
 
 // TODO: Create successful signup mutation message
@@ -262,16 +261,37 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
           </div>
         </div>
 
-        <div className="ui vertical stripe segment">
-          <div className="ui text container">
-            <Image size="huge" src={fiveStepsInfographic} centered />
+        <div className="ui vertical stripe segment padSegment">
+          <div className="ui middle aligned stackable grid container">
+            <div className="center aligned row">
+              <div className="column">
+                <h2 className="soft-gray-h2">
+                  How It Works
+                </h2>
+              </div>
+            </div>
+
+            <div className="center aligned row">
+              <div className="column">
+                <Step.Group vertical>
+                  <Step icon="teal quote right" title="1. Get Instant Quote" description="Select your motorcycle and add services to cart." />
+                  <Step icon="yellow calendar check" title="2. Schedule Appointment" description="Select an available time slot from the calendar." />
+                  <Step icon="blue wrench" title="3. Get Motorcycle Fixed" description="Your mobile mechanic repairs your motorcycle." />
+                  <Step icon="green payment" title="4. Payment Is Released" description="The payment is released after your satisfaction." />
+                </Step.Group>
+              </div>
+            </div>
+
             <h4 className="ui horizontal header divider">
               Well, what are you waiting for?
             </h4>
             <p>{"We believe you'll love us so much that we're giving you $15 off your next service if you sign up during this beta period."}</p>
-            <FormModal client={this.props.client} />
+            <div className="center aligned row">
+              <FormModal client={this.props.client} />
+            </div>
           </div>
         </div>
+
 
       </div>
     );
@@ -285,4 +305,3 @@ Landing.propTypes = {
 const LandingWithApollo = withApollo(Landing);
 
 export default LandingWithApollo;
-
