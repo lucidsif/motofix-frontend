@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import { Button, Modal, Header, Icon, Form, Message } from 'semantic-ui-react';
+import { Button, Modal, Header, Icon, Form, Message, Checkbox } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 
 
@@ -15,6 +15,7 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
     this.state = {
       email: null,
       services: null,
+      ownParts: false,
       notes: null,
       modalOpen: false,
       quoteCreated: null,
@@ -22,6 +23,7 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleServicesChange = this.handleServicesChange.bind(this);
+    this.handleOwnPartsClick = this.handleOwnPartsClick.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
@@ -39,9 +41,24 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
     this.setState({ services: e.target.value });
   }
 
+  handleOwnPartsClick(e) { // eslint-disable-line no-unused-vars
+    // noinspection JSUnresolvedFunction
+    if (this.state.ownParts === false) {
+      this.setState({ ownParts: true });
+    }
+    if (this.state.ownParts === true) {
+      this.setState({ ownParts: false });
+    }
+  }
+
   handleNotesChange(e) {
     // noinspection JSUnresolvedFunction
-    this.setState({ notes: e.target.value });
+    if (this.state.ownParts === true) {
+      this.setState({ notes: `CUSTOMER HAS PARTS; ${e.target.value}` });
+    }
+    if (this.state.ownParts === false) {
+      this.setState({ notes: `CUSTOMER NEEDS PARTS; ${e.target.value}` });
+    }
   }
 
   handleSubmit(e) {
@@ -172,6 +189,12 @@ class CustomQuoteFormModal extends React.Component { // EsLint-disable-line reac
               placeholder="What services do you need?"
               icon="wrench"
               iconPosition="left"
+            />
+            <Checkbox
+              className="checkbox-white-label"
+              label="Have your own parts?"
+              labelPosition="left"
+              onClick={this.handleOwnPartsClick}
             />
             <Form.Input
               onChange={this.handleNotesChange}
