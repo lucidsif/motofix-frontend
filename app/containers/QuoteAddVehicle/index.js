@@ -88,6 +88,7 @@ class QuoteAddVehicle extends React.Component {
       return this.setState({ modelLoading: false });
     })
       .catch((err) => {
+        console.log('main api fail');
         console.log(err);
         console.timeEnd('allModels');
         console.time('allVehicles models');
@@ -125,6 +126,7 @@ class QuoteAddVehicle extends React.Component {
           return this.setState({ modelLoading: false });
         })
           .catch((error) => {
+            console.log('backup api fail');
             console.log(error);
             this.logException(err);
           });
@@ -346,7 +348,7 @@ class QuoteAddVehicle extends React.Component {
     })
       .catch((e) => this.logException(e));
   }
-  validateMotorcycleForm(e) {
+  validateMotorcycleForm(e) { // eslint-disable-line consistent-return
     e.preventDefault();
     if (!this.state.location) {
       this.setState({ location: false });
@@ -395,7 +397,9 @@ class QuoteAddVehicle extends React.Component {
     }
     console.log(vehicle);
 
-    return this.props.onSubmitForm(vehicle);
+    if (this.state.location && this.state.manufacturerValue && this.state.modelValue && this.state.subModelValue && this.state.yearValue) {
+      return this.props.onSubmitForm(vehicle);
+    }
   }
 
   // onblur -> save location to state -> calculate distance from 11435 using distance matrix ->
