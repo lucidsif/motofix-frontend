@@ -122,6 +122,12 @@ div.ui.vertical.segment.padSegment {
   color: #4A5155;
   font-weight: 500;
 }
+/*
+custom form modal checkbox
+ */
+.ui.checkbox input.hidden+label {
+  color: white;
+}
 
 /* mechanic jobs page*/
 .mechanic-job-image {
