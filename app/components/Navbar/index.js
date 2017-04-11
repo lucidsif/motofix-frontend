@@ -16,6 +16,7 @@ import { resetVehicle } from 'containers/QuoteAddVehicle/actions';
 import { browserHistory } from 'react-router';
 import { Dropdown, Menu, Image, Icon, Label } from 'semantic-ui-react';
 import logo from './home-logo.png';
+import logo2 from './motofix_final.png';
 import services from 'containers/QuoteCentral/reducerServices';
 
 // TODO: make sure new quote sets voucher to null
@@ -114,7 +115,7 @@ export class AppNavBar extends React.Component {
     return (
       <Menu secondary fixed="top" className="padRight ">
         <Menu.Item>
-          <Image src={logo} as="a" size="tiny" href="#" onClick={() => browserHistory.push('/')} />
+          <Image src={logo2} as="a" size="tiny" href="#" onClick={() => browserHistory.push('/')} />
           <Label color="orange" horizontal className="betaLabel">beta</Label>
         </Menu.Item>
         <Menu.Menu position="right">
