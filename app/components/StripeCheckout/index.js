@@ -227,7 +227,7 @@ class StripeCheckout extends React.Component {
         description="Your personal mechanic anywhere"
         image={'https://res.cloudinary.com/motocloud/image/upload/v1489386170/f6s-logo_p0r60z.png'}
         token={this.onToken}
-        stripeKey="pk_live_gKkGpkO162dwNfnXUEgRF0pi"
+        stripeKey="pk_test_Uq1Klar8ByVNEJGycRrPLA3X"
         panelLabel="Pay"
         currency="USD"
         email={localStorage.getItem('email')}
