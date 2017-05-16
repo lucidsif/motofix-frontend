@@ -285,10 +285,12 @@ export class Landing extends React.PureComponent { // eslint-disable-line react/
             <h4 className="ui horizontal header divider">
               Well, what are you waiting for?
             </h4>
+            /*
             <p>{"We believe you'll love us so much that we're giving you $15 off your next service if you sign up during this beta period."}</p>
             <div className="center aligned row">
               <FormModal client={this.props.client} />
             </div>
+            */
           </div>
         </div>
 
