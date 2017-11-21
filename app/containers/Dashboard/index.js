@@ -26,6 +26,7 @@ const UserIsAuthenticated = UserAuthWrapper({ // eslint-disable-line new-cap
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const name = localStorage.getItem('userName');
+    console.log('name in dashboard', name);
     return (
       <Grid centered>
 
@@ -35,7 +36,7 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
               <Grid.Column>
                 <Header as="h2">
                   <Image shape="circular" src="https://semantic-ui.com/images/avatar2/large/patrick.png" />
-                  {' '}Hello {name.substr(0, name.indexOf(' '))}
+                  {' '}Hello {name}
                 </Header>
               </Grid.Column>
             </Grid.Row>

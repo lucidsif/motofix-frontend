@@ -19,6 +19,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
     super(props);
     this.state = {
       accountCreated: null,
+      name: null
     };
     this.signUpMutation = this.signUpMutation.bind(this);
   }
@@ -28,6 +29,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
     const name = formMap._root.entries[0][1];
     const email = formMap._root.entries[1][1];
     const password = formMap._root.entries[2][1];
+    this.setState({name});
     // noinspection JSUnresolvedFunction
     return this.props.client.mutate({
       mutation: gql`
@@ -66,6 +68,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
           return this.setState({ inAuthenticated: true });
         }
         localStorage.setItem('authToken', loginResponse.data.logIn.token);
+        localStorage.setItem('userName', this.state.name);
         return this.props.onAccountCreation(parseInt(loginResponse.data.logIn.data.id, 10));
       });
     });
