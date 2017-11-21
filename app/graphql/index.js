@@ -2,7 +2,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: '//impala.motofix-shared-backend-test.c66.me/graphql',
+    uri: '//feathers-motofix.herokuapp.com/graphql',
     opts: {
       credentials: 'same-origin',
       shouldBatch: false,
