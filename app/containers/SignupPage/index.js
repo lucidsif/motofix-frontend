@@ -19,7 +19,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
     super(props);
     this.state = {
       accountCreated: null,
-      name: null
+      name: null,
     };
     this.signUpMutation = this.signUpMutation.bind(this);
   }
@@ -29,7 +29,7 @@ export class SignupPage extends React.Component { // eslint-disable-line react/p
     const name = formMap._root.entries[0][1];
     const email = formMap._root.entries[1][1];
     const password = formMap._root.entries[2][1];
-    this.setState({name});
+    this.setState({ name });
     // noinspection JSUnresolvedFunction
     return this.props.client.mutate({
       mutation: gql`
